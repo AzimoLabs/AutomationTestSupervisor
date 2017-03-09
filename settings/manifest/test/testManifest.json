@@ -1,0 +1,27 @@
+{
+  "android_app_package": "com.azimo.sendmoney",
+  "android_test_package": "instrumentation.azimoTestCases",
+  "test_package_list": [
+    {
+        "package_name": "AuthFlow",
+        "package_location": "bddTests.functional"
+    },
+    {
+        "package_name": "CheckRates",
+        "package_location": "bddTests.functional"
+    }
+  ],
+  "test_set_list": [
+    {
+      "set_name": "default",
+      "set_package_names": []
+    },
+    {
+        "set_name": "allBddFunctional",
+        "set_package_names": [
+          "AuthFlow",
+          "CheckRates"
+        ]
+    }
+  ]
+}

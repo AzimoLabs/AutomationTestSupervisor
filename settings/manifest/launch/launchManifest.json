@@ -1,0 +1,22 @@
+{
+  "launch_plan_list": [
+    {
+      "plan_name": "default",
+      "should_restart_adb": true,
+      "should_recreate_existing_avd": true,
+      "should_launch_avd_sequentially": true,
+      "avd_launch_scan_interval_seconds": 15,
+      "avd_adb_boot_timeout_seconds": 240,
+      "avd_system_boot_timeout_seconds": 120
+    },
+    {
+      "plan_name": "moj_plan",
+      "should_restart_adb": true,
+      "should_recreate_existing_avd": true,
+      "should_launch_avd_sequentially": true,
+      "avd_launch_scan_interval_seconds": 15,
+      "avd_adb_boot_timeout_seconds": 240,
+      "avd_system_boot_timeout_seconds": 120
+    }
+  ]
+}

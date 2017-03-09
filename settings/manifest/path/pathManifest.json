@@ -1,0 +1,24 @@
+{
+  "path_set_list": [
+    {
+      "set_name": "default",
+      "paths": [
+        {
+          "path_name": "sdk_dir",
+          "path_value": "",
+          "path_description": "Path to Android Software Development kit. By default stored in ANDROID_HOME env."
+        },
+        {
+          "path_name": "avd_dir",
+          "path_value": "",
+          "path_description": "Location to .android folder where AVD images are stored. By default stored in ANDROID_SDK_HOME env."
+        },
+        {
+          "path_name": "output_dir",
+          "path_value": "",
+          "path_description": "Path to where test process logs will be saved."
+        }
+      ]
+    }
+  ]
+}

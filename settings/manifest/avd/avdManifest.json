@@ -1,0 +1,43 @@
+{
+  "avd_schema_list": [
+    {
+      "avd_name": "Test-Emulator-API23-Nexus-5",
+      "create_avd_target": "android-23",
+      "create_avd_abi": "google_apis/x86_64",
+      "create_avd_hardware_config_filepath": "~/Android/AVD_Snapshots/Nexus_5X_API_23/config.ini",
+      "create_avd_additional_options": "",
+      "launch_avd_snapshot_filepath": "~/Android/AVD_Snapshots/Nexus_5X_API_23/Nexus_5X_API_23_SNAPSHOT.img",
+      "launch_avd_launch_binary_name": "emulator",
+      "launch_avd_additional_options": "-gpu on -show-kernel -verbose"
+    }
+  ],
+  "avd_set_list": [
+    {
+      "set_name": "default",
+      "avd_list": [],
+      "avd_port_rules": {
+        "assign_missing_ports": true,
+        "search_range_min": 5556,
+        "search_range_max": 5580,
+        "ports_to_ignore": [],
+        "ports_to_use": []
+      }
+    },
+    {
+      "set_name": "avd-basic",
+      "avd_list": [
+        {
+          "avd_name": "Test-Emulator-API23-Nexus-5",
+          "instances": 3
+        }
+      ],
+      "avd_port_rules": {
+        "assign_missing_ports": true,
+        "search_range_min": 5556,
+        "search_range_max": 5580,
+        "ports_to_ignore": [],
+        "ports_to_use": []
+      }
+    }
+  ]
+}
