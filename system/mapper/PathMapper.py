@@ -7,14 +7,14 @@ def clean_path(path):
 
 
 def add_starting_slash(path):
-    if path[0] != "/":
+    if path != "" and path[0] != "/":
         return "/" + path
     else:
         return path
 
 
 def add_ending_slash(path):
-    if path[len(path) - 1] != "/":
+    if path != "" and path[len(path) - 1] != "/":
         return path + "/"
     else:
         return path

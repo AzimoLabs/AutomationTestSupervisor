@@ -1,7 +1,4 @@
-from system.command.GeneralCommand import GeneralCommand
-
-
-class AdbCommand(GeneralCommand):
+class AdbCommand:
     KILL_SERVER = "kill-server"
     START_SERVER = "start-server"
     DEVICES = "devices | grep [0-9] | tr -s \"\t\" \" | cut -d\""

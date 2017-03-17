@@ -1,11 +1,9 @@
-from android.bin.command.EmulatorCommand import *
-from system.command.GeneralCommand import *
-from system.mapper.PathMapper import *
-from system.manager.FileManager import *
-from console.ShellHelper import *
-from console.Printer import *
-from settings.Settings import *
 import re
+
+from android.bin.command.EmulatorCommand import *
+from console.ShellHelper import *
+from system.command.GeneralCommand import *
+from system.manager.FileManager import *
 
 TAG = "EmulatorController:"
 
@@ -58,38 +56,33 @@ class EmulatorController:
         return execute_shell(launch_avd_cmd, True, False)
 
     def apply_config_to_avd(self, avd_schema):
-        config_ini_file_path = clean_path(avd_schema.create_avd_hardware_config_filepath)
-        temp_file_path = config_ini_file_path.replace(".ini", "_temp.ini", 1)
+        config_ini_to_apply_filepath = clean_path(avd_schema.create_avd_hardware_config_filepath)
 
-        temp_file = None
-        config_ini_file = None
-        try:
-            config_ini_file = open(config_ini_file_path, "r")
-            temp_file = open(temp_file_path, "w")
-
-            for config_line in config_ini_file.readlines():
-                temp_lane = config_line
-                if "AvdId=" in config_line:
-                    temp_lane = ("AvdId=" + str(avd_schema.avd_name) + "\n")
-                if "avd.ini.displayname=" in config_line:
-                    temp_lane = ("avd.ini.displayname=" + str(avd_schema.avd_name) + "\n")
-                temp_file.write(temp_lane)
-        finally:
-            if temp_file is not None:
-                temp_file.close()
-            if config_ini_file is not None:
-                config_ini_file.close()
-
-        config_ini_location = clean_path(
+        real_config_ini_file_path = clean_path(
             add_ending_slash(Settings.AVD_DIR) +
             add_ending_slash("avd") +
             add_ending_slash(avd_schema.avd_name + ".avd") +
             "config.ini")
 
-        output = execute_shell(GeneralCommand.COPY_FROM_TO.format(
-            temp_file_path,
-            config_ini_location),
-            True, False)
+        real_config_ini_file = None
+        config_ini_to_apply_file = None
+        try:
+            config_ini_to_apply_file = open(config_ini_to_apply_filepath, "r")
+            real_config_ini_file = open(real_config_ini_file_path, "w")
+            real_config_ini_file.seek(0)
+            real_config_ini_file.truncate()
 
-        delete_file(temp_file_path)
-        return output
+            for config_line in config_ini_to_apply_file.readlines():
+                temp_lane = config_line
+                if "AvdId=" in config_line:
+                    temp_lane = ("AvdId=" + str(avd_schema.avd_name) + "\n")
+                if "avd.ini.displayname=" in config_line:
+                    temp_lane = ("avd.ini.displayname=" + str(avd_schema.avd_name) + "\n")
+                real_config_ini_file.write(temp_lane)
+        finally:
+            if real_config_ini_file is not None:
+                real_config_ini_file.close()
+            if config_ini_to_apply_file is not None:
+                config_ini_to_apply_file.close()
+
+        return "Config.ini successfully applied"

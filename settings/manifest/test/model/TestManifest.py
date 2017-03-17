@@ -9,13 +9,12 @@ TAG = "TestManifest:"
 class TestManifest:
     def __init__(self, manifest_dir):
         self.path_manifest_source = load_json(manifest_dir)
-        self.android_app_package = self.path_manifest_source["android_app_package"]
-        self.android_test_package = self.path_manifest_source["android_test_package"]
+        self.instrumentation_runner = self.path_manifest_source["instrumentation_runner"]
         self.test_package_list = dict()
         self.test_set_list = dict()
 
-        for test_package_dict in self.path_manifest_source["test_package_list"]:
-            self.test_package_list.update({test_package_dict["package_name"]: TestPackage(test_package_dict)})
+        for test_package_dict in self.path_manifest_source["test_list"]:
+            self.test_package_list.update({test_package_dict["test_package_name"]: TestPackage(test_package_dict)})
 
         for test_set_dict in self.path_manifest_source["test_set_list"]:
             self.test_set_list.update({test_set_dict["set_name"]: TestSet(test_set_dict)})

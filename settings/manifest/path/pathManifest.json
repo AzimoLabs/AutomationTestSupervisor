@@ -17,6 +17,46 @@
           "path_name": "output_dir",
           "path_value": "",
           "path_description": "Path to where test process logs will be saved."
+        },
+        {
+          "path_name": "project_root_dir",
+          "path_value": "",
+          "path_description": "Path to root of application under test."
+        },
+        {
+          "path_name": "apk_dir",
+          "path_value": "",
+          "path_description": "Directory where .apk files of application under test are stored."
+        }
+      ]
+    },
+    {
+      "set_name": "F1sherKK",
+      "paths": [
+        {
+          "path_name": "sdk_dir",
+          "path_value": "~/Library/Android/sdk",
+          "path_description": "Path to Android Software Development kit. By default stored in ANDROID_HOME env."
+        },
+        {
+          "path_name": "avd_dir",
+          "path_value": "~/.android/",
+          "path_description": "Location to .android folder where AVD images are stored. By default stored in ANDROID_SDK_HOME env."
+        },
+        {
+          "path_name": "output_dir",
+          "path_value": "output",
+          "path_description": "Path to where test process logs will be saved."
+        },
+        {
+          "path_name": "project_root_dir",
+          "path_value": "~/Dev/Azimo-Android",
+          "path_description": "Path to root of application under test."
+        },
+        {
+          "path_name": "apk_dir",
+          "path_value": "~/Dev/Azimo-Android/app/build/outputs/apk/",
+          "path_description": "Directory where .apk files of application under test are stored."
         }
       ]
     }

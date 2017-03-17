@@ -1,4 +1,6 @@
 class TestPackage:
     def __init__(self, test_package_dict):
-        self.package_name = test_package_dict["package_name"]
-        self.package_location = test_package_dict["package_location"]
+        self.test_package_name = test_package_dict["test_package_name"]
+        self.test_packages = test_package_dict["test_packages"]
+        self.test_classes = test_package_dict["test_classes"]
+        self.test_cases = test_package_dict["test_cases"]

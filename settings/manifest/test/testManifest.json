@@ -1,27 +1,53 @@
 {
-  "android_app_package": "com.azimo.sendmoney",
-  "android_test_package": "instrumentation.azimoTestCases",
-  "test_package_list": [
+  "instrumentation_runner": "com.azimo.sendmoney.debug1.test/com.azimo.sendmoney.instrumentation.config.AzimoTestRunner",
+  "test_list": [
     {
-        "package_name": "AuthFlow",
-        "package_location": "bddTests.functional"
+      "test_package_name": "AuthFlow",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.AuthFlow"
+      ],
+      "test_classes": [],
+      "test_cases": []
     },
     {
-        "package_name": "CheckRates",
-        "package_location": "bddTests.functional"
+      "test_package_name": "CheckRates",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.CheckRates"
+      ],
+      "test_classes": [],
+      "test_cases": []
     }
   ],
   "test_set_list": [
     {
       "set_name": "default",
+      "apk_name_part": "",
+      "application_apk_assemble_task": "",
+      "test_apk_assemble_task": "",
+      "shard": false,
       "set_package_names": []
     },
     {
-        "set_name": "allBddFunctional",
-        "set_package_names": [
-          "AuthFlow",
-          "CheckRates"
-        ]
+      "set_name": "functionalTests",
+      "apk_name_part": "integrationTest",
+      "application_apk_assemble_task": "assembleAutomationIntegrationTest",
+      "test_apk_assemble_task": "assembleAutomationIntegrationTestAndroidTest",
+      "shard": false,
+      "set_package_names": [
+        "AuthFlow",
+        "CheckRates"
+      ]
+    },
+    {
+      "set_name": "allBddFunctional",
+      "apk_name_part": "integrationTest",
+      "application_apk_assemble_task": "assembleAutomationIntegrationTest",
+      "test_apk_assemble_task": "assembleAutomationIntegrationTestAndroidTest",
+      "shard": false,
+      "set_package_names": [
+        "AuthFlow",
+        "CheckRates"
+      ]
     }
   ]
 }
