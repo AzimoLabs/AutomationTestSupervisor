@@ -49,12 +49,14 @@ if output_dir_has_files:
 
 try:
     if Settings.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION:
-        if avd_set.avd_list:
-            if device_manager.is_any_avd_visible():
-                print_step(TAG, "Killing currently visible AVD.")
-                device_manager.kill_all_avd()
+        print_step(TAG, "Preparing device session - killing currently launched AVD.")
+        device_manager.add_models_representing_outside_session_virtual_devices()
+        if device_manager.is_any_avd_visible():
+            device_manager.kill_all_avd()
+        device_manager.clear_models_representing_outside_session_virtual_devices()
 
-            print_step(TAG, "Preparing AVD instances according to AVD set.")
+        if avd_set.avd_list:
+            print_step(TAG, "Preparing device session - creating models for devices specified in AVD set.")
             device_manager.add_models_based_on_avd_schema(avd_set, avd_schemas)
 
             if Settings.SHOULD_RECREATE_EXISTING_AVD:
@@ -71,8 +73,9 @@ try:
                 print_step(TAG, "Launching AVD - all at once.")
                 device_manager.launch_all_avd_at_once()
     else:
-        print_step(TAG, "Preparing Android Device instances.")
+        print_step(TAG, "Preparing device session - creating models for currently visible Android Devices and AVD.")
         device_manager.add_models_representing_outside_session_devices()
+        device_manager.add_models_representing_outside_session_virtual_devices()
 
     print_step(TAG, "Restarting ADB server.")
     if Settings.SHOULD_RESTART_ADB:
@@ -96,3 +99,6 @@ finally:
     if device_manager.is_any_avd_visible() and Settings.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION:
         print_step(TAG, "Killing AVD spawned for test session.")
         device_manager.kill_all_avd()
+        device_manager.clear_models_based_on_avd_schema()
+
+    print_step(TAG, "Launcher finished work!")

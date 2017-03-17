@@ -13,6 +13,7 @@ class DeviceStore:
         self.adb_controller = adb_controller
         self.android_controller = android_controller
         self.emulator_controller = emulator_controller
+        self.outside_session_virtual_devices = list()
         self.outside_session_devices = list()
         self.session_devices = list()
 
@@ -20,19 +21,27 @@ class DeviceStore:
         currently_visible_devices = self._get_visible_devices()
 
         for device_name, status in currently_visible_devices.items():
-            if "emulator" in device_name:
-                outside_session_device = OutsideSessionVirtualDevice(device_name, status, self.adb_controller)
-                print_message(TAG, "AVD model representing device with name '"
-                              + device_name + "' was added to test run.")
-            else:
+            if "emulator" not in device_name:
                 outside_session_device = OutsideSessionDevice(device_name, status, self.adb_controller)
                 print_message(TAG, "Android Device model representing device with name '"
                               + device_name + "' was added to test run.")
-            self.outside_session_devices.append(outside_session_device)
+                self.outside_session_devices.append(outside_session_device)
 
-        if not any(isinstance(device, OutsideSessionDevice) or isinstance(device, OutsideSessionVirtualDevice) for
-                   device in self.outside_session_devices):
-            print_message(TAG, "No Android Devices connected to PC or launched AVD were found.")
+        if not any(isinstance(device, OutsideSessionVirtualDevice) for device in self.outside_session_devices):
+            print_message(TAG, "No Android Devices connected to PC were found.")
+
+    def prepare_outside_session_virtual_devices(self):
+        currently_visible_devices = self._get_visible_devices()
+
+        for device_name, status in currently_visible_devices.items():
+            if "emulator" in device_name:
+                outside_session_virtual_device = OutsideSessionVirtualDevice(device_name, status, self.adb_controller)
+                print_message(TAG, "AVD model representing device with name '"
+                              + device_name + "' was added to test run.")
+                self.outside_session_virtual_devices.append(outside_session_virtual_device)
+
+        if not any(isinstance(device, OutsideSessionVirtualDevice) for device in self.outside_session_virtual_devices):
+            print_message(TAG, "No currently launched AVD were found.")
 
     def prepare_session_devices(self, avd_set, avd_schemas):
         avd_ports = get_open_ports(avd_set)
@@ -67,7 +76,7 @@ class DeviceStore:
         return currently_visible_devices
 
     def get_devices(self):
-        return self.session_devices + self.outside_session_devices
+        return self.session_devices + self.outside_session_devices + self.outside_session_virtual_devices
 
     def update_model_statuses(self):
         currently_visible_devices = self._get_visible_devices()
@@ -78,22 +87,27 @@ class DeviceStore:
         for outside_session_device in self.outside_session_devices:
             outside_session_device.status = "not-launched"
 
+        for outside_session_virtual_device in self.outside_session_virtual_devices:
+            outside_session_virtual_device.status = "not-launched"
+
         for device_name, status in currently_visible_devices.items():
             for session_device in self.session_devices:
-                if session_device == device_name:
+                if session_device.adb_name == device_name:
                     session_device.status = status
 
             for outside_session_device in self.outside_session_devices:
-                if outside_session_device == device_name:
+                if outside_session_device.adb_name == device_name:
                     outside_session_device.status = status
 
-    def clear_models_by_adb_devices(self):
-        currently_visible_devices = self._get_visible_devices()
+            for outside_session_virtual_device in self.outside_session_virtual_devices:
+                if outside_session_virtual_device.adb_name == device_name:
+                    outside_session_virtual_device.status = status
 
-        for session_device in self.session_devices:
-            if session_device.adb_name not in currently_visible_devices:
-                self.session_devices.remove(session_device)
+    def clear_outside_session_virtual_device_models(self):
+        self.outside_session_virtual_devices.clear()
 
-        for outside_session_device in self.outside_session_devices:
-            if outside_session_device.adb_name not in currently_visible_devices:
-                self.outside_session_devices.remove(outside_session_device)
+    def clear_outside_session_device_models(self):
+        self.outside_session_devices.clear()
+
+    def clear_session_avd_models(self):
+        self.session_devices.clear()

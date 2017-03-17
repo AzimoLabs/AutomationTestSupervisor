@@ -33,11 +33,10 @@ class AdbController:
         return execute_shell(self.adb_bin + " " + AdbCommand.WAIT_FOR_DEVICE, False, False)
 
     def kill_device(self, device_adb_name):
-        kill_device_cmd = "{} {} {} {} {}".format(self.adb_bin,
-                                                  AdbCommand.SPECIFIC_DEVICE,
-                                                  device_adb_name,
-                                                  AdbCommand.KILL_DEVICE,
-                                                  GeneralCommand.DELEGATE_OUTPUT_TO_NULL)
+        kill_device_cmd = "{} {} {} {}".format(self.adb_bin,
+                                               AdbCommand.SPECIFIC_DEVICE,
+                                               device_adb_name,
+                                               AdbCommand.KILL_DEVICE)
         return execute_shell(kill_device_cmd, True, False)
 
     def install_apk(self, device_adb_name, apk_name):

@@ -28,25 +28,13 @@
       "set_package_names": []
     },
     {
-      "set_name": "functionalTests",
-      "apk_name_part": "integrationTest",
-      "application_apk_assemble_task": "assembleAutomationIntegrationTest",
-      "test_apk_assemble_task": "assembleAutomationIntegrationTestAndroidTest",
-      "shard": false,
-      "set_package_names": [
-        "AuthFlow",
-        "CheckRates"
-      ]
-    },
-    {
       "set_name": "allBddFunctional",
       "apk_name_part": "integrationTest",
       "application_apk_assemble_task": "assembleAutomationIntegrationTest",
       "test_apk_assemble_task": "assembleAutomationIntegrationTestAndroidTest",
       "shard": false,
       "set_package_names": [
-        "AuthFlow",
-        "CheckRates"
+        "AuthFlow"
       ]
     }
   ]

@@ -97,11 +97,20 @@ def init_launch_plan():
 
     launch_plan = launch_manifest.get_plan(launch_plan_name)
 
+    Settings.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION = False
+
     Settings.SHOULD_RESTART_ADB = launch_plan.should_restart_adb
     if Settings.SHOULD_RESTART_ADB:
-        print_message(TAG, "Adb will be restarted before launching tests.")
+        print_message(TAG, "ADB will be restarted before launching tests.")
     else:
-        print_message(TAG, "Adb with current state will be used during run.")
+        print_message(TAG, "ADB with current state will be used during run.")
+
+    Settings.ADB_SCAN_INTERVAL = launch_plan.adb_scan_interval
+    if Settings.ADB_SCAN_INTERVAL is "":
+        print_error(TAG, "ADB_SCAN_INTERVAL not specified in LaunchManifest. Launcher will quit.")
+        quit()
+    else:
+        print_message(TAG, "ADB will be scanned with " + str(Settings.ADB_SCAN_INTERVAL) + " seconds interval.")
 
     Settings.SHOULD_BUILD_NEW_APK = launch_plan.should_build_new_apk
     if Settings.SHOULD_BUILD_NEW_APK:
@@ -110,15 +119,12 @@ def init_launch_plan():
         print_message(TAG, "Launcher will look for existing .*apk candidates for tests. If no usable candidates are "
                            "found, launcher will build new ones from scratch with commands specified in test set.")
 
-    Settings.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION = launch_plan.should_use_only_devices_spawned_in_session
-    if Settings.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION:
-        print_message(TAG, "Launcher will use only AVD specified in passed as parameter AVD set.")
-    else:
-        print_message(TAG, "Launcher will use all currently visible Android Devices and AVD.")
+    if load_avd_set() is not None and load_avd_set() != AVD_SET_DEFAULT:
+        Settings.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION = True
 
-    if load_avd_set() is not None:
         Settings.SHOULD_RECREATE_EXISTING_AVD = launch_plan.should_recreate_existing_avd
         if Settings.SHOULD_RECREATE_EXISTING_AVD:
+
             print_message(TAG, "If any of AVD which was requested to be used in this run already exists - "
                                "it will be deleted and created from scratch.")
         else:
@@ -136,28 +142,25 @@ def init_launch_plan():
                              " specific AVD will use.\nIf there is not enough memory in the system and you launch too"
                              " many AVD at the same time your PC might turn off due to lack of RAM memory.")
 
-        Settings.AVD_LAUNCH_SCAN_INTERVAL = launch_plan.avd_launch_scan_interval_millis
-        if Settings.AVD_LAUNCH_SCAN_INTERVAL is "":
-            print_error(TAG, "AVD_LAUNCH_SCAN_INTERVAL not specified in LaunchManifest. Launcher will quit.")
-            quit()
-        else:
-            print_message(TAG, "AVD status during launch will be scanned with " + str(Settings.AVD_LAUNCH_SCAN_INTERVAL)
-                          + " seconds interval.")
-
         Settings.AVD_ADB_BOOT_TIMEOUT = launch_plan.avd_adb_boot_timeout_millis
         if Settings.AVD_ADB_BOOT_TIMEOUT is "":
             print_error(TAG, "AVD_ADB_BOOT_TIMEOUT not specified in LaunchManifest. Launcher will quit.")
             quit()
         else:
-            print_message(TAG, "AVD - adb boot timeout set to " + str(Settings.AVD_ADB_BOOT_TIMEOUT) + " seconds.")
+            print_message(TAG, "AVD - ADB boot timeout set to " + str(Settings.AVD_ADB_BOOT_TIMEOUT) + " seconds.")
 
         Settings.AVD_SYSTEM_BOOT_TIMEOUT = launch_plan.avd_system_boot_timeout_millis
         if Settings.AVD_SYSTEM_BOOT_TIMEOUT is "":
             print_error(TAG, "AVD_SYSTEM_BOOT_TIMEOUT not specified in LaunchManifest. Launcher will quit.")
             quit()
         else:
-            print_message(TAG, "AVD - adb system boot timeout set to "
+            print_message(TAG, "AVD - ADB system boot timeout set to "
                           + str(Settings.AVD_SYSTEM_BOOT_TIMEOUT) + " seconds.")
+
+    if Settings.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION:
+        print_message(TAG, "Launcher will use only AVD specified in passed as parameter AVD set.")
+    else:
+        print_message(TAG, "Launcher will use all currently visible Android Devices and AVD.")
 
 
 def init_avd_settings():

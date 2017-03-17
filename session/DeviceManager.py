@@ -22,6 +22,21 @@ class DeviceManager:
     def add_models_representing_outside_session_devices(self):
         self.device_store.prepare_outside_session_devices()
 
+    def add_models_representing_outside_session_virtual_devices(self):
+        self.device_store.prepare_outside_session_virtual_devices()
+
+    def clear_models_based_on_avd_schema(self):
+        print_message(TAG, "Clearing all AVD models related to AVD set.")
+        self.device_store.clear_session_avd_models()
+
+    def clear_models_representing_outside_session_devices(self):
+        print_message(TAG, "Clearing all Android device models.")
+        self.device_store.prepare_outside_session_devices()
+
+    def clear_models_representing_outside_session_virtual_devices(self):
+        print_message(TAG, "Clearing all AVD models unrelated to AVD set.")
+        self.device_store.clear_outside_session_virtual_device_models()
+
     def create_all_avd_and_reuse_existing(self):
         created_avd_list = re.findall("Name: (.+)", self.android_controller.list_avd())
 
@@ -52,11 +67,11 @@ class DeviceManager:
                 else:
                     device.create()
 
-            if device.avd_schema.create_avd_hardware_config_filepath != "":
-                print_message(TAG, "'config.ini' file was specified in AVD schema of device '" + device.adb_name +
-                              " in location '" + device.avd_schema.create_avd_hardware_config_filepath +
-                              "'. Applying...")
-                device.apply_config_ini()
+                if device.avd_schema.create_avd_hardware_config_filepath != "":
+                    print_message(TAG, "'config.ini' file was specified in AVD schema of device '" + device.adb_name +
+                                  " in location '" + device.avd_schema.create_avd_hardware_config_filepath +
+                                  "'. Applying...")
+                    device.apply_config_ini()
 
     def launch_all_avd_sequentially(self):
         for device in self.device_store.get_devices():
@@ -81,7 +96,7 @@ class DeviceManager:
         while True:
             current_time = time.time() * 1000
 
-            if current_time - last_check_time >= Settings.AVD_LAUNCH_SCAN_INTERVAL or start_time == last_check_time:
+            if current_time - last_check_time >= Settings.ADB_SCAN_INTERVAL or start_time == last_check_time:
                 last_check_time = current_time
 
                 self.device_store.update_model_statuses()
@@ -97,7 +112,7 @@ class DeviceManager:
                             + " seconds to launch (ADB launch). Timeout quit.")
                 quit()
 
-        print_message(TAG, "ADB launch finished with success!")
+        print_message(TAG, "ADB wait finished with success!")
 
     def _wait_for_property_statuses(self, monitored_devices):
         print_message(TAG, "Waiting for 'dev.bootcomplete', 'sys.boot_completed', 'init.svc.bootanim', properties of"
@@ -111,7 +126,7 @@ class DeviceManager:
         while True:
             current_time = time.time() * 1000
 
-            if current_time - last_check_time >= Settings.AVD_LAUNCH_SCAN_INTERVAL or start_time == last_check_time:
+            if current_time - last_check_time >= Settings.ADB_SCAN_INTERVAL or start_time == last_check_time:
                 last_check_time = current_time
 
                 print_message(TAG, "Current wait status:")
@@ -158,13 +173,9 @@ class DeviceManager:
                 print_message_highlighted(TAG, "- " + device.adb_name + " ", "('" + device.status + "')")
                 if device.status != "not-launched":
                     device.kill()
+                    time.sleep(2)
 
         self._wait_for_adb_statuses_change_to("not-launched", avd_list)
-        self.device_store.update_model_statuses()
-        print_message(TAG, "AVD statuses in session after killing:")
-        for device in self.device_store.get_devices():
-            if isinstance(device, OutsideSessionVirtualDevice) or isinstance(device, SessionVirtualDevice):
-                print_message_highlighted(TAG, "- " + device.adb_name + " ", "('" + device.status + "')")
 
     def install_apk_on_devices(self, apk):
         if not self.device_store.get_devices():
