@@ -2,71 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fe754bc4-9da6-479c-8fe2-66b4852721c5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/android/apk/ApkModels.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/android/bin/AndroidBinaryFileControllers.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/android/bin/AndroidShellCommands.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/session/SessionDevices.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/session/SessionManagers.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/session/SessionThreads.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/settings/GlobalConfig.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/settings/manifest/avd/AvdManifestModels.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/settings/manifest/launch/LaunchManifestModels.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/settings/manifest/test/TestManifestModels.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/system/bin/SystemShellCommands.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/android/apk/ApkHelper.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/android/bin/AaptController.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/android/bin/AdbController.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/android/bin/AvdManagerController.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/android/bin/EmulatorController.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/android/bin/GradleController.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/android/bin/InstrumentationRunnerController.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/android/bin/command/AaptCommand.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/android/bin/command/AdbCommand.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/android/bin/command/AvdManagerCommand.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/android/bin/command/EmulatorCommand.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/android/bin/command/GradleCommand.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/android/bin/command/InstrumentationRunnerCommand.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/android/device/model/OutsideSessionDevice.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/android/device/model/OutsideSessionVirtualDevice.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/android/device/model/SessionVirtualDevice.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/console/Color.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/console/Printer.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/console/ShellHelper.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/android/device/DeviceStore.py" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/output/avd_logs/Test-Emulator-API23-Nexus-5-0.txt" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/output/avd_logs/Test-Emulator-API23-Nexus-5-1.txt" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/output/avd_logs/Test-Emulator-API23-Nexus-5-2.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/session/ApkManager.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/session/DeviceManager.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/session/TestManager.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/session/thread/ApkInstallThread.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/session/thread/TestThread.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/settings/Settings.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/settings/manifest/avd/model/AvdInSet.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/settings/manifest/avd/model/AvdManifest.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/settings/manifest/avd/model/AvdPortRules.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/settings/manifest/avd/model/AvdSchema.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/settings/manifest/avd/model/AvdSet.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/settings/manifest/launch/model/LaunchManifest.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/settings/manifest/launch/model/LaunchPlan.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/settings/manifest/path/model/Path.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/settings/manifest/path/model/PathSet.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/settings/manifest/test/model/TestManifest.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/settings/manifest/test/model/TestPackage.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/settings/manifest/test/model/TestSet.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/system/command/GeneralCommand.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/system/mapper/PathMapper.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/android/device/DeviceStore.py" afterPath="$PROJECT_DIR$/session/SessionDataStores.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/settings/manifest/path/model/PathManifest.py" afterPath="$PROJECT_DIR$/settings/manifest/path/PathManifestModels.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/system/manager/FileManager.py" afterPath="$PROJECT_DIR$/system/file/FileUtils.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/system/manager/OpenPortManager.py" afterPath="$PROJECT_DIR$/system/port/PortManager.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Launcher.py" afterPath="$PROJECT_DIR$/Launcher.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/android/apk/ApkProvider.py" afterPath="$PROJECT_DIR$/android/apk/ApkProvider.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/loader/ArgLoader.py" afterPath="$PROJECT_DIR$/settings/loader/ArgLoader.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/loader/JsonLoader.py" afterPath="$PROJECT_DIR$/settings/loader/JsonLoader.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/loader/SettingsLoader.py" afterPath="$PROJECT_DIR$/settings/loader/SettingsLoader.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/settings/manifest/path/model/PathManifest.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/system/manager/FileManager.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/system/manager/OpenPortManager.py" afterPath="" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -84,8 +26,8 @@
       <file leaf-file-name="Launcher.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Launcher.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="24" column="1" lean-forward="false" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
+            <state relative-caret-position="270">
+              <caret line="59" column="10" lean-forward="false" selection-start-line="59" selection-start-column="10" selection-end-line="59" selection-end-column="10" />
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
               </folding>
@@ -93,41 +35,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="JsonLoader.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/settings/loader/JsonLoader.py">
+      <file leaf-file-name="FileUtils.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/system/file/FileUtils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SystemShellCommands.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/system/bin/SystemShellCommands.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="23" lean-forward="false" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ArgLoader.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/settings/loader/ArgLoader.py">
+      <file leaf-file-name="GlobalConfig.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings/GlobalConfig.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="30" lean-forward="false" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SessionThreads.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/session/SessionThreads.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SessionManagers.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/session/SessionManagers.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="36" />
+            <state relative-caret-position="240">
+              <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -153,7 +87,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ApkProvider.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ApkProvider.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/android/apk/ApkProvider.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="661">
@@ -161,6 +95,16 @@
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ApkModels.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/android/apk/ApkModels.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="375">
+              <caret line="25" column="53" lean-forward="false" selection-start-line="25" selection-start-column="53" selection-end-line="25" selection-end-column="53" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -242,7 +186,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/android/bin/AdbController.py" />
         <option value="$PROJECT_DIR$/android/bin/AvdManagerController.py" />
         <option value="$PROJECT_DIR$/android/bin/EmulatorController.py" />
         <option value="$PROJECT_DIR$/android/bin/GradleController.py" />
@@ -293,6 +236,7 @@
         <option value="$PROJECT_DIR$/session/SessionDataStores.py" />
         <option value="$PROJECT_DIR$/Launcher.py" />
         <option value="$PROJECT_DIR$/android/apk/ApkProvider.py" />
+        <option value="$PROJECT_DIR$/system/manager/FileManager.py" />
       </list>
     </option>
   </component>
@@ -350,7 +294,65 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="settings" />
+              <option name="myItemId" value="system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="port" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AutomationTestSupervisor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AutomationTestSupervisor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="file" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AutomationTestSupervisor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AutomationTestSupervisor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="console" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AutomationTestSupervisor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AutomationTestSupervisor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bin" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -365,50 +367,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="settings" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="manifest" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="settings" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="manifest" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="settings" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="loader" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -789,22 +747,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/settings/manifest/avd/model/AvdInSet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings/manifest/avd/model/AvdPortRules.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/settings/manifest/avd/model/AvdSet.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -1010,7 +952,7 @@
         <state relative-caret-position="106">
           <caret line="12" column="23" lean-forward="false" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1019,14 +961,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
           <caret line="30" column="18" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/android/apk/ApkModels.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="53" lean-forward="false" selection-start-line="25" selection-start-column="53" selection-end-line="25" selection-end-column="53" />
           <folding />
         </state>
       </provider>
@@ -1063,22 +997,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/file/FileUtils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="14" column="8" lean-forward="true" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/system/console/ShellHelper.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="12" column="12" lean-forward="true" selection-start-line="11" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
           <folding>
-            <element signature="e#0#17#0" expanded="true" />
+            <element signature="e#0#17#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1088,7 +1012,7 @@
         <state relative-caret-position="60">
           <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#15#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1101,28 +1025,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/bin/SystemShellCommands.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="23" lean-forward="false" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings/GlobalConfig.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/settings/loader/SettingsLoader.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2250">
           <caret line="150" column="46" lean-forward="false" selection-start-line="150" selection-start-column="46" selection-end-line="150" selection-end-column="46" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#9#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1130,7 +1038,7 @@
     <entry file="file://$PROJECT_DIR$/settings/loader/JsonLoader.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
-          <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1167,13 +1075,63 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/session/SessionDataStores.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1289">
+          <caret line="6" column="36" lean-forward="false" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Launcher.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="1" lean-forward="false" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
+        <state relative-caret-position="270">
+          <caret line="59" column="10" lean-forward="false" selection-start-line="59" selection-start-column="10" selection-end-line="59" selection-end-column="10" />
           <folding>
             <element signature="e#0#33#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/manager/FileManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/file/FileUtils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/manager/OpenPortManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/bin/SystemShellCommands.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="23" lean-forward="false" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/GlobalConfig.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1195,14 +1153,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/session/SessionDataStores.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1289">
-          <caret line="6" column="36" lean-forward="false" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/android/apk/ApkProvider.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="661">
@@ -1210,6 +1160,14 @@
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/apk/ApkModels.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="53" lean-forward="false" selection-start-line="25" selection-start-column="53" selection-end-line="25" selection-end-column="53" />
+          <folding />
         </state>
       </provider>
     </entry>
