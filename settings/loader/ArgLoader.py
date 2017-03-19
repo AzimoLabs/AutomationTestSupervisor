@@ -1,5 +1,5 @@
 import argparse
-
+#TODO USE ONLY ONE LOAD METHOD
 TAG = "ArgLoader:"
 
 LAUNCH_PLAN_PREFIX = "-lplan"
@@ -22,78 +22,76 @@ TEST_MANIFEST_DIR_DEFAULT = "settings/manifest/test/testManifest.json"
 AVD_MANIFEST_DIR_DEFAULT = "settings/manifest/avd/avdManifest.json"
 PATH_MANIFEST_DIR_DEFAULT = "settings/manifest/path/pathManifest.json"
 
+parser = argparse.ArgumentParser()
+parser.add_argument(LAUNCH_PLAN_PREFIX,
+                    type=str,
+                    default=LAUNCH_PLAN_DEFAULT,
+                    help="Name of launch plan specified in LaunchManifest.json.")
 
-def parse():
-    parser = argparse.ArgumentParser()
-    parser.add_argument(LAUNCH_PLAN_PREFIX,
-                        type=str,
-                        default=LAUNCH_PLAN_DEFAULT,
-                        help="Name of launch plan specified in LaunchManifest.json.")
+parser.add_argument(TEST_SET_PREFIX,
+                    type=str,
+                    default=TEST_SET_DEFAULT,
+                    help="Name of test set specified in TestManifest.json.")
 
-    parser.add_argument(TEST_SET_PREFIX,
-                        type=str,
-                        default=TEST_SET_DEFAULT,
-                        help="Name of test set specified in TestManifest.json.")
+parser.add_argument(AVD_SET_PREFIX,
+                    type=str,
+                    default=AVD_SET_DEFAULT,
+                    help="Name of AVD set specified in AvdManifest.json.")
 
-    parser.add_argument(AVD_SET_PREFIX,
-                        type=str,
-                        default=AVD_SET_DEFAULT,
-                        help="Name of AVD set specified in AvdManifest.json.")
+parser.add_argument(PATH_SET_PREFIX,
+                    type=str,
+                    default=PATH_SET_DEFAULT,
+                    help="Name of path set set specified in PathManifest.json.")
 
-    parser.add_argument(PATH_SET_PREFIX,
-                        type=str,
-                        default=PATH_SET_DEFAULT,
-                        help="Name of path set set specified in PathManifest.json.")
+parser.add_argument(LAUNCH_MANIFEST_DIR_PREFIX,
+                    type=str,
+                    default=LAUNCH_MANIFEST_DIR_DEFAULT,
+                    help="Absolute path to LaunchManifest.json.")
 
-    parser.add_argument(LAUNCH_MANIFEST_DIR_PREFIX,
-                        type=str,
-                        default=LAUNCH_MANIFEST_DIR_DEFAULT,
-                        help="Absolute path to LaunchManifest.json.")
+parser.add_argument(TEST_MANIFEST_DIR_PREFIX,
+                    type=str,
+                    default=TEST_MANIFEST_DIR_DEFAULT,
+                    help="Absolute path to TestManifest.json.")
 
-    parser.add_argument(TEST_MANIFEST_DIR_PREFIX,
-                        type=str,
-                        default=TEST_MANIFEST_DIR_DEFAULT,
-                        help="Absolute path to TestManifest.json.")
+parser.add_argument(AVD_MANIFEST_DIR_PREFIX,
+                    type=str,
+                    default=AVD_MANIFEST_DIR_DEFAULT,
+                    help="Absolute path to AvdManifest.json.")
 
-    parser.add_argument(AVD_MANIFEST_DIR_PREFIX,
-                        type=str,
-                        default=AVD_MANIFEST_DIR_DEFAULT,
-                        help="Absolute path to AvdManifest.json.")
-
-    parser.add_argument(PATH_MANIFEST_DIR_PREFIX,
-                        type=str,
-                        default=PATH_MANIFEST_DIR_DEFAULT,
-                        help="Absolute path to PathManifest.json.")
-    return parser.parse_args()
+parser.add_argument(PATH_MANIFEST_DIR_PREFIX,
+                    type=str,
+                    default=PATH_MANIFEST_DIR_DEFAULT,
+                    help="Absolute path to PathManifest.json.")
+parser_args = parser.parse_args()
 
 
 def load_launch_plan():
-    return parse().lplan
+    return parser_args.lplan
 
 
 def load_test_set():
-    return parse().tset
+    return parser_args.tset
 
 
 def load_avd_set():
-    return parse().aset
+    return parser_args.aset
 
 
 def load_path_set():
-    return parse().pset
+    return parser_args.pset
 
 
 def load_launch_manifest_dir():
-    return parse().ldir
+    return parser_args.ldir
 
 
 def load_test_manifest_dir():
-    return parse().tdir
+    return parser_args.tdir
 
 
 def load_avd_manifest_dir():
-    return parse().adir
+    return parser_args.adir
 
 
 def load_path_manifest_dir():
-    return parse().pdir
+    return parser_args.pdir

@@ -1,12 +1,61 @@
-emulator: Android virtual device file at: /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.ini
+emulator:Android emulator version 25.3.0.0 (build_id 3394391)
+emulator:Found AVD name 'Test-Emulator-API23-Nexus-5-1'
+emulator:Found AVD target architecture: x86_64
+emulator:Deleting file /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/system.img.qcow2 failed
+emulator:Deleting file /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/userdata-qemu.img failed
+emulator:Deleting file /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/userdata-qemu.img.qcow2 failed
+emulator:Deleting file /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/userdata.img done
+emulator:Deleting file /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/userdata.img.qcow2 failed
+emulator:Deleting file /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/cache.img failed
+emulator:Deleting file /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/cache.img.qcow2 failed
+emulator:Deleting file /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/version_num.cache failed
+emulator:Deleting file /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/sdcard.img.qcow2 failed
+emulator:Deleting file /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/encryptionkey.img failed
+emulator:Deleting file /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/encryptionkey.img.qcow2 failed
+emulator:Deleting file /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/hardware-qemu.ini failed
+emulator:Deleting file /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/emulator-user.ini failed
+emulator:  Found directory: /Users/F1sherKK/Library/Android/sdk/system-images/android-23/google_apis/x86_64/
+
+emulator:Copying /Users/F1sherKK/Library/Android/sdk/system-images/android-23/google_apis/x86_64/userdata.img to /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/userdata.img done
+emulator:argv[0]: '/Users/F1sherKK/Library/Android/sdk/tools/emulator'; program directory: '/Users/F1sherKK/Library/Android/sdk/tools'
+emulator:  Found directory: /Users/F1sherKK/Library/Android/sdk/system-images/android-23/google_apis/x86_64/
+
+emulator:Probing for /Users/F1sherKK/Library/Android/sdk/system-images/android-23/google_apis/x86_64//kernel-ranchu: file exists
+emulator:Auto-config: -engine qemu2 (based on configuration)
+emulator:  Found directory: /Users/F1sherKK/Library/Android/sdk/system-images/android-23/google_apis/x86_64/
+
+emulator:try dir /Users/F1sherKK/Library/Android/sdk/tools
+emulator:try dir /Users/F1sherKK/Library/Android/sdk/tools/
+emulator:try dir /Users/F1sherKK/Library/Android/sdk/emulator
+emulator:Found target-specific 64-bit emulator binary: /Users/F1sherKK/Library/Android/sdk/emulator/qemu/darwin-x86_64/qemu-system-x86_64
+emulator:Adding library search path: '/Users/F1sherKK/Library/Android/sdk/emulator/lib64'
+emulator:  Found directory: /Users/F1sherKK/Library/Android/sdk/system-images/android-23/google_apis/x86_64/
+
+emulator:  Found directory: /Users/F1sherKK/Library/Android/sdk/system-images/android-23/google_apis/x86_64/
+
+emulator:GPU emulation enabled using 'host' mode
+emulator: Adding library search path for Qt: '/Users/F1sherKK/Library/Android/sdk/emulator/lib64/qt/lib'
+emulator: Setting Qt plugin search path: QT_QPA_PLATFORM_PLUGIN_PATH=/Users/F1sherKK/Library/Android/sdk/emulator/lib64/qt/plugins
+emulator: Running :/Users/F1sherKK/Library/Android/sdk/emulator/qemu/darwin-x86_64/qemu-system-x86_64
+emulator: qemu backend: argv[00] = "/Users/F1sherKK/Library/Android/sdk/emulator/qemu/darwin-x86_64/qemu-system-x86_64"
+emulator: qemu backend: argv[01] = "-avd"
+emulator: qemu backend: argv[02] = "Test-Emulator-API23-Nexus-5-1"
+emulator: qemu backend: argv[03] = "-port"
+emulator: qemu backend: argv[04] = "5558"
+emulator: qemu backend: argv[05] = "-wipe-data"
+emulator: qemu backend: argv[06] = "-initdata"
+emulator: qemu backend: argv[07] = "/Users/F1sherKK/Android/AVD_Snapshots/Nexus_5X_API_23/Nexus_5X_API_23_SNAPSHOT.img"
+emulator: qemu backend: argv[08] = "-gpu"
+emulator: qemu backend: argv[09] = "on"
+emulator: qemu bacemulator: Android virtual device file at: /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.ini
 emulator: virtual device content at /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd
 emulator: virtual device config file: /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/config.ini
 emulator: using core hw config path: /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/hardware-qemu.ini
 emulator: Found AVD target API level: 23
 emulator: Read property file at /Users/F1sherKK/Library/Android/sdk/system-images/android-23/google_apis/x86_64//build.prop
 emulator: No boot.prop property file found.
-emulator: found skin 'nexus_5' in directory: /Users/F1sherKK/Library/Android/sdk/skins/
-emulator: autoconfig: -skin nexus_5
+emulator: found skin 'nexus_5x' in directory: /Users/F1sherKK/Library/Android/sdk/skins/
+emulator: autoconfig: -skin nexus_5x
 emulator: autoconfig: -skindir /Users/F1sherKK/Library/Android/sdk/skins/
 emulator: autoconfig: -kernel /Users/F1sherKK/Library/Android/sdk/system-images/android-23/google_apis/x86_64//kernel-ranchu
 emulator: Target arch = 'x86_64'
@@ -15,16 +64,26 @@ emulator: Auto-detect: Kernel does not support YAFFS2 partitions.
 emulator: autoconfig: -ramdisk /Users/F1sherKK/Library/Android/sdk/system-images/android-23/google_apis/x86_64//ramdisk.img
 emulator: Using initial system image: /Users/F1sherKK/Library/Android/sdk/system-images/android-23/google_apis/x86_64//system.img
 emulator: autoconfig: -cache /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/cache.img
-emulator: Physical RAM size: 1024MB
+emulator: Physical RAM size: 1536MB
 
-emulator: VM heap size 64MB is below hardware specified minimum of 256MB,setting it to that value
+emulator: VM heap size 256MB is below hardware specified minimum of 384MB,setting it to that value
 emulator: System image is read only
 emulator: GPU emulation enabled using 'host' mode
-emulator: Found 4 DNS servers: 8.8.8.8 8.8.4.4 93.159.154.154 83.142.184.4
-emulator: trying to load skin file '/Users/F1sherKK/Library/Android/sdk/skins//nexus_5/layout'
+emulator: Found 2 DNS servers: 192.168.1.1 192.168.1.1
+emulator: trying to load skin file '/Users/F1sherKK/Library/Android/sdk/skins//nexus_5x/layout'
 emulator: Requested console port 5558: Inferring adb port 5559.
-emulator: Creating: /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/userdata-qemu.img
-
+Creating filesystem with parameters:
+    Size: 2147483648
+    Block size: 4096
+    Blocks per group: 32768
+    Inodes per group: 8192
+    Inode size: 256
+    Journal blocks: 8192
+    Label: 
+    Blocks: 524288
+    Block groups: 16
+    Reserved block group size: 127
+Created filesystem with 42/131072 inodes and 18824/524288 blocks
 emulator: Creating empty ext4 cache partition: /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/cache.img
 Creating filesystem with parameters:
     Size: 69206016
@@ -39,13 +98,13 @@ Creating filesystem with parameters:
     Reserved block group size: 7
 Created filesystem with 11/4224 inodes and 1302/16896 blocks
 emulator: CPU Acceleration: working
-emulator: CPU Acceleration status: HAXM version 6.1.0 (4) is installed and usable.
+emulator: CPU Acceleration status: HAXM version 6.1.1 (4) is installed and usable.
 emulator: Using default value for kernel Contiguous Memory Allocation.
-emulator: Found 4 DNS servers: 8.8.8.8 8.8.4.4 93.159.154.154 83.142.184.4
+emulator: Found 2 DNS servers: 192.168.1.1 192.168.1.1
 Content of hardware configuration file:
   hw.cpu.arch = x86_64
   hw.cpu.ncore = 4
-  hw.ramSize = 1024
+  hw.ramSize = 1536
   hw.screen = multi-touch
   hw.mainKeys = false
   hw.trackBall = false
@@ -66,7 +125,7 @@ Content of hardware configuration file:
   hw.lcd.width = 1080
   hw.lcd.height = 1920
   hw.lcd.depth = 16
-  hw.lcd.density = 480
+  hw.lcd.density = 420
   hw.lcd.backlight = true
   hw.gpu.enabled = true
   hw.gpu.mode = host
@@ -74,7 +133,7 @@ Content of hardware configuration file:
   hw.initialOrientation = Portrait
   hw.camera.back = emulated
   hw.camera.front = emulated
-  vm.heapSize = 256
+  vm.heapSize = 384
   hw.sensors.light = true
   hw.sensors.pressure = true
   hw.sensors.humidity = true
@@ -92,64 +151,80 @@ Content of hardware configuration file:
   disk.dataPartition.path = /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/userdata-qemu.img
   disk.dataPartition.initPath = /Users/F1sherKK/Android/AVD_Snapshots/Nexus_5X_API_23/Nexus_5X_API_23_SNAPSHOT.img
   disk.dataPartition.size = 2g
+  disk.encryptionKeyPartition.path = /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/encryptionkey.img
   avd.name = Test-Emulator-API23-Nexus-5-1
 .
 QEMU options list:
-emulator: argv[00] = "/Users/F1sherKK/Library/Android/sdk/tools/qemu/darwin-x86_64/qemu-system-x86_64"
+emulator: argv[00] = "/Users/F1sherKK/Library/Android/sdk/emulator/qemu/darwin-x86_64/qemu-system-x86_64"
 emulator: argv[01] = "-dns-server"
-emulator: argv[02] = "8.8.8.8,8.8.4.4,93.159.154.154,83.142.184.4"
+emulator: argv[02] = "192.168.1.1,192.168.1.1"
 emulator: argv[03] = "-serial"
 emulator: argv[04] = "stdio"
 emulator: argv[05] = "-android-ports"
 emulator: argv[06] = "5558,5559"
-emulator: argv[07] = "-enable-hax"
-emulator: argv[08] = "-smp"
-emulator: argv[09] = "cores=4398046511108"
-emulator: argv[10] = "-m"
-emulator: argv[11] = "1024"
-emulator: argv[12] = "-append"
-emulator: argv[13] = "qemu=1 androidboot.hardware=ranchu clocksource=pit console=ttyS0,38400 android.qemud=1 android.checkjni=1 qemu.gles=1 ndns=4"
+emulator: argv[07] = "-cpu"
+emulator: argv[08] = "android64"
+emulator: argv[09] = "-enable-hax"
+emulator: argv[10] = "-smp"
+emulator: argv[11] = "cores=4"
+emulator: argv[12] = "-m"
+emulator: argv[13] = "1536"
 emulator: argv[14] = "-lcd-density"
-emulator: argv[15] = "480"
+emulator: argv[15] = "420"
 emulator: argv[16] = "-kernel"
 emulator: argv[17] = "/Users/F1sherKK/Library/Android/sdk/system-images/android-23/google_apis/x86_64//kernel-ranchu"
 emulator: argv[18] = "-initrd"
 emulator: argv[19] = "/Users/F1sherKK/Library/Android/sdk/system-images/android-23/google_apis/x86_64//ramdisk.img"
-emulator: argv[20] = "-drive"
-emulator: argv[21] = "if=none,index=0,id=system,file=/Users/F1sherKK/Library/Android/sdk/system-images/android-23/google_apis/x86_64//system.img,read-only"
-emulator: argv[22] = "-device"
-emulator: argv[23] = "virtio-blk-pci,drive=system"
-emulator: argv[24] = "-drive"
-emulator: argv[25] = "if=none,index=1,id=cache,file=/Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/cache.img"
-emulator: argv[26] = "-device"
-emulator: argv[27] = "virtio-blk-pci,drive=cache"
-emulator: argv[28] = "-drive"
-emulator: argv[29] = "if=none,index=2,id=userdata,file=/Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/userdata-qemu.img"
-emulator: argv[30] = "-device"
-emulator: argv[31] = "virtio-blk-pci,drive=userdata"
-emulator: argv[32] = "-netdev"
-emulator: argv[33] = "user,id=mynet"
-emulator: argv[34] = "-device"
-emulator: argv[35] = "virtio-net-pci,netdev=mynet"
-emulator: argv[36] = "-show-cursor"
-emulator: argv[37] = "-L"
-emulator: argv[38] = "/Users/F1sherKK/Library/Android/sdk/tools/lib/pc-bios"
-emulator: argv[39] = "-vga"
-emulator: argv[40] = "none"
-emulator: argv[41] = "-android-hw"
-emulator: argv[42] = "/Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/hardware-qemu.ini"
+emulator: argv[20] = "-object"
+emulator: argv[21] = "iothread,id=disk-iothread"
+emulator: argv[22] = "-drive"
+emulator: argv[23] = "if=none,overlap-check=none,cache=unsafe,index=0,id=system,file=/Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/system.img.qcow2,read-only"
+emulator: argv[24] = "-device"
+emulator: argv[25] = "virtio-blk-pci,drive=system,iothread=disk-iothread,modern-pio-notify"
+emulator: argv[26] = "-drive"
+emulator: argv[27] = "if=none,overlap-check=none,cache=unsafe,index=1,id=cache,file=/Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/cache.img.qcow2,l2-cache-size=1048576"
+emulator: argv[28] = "-device"
+emulator: argv[29] = "virtio-blk-pci,drive=cache,iothread=disk-iothread,modern-pio-notify"
+emulator: argv[30] = "-drive"
+emulator: argv[31] = "if=none,overlap-check=none,cache=unsafe,index=2,id=userdata,file=/Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/userdata-qemu.img.qcow2,l2-cache-size=1048576"
+emulator: argv[32] = "-device"
+emulator: argv[33] = "virtio-blk-pci,drive=userdata,iothread=disk-iothread,modern-pio-notify"
+emulator: argv[34] = "-drive"
+emulator: argv[35] = "if=none,overlap-check=none,cache=unsafe,index=3,id=encrypt,file=/Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/encryptionkey.img.qcow2,l2-cache-size=1048576"
+emulator: argv[36] = "-device"
+emulator: argv[37] = "virtio-blk-pci,drive=encrypt,iothread=disk-iothread,modern-pio-notify"
+emulator: argv[38] = "-netdev"
+emulator: argv[39] = "user,id=mynet"
+emulator: argv[40] = "-device"
+emulator: argv[41] = "virtio-net-pci,netdev=mynet"
+emulator: argv[42] = "-netdev"
+emulator: argv[43] = "user,id=mynet2,net=10.0.3.0/24"
+emulator: argv[44] = "-device"
+emulator: argv[45] = "virtio-net-pci,netdev=mynet2"
+emulator: argv[46] = "-show-cursor"
+emulator: argv[47] = "-L"
+emulator: argv[48] = "/Users/F1sherKK/Library/Android/sdk/emulator/lib/pc-bios"
+emulator: argv[49] = "-soundhw"
+emulator: argv[50] = "hda"
+emulator: argv[51] = "-vga"
+emulator: argv[52] = "none"
+emulator: argv[53] = "-append"
+emulator: argv[54] = "qemu=1 androidboot.hardware=ranchu clocksource=pit console=ttyS0,38400 android.qemud=1 android.checkjni=1 qemu.gles=1 qemu.encrypt=1 ndns=2"
+emulator: argv[55] = "-android-hw"
+emulator: argv[56] = "/Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/hardware-qemu.ini"
 Concatenated QEMU options:
- /Users/F1sherKK/Library/Android/sdk/tools/qemu/darwin-x86_64/qemu-system-x86_64 -dns-server 8.8.8.8,8.8.4.4,93.159.154.154,83.142.184.4 -serial stdio -android-ports 5558,5559 -enable-hax -smp cores=4398046511108 -m 1024 -append 'qemu=1 androidboot.hardware=ranchu clocksource=pit console=ttyS0,38400 android.qemud=1 android.checkjni=1 qemu.gles=1 ndns=4' -lcd-density 480 -kernel /Users/F1sherKK/Library/Android/sdk/system-images/android-23/google_apis/x86_64//kernel-ranchu -initrd /Users/F1sherKK/Library/Android/sdk/system-images/android-23/google_apis/x86_64//ramdisk.img -drive if=none,index=0,id=system,file=/Users/F1sherKK/Library/Android/sdk/system-images/android-23/google_apis/x86_64//system.img,read-only -device virtio-blk-pci,drive=system -drive if=none,index=1,id=cache,file=/Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/cache.img -device virtio-blk-pci,drive=cache -drive if=none,index=2,id=userdata,file=/Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/userdata-qemu.img -device virtio-blk-pci,drive=userdata -netdev user,id=mynet -device virtio-net-pci,netdev=mynet -show-cursor -L /Users/F1sherKK/Library/Android/sdk/tools/lib/pc-bios -vga none -android-hw /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/hardware-qemu.ini
+ /Users/F1sherKK/Library/Android/sdk/emulator/qemu/darwin-x86_64/qemu-system-x86_64 -dns-server 192.168.1.1,192.168.1.1 -serial stdio -android-ports 5558,5559 -cpu android64 -enable-hax -smp cores=4 -m 1536 -lcd-density 420 -kernel /Users/F1sherKK/Library/Android/sdk/system-images/android-23/google_apis/x86_64//kernel-ranchu -initrd /Users/F1sherKK/Library/Android/sdk/system-images/android-23/google_apis/x86_64//ramdisk.img -object iothread,id=disk-iothread -drive if=none,overlap-check=none,cache=unsafe,index=0,id=system,file=/Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/system.img.qcow2,read-only -device virtio-blk-pci,drive=system,iothread=disk-iothread,modern-pio-notify -drive if=none,overlap-check=none,cache=unsafe,index=1,id=cache,file=/Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/cache.img.qcow2,l2-cache-size=1048576 -device virtio-blk-pci,drive=cache,iothread=disk-iothread,modern-pio-notify -drive if=none,overlap-check=none,cache=unsafe,index=2,id=userdata,file=/Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/userdata-qemu.img.qcow2,l2-cache-size=1048576 -device virtio-blk-pci,drive=userdata,iothread=disk-iothread,modern-pio-notify -drive if=none,overlap-check=none,cache=unsafe,index=3,id=encrypt,file=/Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/encryptionkey.img.qcow2,l2-cache-size=1048576 -device virtio-blk-pci,drive=encrypt,iothread=disk-iothread,modern-pio-notify -netdev user,id=mynet -device virtio-net-pci,netdev=mynet -netdev user,id=mynet2,net=10.0.3.0/24 -device virtio-net-pci,netdev=mynet2 -show-cursor -L /Users/F1sherKK/Library/Android/sdk/emulator/lib/pc-bios -soundhw hda -vga none -append 'qemu=1 androidboot.hardware=ranchu clocksource=pit console=ttyS0,38400 android.qemud=1 android.checkjni=1 qemu.gles=1 qemu.encrypt=1 ndns=2' -android-hw /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/hardware-qemu.ini
 emulator: Starting QEMU main loop
+Hax is enabled
+Hax ram_size 0x60000000
 emulator: registered 'boot-properties' qemud service
 emulator: Adding boot property: 'qemu.sf.fake_camera' = 'both'
 emulator: Initializing hardware OpenGLES emulation support
 emulator: Adding boot property: 'ro.opengles.version' = '131072'
-emulator: Adding boot property: 'dalvik.vm.heapsize' = '256m'
+emulator: Adding boot property: 'dalvik.vm.heapsize' = '384m'
 emulator: Adding boot property: 'qemu.hw.mainkeys' = '0'
-emulator: Adding boot property: 'qemu.sf.lcd_density' = '480'
-Hax is enabled
-Hax ram_size 0x40000000
+emulator: Adding boot property: 'qemu.adb.secure' = '1'
+emulator: Adding boot property: 'qemu.sf.lcd_density' = '420'
 HAX is working and emulator runs in fast virt mode.
 emulator: goldfish_events.have-dpad: false
 emulator: goldfish_events.have-trackball: false
@@ -158,62 +233,42 @@ emulator: goldfish_events.have-keyboard: true
 emulator: goldfish_events.have-lidswitch: false
 emulator: goldfish_events.have-touch: false
 emulator: goldfish_events.have-multitouch: true
-emulator: qemu_add_globals() finished
-emulator: qdev_machine_init() finished
-emulator: entering android_initialize_console_and_adb
-emulator: entering perform_console_and_adb_init
-emulator: entering qemu2_adb_server_init, port 5559
-emulator: ADB server has been initialized for port 5559. Socket: ipv4=7 ipv6=35
-
-emulator: entering adb_server_notify
-emulator: Listening for console connections on port: 5558
-emulator: Serial number of this emulator (for ADB): emulator-5558
-emulator: machine class initialized
-emulator: realtime_init() finished
-emulator: audio_init() finished
-emulator: cpu post-init synchronization finished
-emulator: hax_sync_vcpus() finished
-emulator: usb device parsing finished
-emulator: generic devices initialized
-emulator: drive_check_orphaned() finished
-emulator: net_check_clients() finished
-emulator: (qemu_android_emulation_setup) entering
+Not using any http proxy
 emulator: android_hw_fingerprint_init: fingerprint qemud listen service initialized
 
 [    0.000000] Initializing cgroup subsys cpu
 [    0.000000] Initializing cgroup subsys cpuacct
-[    0.000000] Linux version 3.10.0+ (lfy@lfy0.mtv.corp.google.com) (gcc version 4.9 20140827 (prerelease) (GCC) ) #1 SMP PREEMPT Thu Sep 15 10:40:44 PDT 2016
-[    0.000000] Command line: qemu=1 androidboot.hardware=ranchu clocksource=pit console=ttyS0,38400 android.qemud=1 android.checkjni=1 qemu.gles=1 ndns=4 ndns=4
+[    0.000000] Linux version 3.10.0+ (lfy@lfy0.mtv.corp.google.com) (gcc version 4.9 20140827 (prerelease) (GCC) ) #1 SMP PREEMPT Wed Jan 4 17:19:26 PST 2017
+[    0.000000] Command line: qemu=1 androidboot.hardware=ranchu clocksource=pit console=ttyS0,38400 android.qemud=1 android.checkjni=1 qemu.gles=1 qemu.encrypt=1 ndns=2 ndns=2
 [    0.000000] Disabled fast string operations
 [    0.000000] e820: BIOS-provided physical RAM map:
 [    0.000000] BIOS-e820: [mem 0x0000000000000000-0x000000000009fbff] usable
 [    0.000000] BIOS-e820: [mem 0x000000000009fc00-0x000000000009ffff] reserved
 [    0.000000] BIOS-e820: [mem 0x00000000000f0000-0x00000000000fffff] reserved
-[    0.000000] BIOS-e820: [mem 0x0000000000100000-0x000000003ffdffff] usable
-[    0.000000] BIOS-e820: [mem 0x000000003ffe0000-0x000000003fffffff] reserved
+[    0.000000] BIOS-e820: [mem 0x0000000000100000-0x000000005ffdffff] usable
+[    0.000000] BIOS-e820: [mem 0x000000005ffe0000-0x000000005fffffff] reserved
 [    0.000000] BIOS-e820: [mem 0x00000000fffc0000-0x00000000ffffffff] reserved
 [    0.000000] Notice: NX (Execute Disable) protection missing in CPU!
 [    0.000000] SMBIOS 2.8 present.
 [    0.000000] No AGP bridge found
-[    0.000000] e820: last_pfn = 0x3ffe0 max_arch_pfn = 0x400000000
+[    0.000000] e820: last_pfn = 0x5ffe0 max_arch_pfn = 0x400000000
 [    0.000000] PAT not supported by CPU.
 [    0.000000] CPU MTRRs all blank - virtualized system.
-[    0.000000] found SMP MP-table at [mem 0x000f0e70-0x000f0e7f] mapped at [ffff8800000f0e70]
+[    0.000000] found SMP MP-table at [mem 0x000f0e50-0x000f0e5f] mapped at [ffff8800000f0e50]
 [    0.000000] init_memory_mapping: [mem 0x00000000-0x000fffff]
-[    0.000000] init_memory_mapping: [mem 0x3fc00000-0x3fdfffff]
-[    0.000000] init_memory_mapping: [mem 0x3c000000-0x3fbfffff]
-[    0.000000] init_memory_mapping: [mem 0x00100000-0x3bffffff]
-[    0.000000] init_memory_mapping: [mem 0x3fe00000-0x3ffdffff]
-[    0.000000] cma: CMA: reserved 16 MiB at 3ec00000
-[    0.000000] RAMDISK: [mem 0x3fe97000-0x3ffdffff]
-[    0.000000] ACPI: RSDP 00000000000f0c70 00014 (v00 BOCHS )
-[    0.000000] ACPI: RSDT 000000003ffe1b85 00034 (v01 BOCHS  BXPCRSDT 00000001 BXPC 00000001)
-[    0.000000] ACPI: FACP 000000003ffe1033 00074 (v01 BOCHS  BXPCFACP 00000001 BXPC 00000001)
-[    0.000000] ACPI: DSDT 000000003ffe0040 00FF3 (v01 BOCHS  BXPCDSDT 00000001 BXPC 00000001)
-[    0.000000] ACPI: FACS 000000003ffe0000 00040
-[    0.000000] ACPI: SSDT 000000003ffe10a7 00A16 (v01 BOCHS  BXPCSSDT 00000001 BXPC 00000001)
-[    0.000000] ACPI: APIC 000000003ffe1abd 00090 (v01 BOCHS  BXPCAPIC 00000001 BXPC 00000001)
-[    0.000000] ACPI: HPET 000000003ffe1b4d 00038 (v01 BOCHS  BXPCHPET 00000001 BXPC 00000001)
+[    0.000000] init_memory_mapping: [mem 0x5fc00000-0x5fdfffff]
+[    0.000000] init_memory_mapping: [mem 0x5c000000-0x5fbfffff]
+[    0.000000] init_memory_mapping: [mem 0x00100000-0x5bffffff]
+[    0.000000] init_memory_mapping: [mem 0x5fe00000-0x5ffdffff]
+[    0.000000] cma: CMA: reserved 16 MiB at 5ec00000
+[    0.000000] RAMDISK: [mem 0x5fe97000-0x5ffdffff]
+[    0.000000] ACPI: RSDP 00000000000f0c50 00014 (v00 BOCHS )
+[    0.000000] ACPI: RSDT 000000005ffe1d01 00030 (v01 BOCHS  BXPCRSDT 00000001 BXPC 00000001)
+[    0.000000] ACPI: FACP 000000005ffe1bc5 00074 (v01 BOCHS  BXPCFACP 00000001 BXPC 00000001)
+[    0.000000] ACPI: DSDT 000000005ffe0040 01B85 (v01 BOCHS  BXPCDSDT 00000001 BXPC 00000001)
+[    0.000000] ACPI: FACS 000000005ffe0000 00040
+[    0.000000] ACPI: APIC 000000005ffe1c39 00090 (v01 BOCHS  BXPCAPIC 00000001 BXPC 00000001)
+[    0.000000] ACPI: HPET 000000005ffe1cc9 00038 (v01 BOCHS  BXPCHPET 00000001 BXPC 00000001)
 [    0.000000] Zone ranges:
 [    0.000000]   DMA      [mem 0x00001000-0x00ffffff]
 [    0.000000]   DMA32    [mem 0x01000000-0xffffffff]
@@ -221,7 +276,7 @@ emulator: android_hw_fingerprint_init: fingerprint qemud listen service initiali
 [    0.000000] Movable zone start for each node
 [    0.000000] Early memory node ranges
 [    0.000000]   node   0: [mem 0x00001000-0x0009efff]
-[    0.000000]   node   0: [mem 0x00100000-0x3ffdffff]
+[    0.000000]   node   0: [mem 0x00100000-0x5ffdffff]
 [    0.000000] ACPI: PM-Timer IO Port: 0x608
 [    0.000000] ACPI: LAPIC (acpi_id[0x00] lapic_id[0x00] enabled)
 [    0.000000] ACPI: LAPIC (acpi_id[0x01] lapic_id[0x01] enabled)
@@ -238,17 +293,17 @@ emulator: android_hw_fingerprint_init: fingerprint qemud listen service initiali
 [    0.000000] Using ACPI (MADT) for SMP configuration information
 [    0.000000] ACPI: HPET id: 0x8086a201 base: 0xfed00000
 [    0.000000] smpboot: Allowing 4 CPUs, 0 hotplug CPUs
-[    0.000000] e820: [mem 0x40000000-0xfffbffff] available for PCI devices
+[    0.000000] e820: [mem 0x60000000-0xfffbffff] available for PCI devices
 [    0.000000] setup_percpu: NR_CPUS:8 nr_cpumask_bits:8 nr_cpu_ids:4 nr_node_ids:1
-[    0.000000] PERCPU: Embedded 25 pages/cpu @ffff88003fc00000 s79488 r0 d22912 u524288
-[    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 257896
-[    0.000000] Kernel command line: qemu=1 androidboot.hardware=ranchu clocksource=pit console=ttyS0,38400 android.qemud=1 android.checkjni=1 qemu.gles=1 ndns=4 ndns=4
+[    0.000000] PERCPU: Embedded 25 pages/cpu @ffff88005fc00000 s79488 r0 d22912 u524288
+[    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 386920
+[    0.000000] Kernel command line: qemu=1 androidboot.hardware=ranchu clocksource=pit console=ttyS0,38400 android.qemud=1 android.checkjni=1 qemu.gles=1 qemu.encrypt=1 ndns=2 ndns=2
 [    0.000000] PID hash table entries: 4096 (order: 3, 32768 bytes)
-[    0.000000] Dentry cache hash table entries: 131072 (order: 8, 1048576 bytes)
-[    0.000000] Inode-cache hash table entries: 65536 (order: 7, 524288 bytes)
+[    0.000000] Dentry cache hash table entries: 262144 (order: 9, 2097152 bytes)
+[    0.000000] Inode-cache hash table entries: 131072 (order: 8, 1048576 bytes)
 [    0.000000] Checking aperture...
 [    0.000000] No AGP bridge found
-[    0.000000] Memory: 999180k/1048448k available (6010k kernel code, 392k absent, 48876k reserved, 4956k data, 924k init)
+[    0.000000] Memory: 1513716k/1572736k available (6013k kernel code, 392k absent, 58628k reserved, 4953k data, 924k init)
 [    0.000000] SLUB: HWalign=32, Order=0-3, MinObjects=0, CPUs=4, Nodes=1
 [    0.000000] Preemptible hierarchical RCU implementation.
 [    0.000000] 	CONFIG_RCU_FANOUT set to non-default value of 32
@@ -259,324 +314,482 @@ emulator: android_hw_fingerprint_init: fingerprint qemud listen service initiali
 [    0.000000] tsc: Fast TSC calibration failed
 [    0.000000] tsc: Unable to calibrate against PIT
 [    0.000000] tsc: using HPET reference calibration
-[    0.000000] tsc: Detected 2194.903 MHz processor
-[    0.040005] Calibrating delay loop (skipped), value calculated using timer frequency.. 4389.80 BogoMIPS (lpj=21949030)
-[    0.043889] pid_max: default: 32768 minimum: 301
-[    0.050063] Security Framework initialized
-[    0.051664] SELinux:  Initializing.
-[    0.052954] Mount-cache hash table entries: 256
-[    0.054835] Initializing cgroup subsys debug
-[    0.056380] Initializing cgroup subsys freezer
-[    0.060594] Disabled fast string operations
-[    0.062260] CPU0: Hyper-Threading is disabled
-[    0.064027] Last level iTLB entries: 4KB 32, 2MB 0, 4MB 2
-[    0.064027] Last level dTLB entries: 4KB 64, 2MB 0, 4MB 8
-[    0.064027] tlb_flushall_shift: 6
-[    0.071957] Freeing SMP alternatives: 24k freed
-[    0.073687] ACPI: Core revision 20130328
-[    0.076061] ACPI: All ACPI Tables successfully acquired
-[    0.086563] ..TIMER: vector=0x30 apic1=0 pin1=2 apic2=-1 pin2=-1
-[    0.189021] smpboot: CPU0: Intel Virtual CPU (fam: 06, model: 1f, stepping: 01)
-[    0.200000] Performance Events: unsupported p6 CPU model 31 no PMU driver, software events only.
-[    0.250284] smpboot: Booting Node   0, Processors  #1[    0.040000] Disabled fast string operations
+[    0.000000] tsc: Detected 2194.729 MHz processor
+[    0.050003] Calibrating delay loop (skipped), value calculated using timer frequency.. 4389.45 BogoMIPS (lpj=21947290)
+[    0.052932] pid_max: default: 32768 minimum: 301
+[    0.060039] Security Framework initialized
+[    0.061197] SELinux:  Initializing.
+[    0.062296] Mount-cache hash table entries: 256
+[    0.063653] Initializing cgroup subsys debug
+[    0.064820] Initializing cgroup subsys freezer
+[    0.066692] Disabled fast string operations
+[    0.067913] CPU0: Hyper-Threading is disabled
+[    0.069119] Last level iTLB entries: 4KB 32, 2MB 0, 4MB 2
+[    0.069119] Last level dTLB entries: 4KB 64, 2MB 0, 4MB 8
+[    0.069119] tlb_flushall_shift: 6
+[    0.071546] Freeing SMP alternatives: 24k freed
+[    0.072767] ACPI: Core revision 20130328
+[    0.074575] ACPI: All ACPI Tables successfully acquired
+[    0.085880] ..TIMER: vector=0x30 apic1=0 pin1=2 apic2=-1 pin2=-1
+[    0.188204] smpboot: CPU0: Intel Virtual CPU (fam: 06, model: 1f, stepping: 01)
+[    0.200000] Performance Events: generic architected perfmon v1, core PMU driver.
+[    0.200000] ... version:                1
+[    0.200000] ... bit width:              48
+[    0.200000] ... generic registers:      4
+[    0.200000] ... value mask:             0000ffffffffffff
+[    0.200000] ... max period:             000000007fffffff
+[    0.200000] ... fixed-purpose events:   0
+[    0.200000] ... event mask:             000000000000000f
+[    0.250197] smpboot: Booting Node   0, Processors  #1[    0.050000] Disabled fast string operations
 
-[    0.280000] TSC synchronization [CPU#0 -> CPU#1]:
-[    0.280000] Measured 7849929504 cycles TSC warp between CPUs, turning off TSC clock.
-[    0.280000] tsc: Marking TSC unstable due to check_tsc_sync_source failed
-[    0.300281]  #2[    0.040000] Disabled fast string operations
+[    0.270000] TSC synchronization [CPU#0 -> CPU#1]:
+[    0.270000] Measured 3132803994 cycles TSC warp between CPUs, turning off TSC clock.
+[    0.270000] tsc: Marking TSC unstable due to check_tsc_sync_source failed
+[    0.290200]  #2[    0.050000] Disabled fast string operations
  #3 OK
-[    0.040000] Disabled fast string operations
-[    0.348450] Brought up 4 CPUs
-[    0.350004] smpboot: Total of 4 processors activated (17559.22 BogoMIPS)
-[    0.360751] NET: Registered protocol family 16
-[    0.361892] ACPI: bus type PCI registered
-[    0.361892] PCI: Using configuration type 1 for base access
-[    0.460366] bio: create slab <bio-0> at 0
-[    0.470571] ACPI: Added _OSI(Module Device)
-[    0.472112] ACPI: Added _OSI(Processor Device)
-[    0.473897] ACPI: Added _OSI(3.0 _SCP Extensions)
-[    0.475622] ACPI: Added _OSI(Processor Aggregator Device)
-[    0.479225] ACPI: Interpreter enabled
-[    0.479225] ACPI Exception: AE_NOT_FOUND, While evaluating Sleep State [\_S1_] (20130328/hwxface-568)
-[    0.479225] ACPI Exception: AE_NOT_FOUND, While evaluating Sleep State [\_S2_] (20130328/hwxface-568)
-[    0.479225] ACPI: (supports S0 S3 S5)
-[    0.479282] ACPI: Using IOAPIC for interrupt routing
-[    0.490093] PCI: Using host bridge windows from ACPI; if necessary, use "pci=nocrs" and report a bug
-[    0.520453] ACPI: PCI Root Bridge [PCI0] (domain 0000 [bus 00-ff])
-[    0.523069] acpi PNP0A03:00: fail to add MMCONFIG information, can't access extended PCI configuration space under this bridge.
-[    0.530130] PCI host bridge to bus 0000:00
-[    0.531365] pci_bus 0000:00: root bus resource [bus 00-ff]
-[    0.533380] pci_bus 0000:00: root bus resource [io  0x0000-0x0cf7]
-[    0.535482] pci_bus 0000:00: root bus resource [io  0x0d00-0xadff]
-[    0.540105] pci_bus 0000:00: root bus resource [io  0xae0f-0xaeff]
-[    0.542671] pci_bus 0000:00: root bus resource [io  0xaf20-0xafdf]
-[    0.544879] pci_bus 0000:00: root bus resource [io  0xafe4-0xffff]
-[    0.547875] pci_bus 0000:00: root bus resource [mem 0x000a0000-0x000bffff]
-[    0.550007] pci_bus 0000:00: root bus resource [mem 0x40000000-0xfebfffff]
-[    0.571775] pci 0000:00:01.3: quirk: [io  0x0600-0x063f] claimed by PIIX4 ACPI
-[    0.574815] pci 0000:00:01.3: quirk: [io  0x0700-0x070f] claimed by PIIX4 SMB
-[    0.642427] acpi PNP0A03:00: Unable to request _OSC control (_OSC support mask: 0x08)
-[    0.644258] ACPI: PCI Interrupt Link [LNKA] (IRQs 5 *10 11)
-[    0.646335] ACPI: PCI Interrupt Link [LNKB] (IRQs 5 *10 11)
-[    0.650033] ACPI: PCI Interrupt Link [LNKC] (IRQs 5 10 *11)
-[    0.653337] ACPI: PCI Interrupt Link [LNKD] (IRQs 5 10 *11)
-[    0.655736] ACPI: PCI Interrupt Link [LNKS] (IRQs *9)
-[    0.660718] ACPI: Enabled 16 GPEs in block 00 to 0F
-[    0.662844] vgaarb: loaded
-[    0.662844] SCSI subsystem initialized
-[    0.662844] ACPI: bus type ATA registered
-[    0.670188] ACPI: bus type USB registered
-[    0.671312] usbcore: registered new interface driver usbfs
-[    0.671983] usbcore: registered new interface driver hub
-[    0.671983] usbcore: registered new device driver usb
-[    0.680034] pps_core: LinuxPPS API ver. 1 registered
-[    0.681691] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
-[    0.684691] PTP clock support registered
-[    0.684691] Advanced Linux Sound Architecture Driver Initialized.
-[    0.690128] PCI: Using ACPI for IRQ routing
-[    0.692259] NetLabel: Initializing
-[    0.692259] NetLabel:  domain hash size = 128
-[    0.700176] cfg80211: Calling CRDA to update world regulatory domain
-[    0.702722] NetLabel:  protocols = UNLABELED CIPSOv4
-[    0.705075] NetLabel:  unlabeled traffic allowed by default
-[    0.707390] Switching to clocksource hpet
-[    0.715258] pnp: PnP ACPI init
-[    0.716404] ACPI: bus type PNP registered
-[    0.725307] pnp: PnP ACPI: found 8 devices
-[    0.726850] ACPI: bus type PNP unregistered
-[    0.793013] NET: Registered protocol family 2
-[    0.794869] TCP established hash table entries: 8192 (order: 5, 131072 bytes)
-[    0.797799] TCP bind hash table entries: 8192 (order: 5, 131072 bytes)
-[    0.799860] TCP: Hash tables configured (established 8192 bind 8192)
-[    0.802861] TCP: reno registered
-[    0.804247] UDP hash table entries: 512 (order: 2, 16384 bytes)
-[    0.806258] UDP-Lite hash table entries: 512 (order: 2, 16384 bytes)
-[    0.809177] NET: Registered protocol family 1
-[    0.810671] pci 0000:00:00.0: Limiting direct PCI/PCI transfers
-[    0.813364] pci 0000:00:01.0: PIIX3: Enabling Passive Release
-[    0.815845] pci 0000:00:01.0: Activating ISA DMA hang workarounds
-[    0.818529] Trying to unpack rootfs image as initramfs...
-[    0.850615] Freeing initrd memory: 1316k freed
-[    0.862680] audit: initializing netlink socket (disabled)
-[    0.864992] type=2000 audit(1489077434.860:1): initialized
-[    0.869335] HugeTLB registered 2 MB page size, pre-allocated 0 pages
-[    0.911017] VFS: Disk quotas dquot_6.5.2
-[    0.912669] Dquot-cache hash table entries: 512 (order 0, 4096 bytes)
-[    0.922519] fuse init (API version 7.22)
-[    0.925842] msgmni has been set to 1986
-[    0.933504] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 251)
-[    0.935827] io scheduler noop registered
-[    0.937078] io scheduler deadline registered
-[    0.938958] io scheduler cfq registered (default)
-[    0.941842] pci_hotplug: PCI Hot Plug PCI Core version: 0.5
-[    0.954328] input: Power Button as /devices/LNXSYSTM:00/LNXPWRBN:00/input/input0
-[    0.956517] ACPI: Power Button [PWRF]
-[    0.999522] ACPI: PCI Interrupt Link [LNKB] enabled at IRQ 10
-[    1.047471] ACPI: PCI Interrupt Link [LNKC] enabled at IRQ 11
-[    1.089990] ACPI: PCI Interrupt Link [LNKD] enabled at IRQ 11
-[    1.137470] ACPI: PCI Interrupt Link [LNKA] enabled at IRQ 10
-[    1.142575] Serial: 8250/16550 driver, 4 ports, IRQ sharing disabled
-[    1.175188] 00:05: ttyS0 at I/O 0x3f8 (irq = 4) is a 16550A
-[    1.183381] Non-volatile memory driver v1.3
-[    1.184729] Linux agpgart interface v0.103
-[    1.188030] [drm] Initialized drm 1.1.0 20060810
-[    1.203874] brd: module loaded
-[    1.211510] loop: module loaded
-[    1.214584]  vda: unknown partition table
-[    1.218230]  vdb: unknown partition table
-[    1.222676]  vdc: unknown partition table
-[    1.225753] Loading iSCSI transport class v2.0-870.
-[    1.238003] scsi0 : ata_piix
-[    1.240219] scsi1 : ata_piix
-[    1.242232] ata1: PATA max MWDMA2 cmd 0x1f0 ctl 0x3f6 bmdma 0xc0e0 irq 14
-[    1.244738] ata2: PATA max MWDMA2 cmd 0x170 ctl 0x376 bmdma 0xc0e8 irq 15
-[    1.253564] tun: Universal TUN/TAP device driver, 1.6
-[    1.255461] tun: (C) 1999-2004 Max Krasnyansky <maxk@qualcomm.com>
-[    1.263284] e100: Intel(R) PRO/100 Network Driver, 3.5.24-k2-NAPI
-[    1.265506] e100: Copyright(c) 1999-2006 Intel Corporation
-[    1.267705] e1000: Intel(R) PRO/1000 Network Driver - version 7.3.21-k8-NAPI
-[    1.270363] e1000: Copyright (c) 1999-2006 Intel Corporation.
-[    1.273445] e1000e: Intel(R) PRO/1000 Network Driver - 2.3.2-k
-[    1.275596] e1000e: Copyright(c) 1999 - 2013 Intel Corporation.
-[    1.278048] sky2: driver version 1.30
-[    1.282331] PPP generic driver version 2.4.2
-[    1.284960] PPP BSD Compression module registered
-[    1.286576] PPP Deflate Compression module registered
-[    1.288283] PPP MPPE Compression module registered
-[    1.290195] NET: Registered protocol family 24
-[    1.293990] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
-[    1.296239] ehci-pci: EHCI PCI platform driver
-[    1.298215] ohci_hcd: USB 1.1 'Open' Host Controller (OHCI) Driver
-[    1.300639] uhci_hcd: USB Universal Host Controller Interface driver
-[    1.304441] usbcore: registered new interface driver usblp
-[    1.307192] usbcore: registered new interface driver usb-storage
-[    1.310374] mousedev: PS/2 mouse device common for all mice
-[    1.316931] input: qwerty2 as /devices/platform/GFSH0002:00/input/input1
-[    1.320846] rtc_cmos 00:00: RTC can wake from S4
-[    1.323797] rtc_cmos 00:00: rtc core: registered rtc_cmos as rtc0
-[    1.326015] rtc_cmos 00:00: alarms up to one day, 114 bytes nvram, hpet irqs
-[    1.334031] device-mapper: uevent: version 1.0.3
-[    1.336651] device-mapper: ioctl: 4.24.0-ioctl (2013-01-15) initialised: dm-devel@redhat.com
-[    1.340594] cpuidle: using governor ladder
-[    1.342680] cpuidle: using governor menu
-[    1.347132] hidraw: raw HID events driver (C) Jiri Kosina
-[    1.364212] usbcore: registered new interface driver usbhid
-[    1.366412] usbhid: USB HID core driver
-[    1.368801] ashmem: initialized
-[    1.379615] u32 classifier
-[    1.380470]     Actions configured
-[    1.381923] Netfilter messages via NETLINK v0.30.
-[    1.383255] nf_conntrack version 0.5.0 (7944 buckets, 31776 max)
-[    1.386298] ctnetlink v0.93: registering with nfnetlink.
-[    1.389007] NF_TPROXY: Transparent proxy support initialized, version 4.1.0
-[    1.392285] NF_TPROXY: Copyright (c) 2006-2007 BalaBit IT Ltd.
-[    1.396133] xt_time: kernel timezone is -0000
-[    1.398143] ip_tables: (C) 2000-2006 Netfilter Core Team
-[    1.400185] arp_tables: (C) 2002 David S. Miller
-[    1.402423] TCP: cubic registered
-[    1.404268] Initializing XFRM netlink socket
-[    1.404715] ata2.00: ATAPI: QEMU DVD-ROM, 2.2.0, max UDMA/100
-[    1.405841] ata2.00: configured for MWDMA2
-[    1.410338] scsi 1:0:0:0: CD-ROM            QEMU     QEMU DVD-ROM     2.2. PQ: 0 ANSI: 5
-[    1.411692] NET: Registered protocol family 10
-[    1.412069] mip6: Mobile IPv6
-[    1.412074] ip6_tables: (C) 2000-2006 Netfilter Core Team
-[    1.412100] sit: IPv6 over IPv4 tunneling driver
-[    1.413646] NET: Registered protocol family 17
-[    1.413651] NET: Registered protocol family 15
-[    1.415150] registered taskstats version 1
-[    1.423892] console [netcon0] enabled
-[    1.425102] netconsole: network logging started
-[    1.428021] init: failed to probe driver -19[    1.430175] sr0: scsi3-mmc drive: 4x/4x cd/rw xa/form2 tray
-[    1.431780] cdrom: Uniform CD-ROM driver Revision: 3.20
-
-[    1.435863] ALSA device list:
-[    1.437785]   No soundcards found.
-[    1.438851] sr 1:0:0:0: Attached scsi generic sg0 type 5
-[    1.442993] Freeing unused kernel memory: 924k freed
-[    1.444812] Write protecting the kernel read-only data: 10240k
-[    1.447268] Freeing unused kernel memory: 124k freed
-[    1.455049] Freeing unused kernel memory: 1792k freed
-[    1.457797] init: init started!
-[    1.533010] type=1403 audit(1489077435.530:2): policy loaded auid=4294967295 ses=4294967295
-[    1.536140] type=1404 audit(1489077435.530:3): enforcing=1 old_enforcing=0 auid=4294967295 ses=4294967295
-[    1.590595] init: (Initializing SELinux enforcing took 0.13s.)
-[    1.593841] init: init second stage started!
-[    1.595345] init: property_set("ro.kernel.ndns", "4") failed
-[    1.600487] init: waitpid failed: No child processes
-[    1.602326] init: (Loading properties from /default.prop took 0.00s.)
-[    1.605130] init: (Parsing /init.environ.rc took 0.00s.)
-[    1.607418] init: (Parsing /init.usb.rc took 0.00s.)
-[    1.610547] init: (Parsing /init.ranchu-common.rc took 0.00s.)
-[    1.613362] init: (Parsing /init.ranchu.rc took 0.00s.)
-[    1.615743] init: (Parsing /init.zygote64_32.rc took 0.00s.)
-[    1.617645] init: (Parsing /init.trace.rc took 0.00s.)
-[    1.619523] init: (Parsing /init.rc took 0.02s.)
-[    1.620977] init: SELinux: Could not get canonical path /adb_keys restorecon: No such file or directory.
-[    1.624174] init: Starting service 'ueventd'...
-[    1.625881] init: Waiting for /dev/.coldboot_done...
-[    1.627069] ueventd: ueventd started!
-[    1.759721] ueventd: Coldboot took 0.13s.
-[    1.761570] init: Waiting for /dev/.coldboot_done took 0.14s.
-[    1.761609] init: /dev/hw_random not found
-[    1.761673] init: could not open /dev/keychord: No such file or directory
-[    1.773589] init: write_file: Unable to open '/proc/sys/kernel/hung_task_timeout_secs': No such file or directory
-[    1.777158] init: write_file: Unable to open '/proc/cpu/alignment': No such file or directory
-[    1.781373] init: write_file: Unable to open '/proc/sys/kernel/sched_compat_yield': No such file or directory
-[    1.786751] init: write_file: Unable to write to '/dev/cpuctl/cpu.shares': Invalid argument
-[    1.791018] init: write_file: Unable to open '/proc/sys/abi/swp': No such file or directory
-[    1.795169] init: /dev/hw_random not found
-[    1.806011] EXT4-fs (vda): mounted filesystem with ordered data mode. Opts: (null)
-[    1.808780] fs_mgr: __mount(source=/dev/block/vda,target=/system,type=ext4)=0
-[    1.812209] EXT4-fs (vdb): Ignoring removed nomblk_io_submit option
-[    1.822507] EXT4-fs (vdb): mounted filesystem with ordered data mode. Opts: nomblk_io_submit,errors=panic
-[    1.826014] fs_mgr: __mount(source=/dev/block/vdb,target=/cache,type=ext4)=0
-[    1.829291] EXT4-fs (vdc): Ignoring removed nomblk_io_submit option
-[    1.839992] EXT4-fs (vdc): mounted filesystem with ordered data mode. Opts: nomblk_io_submit,errors=remount-ro
-[    1.844405] fs_mgr: check_fs(): mount(/dev/block/vdc,/data,ext4)=0: Success
-[    1.848203] fs_mgr: check_fs(): unmount(/data) succeeded
-[    1.851500] fs_mgr: Running /system/bin/e2fsck on /dev/block/vdc
-[    1.890159] e2fsck: e2fsck 1.42.9 (28-Dec-2013)
-[    1.890159] 
-[    1.892277] e2fsck: data: clean, 1284/131072 files, 75998/524288 blocks
-[    1.892277] 
-[    1.895038] EXT4-fs (vdc): Ignoring removed nomblk_io_submit option
-[    1.902271] EXT4-fs (vdc): mounted filesystem with ordered data mode. Opts: nomblk_io_submit,errors=panic
-[    1.904912] fs_mgr: __mount(source=/dev/block/vdc,target=/data,type=ext4)=0
-[    1.907345] init: Starting service 'logd'...
-[    1.914358] init: Starting service 'vold'...
-[    1.917737] init: Not bootcharting.
-[    1.936784] logd.auditd: start
-[    1.938711] logd.klogd: 1938700000
-[    1.955947] init: Starting service 'exec 0 (/system/bin/tzdatacheck)'...
-[    1.979436] init: Service 'exec 0 (/system/bin/tzdatacheck)' (pid 1224) exited with status 0
-[    1.991506] init: (Loading properties from /system/build.prop took 0.01s.)
-[    1.993546] init: (Loading properties from /vendor/build.prop took 0.00s.)
-[    1.995590] init: (Loading properties from /factory/factory.prop took 0.00s.)
-[    1.997829] init: (Loading properties from /data/local.prop took 0.00s.)
-[    2.027686] init: /recovery not specified in fstab
-[    2.030425] init: Starting service 'logd-reinit'...
-[    2.036402] init: Starting service 'healthd'...
-[    2.038850] init: Starting service 'lmkd'...
-[    2.040222] logd.daemon: reinit
-[    2.043388] init: Starting service 'servicemanager'...
-[    2.044671] binder: 1246:1246 transaction failed 29189, size 0-0
-[    2.047810] init: Starting service 'surfaceflinger'...
-[    2.049965] init: Starting service 'qemu-props'...
-[    2.052941] init: Service 'logd-reinit' (pid 1229) exited with status 0
-[    2.058732] init: property_set("ro.build.product", "generic") failed
-[    2.061456] init: property_set("ro.product.device", "generic") failed
-[    2.067690] init: Starting service 'goldfish-logcat'...
-[    2.070968] init: Starting service 'goldfish-setup'...
-[    2.076003] init: Starting service 'console'...
-[    2.078729] init: Starting service 'adbd'...
-[    2.081577] init: Service 'goldfish-logcat' (pid 1263) exited with status 0
-[    2.088625] init: Starting service 'netd'...
-[    2.091871] init: Starting service 'debuggerd'...
-[    2.095873] init: Starting service 'debuggerd64'...
-[    2.099605] init: Starting service 'ril-daemon'...
-[    2.102848] init: Starting service 'drm'...
-[    2.105101] init: Starting service 'media'...
-[    2.108260] init: Starting service 'installd'...
-[    2.110297] init: cannot find '/system/bin/install-recovery.sh', disabling 'flash_recovery'
-[    2.116493] init: Starting service 'keystore'...
-[    2.120007] init: Starting service 'zygote'...
-shell@generic_x8[    2.124322] init: Starting service 'zygote_secondary'...
-6_64:/ $ [    2.126460] init: Service 'qemu-props' (pid 1262) exited with status 0
-[    2.134625] init: Starting service 'gatekeeperd'...
-[    2.215816] init: Starting service 'perfprofd'...
-[    2.218444] init: Starting service 'fingerprintd'...
-[    2.220830] init: write_file: Unable to open '/sys/class/android_usb/android0/enable': No such file or directory
-[    2.226324] init: write_file: Unable to open '/sys/class/android_usb/android0/idVendor': No such file or directory
-[    2.230111] init: write_file: Unable to open '/sys/class/android_usb/android0/idProduct': No such file or directory
-[    2.235679] init: write_file: Unable to open '/sys/class/android_usb/android0/functions': No such file or directory
-[    2.239521] init: write_file: Unable to open '/sys/class/android_usb/android0/enable': No such file or directory
-[    2.258691] init: Service 'goldfish-setup' (pid 1264) exited with status 0
-[    2.419985] init: Starting service 'bootanim'...
-[    2.872891] type=1400 audit(1489077436.870:4): avc: denied { write } for pid=1412 comm="BootAnimation" name="property_service" dev="tmpfs" ino=106 scontext=u:r:bootanim:s0 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0
-[    3.046220] healthd: BatteryVoltagePath not found
-[    3.049439] healthd: BatteryTemperaturePath not found
-[    3.774996] type=1400 audit(1489077437.770:5): avc: denied { sys_module } for pid=1272 comm="netd" capability=16 scontext=u:r:netd:s0 tcontext=u:r:netd:s0 tclass=capability permissive=0
-[    4.250301] warning: `main' uses 32-bit capabilities (legacy support in use)
-[    4.755393] type=1400 audit(1489077438.750:6): avc: denied { write } for pid=1291 comm="main" name="property_service" dev="tmpfs" ino=106 scontext=u:r:zygote:s0 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0
-[    4.776955] type=1400 audit(1489077438.770:7): avc: denied { write } for pid=1292 comm="main" name="property_service" dev="tmpfs" ino=106 scontext=u:r:zygote:s0 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0
-[    6.525574] healthd: battery l=50 v=0 t=0.0 h=2 st=2 chg=a
-[    6.784824] lowmemorykiller: lowmem_shrink: convert oom_adj to oom_score_adj:
-[    6.786970] lowmemorykiller: oom_adj 0 => oom_score_adj 0
-[    6.788515] lowmemorykiller: oom_adj 1 => oom_score_adj 58
-[    6.789993] lowmemorykiller: oom_adj 2 => oom_score_adj 117
-[    6.792144] lowmemorykiller: oom_adj 3 => oom_score_adj 176
-[    6.794037] lowmemorykiller: oom_adj 9 => oom_score_adj 529
-[    6.796387] lowmemorykiller: oom_adj 15 => oom_score_adj 1000
+[    0.050000] Disabled fast string operations
+[    0.349612] Brought up 4 CPUs
+[    0.350000] smpboot: Total of 4 processors activated (17557.83 BogoMIPS)
+[    0.370650] NET: Registered protocol family 16
+[    0.372241] ACPI: bus type PCI registered
+[    0.372241] PCI: Using configuration type 1 for base access
+[    0.440245] bio: create slab <bio-0> at 0
+[    0.441645] ACPI: Added _OSI(Module Device)
+[    0.450008] ACPI: Added _OSI(Processor Device)
+[    0.451478] ACPI: Added _OSI(3.0 _SCP Extensions)
+[    0.453308] ACPI: Added _OSI(Processor Aggregator Device)
+[    0.457874] ACPI: Interpreter enabled
+[    0.460008] ACPI Exception: AE_NOT_FOUND, While evaluating Sleep State [\_S1_] (20130328/hwxface-568)
+[    0.463781] ACPI Exception: AE_NOT_FOUND, While evaluating Sleep State [\_S2_] (20130328/hwxface-568)
+[    0.468019] ACPI: (supports S0 S3 S5)
+[    0.469557] ACPI: Using IOAPIC for interrupt routing
+[    0.470108] PCI: Using host bridge windows from ACPI; if necessary, use "pci=nocrs" and report a bug
+[    0.500099] ACPI: PCI Root Bridge [PCI0] (domain 0000 [bus 00-ff])
+[    0.501848] acpi PNP0A03:00: fail to add MMCONFIG information, can't access extended PCI configuration space under this bridge.
+[    0.505347] PCI host bridge to bus 0000:00
+[    0.505347] pci_bus 0000:00: root bus resource [bus 00-ff]
+[    0.505347] pci_bus 0000:00: root bus resource [io  0x0000-0x0cf7]
+[    0.510016] pci_bus 0000:00: root bus resource [io  0x0d00-0xffff]
+[    0.511940] pci_bus 0000:00: root bus resource [mem 0x000a0000-0x000bffff]
+[    0.514012] pci_bus 0000:00: root bus resource [mem 0x60000000-0xfebfffff]
+[    0.536500] pci 0000:00:01.3: quirk: [io  0x0600-0x063f] claimed by PIIX4 ACPI
+[    0.540077] pci 0000:00:01.3: quirk: [io  0x0700-0x070f] claimed by PIIX4 SMB
+[    0.815044] acpi PNP0A03:00: Unable to request _OSC control (_OSC support mask: 0x08)
+[    0.815044] ACPI: PCI Interrupt Link [LNKA] (IRQs 5 *10 11)
+[    0.820746] ACPI: PCI Interrupt Link [LNKB] (IRQs 5 *10 11)
+[    0.822801] ACPI: PCI Interrupt Link [LNKC] (IRQs 5 10 *11)
+[    0.825024] ACPI: PCI Interrupt Link [LNKD] (IRQs 5 10 *11)
+[    0.830389] ACPI: PCI Interrupt Link [LNKS] (IRQs *9)
+[    0.832296] ACPI: Enabled 3 GPEs in block 00 to 0F
+[    0.832296] vgaarb: loaded
+[    0.840142] SCSI subsystem initialized
+[    0.841282] ACPI: bus type ATA registered
+[    0.842699] ACPI: bus type USB registered
+[    0.842699] usbcore: registered new interface driver usbfs
+[    0.842699] usbcore: registered new interface driver hub
+[    0.850074] usbcore: registered new device driver usb
+[    0.851724] pps_core: LinuxPPS API ver. 1 registered
+[    0.851825] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.860011] PTP clock support registered
+[    0.861287] Advanced Linux Sound Architecture Driver Initialized.
+[    0.861810] PCI: Using ACPI for IRQ routing
+[    0.863847] cfg80211: Calling CRDA to update world regulatory domain
+[    0.870189] NetLabel: Initializing
+[    0.871244] NetLabel:  domain hash size = 128
+[    0.872576] NetLabel:  protocols = UNLABELED CIPSOv4
+[    0.874010] NetLabel:  unlabeled traffic allowed by default
+[    0.875926] Switching to clocksource hpet
+[    0.877455] pnp: PnP ACPI init
+[    0.877455] ACPI: bus type PNP registered
+[    0.883064] pnp: PnP ACPI: found 10 devices
+[    0.884458] ACPI: bus type PNP unregistered
+[    0.947485] NET: Registered protocol family 2
+[    0.949195] TCP established hash table entries: 16384 (order: 6, 262144 bytes)
+[    0.952090] TCP bind hash table entries: 16384 (order: 6, 262144 bytes)
+[    0.954489] TCP: Hash tables configured (established 16384 bind 16384)
+[    0.956762] TCP: reno registered
+[    0.957938] UDP hash table entries: 1024 (order: 3, 32768 bytes)
+[    0.959645] UDP-Lite hash table entries: 1024 (order: 3, 32768 bytes)
+[    0.961951] NET: Registered protocol family 1
+[    0.963282] pci 0000:00:00.0: Limiting direct PCI/PCI transfers
+[    0.965017] pci 0000:00:01.0: PIIX3: Enabling Passive Release
+[    0.966950] pci 0000:00:01.0: Activating ISA DMA hang workarounds
+[    0.969187] Trying to unpack rootfs image as initramfs...
+[    0.988741] Freeing initrd memory: 1316k freed
+[    0.999393] audit: initializing netlink socket (disabled)
+[    1.001456] type=2000 audit(1489954171.000:1): initialized
+[    1.006477] HugeTLB registered 2 MB page size, pre-allocated 0 pages
+[    1.050397] VFS: Disk quotas dquot_6.5.2
+[    1.052392] Dquot-cache hash table entries: 512 (order 0, 4096 bytes)
+[    1.063075] fuse init (API version 7.22)
+[    1.066374] msgmni has been set to 2991
+[    1.078947] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 251)
+[    1.081052] io scheduler noop registered
+[    1.082615] io scheduler deadline registered
+[    1.084293] io scheduler cfq registered (default)
+[    1.086834] pci_hotplug: PCI Hot Plug PCI Core version: 0.5
+[    1.104435] input: Power Button as /devices/LNXSYSTM:00/LNXPWRBN:00/input/input0
+[    1.106985] ACPI: Power Button [PWRF]
+[    1.143136] ACPI: PCI Interrupt Link [LNKC] enabled at IRQ 11
+[    1.172302] ACPI: PCI Interrupt Link [LNKD] enabled at IRQ 10
+[    1.203402] ACPI: PCI Interrupt Link [LNKA] enabled at IRQ 10
+[    1.232821] ACPI: PCI Interrupt Link [LNKB] enabled at IRQ 11
+[    1.290104] Serial: 8250/16550 driver, 4 ports, IRQ sharing disabled
+[    1.320354] 00:05: ttyS0 at I/O 0x3f8 (irq = 4) is a 16550A
+[    1.330765] Non-volatile memory driver v1.3
+[    1.332075] Linux agpgart interface v0.103
+[    1.336059] [drm] Initialized drm 1.1.0 20060810
+[    1.360167] brd: module loaded
+[    1.373201] loop: module loaded
+[    1.378757]  vda: unknown partition table
+[    1.384250]  vdb: unknown partition table
+[    1.388258]  vdc: unknown partition table
+[    1.393026]  vdd: unknown partition table
+[    1.396996] Loading iSCSI transport class v2.0-870.
+[    1.415426] scsi0 : ata_piix
+[    1.418894] scsi1 : ata_piix
+[    1.421171] ata1: PATA max MWDMA2 cmd 0x1f0 ctl 0x3f6 bmdma 0xc140 irq 14
+[    1.423321] ata2: PATA max MWDMA2 cmd 0x170 ctl 0x376 bmdma 0xc148 irq 15
+[    1.430221] tun: Universal TUN/TAP device driver, 1.6
+[    1.432194] tun: (C) 1999-2004 Max Krasnyansky <maxk@qualcomm.com>
+[    1.441266] e100: Intel(R) PRO/100 Network Driver, 3.5.24-k2-NAPI
+[    1.443021] e100: Copyright(c) 1999-2006 Intel Corporation
+[    1.445039] e1000: Intel(R) PRO/1000 Network Driver - version 7.3.21-k8-NAPI
+[    1.447134] e1000: Copyright (c) 1999-2006 Intel Corporation.
+[    1.449702] e1000e: Intel(R) PRO/1000 Network Driver - 2.3.2-k
+[    1.451452] e1000e: Copyright(c) 1999 - 2013 Intel Corporation.
+[    1.454437] sky2: driver version 1.30
+[    1.457594] PPP generic driver version 2.4.2
+[    1.460136] PPP BSD Compression module registered
+[    1.461907] PPP Deflate Compression module registered
+[    1.463422] PPP MPPE Compression module registered
+[    1.465136] NET: Registered protocol family 24
+[    1.468260] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    1.470160] ehci-pci: EHCI PCI platform driver
+[    1.472393] ohci_hcd: USB 1.1 'Open' Host Controller (OHCI) Driver
+[    1.474790] uhci_hcd: USB Universal Host Controller Interface driver
+[    1.478020] usbcore: registered new interface driver usblp
+[    1.480091] usbcore: registered new interface driver usb-storage
+[    1.483435] mousedev: PS/2 mouse device common for all mice
+[    1.488480] input: qwerty2 as /devices/platform/GFSH0002:00/input/input1
+[    1.491920] rtc_cmos 00:00: RTC can wake from S4
+[    1.494686] rtc_cmos 00:00: rtc core: registered rtc_cmos as rtc0
+[    1.497333] rtc_cmos 00:00: alarms up to one day, y3k, 114 bytes nvram, hpet irqs
+[    1.501134] goldfish_rtc GFSH0007:00: rtc core: registered GFSH0007:00 as rtc1
+[    1.509110] device-mapper: uevent: version 1.0.3
+[    1.512011] device-mapper: ioctl: 4.24.0-ioctl (2013-01-15) initialised: dm-devel@redhat.com
+[    1.515838] cpuidle: using governor ladder
+[    1.517077] cpuidle: using governor menu
+[    1.520063] hidraw: raw HID events driver (C) Jiri Kosina
+[    1.533676] usbcore: registered new interface driver usbhid
+[    1.535421] usbhid: USB HID core driver
+[    1.537338] ashmem: initialized
+[    1.542620] goldfish_sync: Initialized goldfish sync device
+[    1.583725] ata2.00: ATAPI: QEMU DVD-ROM, 2.5+, max UDMA/100
+[    1.587813] ata2.00: configured for MWDMA2
+[    1.590929] scsi 1:0:0:0: CD-ROM            QEMU     QEMU DVD-ROM     2.5+ PQ: 0 ANSI: 5
+[    1.597104] sr0: scsi3-mmc drive: 4x/4x cd/rw xa/form2 tray
+[    1.598699] cdrom: Uniform CD-ROM driver Revision: 3.20
+[    1.606649] sr 1:0:0:0: Attached scsi generic sg0 type 5
+[    1.617165] u32 classifier
+[    1.617969]     Actions configured
+[    1.618955] Netfilter messages via NETLINK v0.30.
+[    1.620299] nf_conntrack version 0.5.0 (16384 buckets, 65536 max)
+[    1.623799] ctnetlink v0.93: registering with nfnetlink.
+[    1.625523] NF_TPROXY: Transparent proxy support initialized, version 4.1.0
+[    1.628120] NF_TPROXY: Copyright (c) 2006-2007 BalaBit IT Ltd.
+[    1.632513] xt_time: kernel timezone is -0000
+[    1.633965] ip_tables: (C) 2000-2006 Netfilter Core Team
+[    1.635930] arp_tables: (C) 2002 David S. Miller
+[    1.637571] TCP: cubic registered
+[    1.638562] Initializing XFRM netlink socket
+[    1.642819] NET: Registered protocol family 10
+[    1.644556] mip6: Mobile IPv6
+[    1.645681] ip6_tables: (C) 2000-2006 Netfilter Core Team
+[    1.647710] sit: IPv6 over IPv4 tunneling driver
+[    1.651349] NET: Registered protocol family 17
+[    1.652867] NET: Registered protocol family 15
+[    1.656355] registered taskstats version 1
+[    1.661231] console [netcon0] enabled
+[    1.662817] netconsole: network logging started
+[    1.664705] init: failed to probe driver -19
+[    1.666827] ALSA device list:
+[    1.667893]   #0: HDA Intel at 0xfebc0000 irq 11
+[    1.670925] Freeing unused kernel memory: 924k freed
+[    1.672944] Write protecting the kernel read-only data: 10240k
+[    1.676273] Freeing unused kernel memory: 120k freed
+[    1.681767] Freeing unused kernel memory: 1792k freed
+[    1.685394] init: init started!
+[    1.771647] type=1403 audit(1489954171.770:2): policy loaded auid=4294967295 ses=4294967295
+[    1.774190] type=1404 audit(1489954171.770:3): enforcing=1 old_enforcing=0 auid=4294967295 ses=4294967295
+[    1.840521] init: (Initializing SELinux enforcing took 0.15s.)
+[    1.844112] init: init second stage started!
+[    1.845477] init: property_set("ro.kernel.ndns", "2") failed
+[    1.850191] init: waitpid failed: No child processes
+[    1.852030] init: (Loading properties from /default.prop took 0.00s.)
+[    1.854750] init: (Parsing /init.environ.rc took 0.00s.)
+[    1.856644] init: (Parsing /init.usb.rc took 0.00s.)
+[    1.858471] init: (Parsing /init.ranchu-common.rc took 0.00s.)
+[    1.860494] init: (Parsing /init.ranchu-encrypt.rc took 0.00s.)
+[    1.862605] init: (Parsing /init.zygote64_32.rc took 0.00s.)
+[    1.864289] init: (Parsing /init.trace.rc took 0.00s.)
+[    1.865804] init: (Parsing /init.rc took 0.01s.)
+[    1.867755] init: SELinux: Could not get canonical path /adb_keys restorecon: No such file or directory.
+[    1.871543] init: Starting service 'ueventd'...
+[    1.873266] init: Waiting for /dev/.coldboot_done...
+[    1.874481] ueventd: ueventd started!
+[    2.003902] ueventd: Coldboot took 0.13s.
+[    2.010197] init: Waiting for /dev/.coldboot_done took 0.14s.
+[    2.012510] init: /dev/hw_random not found
+[    2.013946] init: could not open /dev/keychord: No such file or directory
+[    2.019081] init: write_file: Unable to open '/proc/sys/kernel/hung_task_timeout_secs': No such file or directory
+[    2.023527] init: write_file: Unable to open '/proc/cpu/alignment': No such file or directory
+[    2.026736] init: write_file: Unable to open '/proc/sys/kernel/sched_compat_yield': No such file or directory
+[    2.030473] init: write_file: Unable to write to '/dev/cpuctl/cpu.shares': Invalid argument
+[    2.034121] init: write_file: Unable to open '/proc/sys/abi/swp': No such file or directory
+[    2.036779] init: /dev/hw_random not found
+[    2.043655] EXT4-fs (vda): mounted filesystem with ordered data mode. Opts: (null)
+[    2.046712] fs_mgr: __mount(source=/dev/block/vda,target=/system,type=ext4)=0
+[    2.049528] EXT4-fs (vdb): Ignoring removed nomblk_io_submit option
+[    2.056053] EXT4-fs (vdb): mounted filesystem with ordered data mode. Opts: nomblk_io_submit,errors=panic
+[    2.059459] fs_mgr: __mount(source=/dev/block/vdb,target=/cache,type=ext4)=0
+[    2.062484] EXT4-fs (vdc): Ignoring removed nomblk_io_submit option
+[    2.069347] EXT4-fs (vdc): mounted filesystem with ordered data mode. Opts: nomblk_io_submit,errors=remount-ro
+[    2.073427] fs_mgr: check_fs(): mount(/dev/block/vdc,/data,ext4)=0: Success
+[    2.078016] fs_mgr: check_fs(): unmount(/data) succeeded
+[    2.081455] fs_mgr: Running /system/bin/e2fsck on /dev/block/vdc
+[    2.122873] e2fsck: e2fsck 1.42.9 (28-Dec-2013)
+[    2.122873] 
+[    2.124669] e2fsck: /dev/block/vdc: clean, 42/131072 files, 18824/524288 blocks
+[    2.124669] 
+[    2.127913] EXT4-fs (vdc): Ignoring removed nomblk_io_submit option
+[    2.133630] EXT4-fs (vdc): mounted filesystem with ordered data mode. Opts: nomblk_io_submit,errors=panic
+[    2.136966] fs_mgr: __mount(source=/dev/block/vdc,target=/data,type=ext4)=0
+[    2.142279] init: Starting service 'logd'...
+[    2.146581] init: SELinux: Could not set context for /data:  Read-only file system
+[    2.149137] init: Starting service 'vold'...
+[    2.150776] init: Not bootcharting.
+[    2.158244] init: SELinux: Could not set context for /data:  Read-only file system
+[    2.161610] init: Starting service 'exec 0 (/system/bin/tzdatacheck)'...
+[    2.172948] init: Service 'exec 0 (/system/bin/tzdatacheck)' (pid 1274) exited with status 0
+[    2.192846] logd.auditd: start
+[    2.194195] logd.klogd: 2194188000
+[    2.222781] init: (Loading properties from /system/build.prop took 0.05s.)
+[    2.225334] init: (Loading properties from /vendor/build.prop took 0.00s.)
+[    2.227638] init: (Loading properties from /factory/factory.prop took 0.00s.)
+[    2.229733] init: (Loading properties from /data/local.prop took 0.00s.)
+[    2.232660] init: Unable to open persistent property directory "/data/property": No such file or directory
+[    2.235658] init: /recovery not specified in fstab
+[    2.237806] init: Starting service 'logd-reinit'...
+[    2.244847] init: Starting service 'healthd'...
+[    2.247197] logd.daemon: reinit
+[    2.247217] init: Starting service 'lmkd'...
+[    2.247486] init: Starting service 'servicemanager'...
+[    2.247666] init: Starting service 'surfaceflinger'...
+[    2.247899] init: Starting service 'qemu-props'...
+[    2.248289] init: Unable to write persistent property to temp file /data/property/.temp.lScggemulator: onGuestSendCommand: [0x7fa8229b6d70] Adb connected, start proxing data
+h: No such file or directory
+[    2.248344] init: Unable to write persistent property to temp file /data/property/.temp.4hA6Qe: No such file or directory
+[    2.248492] init: property_set("ro.build.product", "generic") failed
+[    2.248497] binder: 1294:1294 transaction failed 29189, size 0-0
+[    2.248981] init: property_set("ro.product.device", "generic") failed
+[    2.249015] init: Service 'logd-reinit' (pid 1285) exited with status 0
+[    2.250619] init: Starting service 'goldfish-logcat'...
+[    2.250874] init: Starting service 'goldfish-setup'...
+[    2.252332] init: Starting service 'console'...
+[    2.253016] init: Starting service 'adbd'...
+[    2.253984] init: Starting service 'encrypt'...
+[    2.254769] init: write_file: Unable to open '/sys/class/android_usb/android0/enable': No such file or directory
+[    2.254826] init: write_file: Unable to open '/sys/class/android_usb/android0/idVendor': No such file or directory
+[    2.254856] init: write_file: Unable to open '/sys/class/android_usb/android0/idProduct': No such file or directory
+[    2.254906] init: write_file: Unable to open '/sys/class/android_usb/android0/functions': No such file or directory
+[    2.254976] init: write_file: Unable to open '/sys/class/android_usb/android0/enable': No such file or directory
+[    2.264884] init: Service 'qemu-props' (pid 1299) exited with status 0
+[    2.275700] init: Service 'goldfish-logcat' (pid 1300) exited with status 0
+[    2.337885] type=1400 audit(1489954172.330:4): avc: granted { read write } for pid=1336 comm="vold" name="vdd" dev="tmpfs" ino=3114 scontext=u:r:vold:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file
+[    2.349079] type=1400 audit(1489954172.330:5): avc: granted { read write open } for pid=1336 comm="vold" path="/dev/block/vdd" dev="tmpfs" ino=3114 scontext=u:r:vold:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file
+[    2.363816] init: Not bootcharting.
+[    2.369044] type=1400 audit(1489954172.330:6): avc: granted { getattr } for pid=1336 comm="vold" path="/dev/block/vdd" dev="tmpfs" ino=3114 scontext=u:r:vold:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file
+[    2.372764] init: Starting service 'exec 1 (/system/bin/tzdatacheck)'...
+shell@generic_x86_64:/ $ [    2.386716] init: Service 'exec 1 (/system/bin/tzdatacheck)' (pid 1343) exited with status 0
+[    2.408881] init: Service 'goldfish-setup' (pid 1301) exited with status 0
+[    2.427891] init: Starting service 'bootanim'...
+[    2.880395] type=1400 audit(1489954172.870:7): avc: denied { write } for pid=1359 comm="BootAnimation" name="property_service" dev="tmpfs" ino=4108 scontext=u:r:bootanim:s0 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0
+[    3.251321] healthd: BatteryVoltagePath not found
+[    3.252693] healthd: BatteryTemperaturePath not found
+[    4.726107] type=1400 audit(1489954174.720:8): avc: granted { read write } for pid=1336 comm="vold" name="vdd" dev="tmpfs" ino=3114 scontext=u:r:vold:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file
+[    4.732505] type=1400 audit(1489954174.720:9): avc: granted { read write open } for pid=1336 comm="vold" path="/dev/block/vdd" dev="tmpfs" ino=3114 scontext=u:r:vold:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file
+[    4.740533] type=1400 audit(1489954174.730:10): avc: granted { getattr } for pid=1336 comm="vold" path="/dev/block/vdd" dev="tmpfs" ino=3114 scontext=u:r:vold:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file
+[    4.749173] type=1400 audit(1489954174.740:11): avc: granted { read write } for pid=1336 comm="vold" name="vdd" dev="tmpfs" ino=3114 scontext=u:r:vold:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file
+[    4.756569] type=1400 audit(1489954174.740:12): avc: granted { read write open } for pid=1336 comm="vold" path="/dev/block/vdd" dev="tmpfs" ino=3114 scontext=u:r:vold:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file
+[    4.765067] type=1400 audit(1489954174.740:13): avc: granted { getattr } for pid=1336 comm="vold" path="/dev/block/vdd" dev="tmpfs" ino=3114 scontext=u:r:vold:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file
+[    4.773602] type=1400 audit(1489954174.740:14): avc: granted { read write } for pid=1336 comm="vold" name="vdd" dev="tmpfs" ino=3114 scontext=u:r:vold:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file
+[    4.780798] type=1400 audit(1489954174.740:15): avc: granted { read write open } for pid=1336 comm="vold" path="/dev/block/vdd" dev="tmpfs" ino=3114 scontext=u:r:vold:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file
+[    4.781522] init: Starting service 'netd'...
+[    4.781822] init: Starting service 'debuggerd'...
+[    4.782142] init: Starting service 'debuggerd64'...
+[    4.782408] init: Starting service 'ril-daemon'...
+[    4.782814] init: Starting service 'drm'...
+[    4.783022] init: Starting service 'media'...
+[    4.783257] init: Starting service 'installd'...
+[    4.783433] init: cannot find '/system/bin/install-recovery.sh', disabling 'flash_recovery'
+[    4.783518] init: Starting service 'keystore'...
+[    4.783714] init: Starting service 'zygote'...
+[    4.783902] init: Starting service 'zygote_secondary'...
+[    4.952011] bio: create slab <bio-1> at 1
+[    6.259874] warning: `main' uses 32-bit capabilities (legacy support in use)
+[    6.404549] type=1400 audit(1489954176.400:16): avc: denied { sys_module } for pid=1371 comm="netd" capability=16 scontext=u:r:netd:s0 tcontext=u:r:netd:s0 tclass=capability permissive=0
+[    6.838057] type=1400 audit(1489954176.830:17): avc: denied { write } for pid=1379 comm="main" name="property_service" dev="tmpfs" ino=4108 scontext=u:r:zygote:s0 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0
+[    6.883966] type=1400 audit(1489954176.880:18): avc: denied { write } for pid=1380 comm="main" name="property_service" dev="tmpfs" ino=4108 scontext=u:r:zygote:s0 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0
+[    9.173831] healthd: battery l=100 v=0 t=0.0 h=2 st=2 chg=a
+[    9.359308] lowmemorykiller: lowmem_shrink: convert oom_adj to oom_score_adj:
+[    9.362721] lowmemorykiller: oom_adj 0 => oom_score_adj 0
+[    9.365178] lowmemorykiller: oom_adj 1 => oom_score_adj 58
+[    9.367860] lowmemorykiller: oom_adj 2 => oom_score_adj 117
+[    9.370329] lowmemorykiller: oom_adj 3 => oom_score_adj 176
+[    9.373082] lowmemorykiller: oom_adj 9 => oom_score_adj 529
+[    9.376050] lowmemorykiller: oom_adj 15 => oom_score_adj 1000
+[   19.389746] type=1400 audit(1489954189.987:19): avc: granted { read write } for pid=1336 comm="vold" name="vdd" dev="tmpfs" ino=3114 scontext=u:r:vold:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file
+[   19.399149] type=1400 audit(1489954189.997:20): avc: granted { read write open } for pid=1336 comm="vold" path="/dev/block/vdd" dev="tmpfs" ino=3114 scontext=u:r:vold:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file
+[   19.407970] type=1400 audit(1489954190.007:21): avc: granted { getattr } for pid=1336 comm="vold" path="/dev/block/vdd" dev="tmpfs" ino=3114 scontext=u:r:vold:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file
+[   19.417155] type=1400 audit(1489954190.017:22): avc: granted { read write } for pid=1336 comm="vold" name="vdd" dev="tmpfs" ino=3114 scontext=u:r:vold:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file
+[   19.425660] type=1400 audit(1489954190.017:23): avc: granted { read write open } for pid=1336 comm="vold" path="/dev/block/vdd" dev="tmpfs" ino=3114 scontext=u:r:vold:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file
+[   19.435402] type=1400 audit(1489954190.017:24): avc: granted { getattr } for pid=1336 comm="vold" path="/dev/block/vdd" dev="tmpfs" ino=3114 scontext=u:r:vold:s0 tcontext=u:object_r:block_device:s0 tclass=blk_file
+[   19.614118] bio: create slab <bio-1> at 1
+[   19.816879] init: Service 'netd' is being killed...
+[   19.820744] init: Service 'debuggerd' is being killed...
+[   19.825373] init: Service 'debuggerd64' is being killed...
+[   19.828189] init: Service 'ril-daemon' is being killed...
+[   19.830896] init: Service 'drm' is being killed...
+[   19.836307] init: Service 'media' is being killed...
+[   19.840110] init: Service 'installd' is being killed...
+[   19.844030] init: Service 'keystore' is being killed...
+[   19.848099] init: Service 'zygote' is being killed...
+[   19.856101] init: Service 'zygote_secondary' is being killed...
+[   19.859855] init: Service 'netd' (pid 1371) killed by signal 9
+[   19.863344] init: Service 'netd' (pid 1371) killing any children in process group
+[   19.866933] init: Service 'debuggerd' (pid 1372) killed by signal 9
+[   19.871330] init: Service 'debuggerd' (pid 1372) killing any children in process group
+[   19.876636] init: Service 'debuggerd64' (pid 1373) killed by signal 9
+[   19.879870] init: Service 'debuggerd64' (pid 1373) killing any children in process group
+[   19.885445] init: Service 'ril-daemon' (pid 1374) killed by signal 9
+[   19.886409] binder: undelivered transaction 10662
+[   19.886412] binder: undelivered death notification, 00007fc0a8fd0500
+[   19.886413] binder: undelivered death notification, 00007fc0b62b3980
+[   19.886414] binder: undelivered death notification, 00007fc0a8fd01e0
+[   19.900756] init: Service 'ril-daemon' (pid 1374) killing any children in process group
+[   19.902073] binder: 1298:1354 transaction failed 29189, size 68-0
+[   19.903826] binder: undelivered transaction 10658
+[   19.912455] init: Service 'drm' (pid 1375) killed by signal 9
+[   19.916778] init: Service 'drm' (pid 1375) killing any children in process group
+[   19.921783] init: Service 'media' (pid 1376) killed by signal 9
+[   19.925209] init: Service 'media' (pid 1376) killing any children in process group
+[   19.928011] init: Service 'installd' (pid 1377) killed by signal 9
+[   19.930214] init: Service 'installd' (pid 1377) killing any children in process group
+[   19.933231] init: Service 'keystore' (pid 1378) killed by signal 9
+[   19.935146] init: Service 'keystore' (pid 1378) killing any children in process group
+[   19.938170] init: Service 'zygote' (pid 1379) killed by signal 9
+[   19.940426] init: Service 'zygote' (pid 1379) killing any children in process group
+[   19.944608] init: Service 'zygote_secondary' (pid 1380) killed by signal 9
+[   19.947080] init: Service 'zygote_secondary' (pid 1380) killing any children in process group
+[   19.950254] init: Untracked pid 1659 killed by signal 9
+[   19.952804] init: Untracked pid 1777 killed by signal 9
+[   19.954886] init: Untracked pid 1957 killed by signal 9
+[   19.956775] init: Untracked pid 1980 killed by signal 9
+[   19.958673] init: Untracked pid 1992 killed by signal 9
+[   19.960736] init: Untracked pid 2108 killed by signal 9
+[   20.862828] binder: undelivered death notification, 00007fc0b21ee480
+[   20.865908] binder: undelivered death notification, 00007fc0b2a1d580
+[   20.870106] binder: undelivered transaction 10660
+[   20.873115] binder: undelivered transaction 10661
+[   21.826733] EXT4-fs (dm-0): Ignoring removed nomblk_io_submit option
+[   21.834690] EXT4-fs (dm-0): mounted filesystem with ordered data mode. Opts: nomblk_io_submit,errors=remount-ro
+[   21.838357] fs_mgr: check_fs(): mount(/dev/block/dm-0,/data,ext4)=0: Success
+[   21.844077] fs_mgr: check_fs(): unmount(/data) succeeded
+[   21.845727] fs_mgr: Running /system/bin/e2fsck on /dev/block/dm-0
+[   21.863832] e2fsck: e2fsck 1.42.9 (28-Dec-2013)
+[   21.863832] 
+[   21.865733] e2fsck: /dev/block/dm-0: clean, 42/131072 files, 18824/524288 blocks
+[   21.865733] 
+[   21.868934] EXT4-fs (dm-0): Ignoring removed nomblk_io_submit option
+[   21.875831] EXT4-fs (dm-0): mounted filesystem with ordered data mode. Opts: nomblk_io_submit,errors=panic
+[   21.878852] fs_mgr: __mount(source=/dev/block/dm-0,target=/data,type=ext4)=0
+[   21.882388] init: (Loading properties from /data/local.prop took 0.00s.)
+[   21.884654] init: Unable to open persistent property directory "/data/property": No such file or directory
+[   21.887817] init: Starting service 'logd-reinit'...
+[   21.891360] init: Not bootcharting.
+[   21.893638] logd.daemon: reinit
+[   21.895094] init: Service 'logd-reinit' (pid 2157) exited with status 0
+[   21.924299] init: Starting service 'exec 2 (/system/bin/tzdatacheck)'...
+[   21.929847] init: Service 'exec 2 (/system/bin/tzdatacheck)' (pid 2158) exited with status 0
+[   21.942596] init: Starting service 'netd'...
+[   21.945153] init: Starting service 'debuggerd'...
+[   21.947364] init: Starting service 'debuggerd64'...
+[   21.949573] init: Starting service 'ril-daemon'...
+[   21.952338] init: Starting service 'drm'...
+[   21.954587] init: Starting service 'media'...
+[   21.956684] init: Starting service 'installd'...
+[   21.958872] init: Starting service 'keystore'...
+[   21.961424] init: Starting service 'zygote'...
+[   21.963568] init: Starting service 'zygote_secondary'...
+[   21.966305] init: Starting service 'gatekeeperd'...
+[   21.975111] init: Starting service 'perfprofd'...
+[   21.977109] init: Starting service 'fingerprintd'...
+[   22.943659] init: Service 'encrypt' (pid 1304) exited with status 0
+[   23.122121] type=1400 audit(1489954193.737:25): avc: denied { sys_module } for pid=2159 comm="netd" capability=16 scontext=u:r:netd:s0 tcontext=u:r:netd:s0 tclass=capability permissive=0
+[   23.790693] type=1400 audit(1489954194.397:26): avc: denied { write } for pid=2171 comm="main" name="property_service" dev="tmpfs" ino=4108 scontext=u:r:zygote:s0 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0
+[   24.071454] type=1400 audit(1489954194.667:27): avc: denied { write } for pid=2170 comm="main" name="property_service" dev="tmpfs" ino=4108 scontext=u:r:zygote:s0 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0
+[   30.080267] healthd: battery l=100 v=0 t=0.0 h=2 st=2 chg=a
+[   30.311554] lowmemorykiller: lowmem_shrink: convert oom_adj to oom_score_adj:
+[   30.316667] lowmemorykiller: oom_adj 0 => oom_score_adj 0
+[   30.319722] lowmemorykiller: oom_adj 1 => oom_score_adj 58
+[   30.322911] lowmemorykiller: oom_adj 2 => oom_score_adj 117
+[   30.325268] lowmemorykiller: oom_adj 3 => oom_score_adj 176
+[   30.327962] lowmemorykiller: oom_adj 9 => oom_score_adj 529
+[   30.330624] lowmemorykiller: oom_adj 15 => oom_score_adj 1000
 emulator: _hwFingerprint_connect: connect finger print listen is called
 
 emulator: got message from guest system fingerprint HAL
 
-[   15.266573] init: Service 'bootanim' (pid 1358) exited with status 0
-[   19.571218] binder: 2617:2625 refcount change on invalid ref 12
-[   30.623235] type=1400 audit(1489077465.024:8): avc: denied { read } for pid=2997 comm="Binder_2" name="/" dev="tmpfs" ino=5121 scontext=u:r:untrusted_app:s0:c512,c768 tcontext=u:object_r:device:s0 tclass=dir permissive=0
-[   30.900244] type=1400 audit(1489077465.294:9): avc: denied { search } for pid=2997 comm="Binder_2" name="1291" dev="proc" ino=4069 scontext=u:r:untrusted_app:s0:c512,c768 tcontext=u:r:zygote:s0 tclass=dir permissive=0
-[   34.131951] type=1400 audit(1489077468.534:10): avc: denied { read } for pid=3008 comm="Binder_3" name="/" dev="tmpfs" ino=5121 scontext=u:r:untrusted_app:s0:c512,c768 tcontext=u:object_r:device:s0 tclass=dir permissive=0
-[   34.239549] type=1400 audit(1489077468.634:11): avc: denied { search } for pid=3008 comm="Binder_3" name="1291" dev="proc" ino=4069 scontext=u:r:untrusted_app:s0:c512,c768 tcontext=u:r:zygote:s0 tclass=dir permissive=0
-emulator: Done with QEMU main loop
-emulator: User configuration saved to /Users/F1sherKK/.android/avd/Test-Emulator-API23-Nexus-5-1.avd/emulator-user.ini
+[   45.783500] binder: release 3516:3516 transaction 33656 out, still active
+[   45.978474] binder: 2441:2603 transaction failed 29189, size 8-0
+[   45.981044] binder: send failed reply for transaction 33656, target dead
+[   46.092187] init: Service 'bootanim' (pid 1356) exited with status 0
+emulator: onGuestRecvData: [0x7fa8229b6d70] Adb closed by host
+emulator: onGuestClose: [0x7fa8229b6d70] Adb closed by guest
+emulator: onGuestSendCommand: [0x7fa81e1840d0] Adb connected, start proxing data
+[   56.958426] binder: 3978:3986 refcount change on invalid ref 12
+[   63.149043] type=1400 audit(1489954233.898:28): avc: denied { read } for pid=4189 comm="Binder_4" name="/" dev="tmpfs" ino=3009 scontext=u:r:untrusted_app:s0:c512,c768 tcontext=u:object_r:device:s0 tclass=dir permissive=0
+[   63.251964] healthd: battery l=100 v=0 t=0.0 h=2 st=2 chg=a
+[   63.486035] type=1400 audit(1489954234.238:29): avc: denied { search } for pid=4189 comm="Binder_4" name="2170" dev="proc" ino=5948 scontext=u:r:untrusted_app:s0:c512,c768 tcontext=u:r:zygote:s0 tclass=dir permissive=0
+[   76.260373] binder: 4436:4444 refcount change on invalid ref 17
+[   76.293117] binder: 4436:4453 refcount change on invalid ref 17
+[   76.296997] binder: 4436:4453 refcount change on invalid ref 17
+[   76.299308] binder: transaction release 85790 bad handle 17
+[   79.857697] binder: 1298:1765 transaction failed 29189, size 164-0
+[   92.856498] type=1400 audit(1489954263.608:30): avc: denied { read } for pid=4188 comm="Binder_3" name="/" dev="tmpfs" ino=3009 scontext=u:r:untrusted_app:s0:c512,c768 tcontext=u:object_r:device:s0 tclass=dir permissive=0
+[   92.913341] type=1400 audit(1489954263.668:31): avc: denied { search } for pid=4188 comm="Binder_3" name="2170" dev="proc" ino=5948 scontext=u:r:untrusted_app:s0:c512,c768 tcontext=u:r:zygote:s0 tclass=dir permissive=0
+[   93.421457] type=1400 audit(1489954264.168:32): avc: denied { search } for pid=4163 comm="Binder_2" name="2170" dev="proc" ino=5948 scontext=u:r:untrusted_app:s0:c512,c768 tcontext=u:r:zygote:s0 tclass=dir permissive=0
+[   93.860224] type=1400 audit(1489954264.608:33): avc: denied { read } for pid=4163 comm="Binder_2" name="/" dev="tmpfs" ino=3009 scontext=u:r:untrusted_app:s0:c512,c768 tcontext=u:object_r:device:s0 tclass=dir permissive=0
+[  123.252618] healthd: battery l=100 v=0 t=0.0 h=2 st=2 chg=a
+[  161.236187] type=1400 audit(1489954331.988:34): avc: denied { search } for pid=4163 comm="Binder_2" name="2170" dev="proc" ino=5948 scontext=u:r:untrusted_app:s0:c512,c768 tcontext=u:r:zygote:s0 tclass=dir permissive=0
+[  161.253622] type=1400 audit(1489954332.008:35): avc: denied { read } for pid=4163 comm="Binder_2" name="/" dev="tmpfs" ino=3009 scontext=u:r:untrusted_app:s0:c512,c768 tcontext=u:object_r:device:s0 tclass=dir permissive=0
+[  183.251573] healthd: battery l=100 v=0 t=0.0 h=2 st=2 chg=a
+[  243.253748] healthd: battery l=100 v=0 t=0.0 h=2 st=2 chg=a
+[  273.121688] binder: release 4436:4453 transaction 192614 out, still active
+[  273.166484] binder: 2441:2453 transaction failed 29189, size 4-0
+[  273.172611] binder: send failed reply for transaction 192614, target dead
+emulator: Emulator killed by console kill command.
+
+coreaudio: Could not lock voice for audioInputDeviceIOProc
+Reason: Invalid argument
+coreaudio: Could not lock voice for audioOutputDeviceIOProc
+Reason: Invalid argument
+coreaudio: Could not lock voice for audioInputDeviceIOProc
+Reason: Invalid argument
+coreaudio: Could not lock voice for audioOutputDeviceIOProc
+Reason: Invalid argument
+coreaudio: Could not lock voice for audioInputDeviceIOProc
+Reason: Invalid argument
+coreaudio: Could not lock voice for audioOutputDeviceIOProc
+Reason: Invalid argument
