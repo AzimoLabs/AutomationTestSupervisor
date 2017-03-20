@@ -2,8 +2,12 @@ import re
 import os
 import glob
 
+from error.Exceptions import LauncherFlowInterruptedException
+
 from .ApkModels import ApkCandidate
+
 from settings import GlobalConfig
+
 from system.console import (
     Printer,
     Color
@@ -60,8 +64,9 @@ class ApkProvider:
         if os.path.isdir(GlobalConfig.APK_DIR):
             Printer.system_message(self.TAG, "Directory '" + GlobalConfig.APK_DIR + "' was found.")
         else:
-            Printer.error(self.TAG, "Directory '" + GlobalConfig.APK_DIR + "' does not exist. Launcher will quit.")
-            quit()
+            message = "Directory '{}' does not exist. Launcher will quit."
+            message = message.format(GlobalConfig.APK_DIR)
+            raise LauncherFlowInterruptedException(self.TAG, message)
 
     def provide_apk(self, test_set):
         self._find_candidates(test_set)

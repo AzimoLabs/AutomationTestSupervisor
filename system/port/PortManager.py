@@ -1,7 +1,10 @@
 from error.Exceptions import LauncherFlowInterruptedException
 
 from system.bin.SystemShellCommands import GeneralCommand
-from system.console import (ShellHelper, Printer)
+from system.console import (
+    ShellHelper,
+    Printer
+)
 
 TAG = "PortManager:"
 

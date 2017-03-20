@@ -1,4 +1,4 @@
-from system.console import Printer
+from error.Exceptions import LauncherFlowInterruptedException
 
 
 class OutsideSessionDevice:
@@ -30,12 +30,7 @@ class OutsideSessionVirtualDevice:
 class SessionVirtualDevice:
     TAG = "SessionVirtualDevice:"
 
-    def __init__(self, avd_schema,
-                 port,
-                 log_file,
-                 android_controller,
-                 emulator_controller,
-                 adb_controller):
+    def __init__(self, avd_schema, port, log_file, android_controller, emulator_controller, adb_controller):
         self.android_controller = android_controller
         self.emulator_controller = emulator_controller
         self.adb_controller = adb_controller
@@ -50,18 +45,18 @@ class SessionVirtualDevice:
 
     def _check_avd_schema(self):
         if self.avd_schema.avd_name == "":
-            Printer.error(self.TAG, "One AVD schema doesn't have name set.")
-            quit()
+            message = "One AVD schema doesn't have name set."
+            raise LauncherFlowInterruptedException(self.TAG, message)
 
         if self.avd_schema.create_avd_package == "":
-            Printer.error(self.TAG, "Parameter 'create_avd_package' in AVD schema '"
-                          + self.avd_schema.avd_name + "' cannot be empty.")
-            quit()
+            message = "Parameter 'create_avd_package' in AVD schema {} cannot be empty."
+            message = message.format(self.avd_schema.avd_name)
+            raise LauncherFlowInterruptedException(self.TAG, message)
 
         if self.avd_schema.launch_avd_launch_binary_name == "":
-            Printer.error(self.TAG, "Parameter 'launch_avd_launch_binary_name' in AVD schema '"
-                          + self.avd_schema.avd_name + "' cannot be empty.")
-            quit()
+            message = "Parameter 'launch_avd_launch_binary_name' in AVD schema {} cannot be empty."
+            message = message.format(self.avd_schema.avd_name)
+            raise LauncherFlowInterruptedException(self.TAG, message)
 
     def create(self):
         return self.android_controller.create_avd(self.avd_schema)

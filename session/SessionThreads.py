@@ -11,10 +11,11 @@ from system.console import (
 class TestThread(threading.Thread):
     TAG = "TestThread:"
 
-    def __init__(self, cmd):
+    def __init__(self, cmd, device_name):
         super().__init__()
 
         self.cmd = cmd
+        self.device_name = device_name
         self.is_finished = False
 
     def run(self):

@@ -9,7 +9,7 @@ class AdbCommand:
     WAIT_FOR_DEVICE = "wait-for-device"
     LIST_AVD = "list avd"
     SPECIFIC_DEVICE = "-s {}"
-    INSTALL_APK = "-install {}"
+    INSTALL_APK = "install {}"
     GET_PROPERTY = "shell getprop"
     KILL_DEVICE = "emu kill"
 
@@ -42,4 +42,10 @@ class GradleCommand:
 
 
 class InstrumentationRunnerCommand:
+    RUN_TEST = "shell am instrument -w"
+    NUM_SHARD = "-e numShards {}"
+    SHARD_INDEX = "-e shardIndex {}"
+    PACKAGE = "-e package {}"
+    INSTRUMENTATION_RUNNER = "{}"
     RUN_TEST_PACKAGE = "{} {} shell am instrument -w -e package {} {}"
+

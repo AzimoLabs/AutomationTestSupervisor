@@ -7,7 +7,9 @@ from android.bin.AndroidBinaryFileControllers import (
     GradleController,
     InstrumentationRunnerController,
 )
+
 from error.Exceptions import LauncherFlowInterruptedException
+
 from session.SessionDataStores import (
     DeviceStore,
     TestStore
@@ -17,6 +19,7 @@ from session.SessionManagers import (
     DeviceManager,
     TestManager
 )
+
 from settings import GlobalConfig
 from settings.loader import (
     PathsLoader,
@@ -126,7 +129,7 @@ try:
     device_manager.install_apk_on_devices(apk)
 
     Printer.step(TAG, "Starting tests.")
-    test_manager.run_tests(test_set, test_list)
+    test_manager.run_with_shards(test_set, test_list)
 
 except LauncherFlowInterruptedException as e:
     Printer.error(e.caller_tag, str(e))

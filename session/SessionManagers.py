@@ -1,5 +1,6 @@
-from settings import GlobalConfig
+from error.Exceptions import LauncherFlowInterruptedException
 
+from settings import GlobalConfig
 from session.SessionDevices import (
     OutsideSessionVirtualDevice,
     SessionVirtualDevice
@@ -37,9 +38,8 @@ class ApkManager:
 
             apk_candidate = self.apk_provider.provide_apk(test_set)
             if apk_candidate is None:
-                Printer.error(self.TAG,
-                              "No .apk* candidates for test session were found. Check your config. Launcher will quit.")
-                quit()
+                message = "No .apk* candidates for test session were found. Check your config. Launcher will quit."
+                raise LauncherFlowInterruptedException(self.TAG, message)
         return apk_candidate
 
     def build_apk(self, test_set):
@@ -49,9 +49,8 @@ class ApkManager:
 
         apk_candidate = self.apk_provider.provide_apk(test_set)
         if apk_candidate is None:
-            Printer.error(self.TAG,
-                          "No .apk* candidates for test session were found. Check your config. Launcher will quit.")
-            quit()
+            message = "No .apk* candidates for test session were found. Check your config. Launcher will quit."
+            raise LauncherFlowInterruptedException(self.TAG, message)
         return apk_candidate
 
 
@@ -158,9 +157,9 @@ class DeviceManager:
                     break
 
             if current_time - start_time >= timeout:
-                Printer.error(self.TAG, "Devices took longer than " + str(timeout)
-                              + " seconds to launch (ADB launch). Timeout quit.")
-                quit()
+                message = "Devices took longer than {} seconds to launch (ADB launch). Timeout quit."
+                message = message.format(str(timeout))
+                raise LauncherFlowInterruptedException(self.TAG, message)
 
         Printer.system_message(self.TAG, "ADB wait finished with success!")
 
@@ -209,9 +208,9 @@ class DeviceManager:
                     break
 
             if current_time - start_time >= GlobalConfig.AVD_SYSTEM_BOOT_TIMEOUT:
-                Printer.error(self.TAG, "Devices took longer than " + str(GlobalConfig.AVD_SYSTEM_BOOT_TIMEOUT)
-                              + " seconds to launch (Property launch). Timeout quit.")
-                quit()
+                message = "Devices took longer than seconds to launch (Property launch). Timeout quit."
+                message = message.format(str(GlobalConfig.AVD_SYSTEM_BOOT_TIMEOUT))
+                raise LauncherFlowInterruptedException(self.TAG, message)
 
         Printer.system_message(self.TAG, "Property launch finished with success!")
 
@@ -232,8 +231,9 @@ class DeviceManager:
 
     def install_apk_on_devices(self, apk):
         if not self.device_store.get_devices():
-            Printer.error(self.TAG, "No devices were found in test session. Launcher will quit.")
-            quit()
+            message = "No devices were found in test session. Launcher will quit."
+            message = message.format(str(GlobalConfig.AVD_SYSTEM_BOOT_TIMEOUT))
+            raise LauncherFlowInterruptedException(self.TAG, message)
 
         self._install_apk(apk.apk_name, apk.apk_path)
         self._install_apk(apk.test_apk_name, apk.test_apk_path)
@@ -279,7 +279,7 @@ class TestManager:
             for device in self.device_store.get_devices():
                 cmd = self.instrumentation_runner_controller.assemble_run_test_package_cmd(device.adb_name, package)
                 if device.status == "device":
-                    test_thread = TestThread(cmd)
+                    test_thread = TestThread(cmd, device.adb_name)
                     test_thread.start()
                     test_threads.append(test_thread)
                 else:
@@ -287,3 +287,59 @@ class TestManager:
 
             while any(not thread.is_finished for thread in test_threads):
                 time.sleep(1)
+
+    # TEMPORARY UGLY CODE
+    def run_with_shards(self, test_set, test_list):
+        self.test_store.get_packages(test_set, test_list)
+
+        test_start = time.time()
+
+        device_down_times = dict()
+        device_run_times = dict()
+        for device in self.device_store.get_devices():
+            device_down_times.update({device.adb_name: 0})
+            device_run_times.update({device.adb_name: 0})
+
+        index = -1
+        for package in self.test_store.packages_to_run:
+            test_threads = list()
+            for device in self.device_store.get_devices():
+                index += 1
+                devices_num = len(self.device_store.get_devices())
+                cmd = "{} {} {} {} {} {} {}".format("/Users/F1sherKK/Library/Android/sdk/platform-tools/adb",
+                                                    "-s " + device.adb_name,
+                                                    "shell am instrument -w",
+                                                    "-e numShards " + str(devices_num),
+                                                    "-e shardIndex " + str(index),
+                                                    "-e package " + package,
+                                                    "com.azimo.sendmoney.debug1.test/com.azimo.sendmoney.instrumentation.config.AzimoTestRunner")
+                if device.status == "device":
+                    test_thread = TestThread(cmd, device.adb_name)
+                    test_thread.start()
+                    test_threads.append(test_thread)
+                else:
+                    Printer.error(self.TAG, "ALAOSDOASODAKSODASKDA")
+
+            while any(not thread.is_finished for thread in test_threads):
+                time.sleep(1)
+                for thread in test_threads:
+                    if thread.is_finished:
+                        device_down_times[thread.device_name] += 1
+                    else:
+                        device_run_times[thread.device_name] += 1
+
+        for device in self.device_store.get_devices():
+            Printer.message_highlighted(self.TAG, "Device '" + device.adb_name + "' ran tests for: ",
+                                        str(device_run_times[device.adb_name]) + " seconds.")
+
+        Printer.system_message(self.TAG, "")
+
+        for device in self.device_store.get_devices():
+            Printer.message_highlighted(self.TAG, "Device '" + device.adb_name + "' waited for: ",
+                                        str(device_down_times[device.adb_name]) + " seconds.")
+
+        Printer.system_message(self.TAG, "")
+
+        test_end = time.time()
+        Printer.message_highlighted(self.TAG, "Test process took:", str((test_end - test_start)) + " seconds.")
+

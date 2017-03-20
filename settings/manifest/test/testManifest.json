@@ -16,6 +16,102 @@
       ],
       "test_classes": [],
       "test_cases": []
+    },
+    {
+      "test_package_name": "ConfirmAmount",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.ConfirmAmount"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "DeepLinking",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.DeepLinking"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "MyPeopleTab",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.MyPeopleTab"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "PaymentFlow",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.PaymentFlow"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "PromoCodes",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.PromoCodes"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "Referral",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.Referral"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "ScreenLock",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.ScreenLock"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "SearchContact",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.SearchContact"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "SetupContact",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.SetupContact"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "TransferStatus",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.TransferStatus"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "TransferTab",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.TransferTab"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "UserProfiles",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.UserProfiles"
+      ],
+      "test_classes": [],
+      "test_cases": []
     }
   ],
   "test_set_list": [
@@ -34,7 +130,20 @@
       "test_apk_assemble_task": "assembleAutomationIntegrationTestAndroidTest",
       "shard": false,
       "set_package_names": [
-        "AuthFlow"
+        "AuthFlow",
+        "CheckRates",
+        "ConfirmAmount",
+        "DeepLinking",
+        "MyPeopleTab",
+        "PaymentFlow",
+        "PromoCodes",
+        "Referral",
+        "ScreenLock",
+        "SearchContact",
+        "SetupContact",
+        "TransferStatus",
+        "TransferTab",
+        "UserProfiles"
       ]
     }
   ]

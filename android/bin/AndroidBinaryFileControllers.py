@@ -1,26 +1,15 @@
 import os
 import re
 
-from android.bin.AndroidShellCommands import (
-    AaptCommand,
-    AdbCommand,
-    AvdManagerCommand,
-    EmulatorCommand,
-    GradleCommand,
-    InstrumentationRunnerCommand
-)
+from android.bin.AndroidShellCommands import (AaptCommand, AdbCommand, AvdManagerCommand, EmulatorCommand,
+                                              GradleCommand, InstrumentationRunnerCommand)
+from error.Exceptions import LauncherFlowInterruptedException
 
 from settings import GlobalConfig
 
 from system.bin.SystemShellCommands import GeneralCommand
-from system.console import (
-    Printer,
-    ShellHelper
-)
-from system.file.FileUtils import (
-    clean_path,
-    add_ending_slash,
-)
+from system.console import (Printer, ShellHelper)
+from system.file.FileUtils import (clean_path, add_ending_slash, )
 
 
 class AaptController:
@@ -46,24 +35,25 @@ class AaptController:
                 build_tools_folder_with_highest_ver = build_tools_folder
 
         if build_tools_folder_with_highest_ver is None:
-            Printer.error(self.TAG, "Android SDK Build-Tools not found. Launcher will quit.")
-            quit()
+            message = "Android SDK Build-Tools not found. Launcher will quit."
+            raise LauncherFlowInterruptedException(self.TAG, message)
+
         else:
             Printer.message_highlighted(self.TAG, "Android SDK Build-Tools with latest version were selected: ",
                                         str(build_tools_folder_with_highest_ver))
 
-        self.aapt_bin = clean_path(add_ending_slash(GlobalConfig.SDK_DIR) + "build-tools/"
-                                   + str(build_tools_folder_with_highest_ver) + "/aapt")
+        self.aapt_bin = clean_path(add_ending_slash(GlobalConfig.SDK_DIR) + "build-tools/" + str(
+            build_tools_folder_with_highest_ver) + "/aapt")
 
         if os.path.isfile(self.aapt_bin):
             Printer.system_message(self.TAG, "Aapt binary file found at '" + self.aapt_bin + "'.")
         else:
-            Printer.error(self.TAG, "Unable to find Aapt binary at '" + self.aapt_bin + "'.")
-            quit()
+            message = "Unable to find Aapt binary at '{}'."
+            message = message.format(self.aapt_bin)
+            raise LauncherFlowInterruptedException(self.TAG, message)
 
     def dump_badging(self, apk_name):
-        dump_badging_cmd = "{} {}".format(self.aapt_bin,
-                                          AaptCommand.DUMP_BADGING.format(apk_name))
+        dump_badging_cmd = "{} {}".format(self.aapt_bin, AaptCommand.DUMP_BADGING.format(apk_name))
         return ShellHelper.execute_shell(dump_badging_cmd, False, False)
 
 
@@ -78,48 +68,39 @@ class AdbController:
         if os.path.isfile(self.adb_bin):
             Printer.system_message(self.TAG, "ADB binary file found at '" + self.adb_bin + "'.")
         else:
-            Printer.error(self.TAG, "Unable to find ADB binary at '" + self.adb_bin + "'.")
-            quit()
+            message = "Unable to find ADB binary at '{}'."
+            message = message.format(self.adb_bin)
+            raise LauncherFlowInterruptedException(self.TAG, message)
 
     def start_server(self):
-        start_server_cmd = "{} {}".format(self.adb_bin,
-                                          AdbCommand.START_SERVER)
+        start_server_cmd = "{} {}".format(self.adb_bin, AdbCommand.START_SERVER)
         return ShellHelper.execute_shell(start_server_cmd, True, True)
 
     def kill_server(self):
-        kill_server_cmd = "{} {}".format(self.adb_bin,
-                                         AdbCommand.KILL_SERVER)
+        kill_server_cmd = "{} {}".format(self.adb_bin, AdbCommand.KILL_SERVER)
         return ShellHelper.execute_shell(kill_server_cmd, True, True)
 
     def devices(self):
-        devices_cmd = "{} {}".format(self.adb_bin,
-                                     AdbCommand.DEVICES)
+        devices_cmd = "{} {}".format(self.adb_bin, AdbCommand.DEVICES)
         return ShellHelper.execute_shell(devices_cmd, False, False)
 
     def wait_for_device(self):
-        waif_for_device_cmd = "{} {}".format(self.adb_bin,
-                                             AdbCommand.WAIT_FOR_DEVICE)
+        waif_for_device_cmd = "{} {}".format(self.adb_bin, AdbCommand.WAIT_FOR_DEVICE)
         return ShellHelper.execute_shell(waif_for_device_cmd, False, False)
 
     def kill_device(self, device_adb_name):
-        kill_device_cmd = "{} {} {} {}".format(self.adb_bin,
-                                               AdbCommand.SPECIFIC_DEVICE,
-                                               device_adb_name,
+        kill_device_cmd = "{} {} {} {}".format(self.adb_bin, AdbCommand.SPECIFIC_DEVICE, device_adb_name,
                                                AdbCommand.KILL_DEVICE)
         return ShellHelper.execute_shell(kill_device_cmd, True, False)
 
     def install_apk(self, device_adb_name, apk_name):
-        install_apk_cmd = "{} {} {} {}".format(self.adb_bin,
-                                               AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
-                                               AdbCommand.INSTALL_APK.format(apk_name),
-                                               GeneralCommand.CHANGE_THREAD)
+        install_apk_cmd = "{} {} {} {}".format(self.adb_bin, AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                               AdbCommand.INSTALL_APK.format(apk_name), GeneralCommand.CHANGE_THREAD)
         return ShellHelper.execute_shell(install_apk_cmd, True, False)
 
     def get_property(self, device_adb_name, device_property):
-        get_property_cmd = "{} {} {} {}".format(self.adb_bin,
-                                                AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
-                                                AdbCommand.GET_PROPERTY,
-                                                device_property)
+        get_property_cmd = "{} {} {} {}".format(self.adb_bin, AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                                AdbCommand.GET_PROPERTY, device_property)
         return ShellHelper.execute_shell(get_property_cmd, False, False)
 
 
@@ -134,17 +115,16 @@ class AvdManagerController:
         if os.path.isfile(self.avdmanager_bin):
             Printer.system_message(self.TAG, "AvdManager binary file found at '" + self.avdmanager_bin + "'.")
         else:
-            Printer.error(self.TAG, "Unable to find ADB binary at '" + self.avdmanager_bin + "'.")
-            quit()
+            message = "Unable to find ADB binary at '{}'."
+            message = message.format(self.avdmanager_bin)
+            raise LauncherFlowInterruptedException(self.TAG, message)
 
     def list_avd(self):
-        list_avd_cmd = "{} {}".format(self.avdmanager_bin,
-                                      AvdManagerCommand.LIST_AVD)
+        list_avd_cmd = "{} {}".format(self.avdmanager_bin, AvdManagerCommand.LIST_AVD)
         return ShellHelper.execute_shell(list_avd_cmd, False, False)
 
     def delete_avd(self, avd_schema):
-        delete_avd_cmd = "{} {}".format(self.avdmanager_bin,
-                                        AvdManagerCommand.DELETE_AVD.format(avd_schema.avd_name))
+        delete_avd_cmd = "{} {}".format(self.avdmanager_bin, AvdManagerCommand.DELETE_AVD.format(avd_schema.avd_name))
         return ShellHelper.execute_shell(delete_avd_cmd, True, True)
 
     def create_avd(self, avd_schema):
@@ -171,14 +151,8 @@ class AvdManagerController:
         part_avd_additional_options = AvdManagerCommand.CreateAvdCommandPart.AVD_ADDITIONAL_OPTIONS.format(
             avd_schema.create_avd_additional_options)
 
-        create_avd_cmd = "{} {} {} {} {} {} {} {} {}".format(part_answer_no,
-                                                             self.avdmanager_bin,
-                                                             part_create_avd,
-                                                             part_name,
-                                                             part_package,
-                                                             part_device,
-                                                             part_tag,
-                                                             part_abi,
+        create_avd_cmd = "{} {} {} {} {} {} {} {} {}".format(part_answer_no, self.avdmanager_bin, part_create_avd,
+                                                             part_name, part_package, part_device, part_tag, part_abi,
                                                              part_avd_additional_options)
         return ShellHelper.execute_shell(create_avd_cmd, True, True)
 
@@ -189,8 +163,7 @@ class EmulatorController:
     emulator_bin = dict()
 
     def __init__(self):
-        tools_dir = clean_path(
-            add_ending_slash(str(GlobalConfig.SDK_DIR)) + "tools/")
+        tools_dir = clean_path(add_ending_slash(str(GlobalConfig.SDK_DIR)) + "tools/")
 
         try:
             for the_file in os.listdir(tools_dir):
@@ -200,10 +173,10 @@ class EmulatorController:
                     self.emulator_bin[str(binary_name[0])] = file_path
         finally:
             if len(self.emulator_bin) == 0:
-                Printer.error(self.TAG,
-                              "Unable to find emulator binary files in direction '" + str(
-                                  tools_dir) + "' of Android SDK.")
-                quit()
+                message = "Unable to find emulator binary files in direction '{}' of Android SDK."
+                message = message.format(str(tools_dir))
+                raise LauncherFlowInterruptedException(self.TAG, message)
+
             else:
                 Printer.system_message(self.TAG, "Emulator related binary files found in Android SDK:\n" + '\n'.join(
                     ["              - '" + path + "'" for path in self.emulator_bin.values()]))
@@ -224,12 +197,8 @@ class EmulatorController:
         part_output_file = "{} {}".format(GeneralCommand.DELEGATE_OUTPUT_TO_FILE.format(log_file),
                                           GeneralCommand.CHANGE_THREAD)
 
-        launch_avd_cmd = "{} {} {} {} {} {}".format(part_emulator_binary,
-                                                    part_name,
-                                                    part_port,
-                                                    part_snapshot,
-                                                    part_additional_options,
-                                                    part_output_file)
+        launch_avd_cmd = "{} {} {} {} {} {}".format(part_emulator_binary, part_name, part_port, part_snapshot,
+                                                    part_additional_options, part_output_file)
 
         return ShellHelper.execute_shell(launch_avd_cmd, True, False)
 
@@ -237,10 +206,8 @@ class EmulatorController:
         config_ini_to_apply_filepath = clean_path(avd_schema.create_avd_hardware_config_filepath)
 
         real_config_ini_file_path = clean_path(
-            add_ending_slash(GlobalConfig.AVD_DIR) +
-            add_ending_slash("avd") +
-            add_ending_slash(avd_schema.avd_name + ".avd") +
-            "config.ini")
+            add_ending_slash(GlobalConfig.AVD_DIR) + add_ending_slash("avd") + add_ending_slash(
+                avd_schema.avd_name + ".avd") + "config.ini")
 
         real_config_ini_file = None
         config_ini_to_apply_file = None
@@ -281,8 +248,8 @@ class GradleController:
         self.gradlew_found = os.path.isfile(self.gradle_bin)
 
         if self.project_root_found:
-            Printer.system_message(self.TAG, "Project root dir '" + GlobalConfig.PROJECT_ROOT_DIR
-                                   + "' was found! Building new .*apk is possible.")
+            Printer.system_message(self.TAG,
+                                   "Project root dir '" + GlobalConfig.PROJECT_ROOT_DIR + "' was found! Building new .*apk is possible.")
             if self.gradlew_found:
                 Printer.system_message(self.TAG, "gradlew binary found at'" + str(self.gradle_bin) + "'.")
 
@@ -290,8 +257,7 @@ class GradleController:
         application_apk_assemble_task = test_set.application_apk_assemble_task
         self._check_if_build_is_possible(application_apk_assemble_task)
 
-        cmd = GradleCommand.RUN_TASK_IN_OTHER_DIRECTORY.format(self.gradle_bin,
-                                                               GlobalConfig.PROJECT_ROOT_DIR,
+        cmd = GradleCommand.RUN_TASK_IN_OTHER_DIRECTORY.format(self.gradle_bin, GlobalConfig.PROJECT_ROOT_DIR,
                                                                application_apk_assemble_task)
         ShellHelper.execute_shell(cmd, True, True)
 
@@ -299,23 +265,23 @@ class GradleController:
         test_apk_assemble_task = test_set.test_apk_assemble_task
         self._check_if_build_is_possible(test_apk_assemble_task)
 
-        cmd = GradleCommand.RUN_TASK_IN_OTHER_DIRECTORY.format(self.gradle_bin,
-                                                               GlobalConfig.PROJECT_ROOT_DIR,
+        cmd = GradleCommand.RUN_TASK_IN_OTHER_DIRECTORY.format(self.gradle_bin, GlobalConfig.PROJECT_ROOT_DIR,
                                                                test_apk_assemble_task)
         ShellHelper.execute_shell(cmd, True, True)
 
     def _check_if_build_is_possible(self, cmd):
         if cmd == "":
-            Printer.error(self.TAG, "Gradle assemble task (for building .*apk) was not specified in TestManifest. "
-                                    "Launcher will quit.")
-            quit()
+            message = "Gradle assemble task (for building .*apk) was not specified in TestManifest. Launcher will quit."
+            raise LauncherFlowInterruptedException(self.TAG, message)
+
         if not self.project_root_found:
-            Printer.error(self.TAG, "Unable to build new .*apk. Project root not found. Launcher will quit.")
-            quit()
+            message = "Unable to build new .*apk. Project root not found. Launcher will quit."
+            raise LauncherFlowInterruptedException(self.TAG, message)
+
         if not self.gradlew_found:
-            Printer.error(self.TAG, "Unable to build new .*apk. File 'gradlew' not found in dir '"
-                          + GlobalConfig.PROJECT_ROOT_DIR + "'. Launcher will quit.")
-            quit()
+            message = "Unable to build new .*apk. File 'gradlew' not found in dir '{}'. Launcher will quit."
+            message = message.format(GlobalConfig.PROJECT_ROOT_DIR)
+            raise LauncherFlowInterruptedException(self.TAG, message)
 
 
 class InstrumentationRunnerController:
@@ -329,11 +295,11 @@ class InstrumentationRunnerController:
         if os.path.isfile(self.adb_bin):
             Printer.system_message(self.TAG, "ADB binary file found at '" + self.adb_bin + "'.")
         else:
-            Printer.error(self.TAG, "Unable to find ADB binary at '" + self.adb_bin + "'.")
-            quit()
+            message = "Unable to find ADB binary at '{}'."
+            message = message.format(self.adb_bin)
+            raise LauncherFlowInterruptedException(self.TAG, message)
 
     def assemble_run_test_package_cmd(self, device_adb_name, test_package):
         return InstrumentationRunnerCommand.RUN_TEST_PACKAGE.format(self.adb_bin,
                                                                     AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
-                                                                    test_package,
-                                                                    GlobalConfig.INSTRUMENTATION_RUNNER)
+                                                                    test_package, GlobalConfig.INSTRUMENTATION_RUNNER)
