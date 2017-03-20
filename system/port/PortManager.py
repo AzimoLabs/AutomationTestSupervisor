@@ -1,8 +1,7 @@
+from error.Exceptions import LauncherFlowInterruptedException
+
 from system.bin.SystemShellCommands import GeneralCommand
-from system.console import (
-    ShellHelper,
-    Printer
-)
+from system.console import (ShellHelper, Printer)
 
 TAG = "PortManager:"
 
@@ -38,9 +37,8 @@ def get_open_ports(avd_set):
 
     range_min = avd_set.avd_port_rules.search_range_min
     range_max = avd_set.avd_port_rules.search_range_max
-    Printer.system_message(TAG,
-                           "Checking for " + str(avd_instances) + " open ports in range <" + str(range_min) + ", "
-                           + str(range_max) + ">.")
+    Printer.system_message(TAG, "Checking for " + str(avd_instances) + " open ports in range <" + str(
+        range_min) + ", " + str(range_max) + ">.")
 
     available_ports = list()
 
@@ -54,8 +52,9 @@ def get_open_ports(avd_set):
         if port_open:
             available_ports.append(port)
         else:
-            Printer.error(TAG, "Port " + str(port) + " was requested but is currently used.")
-            quit()
+            message = "Port {} was requested but is currently used."
+            message = message.format(str(port))
+            raise LauncherFlowInterruptedException(TAG, message)
 
     if should_assign_missing_ports:
         temp_port = range_min
@@ -76,10 +75,9 @@ def get_open_ports(avd_set):
                 temp_port += 2
 
         if len(available_ports) != avd_instances:
-            Printer.error(TAG, "There are only " + str(len(available_ports)) + " open ports available in range <"
-                          + str(range_min) + ", " + str(range_max) + ">. Requested amount: " + str(avd_instances) +
-                          ".")
-            quit()
+            message = "There are only {} open ports available in range <{}, {}>. Requested amount: {}."
+            message = message.format(str(len(available_ports)), str(range_min), str(range_max), str(avd_instances))
+            raise LauncherFlowInterruptedException(TAG, message)
 
     return available_ports
 
@@ -92,36 +90,36 @@ def _check_port_rules(avd_set):
         avd_instances += avd.instances
 
     if len(avd_rules.ports_to_use) != len(set(avd_rules.ports_to_use)):
-        Printer.error(TAG, "'Ports to use' list contains duplicates.")
-        quit()
+        message = "'Ports to use' list contains duplicates."
+        raise LauncherFlowInterruptedException(TAG, message)
 
     if len(avd_rules.ports_to_ignore) != len(set(avd_rules.ports_to_ignore)):
-        Printer.error(TAG, "'Ports to ignore' list contains duplicates.")
-        quit()
+        message = "'Ports to ignore' list contains duplicates."
+        raise LauncherFlowInterruptedException(TAG, message)
 
     for port_to_be_used in avd_rules.ports_to_use:
         if port_to_be_used % 2 == 1:
-            Printer.error(TAG, "Port numbers has to be even")
-            quit()
+            message = "Port numbers has to be even."
+            raise LauncherFlowInterruptedException(TAG, message)
 
     for port_to_be_used in avd_rules.ports_to_use:
         if port_to_be_used < avd_rules.search_range_min or port_to_be_used > avd_rules.search_range_max:
-            Printer.error(TAG, "Requested to use port " + str(port_to_be_used) + " is out of range " +
-                          "<" + str(avd_rules.search_range_min) + ", " + str(avd_rules.search_range_max) + ">.")
-            quit()
+            message = "Requested to use port {} is out of range <{}, {}>."
+            message = message.format(str(port_to_be_used), str(avd_rules.search_range_min),
+                                     str(avd_rules.search_range_max))
+            raise LauncherFlowInterruptedException(TAG, message)
 
     for port_to_be_ignored in avd_rules.ports_to_ignore:
         for port_to_be_used in avd_rules.ports_to_use:
             if port_to_be_used == port_to_be_ignored:
-                Printer.error(TAG,
-                              "Port " + str(port_to_be_used) + " is set to be used and ignored at the same time.")
-                quit()
+                message = "Port {} is set to be used and ignored at the same time."
+                message = message.format(str(port_to_be_used))
+                raise LauncherFlowInterruptedException(TAG, message)
 
     if not avd_rules.assign_missing_ports:
         requested_ports_to_use_num = len(avd_rules.ports_to_use)
         if requested_ports_to_use_num != avd_instances:
-            Printer.error(TAG, "There are " + str(
-                avd_instances) + " AVD instances about to be created according to set, but there were only " +
-                          str(requested_ports_to_use_num) + " ports requested to use. Set \"assign_missing_ports\"" +
-                          " to True or add more ports to list.")
-            quit()
+            message = ("There are {} AVD instances about to be created according to set, but there were only {} ports "
+                       "requested to use. Set 'assign_missing_ports' to True or add more ports to list.")
+            message = message.format(str(avd_instances), str(requested_ports_to_use_num))
+            raise LauncherFlowInterruptedException(TAG, message)

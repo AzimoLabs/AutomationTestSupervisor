@@ -1,3 +1,5 @@
+from error.Exceptions import LauncherFlowInterruptedException
+
 from settings import GlobalConfig
 from settings.loader import ArgLoader
 from settings.manifest.launch.LaunchManifestModels import LaunchManifest
@@ -23,13 +25,14 @@ def _load_launch_plan_to_global_settings(launch_plan):
         Printer.system_message(TAG, "ADB will be restarted before launching tests.")
     else:
         Printer.system_message(TAG, "ADB with current state will be used during run.")
+
     GlobalConfig.ADB_SCAN_INTERVAL = launch_plan.adb_scan_interval
     if GlobalConfig.ADB_SCAN_INTERVAL is "":
-        Printer.error(TAG, "ADB_SCAN_INTERVAL not specified in LaunchManifest. Launcher will quit.")
-        quit()
+        message = "ADB_SCAN_INTERVAL not specified in LaunchManifest. Launcher will quit."
+        raise LauncherFlowInterruptedException(TAG, message)
     else:
-        Printer.system_message(TAG, "ADB will be scanned with " + str(GlobalConfig.ADB_SCAN_INTERVAL)
-                               + " seconds interval.")
+        Printer.system_message(TAG,
+                               "ADB will be scanned with " + str(GlobalConfig.ADB_SCAN_INTERVAL) + " seconds interval.")
     GlobalConfig.SHOULD_BUILD_NEW_APK = launch_plan.should_build_new_apk
     if GlobalConfig.SHOULD_BUILD_NEW_APK:
         Printer.system_message(TAG, "Launcher will build .*apk candidates for tests with commands specified in test "
@@ -60,24 +63,24 @@ def _load_launch_plan_to_global_settings(launch_plan):
         else:
             Printer.system_message(TAG, "AVD will be launched all at once.")
             Printer.error(TAG, "Warning: when launching AVD simultaneously ADB is unaware of the amount of memory that"
-                               " specific AVD will use.\nIf there is not enough memory in the system and you launch too"
+                               " specific AVD will use. If there is not enough memory in the system and you launch too"
                                " many AVD at the same time your PC might turn off due to lack of RAM memory.")
 
         GlobalConfig.AVD_ADB_BOOT_TIMEOUT = launch_plan.avd_adb_boot_timeout_millis
         if GlobalConfig.AVD_ADB_BOOT_TIMEOUT is "":
-            Printer.error(TAG, "AVD_ADB_BOOT_TIMEOUT not specified in LaunchManifest. Launcher will quit.")
-            quit()
+            message = "AVD_ADB_BOOT_TIMEOUT not specified in LaunchManifest. Launcher will quit."
+            raise LauncherFlowInterruptedException(TAG, message)
         else:
-            Printer.system_message(TAG, "AVD - ADB boot timeout set to " + str(GlobalConfig.AVD_ADB_BOOT_TIMEOUT)
-                                   + " seconds.")
+            Printer.system_message(TAG, "AVD - ADB boot timeout set to " + str(
+                GlobalConfig.AVD_ADB_BOOT_TIMEOUT) + " seconds.")
 
         GlobalConfig.AVD_SYSTEM_BOOT_TIMEOUT = launch_plan.avd_system_boot_timeout_millis
         if GlobalConfig.AVD_SYSTEM_BOOT_TIMEOUT is "":
-            Printer.error(TAG, "AVD_SYSTEM_BOOT_TIMEOUT not specified in LaunchManifest. Launcher will quit.")
-            quit()
+            message = "AVD_SYSTEM_BOOT_TIMEOUT not specified in LaunchManifest. Launcher will quit."
+            raise LauncherFlowInterruptedException(TAG, message)
         else:
-            Printer.system_message(TAG, "AVD - ADB system boot timeout set to "
-                                   + str(GlobalConfig.AVD_SYSTEM_BOOT_TIMEOUT) + " seconds.")
+            Printer.system_message(TAG, "AVD - ADB system boot timeout set to " + str(
+                GlobalConfig.AVD_SYSTEM_BOOT_TIMEOUT) + " seconds.")
 
     if GlobalConfig.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION:
         Printer.system_message(TAG, "Launcher will use only AVD specified in passed as parameter AVD set.")
@@ -87,9 +90,10 @@ def _load_launch_plan_to_global_settings(launch_plan):
 
 def _load_launch_plan_name():
     launch_plan_name = ArgLoader.get_arg_loaded_by(ArgLoader.LAUNCH_PLAN_PREFIX)
+
     if launch_plan_name is None:
-        Printer.error(TAG, "No launch plan selected. Launcher will quit.")
-        quit()
+        message = "No launch plan selected. Launcher will quit."
+        raise LauncherFlowInterruptedException(TAG, message)
     else:
         Printer.message_highlighted(TAG, "Selected launch plan: ", launch_plan_name)
     return launch_plan_name
@@ -98,7 +102,7 @@ def _load_launch_plan_name():
 def _load_launch_plan_manifest():
     launch_manifest_dir = ArgLoader.get_arg_loaded_by(ArgLoader.LAUNCH_MANIFEST_DIR_PREFIX)
     launch_manifest = LaunchManifest(launch_manifest_dir)
-    Printer.message_highlighted(TAG, "Created LaunchManifest from file: ", str(launch_manifest_dir))
+    Printer.message_highlighted(TAG, "Created LaunchManifest from file: ", launch_manifest_dir)
     return launch_manifest
 
 
@@ -107,6 +111,6 @@ def _load_launch_plan(launch_manifest, launch_plan_name):
         Printer.system_message(TAG, "Launch plan '" + launch_plan_name + "' was found in LaunchManifest.")
         return launch_manifest.get_plan(launch_plan_name)
     else:
-        Printer.error(TAG, "Invalid launch plan with name '"
-                      + launch_plan_name + "' does not exist in LaunchManifest!")
-        quit()
+        message = "Invalid launch plan with name '{}' does not exist in LaunchManifest!"
+        message = message.format(launch_plan_name)
+        raise LauncherFlowInterruptedException(TAG, message)

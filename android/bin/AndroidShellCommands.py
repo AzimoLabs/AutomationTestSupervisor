@@ -1,6 +1,7 @@
 class AaptCommand:
     DUMP_BADGING = "dump badging {}"
 
+
 class AdbCommand:
     KILL_SERVER = "kill-server"
     START_SERVER = "start-server"

@@ -1,14 +1,3 @@
-from settings import GlobalConfig
-from settings.loader import (
-    PathsLoader,
-    LaunchPlanLoader,
-    AvdSetLoader,
-    TestSetLoader
-)
-
-from system.console import Printer
-from system.file import FileUtils
-
 from android.apk.ApkProvider import ApkProvider
 from android.bin.AndroidBinaryFileControllers import (
     AaptController,
@@ -18,7 +7,7 @@ from android.bin.AndroidBinaryFileControllers import (
     GradleController,
     InstrumentationRunnerController,
 )
-
+from error.Exceptions import LauncherFlowInterruptedException
 from session.SessionDataStores import (
     DeviceStore,
     TestStore
@@ -28,45 +17,70 @@ from session.SessionManagers import (
     DeviceManager,
     TestManager
 )
+from settings import GlobalConfig
+from settings.loader import (
+    PathsLoader,
+    LaunchPlanLoader,
+    AvdSetLoader,
+    TestSetLoader
+)
+from system.console import Printer
+from system.file import FileUtils
 
 TAG = "Launcher:"
 
-Printer.step(TAG, "AutomationTestSupervisor has started working!")
+adb_controller = None
+android_controller = None
+emulator_controller = None
+aapt_controller = None
+gradle_controller = None
+instrumentation_runner_controller = None
 
-Printer.step(TAG, "Preparing paths.")
-PathsLoader.init_paths()
+device_store = None
+device_manager = None
 
-Printer.step(TAG, "Preparing launch plan.")
-LaunchPlanLoader.init_launch_plan()
+apk_provider = None
+apk_manager = None
 
-Printer.step(TAG, "Preparing avd settings.")
-avd_set, avd_schemas = AvdSetLoader.init_avd_settings()
-
-Printer.step(TAG, "Preparing test settings.")
-test_set, test_list = TestSetLoader.init_test_settings()
-
-Printer.step(TAG, "Initiating objects.")
-adb_controller = AdbController()
-android_controller = AvdManagerController()
-emulator_controller = EmulatorController()
-aapt_controller = AaptController()
-gradle_controller = GradleController()
-instrumentation_runner_controller = InstrumentationRunnerController()
-
-device_store = DeviceStore(adb_controller, android_controller, emulator_controller)
-device_manager = DeviceManager(device_store, adb_controller, android_controller)
-
-apk_provider = ApkProvider(aapt_controller)
-apk_manager = ApkManager(gradle_controller, apk_provider)
-
-test_store = TestStore()
-test_manager = TestManager(instrumentation_runner_controller, device_store, test_store)
-
-if FileUtils.output_dir_has_files:
-    Printer.step(TAG, "Performing output dir clean up.")
-    FileUtils.clean_output_dir()
+test_store = None
+test_manager = None
 
 try:
+    Printer.step(TAG, "AutomationTestSupervisor has started working!")
+
+    Printer.step(TAG, "Preparing paths.")
+    PathsLoader.init_paths()
+
+    Printer.step(TAG, "Preparing launch plan.")
+    LaunchPlanLoader.init_launch_plan()
+
+    Printer.step(TAG, "Preparing avd settings.")
+    avd_set, avd_schemas = AvdSetLoader.init_avd_settings()
+
+    Printer.step(TAG, "Preparing test settings.")
+    test_set, test_list = TestSetLoader.init_test_settings()
+
+    Printer.step(TAG, "Initiating objects.")
+    adb_controller = AdbController()
+    android_controller = AvdManagerController()
+    emulator_controller = EmulatorController()
+    aapt_controller = AaptController()
+    gradle_controller = GradleController()
+    instrumentation_runner_controller = InstrumentationRunnerController()
+
+    device_store = DeviceStore(adb_controller, android_controller, emulator_controller)
+    device_manager = DeviceManager(device_store, adb_controller, android_controller)
+
+    apk_provider = ApkProvider(aapt_controller)
+    apk_manager = ApkManager(gradle_controller, apk_provider)
+
+    test_store = TestStore()
+    test_manager = TestManager(instrumentation_runner_controller, device_store, test_store)
+
+    if FileUtils.output_dir_has_files:
+        Printer.step(TAG, "Performing output dir clean up.")
+        FileUtils.clean_output_dir()
+
     if GlobalConfig.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION:
         Printer.step(TAG, "Preparing device session - killing currently launched AVD.")
         device_manager.add_models_representing_outside_session_virtual_devices()
@@ -114,8 +128,13 @@ try:
     Printer.step(TAG, "Starting tests.")
     test_manager.run_tests(test_set, test_list)
 
+except LauncherFlowInterruptedException as e:
+    Printer.error(e.caller_tag, str(e))
+    quit()
+
 finally:
-    if device_manager.is_any_avd_visible() and GlobalConfig.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION:
+    if device_manager is not None and device_manager.is_any_avd_visible() \
+            and GlobalConfig.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION:
         Printer.step(TAG, "Killing AVD spawned for test session.")
         device_manager.kill_all_avd()
         device_manager.clear_models_based_on_avd_schema()
