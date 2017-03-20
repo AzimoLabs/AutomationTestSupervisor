@@ -62,8 +62,9 @@ class AaptController:
             quit()
 
     def dump_badging(self, apk_name):
-        return ShellHelper.execute_shell(self.aapt_bin + " " + AaptCommand.DUMP_BADGING.format(apk_name),
-                                         False, False)
+        dump_badging_cmd = "{} {}".format(self.aapt_bin,
+                                          AaptCommand.DUMP_BADGING.format(apk_name))
+        return ShellHelper.execute_shell(dump_badging_cmd, False, False)
 
 
 class AdbController:
@@ -81,16 +82,24 @@ class AdbController:
             quit()
 
     def start_server(self):
-        return ShellHelper.execute_shell(self.adb_bin + " " + AdbCommand.START_SERVER, True, True)
+        start_server_cmd = "{} {}".format(self.adb_bin,
+                                          AdbCommand.START_SERVER)
+        return ShellHelper.execute_shell(start_server_cmd, True, True)
 
     def kill_server(self):
-        return ShellHelper.execute_shell(self.adb_bin + " " + AdbCommand.KILL_SERVER, True, True)
+        kill_server_cmd = "{} {}".format(self.adb_bin,
+                                         AdbCommand.KILL_SERVER)
+        return ShellHelper.execute_shell(kill_server_cmd, True, True)
 
     def devices(self):
-        return ShellHelper.execute_shell(self.adb_bin + " " + AdbCommand.DEVICES, False, False)
+        devices_cmd = "{} {}".format(self.adb_bin,
+                                     AdbCommand.DEVICES)
+        return ShellHelper.execute_shell(devices_cmd, False, False)
 
     def wait_for_device(self):
-        return ShellHelper.execute_shell(self.adb_bin + " " + AdbCommand.WAIT_FOR_DEVICE, False, False)
+        waif_for_device_cmd = "{} {}".format(self.adb_bin,
+                                             AdbCommand.WAIT_FOR_DEVICE)
+        return ShellHelper.execute_shell(waif_for_device_cmd, False, False)
 
     def kill_device(self, device_adb_name):
         kill_device_cmd = "{} {} {} {}".format(self.adb_bin,
@@ -100,16 +109,17 @@ class AdbController:
         return ShellHelper.execute_shell(kill_device_cmd, True, False)
 
     def install_apk(self, device_adb_name, apk_name):
-        return ShellHelper.execute_shell(self.adb_bin
-                                         + " " + AdbCommand.INSTALL_APK.format(device_adb_name, apk_name)
-                                         + " " + GeneralCommand.CHANGE_THREAD, True, False)
+        install_apk_cmd = "{} {} {} {}".format(self.adb_bin,
+                                               AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                               AdbCommand.INSTALL_APK.format(apk_name),
+                                               GeneralCommand.CHANGE_THREAD)
+        return ShellHelper.execute_shell(install_apk_cmd, True, False)
 
     def get_property(self, device_adb_name, device_property):
-        get_property_cmd = "{} {} {} {} {}".format(self.adb_bin,
-                                                   AdbCommand.SPECIFIC_DEVICE,
-                                                   device_adb_name,
-                                                   AdbCommand.GET_PROPERTY,
-                                                   device_property)
+        get_property_cmd = "{} {} {} {}".format(self.adb_bin,
+                                                AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                                AdbCommand.GET_PROPERTY,
+                                                device_property)
         return ShellHelper.execute_shell(get_property_cmd, False, False)
 
 
@@ -128,12 +138,14 @@ class AvdManagerController:
             quit()
 
     def list_avd(self):
-        return ShellHelper.execute_shell(self.avdmanager_bin + " " + AvdManagerCommand.LIST_AVD, False, False)
+        list_avd_cmd = "{} {}".format(self.avdmanager_bin,
+                                      AvdManagerCommand.LIST_AVD)
+        return ShellHelper.execute_shell(list_avd_cmd, False, False)
 
     def delete_avd(self, avd_schema):
-        avd_name = avd_schema.avd_name
-        return ShellHelper.execute_shell(self.avdmanager_bin + " " + AvdManagerCommand.DELETE_AVD.format(avd_name),
-                                         True, True)
+        delete_avd_cmd = "{} {}".format(self.avdmanager_bin,
+                                        AvdManagerCommand.DELETE_AVD.format(avd_schema.avd_name))
+        return ShellHelper.execute_shell(delete_avd_cmd, True, True)
 
     def create_avd(self, avd_schema):
         part_answer_no = GeneralCommand.ANSWER_NO
@@ -211,6 +223,7 @@ class EmulatorController:
 
         part_output_file = "{} {}".format(GeneralCommand.DELEGATE_OUTPUT_TO_FILE.format(log_file),
                                           GeneralCommand.CHANGE_THREAD)
+
         launch_avd_cmd = "{} {} {} {} {} {}".format(part_emulator_binary,
                                                     part_name,
                                                     part_port,
@@ -319,8 +332,8 @@ class InstrumentationRunnerController:
             Printer.error(self.TAG, "Unable to find ADB binary at '" + self.adb_bin + "'.")
             quit()
 
-    def assemble_run_test_package_cmd(self, device_name, test_package):
+    def assemble_run_test_package_cmd(self, device_adb_name, test_package):
         return InstrumentationRunnerCommand.RUN_TEST_PACKAGE.format(self.adb_bin,
-                                                                    AdbCommand.SPECIFIC_DEVICE + " " + device_name,
+                                                                    AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
                                                                     test_package,
                                                                     GlobalConfig.INSTRUMENTATION_RUNNER)

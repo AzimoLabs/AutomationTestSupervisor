@@ -1,5 +1,10 @@
 from settings import GlobalConfig
-from settings.loader import SettingsLoader
+from settings.loader import (
+    PathsLoader,
+    LaunchPlanLoader,
+    AvdSetLoader,
+    TestSetLoader
+)
 
 from system.console import Printer
 from system.file import FileUtils
@@ -29,16 +34,16 @@ TAG = "Launcher:"
 Printer.step(TAG, "AutomationTestSupervisor has started working!")
 
 Printer.step(TAG, "Preparing paths.")
-SettingsLoader.init_paths()
+PathsLoader.init_paths()
 
 Printer.step(TAG, "Preparing launch plan.")
-SettingsLoader.init_launch_plan()
+LaunchPlanLoader.init_launch_plan()
 
 Printer.step(TAG, "Preparing avd settings.")
-avd_set, avd_schemas = SettingsLoader.init_avd_settings()
+avd_set, avd_schemas = AvdSetLoader.init_avd_settings()
 
 Printer.step(TAG, "Preparing test settings.")
-test_set, test_list = SettingsLoader.init_test_settings()
+test_set, test_list = TestSetLoader.init_test_settings()
 
 Printer.step(TAG, "Initiating objects.")
 adb_controller = AdbController()

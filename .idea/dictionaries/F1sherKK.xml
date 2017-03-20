@@ -2,10 +2,12 @@
   <dictionary name="F1sherKK">
     <words>
       <w>aapt</w>
+      <w>avdmanager</w>
       <w>badging</w>
       <w>filenames</w>
       <w>filepath</w>
       <w>gradle</w>
+      <w>gradlew</w>
       <w>initdata</w>
     </words>
   </dictionary>

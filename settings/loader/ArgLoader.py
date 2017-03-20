@@ -1,5 +1,5 @@
 import argparse
-#TODO USE ONLY ONE LOAD METHOD
+
 TAG = "ArgLoader:"
 
 LAUNCH_PLAN_PREFIX = "-lplan"
@@ -65,33 +65,21 @@ parser.add_argument(PATH_MANIFEST_DIR_PREFIX,
 parser_args = parser.parse_args()
 
 
-def load_launch_plan():
-    return parser_args.lplan
-
-
-def load_test_set():
-    return parser_args.tset
-
-
-def load_avd_set():
-    return parser_args.aset
-
-
-def load_path_set():
-    return parser_args.pset
-
-
-def load_launch_manifest_dir():
-    return parser_args.ldir
-
-
-def load_test_manifest_dir():
-    return parser_args.tdir
-
-
-def load_avd_manifest_dir():
-    return parser_args.adir
-
-
-def load_path_manifest_dir():
-    return parser_args.pdir
+def get_arg_loaded_by(param):
+    if param == LAUNCH_PLAN_PREFIX:
+        return parser_args.lplan
+    if param == TEST_SET_PREFIX:
+        return parser_args.tset
+    if param == AVD_SET_PREFIX:
+        return parser_args.aset
+    if param == PATH_SET_PREFIX:
+        return parser_args.pset
+    if param == LAUNCH_MANIFEST_DIR_PREFIX:
+        return parser_args.ldir
+    if param == TEST_MANIFEST_DIR_PREFIX:
+        return parser_args.tdir
+    if param == AVD_MANIFEST_DIR_PREFIX:
+        return parser_args.adir
+    if param == PATH_MANIFEST_DIR_PREFIX:
+        return parser_args.pdir
+    return None
