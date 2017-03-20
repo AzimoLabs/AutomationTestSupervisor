@@ -47,11 +47,14 @@ class ApkInstallThread(threading.Thread):
 
     def run(self):
         start_time = int(round(time.time() * 1000))
+
         self.device.install_apk(self.apk_path)
+
         end_time = int(round(time.time() * 1000))
         self.install_time = (end_time - start_time) / 1000
+        self.is_finished = True
+
         Printer.system_message(self.TAG, ".*apk " + Color.GREEN + "'" + self.apk_path + "'" + Color.BLUE
                                + " was successfully installed on device " + Color.GREEN + "'" + self.device.adb_name
                                + "'" + Color.BLUE + ". It took " + Color.GREEN + str(self.install_time) + Color.BLUE
                                + " seconds.")
-        self.is_finished = True

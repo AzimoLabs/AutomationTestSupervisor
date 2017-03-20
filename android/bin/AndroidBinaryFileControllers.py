@@ -1,6 +1,11 @@
 import os
 import re
 
+from android.bin.AndroidShellCommandAssemblers import (
+    AaptCommandAssembler,
+    AdbCommandAssembler
+)
+
 from android.bin.AndroidShellCommands import (AaptCommand, AdbCommand, AvdManagerCommand, EmulatorCommand,
                                               GradleCommand, InstrumentationRunnerCommand)
 from error.Exceptions import LauncherFlowInterruptedException
@@ -18,9 +23,14 @@ class AaptController:
     aapt_bin = None
 
     def __init__(self):
+        build_tools = self._find_latest_build_tools()
+        self.aapt_bin = clean_path(add_ending_slash(GlobalConfig.SDK_DIR) + "build-tools/" + build_tools + "/aapt")
+        self._check_bin_directory()
+        self.aapt_command_assembler = AdbCommandAssembler()
+
+    def _find_latest_build_tools(self):
         build_tools = os.listdir(clean_path(add_ending_slash(GlobalConfig.SDK_DIR) + "build-tools"))
         build_tools = [build_tool for build_tool in build_tools if build_tool[0].isdigit()]
-
         build_tools_folder_with_highest_ver = None
         Printer.system_message(self.TAG, "Available Android SDK Build-Tools versions: " + str(build_tools))
         for build_tools_folder in build_tools:
@@ -33,7 +43,6 @@ class AaptController:
 
             if ver > highest_ver:
                 build_tools_folder_with_highest_ver = build_tools_folder
-
         if build_tools_folder_with_highest_ver is None:
             message = "Android SDK Build-Tools not found. Launcher will quit."
             raise LauncherFlowInterruptedException(self.TAG, message)
@@ -41,10 +50,9 @@ class AaptController:
         else:
             Printer.message_highlighted(self.TAG, "Android SDK Build-Tools with latest version were selected: ",
                                         str(build_tools_folder_with_highest_ver))
+        return build_tools_folder_with_highest_ver
 
-        self.aapt_bin = clean_path(add_ending_slash(GlobalConfig.SDK_DIR) + "build-tools/" + str(
-            build_tools_folder_with_highest_ver) + "/aapt")
-
+    def _check_bin_directory(self):
         if os.path.isfile(self.aapt_bin):
             Printer.system_message(self.TAG, "Aapt binary file found at '" + self.aapt_bin + "'.")
         else:
