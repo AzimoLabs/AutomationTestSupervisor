@@ -20,7 +20,6 @@ import re
 import time
 
 
-# TODO REMOVE STEPS FROM APK MANAGER
 class ApkManager:
     TAG = "ApkManager:"
 
@@ -28,19 +27,10 @@ class ApkManager:
         self.gradle_controller = gradle_controller
         self.apk_provider = apk_provider
 
-    def get_apk_and_build_if_not_found(self, test_set):
+    def get_apk(self, test_set):
         apk_candidate = self.apk_provider.provide_apk(test_set)
-        if apk_candidate is None:
-            Printer.error(self.TAG, "No .apk* candidates for test session were found.")
-
-            Printer.step(self.TAG, "Building application and test .*apk from scratch.")
-            self.gradle_controller.build_application_apk(test_set)
-            self.gradle_controller.build_test_apk(test_set)
-
-            apk_candidate = self.apk_provider.provide_apk(test_set)
-            if apk_candidate is None:
-                message = "No .apk* candidates for test session were found. Check your config. Launcher will quit."
-                raise LauncherFlowInterruptedException(self.TAG, message)
+        if apk_candidate is not None:
+            Printer.message_highlighted(self.TAG, "Picked .*apk with highest version code:\n", str(apk_candidate))
         return apk_candidate
 
     def build_apk(self, test_set):
@@ -52,6 +42,8 @@ class ApkManager:
         if apk_candidate is None:
             message = "No .apk* candidates for test session were found. Check your config. Launcher will quit."
             raise LauncherFlowInterruptedException(self.TAG, message)
+        else:
+            Printer.message_highlighted(self.TAG, "Picked .*apk with highest version code:\n", str(apk_candidate))
         return apk_candidate
 
 
@@ -350,4 +342,3 @@ class TestManager:
 
         test_end = time.time()
         Printer.message_highlighted(self.TAG, "Test process took:", str((test_end - test_start)) + " seconds.")
-

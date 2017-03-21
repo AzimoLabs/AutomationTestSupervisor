@@ -122,8 +122,9 @@ try:
     if GlobalConfig.SHOULD_BUILD_NEW_APK:
         apk = apk_manager.build_apk(test_set)
     else:
-        apk = apk_manager.get_apk_and_build_if_not_found(test_set)
-    Printer.message_highlighted(TAG, "Picked .*apk with highest version code:\n", str(apk))
+        apk = apk_manager.get_apk(test_set)
+        if apk is None:
+            apk = apk_manager.get_apk(test_set)
 
     Printer.step(TAG, "Installing .*apk on devices included in test session.")
     device_manager.install_apk_on_devices(apk)
