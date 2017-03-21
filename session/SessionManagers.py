@@ -1,6 +1,7 @@
 from error.Exceptions import LauncherFlowInterruptedException
 
 from settings import GlobalConfig
+
 from session.SessionDevices import (
     OutsideSessionVirtualDevice,
     SessionVirtualDevice
@@ -273,11 +274,18 @@ class TestManager:
 
     def run_tests(self, test_set, test_list):
         self.test_store.get_packages(test_set, test_list)
+        cmd_assembler = self.instrumentation_runner_controller.instrumentation_runner_command_assembler
 
         for package in self.test_store.packages_to_run:
             test_threads = list()
             for device in self.device_store.get_devices():
-                cmd = self.instrumentation_runner_controller.assemble_run_test_package_cmd(device.adb_name, package)
+
+                params = {"package": package}
+                cmd = cmd_assembler.assemble_run_test_package_cmd(self.instrumentation_runner_controller.adb_bin,
+                                                                  device.adb_name,
+                                                                  params,
+                                                                  GlobalConfig.INSTRUMENTATION_RUNNER)
+
                 if device.status == "device":
                     test_thread = TestThread(cmd, device.adb_name)
                     test_thread.start()
