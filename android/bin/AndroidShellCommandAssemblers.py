@@ -3,6 +3,9 @@ from system.bin.SystemShellCommands import GeneralCommand
 from android.bin.AndroidShellCommands import (
     AaptCommand,
     AdbCommand,
+    AdbShellCommand,
+    AdbActivityManagerCommand,
+    AdbPackageManagerCommand,
     AvdManagerCommand,
     EmulatorCommand,
     GradleCommand,
@@ -18,6 +21,35 @@ class AaptCommandAssembler:
                                                AaptCommand.DUMP_BADGING.format(apk_name))
 
 
+class AdbShellCommandAssembler:
+    get_property_schema = "{} {} {} {}"
+
+    def assemble_get_property_cmd(self, adb_bin, device_adb_name, device_property):
+        return self.get_property_schema.format(adb_bin,
+                                               AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                               AdbShellCommand.SHELL,
+                                               AdbShellCommand.GET_PROPERTY.format(device_property))
+
+
+class AdbPackageManagerCommandAssembler:
+    list_installed_packages_schema = "{} {} {} {} {}"
+    uninstall_package_schema = "{} {} {} {} {}"
+
+    def assemble_list_installed_packages_cmd(self, adb_bin, device_adb_name):
+        return self.list_installed_packages_schema.format(adb_bin,
+                                                          AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                                          AdbShellCommand.SHELL,
+                                                          AdbPackageManagerCommand.PACKAGE_MANAGER,
+                                                          AdbPackageManagerCommand.LIST_SERVICES)
+
+    def assemble_uninstall_package_cmd(self, adb_bin, device_adb_name, package_name):
+        return self.uninstall_package_schema.format(adb_bin,
+                                                    AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                                    AdbShellCommand.SHELL,
+                                                    AdbPackageManagerCommand.PACKAGE_MANAGER,
+                                                    AdbPackageManagerCommand.UNINSTALL_PACKAGE.format(package_name))
+
+
 class AdbCommandAssembler:
     start_server_schema = "{} {}"
     kill_server_schema = "{} {}"
@@ -25,7 +57,7 @@ class AdbCommandAssembler:
     waif_for_device_schema = "{} {}"
     kill_device_schema = "{} {} {}"
     install_apk_schema = "{} {} {} {}"
-    get_property_schema = "{} {} {} {}"
+    uninstall_package_schema = "{} {} {}"
 
     def assemble_start_server_cmd(self, adb_bin):
         return self.start_server_schema.format(adb_bin,
@@ -54,11 +86,10 @@ class AdbCommandAssembler:
                                               AdbCommand.INSTALL_APK.format(apk_name),
                                               GeneralCommand.CHANGE_THREAD)
 
-    def assemble_get_property_cmd(self, adb_bin, device_adb_name, device_property):
-        return self.get_property_schema.format(adb_bin,
-                                               AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
-                                               AdbCommand.GET_PROPERTY,
-                                               device_property)
+    def assemble_uninstall_package_cmd(self, adb_bin, device_adb_name, package):
+        return self.uninstall_package_schema.format(adb_bin,
+                                                    AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                                    AdbCommand.UNINSTALL_PACKAGE.format(package))
 
 
 class AvdManagerCommandAssembler:
@@ -133,7 +164,8 @@ class EmulatorCommandAssembler:
                                              part_name,
                                              part_port,
                                              part_snapshot,
-                                             part_additional_options, part_output_file)
+                                             part_additional_options,
+                                             part_output_file)
 
 
 class GradleCommandAssembler:
@@ -153,13 +185,15 @@ class GradleCommandAssembler:
 
 
 class InstrumentationRunnerCommandAssembler:
-    test_command_schema = "{} {} {} {} {}"
+    test_command_schema = "{} {} {} {} {} {} {}"
 
     def assemble_run_test_package_cmd(self, adb_binary, device_adb_name, params, instrumentation_runner):
         parameters = self._assemble_params(params)
         return self.test_command_schema.format(adb_binary,
                                                AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
-                                               InstrumentationRunnerCommand.RUN_TEST,
+                                               AdbShellCommand.SHELL,
+                                               AdbActivityManagerCommand.ACTIVITY_MANAGER,
+                                               InstrumentationRunnerCommand.INSTRUMENT_PROCESS,
                                                parameters,
                                                InstrumentationRunnerCommand.INSTRUMENTATION_RUNNER.format(
                                                    instrumentation_runner))
@@ -169,9 +203,9 @@ class InstrumentationRunnerCommandAssembler:
         parameters = ""
         for param, value in params.items():
             if param == "package":
-                parameters += " ".join(InstrumentationRunnerCommand.PACKAGE.format(value))
+                parameters += (" " + InstrumentationRunnerCommand.PACKAGE.format(value))
             if param == "numShards":
-                parameters += " ".join(InstrumentationRunnerCommand.NUM_SHARD.format(value))
+                parameters += (" " + InstrumentationRunnerCommand.NUM_SHARD.format(value))
             if param == "shardIndex":
-                parameters += " ".join(InstrumentationRunnerCommand.SHARD_INDEX.format(value))
+                parameters += (" " + InstrumentationRunnerCommand.SHARD_INDEX.format(value))
         return parameters

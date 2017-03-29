@@ -4,6 +4,8 @@ import re
 from android.bin.AndroidShellCommandAssemblers import (
     AaptCommandAssembler,
     AdbCommandAssembler,
+    AdbShellCommandAssembler,
+    AdbPackageManagerCommandAssembler,
     AvdManagerCommandAssembler,
     EmulatorCommandAssembler,
     GradleCommandAssembler,
@@ -62,8 +64,8 @@ class AaptController:
             message = message.format(self.aapt_bin)
             raise LauncherFlowInterruptedException(self.TAG, message)
 
-    def dump_badging(self, apk_name):
-        cmd = self.aapt_command_assembler.assemble_dump_badging_cmd(self.aapt_bin, apk_name)
+    def dump_badging(self, apk_filepath):
+        cmd = self.aapt_command_assembler.assemble_dump_badging_cmd(self.aapt_bin, apk_filepath)
         return ShellHelper.execute_shell(cmd, False, False)
 
 
@@ -109,9 +111,58 @@ class AdbController:
         cmd = self.adb_command_assembler.assemble_install_apk_cmd(self.adb_bin, device_adb_name, apk_name)
         return ShellHelper.execute_shell(cmd, True, False)
 
+
+class AdbShellController:
+    TAG = "AdbShellController:"
+
+    adb_bin = None
+
+    def __init__(self):
+        self.adb_bin = clean_path(add_ending_slash(GlobalConfig.SDK_DIR) + "platform-tools/adb")
+        self._assert_bin_directory_exists()
+        self.adb_shell_command_assembler = AdbShellCommandAssembler()
+
+    def _assert_bin_directory_exists(self):
+        if os.path.isfile(self.adb_bin):
+            Printer.system_message(self.TAG, "ADB binary file found at '" + self.adb_bin + "'.")
+        else:
+            message = "Unable to find ADB binary at '{}'."
+            message = message.format(self.adb_bin)
+            raise LauncherFlowInterruptedException(self.TAG, message)
+
     def get_property(self, device_adb_name, device_property):
-        cmd = self.adb_command_assembler.assemble_get_property_cmd(self.adb_bin, device_adb_name, device_property)
+        cmd = self.adb_shell_command_assembler.assemble_get_property_cmd(self.adb_bin, device_adb_name, device_property)
         return ShellHelper.execute_shell(cmd, False, False)
+
+
+class AdbPackageManagerController:
+    TAG = "AdbPackageManagerController:"
+
+    adb_bin = None
+
+    def __init__(self):
+        self.adb_bin = clean_path(add_ending_slash(GlobalConfig.SDK_DIR) + "platform-tools/adb")
+        self._assert_bin_directory_exists()
+        self.adb_package_manager_command_assembler = AdbPackageManagerCommandAssembler()
+
+    def _assert_bin_directory_exists(self):
+        if os.path.isfile(self.adb_bin):
+            Printer.system_message(self.TAG, "ADB binary file found at '" + self.adb_bin + "'.")
+        else:
+            message = "Unable to find ADB binary at '{}'."
+            message = message.format(self.adb_bin)
+            raise LauncherFlowInterruptedException(self.TAG, message)
+
+    def get_installed_packages(self, device_adb_name):
+        cmd = self.adb_package_manager_command_assembler.assemble_list_installed_packages_cmd(self.adb_bin,
+                                                                                              device_adb_name)
+        return ShellHelper.execute_shell(cmd, False, False)
+
+    def uninstall_package(self, device_adb_name, package_name):
+        cmd = self.adb_package_manager_command_assembler.assemble_uninstall_package_cmd(self.adb_bin,
+                                                                                        device_adb_name,
+                                                                                        package_name)
+        return ShellHelper.execute_shell(cmd, True, True)
 
 
 class AvdManagerController:
@@ -157,17 +208,19 @@ class EmulatorController:
     def _display_emulator_binaries(self):
         emulator_binaries = dict()
 
-        tools_dir = clean_path(add_ending_slash(str(GlobalConfig.SDK_DIR)) + "tools/")
+        emulator_dir = clean_path(add_ending_slash(str(GlobalConfig.SDK_DIR)) + "emulator/")
         try:
-            for the_file in os.listdir(tools_dir):
-                file_path = os.path.join(tools_dir, the_file)
+            for the_file in os.listdir(emulator_dir):
+                file_path = os.path.join(emulator_dir, the_file)
                 if os.path.isfile(file_path) and "emulator" in file_path:
-                    binary_name = re.findall("tools/(emulator*.+)", file_path)
-                    emulator_binaries[str(binary_name[0])] = file_path
+                    binary_name = re.findall("emulator\/(emulator*.+)", file_path)
+
+                    if binary_name:
+                        emulator_binaries[str(binary_name[0])] = file_path
         finally:
             if len(emulator_binaries) == 0:
                 message = "Unable to find emulator binary files in direction '{}' of Android SDK."
-                message = message.format(str(tools_dir))
+                message = message.format(str(emulator_dir))
                 raise LauncherFlowInterruptedException(self.TAG, message)
 
             else:

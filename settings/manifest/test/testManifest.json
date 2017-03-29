@@ -2,7 +2,7 @@
   "instrumentation_runner": "com.azimo.sendmoney.debug1.test/com.azimo.sendmoney.instrumentation.config.AzimoTestRunner",
   "test_list": [
     {
-      "test_package_name": "AuthFlow",
+      "test_package_name": "Function-AuthFlow",
       "test_packages": [
         "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.AuthFlow"
       ],
@@ -10,7 +10,7 @@
       "test_cases": []
     },
     {
-      "test_package_name": "CheckRates",
+      "test_package_name": "Function-CheckRates",
       "test_packages": [
         "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.CheckRates"
       ],
@@ -18,7 +18,7 @@
       "test_cases": []
     },
     {
-      "test_package_name": "ConfirmAmount",
+      "test_package_name": "Function-ConfirmAmount",
       "test_packages": [
         "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.ConfirmAmount"
       ],
@@ -26,7 +26,7 @@
       "test_cases": []
     },
     {
-      "test_package_name": "DeepLinking",
+      "test_package_name": "Function-DeepLinking",
       "test_packages": [
         "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.DeepLinking"
       ],
@@ -34,7 +34,7 @@
       "test_cases": []
     },
     {
-      "test_package_name": "MyPeopleTab",
+      "test_package_name": "Function-MyPeopleTab",
       "test_packages": [
         "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.MyPeopleTab"
       ],
@@ -42,7 +42,7 @@
       "test_cases": []
     },
     {
-      "test_package_name": "PaymentFlow",
+      "test_package_name": "Function-PaymentFlow",
       "test_packages": [
         "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.PaymentFlow"
       ],
@@ -50,7 +50,7 @@
       "test_cases": []
     },
     {
-      "test_package_name": "PromoCodes",
+      "test_package_name": "Function-PromoCodes",
       "test_packages": [
         "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.PromoCodes"
       ],
@@ -58,7 +58,7 @@
       "test_cases": []
     },
     {
-      "test_package_name": "Referral",
+      "test_package_name": "Function-Referral",
       "test_packages": [
         "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.Referral"
       ],
@@ -66,7 +66,7 @@
       "test_cases": []
     },
     {
-      "test_package_name": "ScreenLock",
+      "test_package_name": "Function-ScreenLock",
       "test_packages": [
         "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.ScreenLock"
       ],
@@ -74,7 +74,7 @@
       "test_cases": []
     },
     {
-      "test_package_name": "SearchContact",
+      "test_package_name": "Function-SearchContact",
       "test_packages": [
         "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.SearchContact"
       ],
@@ -82,7 +82,7 @@
       "test_cases": []
     },
     {
-      "test_package_name": "SetupContact",
+      "test_package_name": "Function-SetupContact",
       "test_packages": [
         "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.SetupContact"
       ],
@@ -90,7 +90,7 @@
       "test_cases": []
     },
     {
-      "test_package_name": "TransferStatus",
+      "test_package_name": "Function-TransferStatus",
       "test_packages": [
         "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.TransferStatus"
       ],
@@ -98,7 +98,7 @@
       "test_cases": []
     },
     {
-      "test_package_name": "TransferTab",
+      "test_package_name": "Function-TransferTab",
       "test_packages": [
         "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.TransferTab"
       ],
@@ -106,9 +106,137 @@
       "test_cases": []
     },
     {
-      "test_package_name": "UserProfiles",
+      "test_package_name": "Function-UserProfiles",
       "test_packages": [
         "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.UserProfiles"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "EndToEnd-CardsManagement",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.endToEnd.CardsManagement"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "EndToEnd-ExistingUserFlow",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.endToEnd.ExistingUserFlow"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "EndToEnd-Login",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.endToEnd.Login"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "EndToEnd-NewUserFlow",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.endToEnd.NewUserFlow"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "EndToEnd-P2PStatuses",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.endToEnd.P2PStatuses"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "EndToEnd-PasswordChange",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.endToEnd.PasswordChange"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "EndToEnd-Payments",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.endToEnd.Payments"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "EndToEnd-PayoutDetails",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.endToEnd.PayoutDetails"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "EndToEnd-PhoneVerification",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.endToEnd.PhoneVerification"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "EndToEnd-PromoCodes",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.endToEnd.PromoCodes"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "EndToEnd-Recipient",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.endToEnd.Recipient"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "EndToEnd-Referral",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.endToEnd.Referral"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "EndToEnd-Register",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.endToEnd.Register"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "EndToEnd-ScreenLock",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.endToEnd.ScreenLock"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "EndToEnd-TransferStatuses",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.endToEnd.TransferStatuses"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
+    {
+      "test_package_name": "EndToEnd-UpdateUserProfile",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.endToEnd.UpdateUserProfile"
       ],
       "test_classes": [],
       "test_cases": []
@@ -130,20 +258,55 @@
       "test_apk_assemble_task": "assembleAutomationIntegrationTestAndroidTest",
       "shard": false,
       "set_package_names": [
-        "AuthFlow",
-        "CheckRates",
-        "ConfirmAmount",
-        "DeepLinking",
-        "MyPeopleTab",
-        "PaymentFlow",
-        "PromoCodes",
-        "Referral",
-        "ScreenLock",
-        "SearchContact",
-        "SetupContact",
-        "TransferStatus",
-        "TransferTab",
-        "UserProfiles"
+        "Function-AuthFlow",
+        "Function-CheckRates",
+        "Function-ConfirmAmount",
+        "Function-DeepLinking",
+        "Function-MyPeopleTab",
+        "Function-PaymentFlow",
+        "Function-PromoCodes",
+        "Function-Referral",
+        "Function-ScreenLock",
+        "Function-SearchContact",
+        "Function-SetupContact",
+        "Function-TransferStatus",
+        "Function-TransferTab",
+        "Function-UserProfiles"
+      ]
+    },
+    {
+      "set_name": "end_to_end_all",
+      "apk_name_part": "integrationTest",
+      "application_apk_assemble_task": "assembleAutomationIntegrationTest",
+      "test_apk_assemble_task": "assembleAutomationIntegrationTestAndroidTest",
+      "shard": false,
+      "set_package_names": [
+        "EndToEnd-CardsManagement",
+        "EndToEnd-ExistingUserFlow",
+        "EndToEnd-Login",
+        "EndToEnd-NewUserFlow",
+        "EndToEnd-P2PStatuses",
+        "EndToEnd-PasswordChange",
+        "EndToEnd-Payments",
+        "EndToEnd-PayoutDetails",
+        "EndToEnd-PhoneVerification",
+        "EndToEnd-PromoCodes",
+        "EndToEnd-Recipient",
+        "EndToEnd-Referral",
+        "EndToEnd-Register",
+        "EndToEnd-ScreenLock",
+        "EndToEnd-TransferStatuses",
+        "EndToEnd-UpdateUserProfile"
+      ]
+    },
+    {
+      "set_name": "function_authFlow",
+      "apk_name_part": "integrationTest",
+      "application_apk_assemble_task": "assembleAutomationIntegrationTest",
+      "test_apk_assemble_task": "assembleAutomationIntegrationTestAndroidTest",
+      "shard": false,
+      "set_package_names": [
+        "Function-AuthFlow"
       ]
     }
   ]

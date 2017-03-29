@@ -1,57 +1,16 @@
 import re
 import os
-import glob
 
-from error.Exceptions import LauncherFlowInterruptedException
-
+from . import ApkHelper
 from .ApkModels import ApkCandidate
 
 from settings import GlobalConfig
 
+from system.file import FileUtils
 from system.console import (
     Printer,
     Color
 )
-
-
-def get_list_with_application_apk(apk_name_part_cleaned):
-    apk_filenames = os.listdir(GlobalConfig.APK_DIR)
-
-    application_apk_list = list()
-    for apk_filename in apk_filenames:
-        if apk_name_part_cleaned in apk_filename and "androidTest" not in apk_filename:
-            application_apk_list.append(apk_filename)
-    return application_apk_list
-
-
-def get_list_with_application_apk_filepath(apk_name_part_cleaned):
-    apk_absolute_paths = glob.glob(GlobalConfig.APK_DIR + "*")
-
-    application_apk_filepath_list = list()
-    for apk_path in apk_absolute_paths:
-        if apk_name_part_cleaned in apk_path and "androidTest" not in apk_path:
-            application_apk_filepath_list.append(apk_path)
-    return application_apk_filepath_list
-
-
-def get_list_with_test_apk(apk_name_part_cleaned):
-    apk_filenames = os.listdir(GlobalConfig.APK_DIR)
-
-    test_apk_list = list()
-    for apk_filename in apk_filenames:
-        if apk_name_part_cleaned in apk_filename and "androidTest" in apk_filename:
-            test_apk_list.append(apk_filename)
-    return test_apk_list
-
-
-def get_list_with_test_apk_filepath(apk_name_part_cleaned):
-    apk_absolute_paths = glob.glob(GlobalConfig.APK_DIR + "*")
-
-    application_apk_filepath_list = list()
-    for apk_path in apk_absolute_paths:
-        if apk_name_part_cleaned in apk_path and "androidTest" in apk_path:
-            application_apk_filepath_list.append(apk_path)
-    return application_apk_filepath_list
 
 
 class ApkProvider:
@@ -60,13 +19,14 @@ class ApkProvider:
     def __init__(self, aapt_controller):
         self.aapt_controller = aapt_controller
         self.apk_candidates = list()
+        self._create_apk_dir_if_not_exists()
 
+    def _create_apk_dir_if_not_exists(self):
         if os.path.isdir(GlobalConfig.APK_DIR):
             Printer.system_message(self.TAG, "Directory '" + GlobalConfig.APK_DIR + "' was found.")
         else:
-            message = "Directory '{}' does not exist. Launcher will quit."
-            message = message.format(GlobalConfig.APK_DIR)
-            raise LauncherFlowInterruptedException(self.TAG, message)
+            Printer.system_message(self.TAG, "Directory '" + GlobalConfig.APK_DIR + "' not found. Creating...")
+            FileUtils.create_dir(GlobalConfig.APK_DIR)
 
     def provide_apk(self, test_set):
         self._find_candidates(test_set)
@@ -74,22 +34,22 @@ class ApkProvider:
         return self._get_usable_apk_candidate_for_latest_version()
 
     def _find_candidates(self, test_set):
-        apk_name_part_cleaned = test_set.apk_name_part.replace(".apk", "")
+        name_part = test_set.apk_name_part.replace(".apk", "")
         Printer.system_message(self.TAG,
                                "Checking '" + GlobalConfig.APK_DIR + "' directory for .*apk list with names " +
-                               "containing '" + apk_name_part_cleaned + "':")
+                               "containing '" + name_part + "':")
 
-        application_apk_list = get_list_with_application_apk(apk_name_part_cleaned)
-        application_apk_filepath_list = get_list_with_application_apk_filepath(apk_name_part_cleaned)
-        test_apk_list = get_list_with_test_apk(apk_name_part_cleaned)
-        test_apk_filepath_list = get_list_with_test_apk_filepath(apk_name_part_cleaned)
+        app_apk_list = ApkHelper.get_list_with_application_apk(name_part, GlobalConfig.APK_DIR)
+        app_apk_filepath_list = ApkHelper.get_list_with_application_apk_filepath(name_part, GlobalConfig.APK_DIR)
+        test_apk_list = ApkHelper.get_list_with_test_apk(name_part, GlobalConfig.APK_DIR)
+        test_apk_filepath_list = ApkHelper.get_list_with_test_apk_filepath(name_part, GlobalConfig.APK_DIR)
 
-        for apk in application_apk_list:
+        for apk in app_apk_list:
             apk_filename = apk
             apk_filename_without_extension = apk_filename.replace(".apk", "")
 
             apk_filepath = ""
-            for path in application_apk_filepath_list:
+            for path in app_apk_filepath_list:
                 if apk_filename_without_extension and "-androidTest" not in path:
                     apk_filepath = path
 

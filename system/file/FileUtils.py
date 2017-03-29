@@ -11,7 +11,23 @@ from settings import GlobalConfig
 TAG = "FileManager:"
 
 
-def create_file(folder, file_name, extension):
+def create_dir(directory):
+    dir_path = clean_path(directory)
+
+    try:
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        absolute_path = os.path.abspath(dir_path)
+        Printer.system_message(TAG, "Created directory '" + absolute_path + "'.")
+    except Exception as e:
+        message = "Unable to create directory '{}'. Error message: {}"
+        message = message.format(dir_path, str(e))
+        raise LauncherFlowInterruptedException(TAG, message)
+
+    return absolute_path
+
+
+def create_output_file(folder, file_name, extension):
     directory = add_ending_slash(GlobalConfig.OUTPUT_DIR) + add_ending_slash(str(folder))
     file_path = clean_path(directory + str(file_name) + "." + extension)
 

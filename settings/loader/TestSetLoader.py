@@ -50,14 +50,14 @@ def _load_test_set(test_manifest, test_set_name):
         Printer.system_message(TAG, "Test set '" + test_set_name + "' was found in TestManifest.")
         test_set = test_manifest.get_set(test_set_name)
         Printer.message_highlighted(TAG, "Test set contains following package names: ",
-                                    ",".join("'" + package_name + "'" for package_name in test_set.set_package_names))
+                                    ", ".join("'" + package_name + "'" for package_name in test_set.set_package_names))
 
         found_all_packages = True
-        errors = "\n"
+        errors = ""
         for package_name in test_set.set_package_names:
             if not test_manifest.contains_package(package_name):
                 found_all_packages = False
-                errors.join("Test package '" + package_name + "' was not found in TestManifest!")
+                errors += "\n              - Test package '" + package_name + "' was not found in TestManifest!"
 
         if found_all_packages:
             Printer.system_message(TAG, "All test packages from set '" + test_set_name

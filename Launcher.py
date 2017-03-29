@@ -2,6 +2,8 @@ from android.apk.ApkProvider import ApkProvider
 from android.bin.AndroidBinaryFileControllers import (
     AaptController,
     AdbController,
+    AdbShellController,
+    AdbPackageManagerController,
     AvdManagerController,
     EmulatorController,
     GradleController,
@@ -33,7 +35,9 @@ from system.file import FileUtils
 TAG = "Launcher:"
 
 adb_controller = None
-android_controller = None
+adb_shell_controller = None
+adb_package_manager_controller = None
+avdmanager_controller = None
 emulator_controller = None
 aapt_controller = None
 gradle_controller = None
@@ -65,17 +69,19 @@ try:
 
     Printer.step(TAG, "Initiating objects.")
     adb_controller = AdbController()
-    android_controller = AvdManagerController()
+    adb_shell_controller = AdbShellController()
+    adb_package_manager_controller = AdbPackageManagerController()
+    avdmanager_controller = AvdManagerController()
     emulator_controller = EmulatorController()
     aapt_controller = AaptController()
     gradle_controller = GradleController()
     instrumentation_runner_controller = InstrumentationRunnerController()
 
-    device_store = DeviceStore(adb_controller, android_controller, emulator_controller)
-    device_manager = DeviceManager(device_store, adb_controller, android_controller)
+    device_store = DeviceStore(adb_controller, adb_package_manager_controller, avdmanager_controller, emulator_controller)
+    device_manager = DeviceManager(device_store, adb_controller, adb_shell_controller, avdmanager_controller)
 
     apk_provider = ApkProvider(aapt_controller)
-    apk_manager = ApkManager(gradle_controller, apk_provider)
+    apk_manager = ApkManager(device_store, apk_provider, gradle_controller, aapt_controller)
 
     test_store = TestStore()
     test_manager = TestManager(instrumentation_runner_controller, device_store, test_store)
@@ -124,13 +130,13 @@ try:
     else:
         apk = apk_manager.get_apk(test_set)
         if apk is None:
-            apk = apk_manager.get_apk(test_set)
+            apk = apk_manager.build_apk(test_set)
 
     Printer.step(TAG, "Installing .*apk on devices included in test session.")
-    device_manager.install_apk_on_devices(apk)
+    apk_manager.install_apk_on_devices(apk)
 
     Printer.step(TAG, "Starting tests.")
-    test_manager.run_with_shards(test_set, test_list)
+    test_manager.run_with_boosted_shards(test_set, test_list)
 
 except LauncherFlowInterruptedException as e:
     Printer.error(e.caller_tag, str(e))

@@ -8,10 +8,34 @@ class AdbCommand:
     DEVICES = "devices | grep [0-9] | tr -s \"\t\" \" | cut -d\""
     WAIT_FOR_DEVICE = "wait-for-device"
     LIST_AVD = "list avd"
+    KILL_DEVICE = "emu kill"
     SPECIFIC_DEVICE = "-s {}"
     INSTALL_APK = "install {}"
-    GET_PROPERTY = "shell getprop"
-    KILL_DEVICE = "emu kill"
+    UNINSTALL_PACKAGE = "uninstall {}"
+
+
+class AdbShellCommand:
+    SHELL = "shell"
+    GET_PROPERTY = "getprop {}"
+
+
+class AdbPackageManagerCommand:
+    PACKAGE_MANAGER = "pm"
+    LIST_SERVICES = "list packages"
+    UNINSTALL_PACKAGE = "uninstall {}"
+
+
+class AdbActivityManagerCommand:
+    ACTIVITY_MANAGER = "am"
+
+
+class InstrumentationRunnerCommand:
+    INSTRUMENT_PROCESS = "instrument -w"
+    NUM_SHARD = "-e numShards {}"
+    SHARD_INDEX = "-e shardIndex {}"
+    PACKAGE = "-e package {}"
+    INSTRUMENTATION_RUNNER = "{}"
+    RUN_TEST_PACKAGE = "{} {} shell am instrument -w -e package {} {}"
 
 
 class AvdManagerCommand:
@@ -39,13 +63,3 @@ class EmulatorCommand:
 
 class GradleCommand:
     RUN_TASK_IN_OTHER_DIRECTORY = "{} -p {} {}"
-
-
-class InstrumentationRunnerCommand:
-    RUN_TEST = "shell am instrument -w"
-    NUM_SHARD = "-e numShards {}"
-    SHARD_INDEX = "-e shardIndex {}"
-    PACKAGE = "-e package {}"
-    INSTRUMENTATION_RUNNER = "{}"
-    RUN_TEST_PACKAGE = "{} {} shell am instrument -w -e package {} {}"
-

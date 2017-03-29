@@ -14,9 +14,10 @@ from session.SessionDevices import (
 class DeviceStore:
     TAG = "DeviceStore:"
 
-    def __init__(self, adb_controller, android_controller, emulator_controller):
+    def __init__(self, adb_controller, adb_package_manager_controller, avdmanager_controller, emulator_controller):
         self.adb_controller = adb_controller
-        self.android_controller = android_controller
+        self.adb_package_manager_controller = adb_package_manager_controller
+        self.avdmanager_controller = avdmanager_controller
         self.emulator_controller = emulator_controller
 
         self.outside_session_virtual_devices = list()
@@ -28,7 +29,10 @@ class DeviceStore:
 
         for device_name, status in currently_visible_devices.items():
             if "emulator" not in device_name:
-                outside_session_device = OutsideSessionDevice(device_name, status, self.adb_controller)
+                outside_session_device = OutsideSessionDevice(device_name,
+                                                              status,
+                                                              self.adb_controller,
+                                                              self.adb_package_manager_controller)
                 Printer.system_message(self.TAG, "Android Device model representing device with name '"
                                        + device_name + "' was added to test run.")
                 self.outside_session_devices.append(outside_session_device)
@@ -41,7 +45,10 @@ class DeviceStore:
 
         for device_name, status in currently_visible_devices.items():
             if "emulator" in device_name:
-                outside_session_virtual_device = OutsideSessionVirtualDevice(device_name, status, self.adb_controller)
+                outside_session_virtual_device = OutsideSessionVirtualDevice(device_name,
+                                                                             status,
+                                                                             self.adb_controller,
+                                                                             self.adb_package_manager_controller)
                 Printer.system_message(self.TAG, "AVD model representing device with name '"
                                        + device_name + "' was added to test run.")
                 self.outside_session_virtual_devices.append(outside_session_virtual_device)
@@ -57,14 +64,15 @@ class DeviceStore:
                 avd_schema = copy.deepcopy(avd_schemas[avd.avd_name])
                 avd_schema.avd_name = avd_schema.avd_name + "-" + str(i)
                 port = avd_ports.pop(0)
-                log_file = FileUtils.create_file("avd_logs", avd_schema.avd_name, "txt")
+                log_file = FileUtils.create_output_file("avd_logs", avd_schema.avd_name, "txt")
 
                 session_device = SessionVirtualDevice(avd_schema,
                                                       port,
                                                       log_file,
-                                                      self.android_controller,
+                                                      self.avdmanager_controller,
                                                       self.emulator_controller,
-                                                      self.adb_controller)
+                                                      self.adb_controller,
+                                                      self.adb_package_manager_controller)
                 self.session_devices.append(session_device)
                 Printer.system_message(self.TAG, "Android Virtual Device model was created according to schema '" +
                                        avd_schema.avd_name + "'. Instance number: " + str(i)

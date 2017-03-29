@@ -93,6 +93,6 @@ def _load_paths_to_global_settings(path_set):
 
     GlobalConfig.APK_DIR = add_ending_slash(clean_path((path_set.paths["apk_dir"]).path_value))
     if GlobalConfig.APK_DIR == "":
-        message = "Directory with .*apk files was not found. Launcher will quit."
+        message = "Directory with .*apk files was not specified. Launcher will quit."
         raise LauncherFlowInterruptedException(TAG, message)
     Printer.message_highlighted(TAG, "Launcher will look for .*apk files in dir: ", GlobalConfig.APK_DIR)

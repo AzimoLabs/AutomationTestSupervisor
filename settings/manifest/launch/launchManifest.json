@@ -8,9 +8,9 @@
       "avd_adb_boot_timeout_millis": 240000,
       "avd_system_boot_timeout_millis": 120000,
 
+      "should_build_new_apk": true,
       "should_restart_adb": true,
-      "adb_scan_interval": 10000,
-      "should_build_new_apk": false
+      "adb_scan_interval": 10000
     }
   ]
 }
