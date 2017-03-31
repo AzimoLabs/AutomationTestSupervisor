@@ -1,3 +1,6 @@
+import re
+import time
+
 from error.Exceptions import LauncherFlowInterruptedException
 
 from settings import GlobalConfig
@@ -15,9 +18,6 @@ from system.console import (
     Printer,
     Color
 )
-
-import re
-import time
 
 
 class ApkManager:
@@ -79,6 +79,54 @@ class ApkManager:
 
         while any(not thread.is_finished for thread in apk_install_threads):
             time.sleep(1)
+
+    def set_instrumentation_runner_according_to(self, apk):
+        Printer.system_message(self.TAG, "Scanning test .*apk file for Instrumentation Runner data.")
+
+        resources = self.aapt_controller.list_resources(apk.test_apk_path)
+        target_package = ""
+        instrumentation_runner_name = ""
+
+        inside_instrumentation_section = False
+        inside_manifest_section = False
+        for line in resources.splitlines():
+            if "E: instrumentation" in line:
+                inside_instrumentation_section = True
+                continue
+
+            if "E: manifest" in line:
+                inside_manifest_section = True
+                continue
+
+            if inside_instrumentation_section and "E: " in line:
+                inside_instrumentation_section = False
+
+            if inside_manifest_section and "E: " in line:
+                inside_manifest_section = False
+
+            if inside_instrumentation_section:
+                if "A: android:name" in line:
+                    regex_result = re.findall("=\"(.+?)\"", line)
+                    if regex_result:
+                        instrumentation_runner_name = str(regex_result[0])
+
+            if inside_manifest_section:
+                if "A: package" in line:
+                    regex_result = re.findall("=\"(.+?)\"", line)
+                    if regex_result:
+                        target_package = str(regex_result[0])
+
+        if target_package == "":
+            message = "Unable to find package of tested application in test .*apk file. Tests won't start without it."
+            raise LauncherFlowInterruptedException(self.TAG, message)
+
+        if instrumentation_runner_name == "":
+            message = ("Unable to find Instrumentation Runner name of tested application in test .*apk file."
+                       " Tests won't start without it.")
+            raise LauncherFlowInterruptedException(self.TAG, message)
+
+        GlobalConfig.INSTRUMENTATION_RUNNER = target_package + "/" + instrumentation_runner_name
+        Printer.message_highlighted(self.TAG, "Instrumentation Runner found: ", GlobalConfig.INSTRUMENTATION_RUNNER)
 
 
 class DeviceManager:

@@ -136,6 +136,9 @@ if __name__ == "__main__":
             if apk is None:
                 apk = apk_manager.build_apk(test_set)
 
+        Printer.step(TAG, "Scanning .*apk for helpful data.")
+        apk_manager.set_instrumentation_runner_according_to(apk)
+
         Printer.step(TAG, "Installing .*apk on devices included in test session.")
         apk_manager.install_apk_on_devices(apk)
 

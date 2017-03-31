@@ -8,7 +8,6 @@ class TestManifest:
 
     def __init__(self, manifest_dir):
         self.path_manifest_source = JsonLoader.load_json(manifest_dir)
-        self.instrumentation_runner = self.path_manifest_source["instrumentation_runner"]
         self.test_package_list = dict()
         self.test_set_list = dict()
 

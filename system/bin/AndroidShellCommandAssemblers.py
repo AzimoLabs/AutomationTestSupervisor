@@ -22,7 +22,7 @@ class AaptCommandAssembler:
 
     def assemble_list_all_cmd(self, aapt_bin, apk_filepath):
         return self.list_all_schema.format(aapt_bin,
-                                           AaptCommand.DUMP_BADGING.format(apk_filepath))
+                                           AaptCommand.LIST_ALL.format(apk_filepath))
 
 
 class AdbShellCommandAssembler:

@@ -67,6 +67,10 @@ class AaptController:
         cmd = self.aapt_command_assembler.assemble_dump_badging_cmd(self.aapt_bin, apk_filepath)
         return ShellHelper.execute_shell(cmd, False, False)
 
+    def list_resources(self, apk_filepath):
+        cmd = self.aapt_command_assembler.assemble_list_all_cmd(self.aapt_bin, apk_filepath)
+        return ShellHelper.execute_shell(cmd, False, False)
+
 
 class AdbController:
     TAG = "AdbController:"

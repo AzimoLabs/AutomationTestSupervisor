@@ -1,6 +1,5 @@
 from error.Exceptions import LauncherFlowInterruptedException
 
-from settings import GlobalConfig
 from settings.loader import ArgLoader
 from settings.manifest.test.TestManifestModels import TestManifest
 
@@ -14,8 +13,6 @@ def init_test_settings():
     test_manifest = _load_manifest()
     test_list = _load_test_list(test_manifest)
     test_set = _load_test_set(test_manifest, test_set_name)
-
-    _load_test_settings_to_global_config(test_manifest)
 
     return test_set, test_list
 
@@ -70,12 +67,3 @@ def _load_test_set(test_manifest, test_set_name):
         raise LauncherFlowInterruptedException(TAG, message)
 
     return test_set
-
-
-def _load_test_settings_to_global_config(test_manifest):
-    GlobalConfig.INSTRUMENTATION_RUNNER = test_manifest.instrumentation_runner
-    if GlobalConfig.INSTRUMENTATION_RUNNER == "":
-        Printer.error(TAG, "Instrumentation Runner was not set. "
-                           "Test can't start without it. Launcher will quit.")
-    else:
-        Printer.message_highlighted(TAG, "Instrumentation Runner set to: ", GlobalConfig.INSTRUMENTATION_RUNNER)
