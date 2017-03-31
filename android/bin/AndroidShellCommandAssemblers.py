@@ -16,9 +16,9 @@ from android.bin.AndroidShellCommands import (
 class AaptCommandAssembler:
     dump_badging_schema = "{} {}"
 
-    def assemble_dump_badging_cmd(self, aapt_bin, apk_name):
+    def assemble_dump_badging_cmd(self, aapt_bin, apk_filepath):
         return self.dump_badging_schema.format(aapt_bin,
-                                               AaptCommand.DUMP_BADGING.format(apk_name))
+                                               AaptCommand.DUMP_BADGING.format(apk_filepath))
 
 
 class AdbShellCommandAssembler:

@@ -58,6 +58,9 @@ class ApkManager:
         self._install_apk(apk.test_apk_name, apk.test_apk_path)
 
     def _install_apk(self, apk_name, apk_path):
+        aapt_command_assembler = self.aapt_controller.aapt_command_assembler
+        dump_badging_cmd = aapt_command_assembler.assemble_dump_badging_cmd(self.aapt_controller.aapt_bin, apk_path)
+
         Printer.message_highlighted(self.TAG, "Attempting to install " + Color.GREEN + "'" + apk_name + "'" + Color.BLUE
                                     + " on devices: ", "("
                                     + " ".join("'" + device.adb_name + "'"
@@ -67,7 +70,7 @@ class ApkManager:
         apk_install_threads = list()
         for device in self.device_store.get_devices():
             if device.status == "device":
-                apk_install_thread = ApkInstallThread(self.aapt_controller, device, apk_name, apk_path)
+                apk_install_thread = ApkInstallThread(dump_badging_cmd, device, apk_name, apk_path)
                 apk_install_thread.start()
                 apk_install_threads.append(apk_install_thread)
             else:
@@ -311,7 +314,7 @@ class TestManager:
                                                                   GlobalConfig.INSTRUMENTATION_RUNNER)
 
                 if device.status == "device":
-                    test_thread = TestThread(cmd, device.adb_name)
+                    test_thread = TestThread(cmd, device)
                     test_thread.start()
                     test_threads.append(test_thread)
                 else:
@@ -350,10 +353,10 @@ class TestManager:
 
                 threads_to_clean = list()
                 for thread in test_threads:
-                    if thread.device_name == device.adb_name:
+                    if thread.device.adb_name == device.adb_name:
                         is_device_thread_created = True
 
-                    if thread.device_name == device.adb_name and thread.is_finished:
+                    if thread.device.adb_name == device.adb_name and thread.is_finished:
                         num_test_processes_finished += 1
                         threads_to_clean.append(thread)
 
@@ -368,7 +371,7 @@ class TestManager:
 
                         Printer.system_message(self.TAG, str(len(test_cmd_to_run)) + " packages to run left...")
 
-                        test_thread = TestThread(cmd, device.adb_name)
+                        test_thread = TestThread(cmd, device)
                         test_thread.start()
                         test_threads.append(test_thread)
                     else:
