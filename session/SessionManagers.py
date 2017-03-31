@@ -2,7 +2,7 @@ from error.Exceptions import LauncherFlowInterruptedException
 
 from settings import GlobalConfig
 
-from session.SessionDevices import (
+from session.SessionModels import (
     OutsideSessionVirtualDevice,
     SessionVirtualDevice
 )
@@ -23,14 +23,14 @@ import time
 class ApkManager:
     TAG = "ApkManager:"
 
-    def __init__(self, device_store, apk_provider, gradle_controller, aapt_controller):
+    def __init__(self, device_store, apk_store, gradle_controller, aapt_controller):
         self.device_store = device_store
-        self.apk_provider = apk_provider
+        self.apk_store = apk_store
         self.gradle_controller = gradle_controller
         self.aapt_controller = aapt_controller
 
     def get_apk(self, test_set):
-        apk_candidate = self.apk_provider.provide_apk(test_set)
+        apk_candidate = self.apk_store.provide_apk(test_set)
         if apk_candidate is not None:
             Printer.message_highlighted(self.TAG, "Picked .*apk with highest version code:\n", str(apk_candidate))
         return apk_candidate
@@ -40,7 +40,7 @@ class ApkManager:
         self.gradle_controller.build_application_apk(test_set)
         self.gradle_controller.build_test_apk(test_set)
 
-        apk_candidate = self.apk_provider.provide_apk(test_set)
+        apk_candidate = self.apk_store.provide_apk(test_set)
         if apk_candidate is None:
             message = "No .apk* candidates for test session were found. Check your config. Launcher will quit."
             raise LauncherFlowInterruptedException(self.TAG, message)

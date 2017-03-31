@@ -1,21 +1,11 @@
-from android.apk.ApkProvider import ApkProvider
-from android.bin.AndroidBinaryFileControllers import (
-    AaptController,
-    AdbController,
-    AdbShellController,
-    AdbPackageManagerController,
-    AvdManagerController,
-    EmulatorController,
-    GradleController,
-    InstrumentationRunnerController,
-)
-
 from error.Exceptions import LauncherFlowInterruptedException
 
 from session.SessionDataStores import (
+    ApkStore,
     DeviceStore,
     TestStore
 )
+
 from session.SessionManagers import (
     ApkManager,
     DeviceManager,
@@ -29,8 +19,19 @@ from settings.loader import (
     AvdSetLoader,
     TestSetLoader
 )
+
 from system.console import Printer
 from system.file import FileUtils
+from system.bin.AndroidBinaryFileControllers import (
+    AaptController,
+    AdbController,
+    AdbShellController,
+    AdbPackageManagerController,
+    AvdManagerController,
+    EmulatorController,
+    GradleController,
+    InstrumentationRunnerController,
+)
 
 TAG = "Launcher:"
 
@@ -46,7 +47,7 @@ instrumentation_runner_controller = None
 device_store = None
 device_manager = None
 
-apk_provider = None
+apk_store = None
 apk_manager = None
 
 test_store = None
@@ -82,8 +83,8 @@ if __name__ == "__main__":
                                    emulator_controller)
         device_manager = DeviceManager(device_store, adb_controller, adb_shell_controller, avdmanager_controller)
 
-        apk_provider = ApkProvider(aapt_controller)
-        apk_manager = ApkManager(device_store, apk_provider, gradle_controller, aapt_controller)
+        apk_store = ApkStore(aapt_controller)
+        apk_manager = ApkManager(device_store, apk_store, gradle_controller, aapt_controller)
 
         test_store = TestStore()
         test_manager = TestManager(instrumentation_runner_controller, device_store, test_store)
