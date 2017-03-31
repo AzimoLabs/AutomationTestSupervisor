@@ -293,7 +293,7 @@ class GradleController:
         self._check_if_build_is_possible(assemble_task)
 
         cmd = self.gradle_command_assembler.assemble_build_application_apk_cmd(self.gradle_bin,
-                                                                               "",
+                                                                               test_set.gradle_build_params,
                                                                                assemble_task,
                                                                                GlobalConfig.PROJECT_ROOT_DIR)
         ShellHelper.execute_shell(cmd, True, True)
@@ -303,7 +303,7 @@ class GradleController:
         self._check_if_build_is_possible(assemble_task)
 
         cmd = self.gradle_command_assembler.assemble_build_test_apk_cmd(self.gradle_bin,
-                                                                        "",
+                                                                        test_set.gradle_build_params,
                                                                         assemble_task,
                                                                         GlobalConfig.PROJECT_ROOT_DIR)
         ShellHelper.execute_shell(cmd, True, True)

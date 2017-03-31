@@ -248,6 +248,7 @@
       "apk_name_part": "",
       "application_apk_assemble_task": "",
       "test_apk_assemble_task": "",
+      "gradle_build_params": "",
       "shard": false,
       "set_package_names": []
     },
@@ -256,6 +257,7 @@
       "apk_name_part": "integrationTest",
       "application_apk_assemble_task": "assembleAutomationIntegrationTest",
       "test_apk_assemble_task": "assembleAutomationIntegrationTestAndroidTest",
+      "gradle_build_params": "-PtestApiBasePath=azimoF",
       "shard": false,
       "set_package_names": [
         "Function-AuthFlow",
@@ -279,6 +281,7 @@
       "apk_name_part": "integrationTest",
       "application_apk_assemble_task": "assembleAutomationIntegrationTest",
       "test_apk_assemble_task": "assembleAutomationIntegrationTestAndroidTest",
+      "gradle_build_params": "-PtestApiBasePath=azimoF",
       "shard": false,
       "set_package_names": [
         "EndToEnd-CardsManagement",
@@ -304,6 +307,7 @@
       "apk_name_part": "integrationTest",
       "application_apk_assemble_task": "assembleAutomationIntegrationTest",
       "test_apk_assemble_task": "assembleAutomationIntegrationTestAndroidTest",
+      "gradle_build_params": "-PtestApiBasePath=azimoF",
       "shard": false,
       "set_package_names": [
         "Function-AuthFlow"

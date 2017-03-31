@@ -66,4 +66,5 @@ class TestSet:
         self.application_apk_assemble_task = test_set_dict["application_apk_assemble_task"]
         self.test_apk_assemble_task = test_set_dict["test_apk_assemble_task"]
         self.set_package_names = test_set_dict["set_package_names"]
+        self.gradle_build_params = test_set_dict["gradle_build_params"]
         self.shard = test_set_dict["shard"]
