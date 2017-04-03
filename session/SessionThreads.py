@@ -65,13 +65,13 @@ class ApkInstallThread(threading.Thread):
         installed_packages_str = self.device.get_installed_packages()
 
         if package in installed_packages_str:
-            Printer.system_message(self.TAG, "Package '" + Color.GREEN + package + Color.BLUE + "' "
-                                   "is currently installed on device '" + Color.GREEN + self.device.adb_name
+            Printer.system_message(self.TAG, "Package " + Color.GREEN + "'" + package + "'" + Color.BLUE +
+                                   " is currently installed on device '" + Color.GREEN + self.device.adb_name
                                    + Color.BLUE + "'. Removing from device...")
             self.device.uninstall_package(package)
         else:
-            Printer.system_message(self.TAG, "Package '" + Color.GREEN + package + Color.BLUE + "' "
-                                   "was not found on device '" + Color.GREEN + self.device.adb_name + Color.BLUE +
+            Printer.system_message(self.TAG, "Package " + Color.GREEN + "'" + package + "'" + Color.BLUE +
+                                   " was not found on device '" + Color.GREEN + self.device.adb_name + Color.BLUE +
                                    "'.")
 
         Printer.system_message(self.TAG, "Installing .*apk file...")

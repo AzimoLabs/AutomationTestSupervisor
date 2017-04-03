@@ -4,10 +4,12 @@ from error.Exceptions import LauncherFlowInterruptedException
 
 
 class _BasicDevice:
-    def __init__(self, adb_name, status, adb_controller, adb_package_manager_controller):
+    def __init__(self, adb_name, status, adb_controller, adb_package_manager_controller, adb_settings_controller):
         self.adb_controller = adb_controller
         self.adb_package_manager_controller = adb_package_manager_controller
+        self.adb_settings_controller = adb_settings_controller
         self.adb_name = adb_name
+        self.android_id = self.adb_settings_controller.get_device_android_id(self.adb_name).strip()
         self.status = status
 
     def install_apk(self, apk_file):
@@ -24,8 +26,8 @@ class _BasicDevice:
 
 
 class _BasicVirtualDevice(_BasicDevice):
-    def __init__(self, adb_name, status, adb_controller, adb_package_manager_controller):
-        super().__init__(adb_name, status, adb_controller, adb_package_manager_controller)
+    def __init__(self, adb_name, status, adb_controller, adb_package_manager_controller, adb_settings_controller):
+        super().__init__(adb_name, status, adb_controller, adb_package_manager_controller, adb_settings_controller)
 
     def get_property(self, device_property):
         return self.adb_controller.get_property(self.adb_name, device_property)
@@ -35,13 +37,13 @@ class _BasicVirtualDevice(_BasicDevice):
 
 
 class OutsideSessionDevice(_BasicDevice):
-    def __init__(self, adb_name, status, adb_controller, adb_package_manager_controller):
-        super().__init__(adb_name, status, adb_controller, adb_package_manager_controller)
+    def __init__(self, adb_name, status, adb_controller, adb_package_manager_controller, adb_settings_controller):
+        super().__init__(adb_name, status, adb_controller, adb_package_manager_controller, adb_settings_controller)
 
 
 class OutsideSessionVirtualDevice(_BasicVirtualDevice):
-    def __init__(self, adb_name, status, adb_controller, adb_package_manager_controller):
-        super().__init__(adb_name, status, adb_controller, adb_package_manager_controller)
+    def __init__(self, adb_name, status, adb_controller, adb_package_manager_controller, adb_settings_controller):
+        super().__init__(adb_name, status, adb_controller, adb_package_manager_controller, adb_settings_controller)
 
 
 class SessionVirtualDevice(_BasicVirtualDevice):
@@ -49,9 +51,11 @@ class SessionVirtualDevice(_BasicVirtualDevice):
 
     def __init__(self,
                  avd_schema, port, log_file, avdmanager_controller, emulator_controller, adb_controller,
-                 adb_package_manager_controller):
+                 adb_package_manager_controller, adb_settings_controller):
 
-        super().__init__("emulator-" + str(port), "not-launched", adb_controller, adb_package_manager_controller)
+        super().__init__("emulator-" + str(port), "not-launched", adb_controller, adb_package_manager_controller,
+                         adb_settings_controller)
+
         self.avdmanager_controller = avdmanager_controller
         self.emulator_controller = emulator_controller
         self.avd_schema = avd_schema

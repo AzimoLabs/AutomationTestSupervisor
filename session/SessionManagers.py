@@ -159,6 +159,15 @@ class DeviceManager:
         Printer.system_message(self.TAG, "Clearing all AVD models unrelated to AVD set.")
         self.device_store.clear_outside_session_virtual_device_models()
 
+    def clear_models_with_android_ids_in_ignore_list(self):
+        for device in self.device_store.get_devices():
+            if device.android_id in GlobalConfig.IGNORED_DEVICE_LIST:
+                Printer.system_message(self.TAG, "Android-ID "
+                                       + Color.GREEN + "'" + device.android_id + "'" + Color.BLUE +
+                                       " of device " + Color.GREEN + "'" + device.adb_name + "'" + Color.BLUE +
+                                       " was found in ignore list.")
+                self.device_store.remove_device_from_session(device)
+
     def create_all_avd_and_reuse_existing(self):
         created_avd_list = re.findall("Name: (.+)", self.avdmanager_controller.list_avd())
 

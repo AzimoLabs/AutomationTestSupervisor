@@ -20,13 +20,18 @@ def init_launch_plan():
 def _load_launch_plan_to_global_settings(launch_plan):
     GlobalConfig.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION = False
 
+    GlobalConfig.IGNORED_DEVICE_LIST = launch_plan.device_android_id_to_ignore
+    if GlobalConfig.IGNORED_DEVICE_LIST:
+        Printer.message_highlighted(TAG, "Devices with following Android-IDs will be ignored: ",
+                                    str(GlobalConfig.IGNORED_DEVICE_LIST))
+
     GlobalConfig.SHOULD_RESTART_ADB = launch_plan.should_restart_adb
     if GlobalConfig.SHOULD_RESTART_ADB:
         Printer.system_message(TAG, "ADB will be restarted before launching tests.")
     else:
         Printer.system_message(TAG, "ADB with current state will be used during run.")
 
-    GlobalConfig.ADB_SCAN_INTERVAL = launch_plan.adb_scan_interval
+    GlobalConfig.ADB_SCAN_INTERVAL = launch_plan.adb_scan_interval_millis
     if GlobalConfig.ADB_SCAN_INTERVAL is "":
         message = "ADB_SCAN_INTERVAL not specified in LaunchManifest. Launcher will quit."
         raise LauncherFlowInterruptedException(TAG, message)

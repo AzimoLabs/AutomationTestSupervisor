@@ -10,6 +10,7 @@ from system.bin.AndroidShellCommandAssemblers import (
     AdbCommandAssembler,
     AdbShellCommandAssembler,
     AdbPackageManagerCommandAssembler,
+    AdbSettingsCommandAssembler,
     AvdManagerCommandAssembler,
     EmulatorCommandAssembler,
     GradleCommandAssembler,
@@ -166,6 +167,30 @@ class AdbPackageManagerController:
                                                                                         device_adb_name,
                                                                                         package_name)
         return ShellHelper.execute_shell(cmd, True, True)
+
+
+class AdbSettingsController:
+    TAG = "AdbSettingsController:"
+
+    adb_bin = None
+
+    def __init__(self):
+        self.adb_bin = clean_path(add_ending_slash(GlobalConfig.SDK_DIR) + "platform-tools/adb")
+        self._assert_bin_directory_exists()
+        self.adb_settings_command_assembler = AdbSettingsCommandAssembler()
+
+    def _assert_bin_directory_exists(self):
+        if os.path.isfile(self.adb_bin):
+            Printer.system_message(self.TAG, "ADB binary file found at '" + self.adb_bin + "'.")
+        else:
+            message = "Unable to find ADB binary at '{}'."
+            message = message.format(self.adb_bin)
+            raise LauncherFlowInterruptedException(self.TAG, message)
+
+    def get_device_android_id(self, device_adb_name):
+        cmd = self.adb_settings_command_assembler.assemble_get_device_android_id_cmd(self.adb_bin,
+                                                                                     device_adb_name)
+        return ShellHelper.execute_shell(cmd, False, False)
 
 
 class AvdManagerController:

@@ -152,9 +152,16 @@ class ApkStore:
 class DeviceStore:
     TAG = "DeviceStore:"
 
-    def __init__(self, adb_controller, adb_package_manager_controller, avdmanager_controller, emulator_controller):
+    def __init__(self,
+                 adb_controller,
+                 adb_package_manager_controller,
+                 adb_settings_controller,
+                 avdmanager_controller,
+                 emulator_controller):
+
         self.adb_controller = adb_controller
         self.adb_package_manager_controller = adb_package_manager_controller
+        self.adb_settings_controller = adb_settings_controller
         self.avdmanager_controller = avdmanager_controller
         self.emulator_controller = emulator_controller
 
@@ -170,12 +177,13 @@ class DeviceStore:
                 outside_session_device = OutsideSessionDevice(device_name,
                                                               status,
                                                               self.adb_controller,
-                                                              self.adb_package_manager_controller)
-                Printer.system_message(self.TAG, "Android Device model representing device with name '"
-                                       + device_name + "' was added to test run.")
+                                                              self.adb_package_manager_controller,
+                                                              self.adb_settings_controller)
+                Printer.system_message(self.TAG, "Android Device model representing device with name "
+                                       + Color.GREEN + "'" + device_name + "'" + Color.BLUE + " was added to test run.")
                 self.outside_session_devices.append(outside_session_device)
 
-        if not any(isinstance(device, OutsideSessionVirtualDevice) for device in self.outside_session_devices):
+        if not any(isinstance(device, OutsideSessionDevice) for device in self.outside_session_devices):
             Printer.system_message(self.TAG, "No Android Devices connected to PC were found.")
 
     def prepare_outside_session_virtual_devices(self):
@@ -186,9 +194,10 @@ class DeviceStore:
                 outside_session_virtual_device = OutsideSessionVirtualDevice(device_name,
                                                                              status,
                                                                              self.adb_controller,
-                                                                             self.adb_package_manager_controller)
-                Printer.system_message(self.TAG, "AVD model representing device with name '"
-                                       + device_name + "' was added to test run.")
+                                                                             self.adb_package_manager_controller,
+                                                                             self.adb_settings_controller)
+                Printer.system_message(self.TAG, "AVD model representing device with name "
+                                       + Color.GREEN + "'" + device_name + "'" + Color.BLUE + " was added to test run.")
                 self.outside_session_virtual_devices.append(outside_session_virtual_device)
 
         if not any(isinstance(device, OutsideSessionVirtualDevice) for device in self.outside_session_virtual_devices):
@@ -210,11 +219,12 @@ class DeviceStore:
                                                       self.avdmanager_controller,
                                                       self.emulator_controller,
                                                       self.adb_controller,
-                                                      self.adb_package_manager_controller)
+                                                      self.adb_package_manager_controller,
+                                                      self.adb_settings_controller)
                 self.session_devices.append(session_device)
-                Printer.system_message(self.TAG, "Android Virtual Device model was created according to schema '" +
-                                       avd_schema.avd_name + "'. Instance number: " + str(i)
-                                       + ". Assigned to port: " + str(port) + ".")
+                Printer.system_message(self.TAG, "Android Virtual Device model was created according to schema "
+                                       + Color.GREEN + "'" + avd_schema.avd_name + "'" + Color.BLUE +
+                                       ". Instance number: " + str(i) + ". Assigned to port: " + str(port) + ".")
 
     def _get_visible_devices(self):
         currently_visible_devices = dict()
@@ -263,6 +273,16 @@ class DeviceStore:
 
     def clear_session_avd_models(self):
         self.session_devices.clear()
+
+    def remove_device_from_session(self, device):
+        if device in self.outside_session_virtual_devices:
+            self.outside_session_virtual_devices.remove(device)
+        elif device in self.outside_session_devices:
+            self.outside_session_devices.remove(device)
+        elif device in self.session_devices:
+            self.session_devices.remove(device)
+        Printer.system_message(self.TAG, "Device with name "
+                               + Color.GREEN + "'" + device.adb_name + "'" + Color.BLUE + " was removed from session.")
 
 
 class TestStore:

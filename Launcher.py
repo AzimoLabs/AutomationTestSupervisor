@@ -27,6 +27,7 @@ from system.bin.AndroidBinaryFileControllers import (
     AdbController,
     AdbShellController,
     AdbPackageManagerController,
+    AdbSettingsController,
     AvdManagerController,
     EmulatorController,
     GradleController,
@@ -38,6 +39,7 @@ TAG = "Launcher:"
 adb_controller = None
 adb_shell_controller = None
 adb_package_manager_controller = None
+adb_settings_controller = None
 avdmanager_controller = None
 emulator_controller = None
 aapt_controller = None
@@ -73,14 +75,15 @@ if __name__ == "__main__":
         adb_controller = AdbController()
         adb_shell_controller = AdbShellController()
         adb_package_manager_controller = AdbPackageManagerController()
+        adb_settings_controller = AdbSettingsController()
         avdmanager_controller = AvdManagerController()
         emulator_controller = EmulatorController()
         aapt_controller = AaptController()
         gradle_controller = GradleController()
         instrumentation_runner_controller = InstrumentationRunnerController()
 
-        device_store = DeviceStore(adb_controller, adb_package_manager_controller, avdmanager_controller,
-                                   emulator_controller)
+        device_store = DeviceStore(adb_controller, adb_package_manager_controller, adb_settings_controller,
+                                   avdmanager_controller, emulator_controller)
         device_manager = DeviceManager(device_store, adb_controller, adb_shell_controller, avdmanager_controller)
 
         apk_store = ApkStore(aapt_controller)
@@ -122,6 +125,10 @@ if __name__ == "__main__":
                               "and AVD.")
             device_manager.add_models_representing_outside_session_devices()
             device_manager.add_models_representing_outside_session_virtual_devices()
+
+        if GlobalConfig.IGNORED_DEVICE_LIST:
+            Printer.step(TAG, "Checking device ignore list")
+            device_manager.clear_models_with_android_ids_in_ignore_list()
 
         Printer.step(TAG, "Restarting ADB server.")
         if GlobalConfig.SHOULD_RESTART_ADB:

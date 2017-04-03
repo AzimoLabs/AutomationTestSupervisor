@@ -10,7 +10,9 @@
 
       "should_build_new_apk": true,
       "should_restart_adb": true,
-      "adb_scan_interval": 10000
+      "adb_scan_interval_millis": 10000,
+
+      "device_android_id_to_ignore": []
     }
   ]
 }

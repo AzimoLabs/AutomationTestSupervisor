@@ -4,6 +4,7 @@ from system.bin.AndroidShellCommands import (
     AdbShellCommand,
     AdbActivityManagerCommand,
     AdbPackageManagerCommand,
+    AdbSettingsCommand,
     AvdManagerCommand,
     EmulatorCommand,
     GradleCommand,
@@ -23,35 +24,6 @@ class AaptCommandAssembler:
     def assemble_list_all_cmd(self, aapt_bin, apk_filepath):
         return self.list_all_schema.format(aapt_bin,
                                            AaptCommand.LIST_ALL.format(apk_filepath))
-
-
-class AdbShellCommandAssembler:
-    get_property_schema = "{} {} {} {}"
-
-    def assemble_get_property_cmd(self, adb_bin, device_adb_name, device_property):
-        return self.get_property_schema.format(adb_bin,
-                                               AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
-                                               AdbShellCommand.SHELL,
-                                               AdbShellCommand.GET_PROPERTY.format(device_property))
-
-
-class AdbPackageManagerCommandAssembler:
-    list_installed_packages_schema = "{} {} {} {} {}"
-    uninstall_package_schema = "{} {} {} {} {}"
-
-    def assemble_list_installed_packages_cmd(self, adb_bin, device_adb_name):
-        return self.list_installed_packages_schema.format(adb_bin,
-                                                          AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
-                                                          AdbShellCommand.SHELL,
-                                                          AdbPackageManagerCommand.PACKAGE_MANAGER,
-                                                          AdbPackageManagerCommand.LIST_SERVICES)
-
-    def assemble_uninstall_package_cmd(self, adb_bin, device_adb_name, package_name):
-        return self.uninstall_package_schema.format(adb_bin,
-                                                    AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
-                                                    AdbShellCommand.SHELL,
-                                                    AdbPackageManagerCommand.PACKAGE_MANAGER,
-                                                    AdbPackageManagerCommand.UNINSTALL_PACKAGE.format(package_name))
 
 
 class AdbCommandAssembler:
@@ -94,6 +66,46 @@ class AdbCommandAssembler:
         return self.uninstall_package_schema.format(adb_bin,
                                                     AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
                                                     AdbCommand.UNINSTALL_PACKAGE.format(package))
+
+
+class AdbShellCommandAssembler:
+    get_property_schema = "{} {} {} {}"
+
+    def assemble_get_property_cmd(self, adb_bin, device_adb_name, device_property):
+        return self.get_property_schema.format(adb_bin,
+                                               AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                               AdbShellCommand.SHELL,
+                                               AdbShellCommand.GET_PROPERTY.format(device_property))
+
+
+class AdbPackageManagerCommandAssembler:
+    list_installed_packages_schema = "{} {} {} {} {}"
+    uninstall_package_schema = "{} {} {} {} {}"
+
+    def assemble_list_installed_packages_cmd(self, adb_bin, device_adb_name):
+        return self.list_installed_packages_schema.format(adb_bin,
+                                                          AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                                          AdbShellCommand.SHELL,
+                                                          AdbPackageManagerCommand.PACKAGE_MANAGER,
+                                                          AdbPackageManagerCommand.LIST_SERVICES)
+
+    def assemble_uninstall_package_cmd(self, adb_bin, device_adb_name, package_name):
+        return self.uninstall_package_schema.format(adb_bin,
+                                                    AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                                    AdbShellCommand.SHELL,
+                                                    AdbPackageManagerCommand.PACKAGE_MANAGER,
+                                                    AdbPackageManagerCommand.UNINSTALL_PACKAGE.format(package_name))
+
+
+class AdbSettingsCommandAssembler:
+    get_device_android_id_schema = "{} {} {} {} {}"
+
+    def assemble_get_device_android_id_cmd(self, adb_bin, device_adb_name):
+        return self.get_device_android_id_schema.format(adb_bin,
+                                                        AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                                        AdbShellCommand.SHELL,
+                                                        AdbSettingsCommand.SETTINGS,
+                                                        AdbSettingsCommand.GET_DEVICE_ANDROID_ID)
 
 
 class AvdManagerCommandAssembler:

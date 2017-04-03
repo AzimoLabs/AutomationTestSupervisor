@@ -30,6 +30,11 @@ class AdbActivityManagerCommand:
     ACTIVITY_MANAGER = "am"
 
 
+class AdbSettingsCommand:
+    SETTINGS = "settings"
+    GET_DEVICE_ANDROID_ID = "get secure android_id"
+
+
 class InstrumentationRunnerCommand:
     INSTRUMENT_PROCESS = "instrument -w"
     NUM_SHARD = "-e numShards {}"
