@@ -169,6 +169,11 @@ class DeviceManager:
                                        " of device " + Color.GREEN + "'" + device.adb_name + "'" + Color.BLUE +
                                        " was found in ignore list.")
                 self.device_store.remove_device_from_session(device)
+            else:
+                Printer.system_message(self.TAG, "Android-ID "
+                                       + Color.GREEN + "'" + device.android_id + "'" + Color.BLUE +
+                                       " of device " + Color.GREEN + "'" + device.adb_name + "'" + Color.BLUE +
+                                       " is allowed to run in session.")
 
     def create_all_avd_and_reuse_existing(self):
         created_avd_list = re.findall("Name: (.+)", self.avdmanager_controller.list_avd())
@@ -253,20 +258,23 @@ class DeviceManager:
                                ") devices status will change to '" + status + "'.")
 
         timeout = GlobalConfig.AVD_ADB_BOOT_TIMEOUT
-        start_time = last_check_time = time.time() * 1000
+        start_time = last_scan_ended = time.time() * 1000
         while True:
             current_time = time.time() * 1000
 
-            if current_time - last_check_time >= GlobalConfig.ADB_SCAN_INTERVAL or start_time == last_check_time:
-                last_check_time = current_time
+            if current_time - last_scan_ended >= GlobalConfig.ADB_SCAN_INTERVAL or start_time == last_scan_ended:
+                Printer.system_message(self.TAG, "Scanning...")
 
                 self.device_store.update_model_statuses()
-                Printer.system_message(self.TAG, "Current wait status:")
+                Printer.system_message(self.TAG, "  - Current wait status:")
                 for device in monitored_devices:
-                    Printer.message_highlighted(self.TAG, "- " + device.adb_name + " ", "('" + device.status + "')")
+                    Printer.message_highlighted(self.TAG, "      * " + device.adb_name
+                                                + " ", "('" + device.status + "')")
 
                 if all(device.status == status for device in monitored_devices):
                     break
+
+                last_scan_ended = time.time() * 1000
 
             if current_time - start_time >= timeout:
                 message = "Devices took longer than {} seconds to launch (ADB launch). Timeout quit."
@@ -285,12 +293,12 @@ class DeviceManager:
         for device in monitored_devices:
             device_statuses.update({device.adb_name: None})
 
-        start_time = last_check_time = time.time() * 1000
+        start_time = last_scan_ended = time.time() * 1000
         while True:
             current_time = time.time() * 1000
 
-            if current_time - last_check_time >= GlobalConfig.ADB_SCAN_INTERVAL or start_time == last_check_time:
-                last_check_time = current_time
+            if current_time - last_scan_ended >= GlobalConfig.ADB_SCAN_INTERVAL or start_time == last_scan_ended:
+                Printer.system_message(self.TAG, "Scanning...")
 
                 for device in self.device_store.get_devices():
                     if device in monitored_devices:
@@ -307,9 +315,9 @@ class DeviceManager:
                                                                   "init.svc.bootanim": boot_anim,
                                                                   "boot_finished": boot_finished}})
 
-                Printer.system_message(self.TAG, "Current wait status:")
+                Printer.system_message(self.TAG, "  - Current wait status:")
                 for device_name, status_dict in device_statuses.items():
-                    Printer.message_highlighted(self.TAG, device_name + " properties: "
+                    Printer.message_highlighted(self.TAG, "      * " + device_name + " properties: "
                                                 + "('dev.bootcomplete'" + " : "
                                                 + str(status_dict["dev.bootcomplete"]
                                                       if status_dict["dev.bootcomplete"] != "" else "0") + ", "
@@ -322,6 +330,8 @@ class DeviceManager:
 
                 if all(status_dict["boot_finished"] for status_dict in device_statuses.values()):
                     break
+
+                last_scan_ended = time.time() * 1000
 
             if current_time - start_time >= GlobalConfig.AVD_SYSTEM_BOOT_TIMEOUT:
                 message = "Devices took longer than seconds to launch (Property launch). Timeout quit."

@@ -27,7 +27,6 @@ class _BasicDevice:
     def get_android_id(self):
         if self.android_id is None:
             self.android_id = self.adb_settings_controller.get_device_android_id(self.adb_name).strip()
-        print(self.android_id)
         return self.android_id
 
 
