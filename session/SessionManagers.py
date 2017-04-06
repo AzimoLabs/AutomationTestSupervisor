@@ -163,7 +163,7 @@ class DeviceManager:
 
     def clear_models_with_android_ids_in_ignore_list(self):
         for device in self.device_store.get_devices():
-            if device.android_id in GlobalConfig.IGNORED_DEVICE_LIST:
+            if device.get_android_id() in GlobalConfig.IGNORED_DEVICE_LIST:
                 Printer.system_message(self.TAG, "Android-ID "
                                        + Color.GREEN + "'" + device.android_id + "'" + Color.BLUE +
                                        " of device " + Color.GREEN + "'" + device.adb_name + "'" + Color.BLUE +
@@ -292,7 +292,6 @@ class DeviceManager:
             if current_time - last_check_time >= GlobalConfig.ADB_SCAN_INTERVAL or start_time == last_check_time:
                 last_check_time = current_time
 
-                Printer.system_message(self.TAG, "Current wait status:")
                 for device in self.device_store.get_devices():
                     if device in monitored_devices:
                         dev_boot = (self.adb_shell_controller
@@ -308,6 +307,7 @@ class DeviceManager:
                                                                   "init.svc.bootanim": boot_anim,
                                                                   "boot_finished": boot_finished}})
 
+                Printer.system_message(self.TAG, "Current wait status:")
                 for device_name, status_dict in device_statuses.items():
                     Printer.message_highlighted(self.TAG, device_name + " properties: "
                                                 + "('dev.bootcomplete'" + " : "

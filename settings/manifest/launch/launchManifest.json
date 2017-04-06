@@ -12,10 +12,10 @@
       "should_build_new_apk": true,
       "should_restart_adb": true,
 
-      "adb_call_buffer_size": 1,
-      "adb_call_buffer_delay_between_cmd": 4000,
+      "adb_call_buffer_size": 3,
+      "adb_call_buffer_delay_between_cmd": 2500,
 
-      "device_android_id_to_ignore": []
+      "device_android_id_to_ignore": ["test"]
     }
   ]
 }
