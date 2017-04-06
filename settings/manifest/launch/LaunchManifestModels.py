@@ -33,13 +33,17 @@ class LaunchManifest:
 class LaunchPlan:
     def __init__(self, launch_plan_dict):
         self.plan_name = launch_plan_dict["plan_name"]
-        self.should_restart_adb = launch_plan_dict["should_restart_adb"]
-        self.adb_scan_interval_millis = launch_plan_dict["adb_scan_interval_millis"]
-        self.should_build_new_apk = launch_plan_dict["should_build_new_apk"]
 
-        self.should_launch_avd_sequentially = launch_plan_dict["should_launch_avd_sequentially"]
         self.should_recreate_existing_avd = launch_plan_dict["should_recreate_existing_avd"]
+        self.should_launch_avd_sequentially = launch_plan_dict["should_launch_avd_sequentially"]
+        self.adb_scan_interval_millis = launch_plan_dict["adb_scan_interval_millis"]
         self.avd_adb_boot_timeout_millis = launch_plan_dict["avd_adb_boot_timeout_millis"]
         self.avd_system_boot_timeout_millis = launch_plan_dict["avd_system_boot_timeout_millis"]
+
+        self.should_build_new_apk = launch_plan_dict["should_build_new_apk"]
+        self.should_restart_adb = launch_plan_dict["should_restart_adb"]
+
+        self.adb_call_buffer_size = launch_plan_dict["adb_call_buffer_size"]
+        self.adb_call_buffer_delay_between_cmd = launch_plan_dict["adb_call_buffer_delay_between_cmd"]
 
         self.device_android_id_to_ignore = launch_plan_dict["device_android_id_to_ignore"]

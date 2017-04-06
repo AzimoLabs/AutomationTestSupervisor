@@ -5,6 +5,7 @@ from settings.loader import ArgLoader
 from settings.manifest.launch.LaunchManifestModels import LaunchManifest
 
 from system.console import Printer
+from system.console import Color
 
 TAG = "LaunchPlanLoader:"
 
@@ -30,6 +31,27 @@ def _load_launch_plan_to_global_settings(launch_plan):
         Printer.system_message(TAG, "ADB will be restarted before launching tests.")
     else:
         Printer.system_message(TAG, "ADB with current state will be used during run.")
+
+    GlobalConfig.ADB_CALL_BUFFER_SIZE = launch_plan.adb_call_buffer_size
+    if GlobalConfig.ADB_CALL_BUFFER_SIZE > 0:
+        Printer.message_highlighted(TAG, "ADB call buffer size set to: ", str(GlobalConfig.ADB_CALL_BUFFER_SIZE) +
+                                    " slot(s)")
+    else:
+        message = "ADB_CALL_BUFFER_SIZE cannot be smaller than 1. Launcher will quit."
+        raise LauncherFlowInterruptedException(TAG, message)
+
+    GlobalConfig.ADB_CALL_BUFFER_DELAY_BETWEEN_CMD = launch_plan.adb_call_buffer_delay_between_cmd
+    if GlobalConfig.ADB_CALL_BUFFER_DELAY_BETWEEN_CMD >= 0:
+        if GlobalConfig.ADB_CALL_BUFFER_DELAY_BETWEEN_CMD == 0:
+            Printer.message_highlighted(TAG, "ADB call buffer is disabled. ADB_CALL_BUFFER_DELAY_BETWEEN_CMD param set "
+                                        "to:", " 0 seconds")
+        else:
+            Printer.system_message(TAG, "ADB call buffer will clear slots after " + Color.GREEN + "'" +
+                                   str(GlobalConfig.ADB_CALL_BUFFER_DELAY_BETWEEN_CMD/1000) + " seconds'" + Color.BLUE +
+                                   " from ADB call.")
+    else:
+        message = "ADB_CALL_BUFFER_DELAY_BETWEEN_CMD cannot be negative! Launcher will quit."
+        raise LauncherFlowInterruptedException(TAG, message)
 
     GlobalConfig.ADB_SCAN_INTERVAL = launch_plan.adb_scan_interval_millis
     if GlobalConfig.ADB_SCAN_INTERVAL is "":

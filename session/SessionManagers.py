@@ -55,6 +55,7 @@ class ApkManager:
             raise LauncherFlowInterruptedException(self.TAG, message)
 
         # TODO it should be one install_apk process instead of two
+        # TODO (now 2nd can start only when all threads from 1st are done)
         self._install_apk(apk.apk_name, apk.apk_path)
         self._install_apk(apk.test_apk_name, apk.test_apk_path)
 

@@ -5,12 +5,15 @@
 
       "should_recreate_existing_avd": true,
       "should_launch_avd_sequentially": true,
+      "adb_scan_interval_millis": 10000,
       "avd_adb_boot_timeout_millis": 240000,
       "avd_system_boot_timeout_millis": 120000,
 
       "should_build_new_apk": true,
       "should_restart_adb": true,
-      "adb_scan_interval_millis": 10000,
+
+      "adb_call_buffer_size": 1,
+      "adb_call_buffer_delay_between_cmd": 4000,
 
       "device_android_id_to_ignore": []
     }

@@ -126,14 +126,14 @@ if __name__ == "__main__":
             device_manager.add_models_representing_outside_session_devices()
             device_manager.add_models_representing_outside_session_virtual_devices()
 
-        if GlobalConfig.IGNORED_DEVICE_LIST:
-            Printer.step(TAG, "Checking device ignore list")
-            device_manager.clear_models_with_android_ids_in_ignore_list()
-
         Printer.step(TAG, "Restarting ADB server.")
         if GlobalConfig.SHOULD_RESTART_ADB:
             adb_controller.kill_server()
             adb_controller.start_server()
+
+        if GlobalConfig.IGNORED_DEVICE_LIST:
+            Printer.step(TAG, "Checking device ignore list")
+            device_manager.clear_models_with_android_ids_in_ignore_list()
 
         Printer.step(TAG, "Preparing .*apk for test.")
         if GlobalConfig.SHOULD_BUILD_NEW_APK:

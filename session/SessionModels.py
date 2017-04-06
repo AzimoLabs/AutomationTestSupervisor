@@ -9,7 +9,7 @@ class _BasicDevice:
         self.adb_package_manager_controller = adb_package_manager_controller
         self.adb_settings_controller = adb_settings_controller
         self.adb_name = adb_name
-        self.android_id = self.adb_settings_controller.get_device_android_id(self.adb_name).strip()
+        self.android_id = None
         self.status = status
 
     def install_apk(self, apk_file):
@@ -23,6 +23,11 @@ class _BasicDevice:
 
     def uninstall_package(self, package_name):
         return self.adb_package_manager_controller.uninstall_package(self.adb_name, package_name)
+
+    def get_android_id(self):
+        if self.android_id is None:
+            self.android_id = self.adb_settings_controller.get_device_android_id(self.adb_name).strip()
+        return self.android_id
 
 
 class _BasicVirtualDevice(_BasicDevice):
