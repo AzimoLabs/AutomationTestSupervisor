@@ -10,6 +10,8 @@
       <w>gradle</w>
       <w>gradlew</w>
       <w>initdata</w>
+      <w>logcat</w>
+      <w>logcats</w>
     </words>
   </dictionary>
 </component>

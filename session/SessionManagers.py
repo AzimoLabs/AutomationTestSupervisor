@@ -1,5 +1,6 @@
 import re
 import time
+import copy
 
 from error.Exceptions import LauncherFlowInterruptedException
 
@@ -7,13 +8,17 @@ from settings import GlobalConfig
 
 from session.SessionModels import (
     OutsideSessionVirtualDevice,
-    SessionVirtualDevice
+    SessionVirtualDevice,
 )
 from session.SessionThreads import (
     TestThread,
+    TestLogCatMonitorThread,
     ApkInstallThread
 )
 
+from system.file import (
+    FileUtils
+)
 from system.console import (
     Printer,
     Color
@@ -234,7 +239,7 @@ class DeviceManager:
                 if creation_time > reasonable_time and "--force" not in device.avd_schema.create_avd_additional_options:
                     Printer.message_highlighted(self.TAG, "AVD creation took: ", str(creation_time) + " sec" + Color.RED
                                                 + " (Attention! Creation process could ran faster. Try adding '--force'"
-                                                " to your AVD schema in 'create_avd_additional_options' field.)")
+                                                  " to your AVD schema in 'create_avd_additional_options' field.)")
                 else:
                     Printer.message_highlighted(self.TAG, "AVD creation took: ", str(creation_time) + " sec")
 
@@ -363,29 +368,46 @@ class DeviceManager:
 class TestManager:
     TAG = "TestManager:"
 
-    def __init__(self, instrumentation_runner_controller, device_store, test_store):
+    def __init__(self, instrumentation_runner_controller, logcat_controller, device_store, test_store, log_store):
         self.instrumentation_runner_controller = instrumentation_runner_controller
+        self.logcat_controller = logcat_controller
         self.device_store = device_store
         self.test_store = test_store
+        self.log_store = log_store
 
     def run_tests(self, test_set, test_list):
         self.test_store.get_packages(test_set, test_list)
-        cmd_assembler = self.instrumentation_runner_controller.instrumentation_runner_command_assembler
+        instrumentation_cmd_assembler = self.instrumentation_runner_controller.instrumentation_runner_command_assembler
+        logcat_cmd_assembler = self.logcat_controller.adb_logcat_command_assembler
 
         for package in self.test_store.packages_to_run:
             test_threads = list()
+            logcat_threads = list()
             for device in self.device_store.get_devices():
 
                 params = {"package": package}
-                cmd = cmd_assembler.assemble_run_test_package_cmd(self.instrumentation_runner_controller.adb_bin,
-                                                                  device.adb_name,
-                                                                  params,
-                                                                  GlobalConfig.INSTRUMENTATION_RUNNER)
+                launch_cmd = instrumentation_cmd_assembler.assemble_run_test_package_cmd(
+                    self.instrumentation_runner_controller.adb_bin,
+                    device.adb_name,
+                    params,
+                    GlobalConfig.INSTRUMENTATION_RUNNER)
+
+                monitor_logcat_cmd = logcat_cmd_assembler.assemble_monitor_logcat_cmd(
+                    self.instrumentation_runner_controller.adb_bin,
+                    device.adb_name)
+
+                flush_logcat_cmd = logcat_cmd_assembler.assemble_flush_log_cat_cmd(
+                    self.instrumentation_runner_controller.adb_bin,
+                    device.adb_name)
 
                 if device.status == "device":
-                    test_thread = TestThread(cmd, device)
+                    test_thread = TestThread(launch_cmd, device)
                     test_thread.start()
                     test_threads.append(test_thread)
+
+                    logcat_thread = TestLogCatMonitorThread(monitor_logcat_cmd, flush_logcat_cmd, device)
+                    logcat_threads.append(logcat_thread)
+                    logcat_thread.start()
                 else:
                     message = ("Something went wrong. At this point all devices should be ready to run. Make sure "
                                "nothing modifies status of currently connected devices.")
@@ -394,9 +416,18 @@ class TestManager:
             while any(not thread.is_finished for thread in test_threads):
                 time.sleep(1)
 
+            for thread in test_threads:
+                self.log_store.test_log_summaries.extend(copy.deepcopy(thread.logs))
+
+            for thread in logcat_threads:
+                self.log_store.test_logcats.extend(copy.deepcopy(thread.logs))
+                thread.kill_logcat_monitoring()
+                logcat_threads.remove(thread)
+
     def run_with_boosted_shards(self, test_set, test_list):
         self.test_store.get_packages(test_set, test_list)
-        cmd_assembler = self.instrumentation_runner_controller.instrumentation_runner_command_assembler
+        instrumentation_cmd_assembler = self.instrumentation_runner_controller.instrumentation_runner_command_assembler
+        logcat_cmd_assembler = self.logcat_controller.adb_logcat_command_assembler
 
         device_name_mark = "device_name_to_replace"
         num_devices = len(self.device_store.get_devices())
@@ -405,50 +436,98 @@ class TestManager:
         for package in self.test_store.packages_to_run:
             for i in range(0, num_devices):
                 params = {"package": package, "numShards": num_devices, "shardIndex": i}
-                cmd = cmd_assembler.assemble_run_test_package_cmd(self.instrumentation_runner_controller.adb_bin,
-                                                                  device_name_mark,
-                                                                  params,
-                                                                  GlobalConfig.INSTRUMENTATION_RUNNER)
-                test_cmd_to_run.append(cmd)
+                launch_cmd = instrumentation_cmd_assembler.assemble_run_test_package_cmd(
+                    self.instrumentation_runner_controller.adb_bin,
+                    device_name_mark,
+                    params,
+                    GlobalConfig.INSTRUMENTATION_RUNNER)
+                test_cmd_to_run.append(launch_cmd)
 
         num_test_processes_to_run = len(test_cmd_to_run)
         num_test_processes_finished = 0
 
         test_start = time.time()
         test_threads = list()
+        logcat_threads = list()
         while num_test_processes_to_run != num_test_processes_finished:
             for device in self.device_store.get_devices():
-                is_device_thread_created = False
+                is_logcat_thread_created = False
 
-                threads_to_clean = list()
+                for thread in logcat_threads:
+                    if thread.device.adb_name == device.adb_name:
+                        is_logcat_thread_created = True
+
+                if not is_logcat_thread_created:
+                    monitor_logcat_cmd = logcat_cmd_assembler.assemble_monitor_logcat_cmd(
+                        self.instrumentation_runner_controller.adb_bin,
+                        device.adb_name)
+
+                    flush_logcat_cmd = logcat_cmd_assembler.assemble_flush_log_cat_cmd(
+                        self.instrumentation_runner_controller.adb_bin,
+                        device.adb_name)
+
+                    logcat_thread = TestLogCatMonitorThread(monitor_logcat_cmd, flush_logcat_cmd, device)
+                    logcat_threads.append(logcat_thread)
+                    logcat_thread.start()
+
+                is_test_thread_created = False
+                test_threads_to_clean = list()
                 for thread in test_threads:
                     if thread.device.adb_name == device.adb_name:
-                        is_device_thread_created = True
+                        is_test_thread_created = True
 
                     if thread.device.adb_name == device.adb_name and thread.is_finished:
+                        self.log_store.test_log_summaries.extend(copy.deepcopy(thread.logs))
                         num_test_processes_finished += 1
-                        threads_to_clean.append(thread)
+                        test_threads_to_clean.append(thread)
 
-                for thread in threads_to_clean:
+                for thread in test_threads_to_clean:
                     test_threads.remove(thread)
-                    is_device_thread_created = False
+                    is_test_thread_created = False
 
-                if not is_device_thread_created and len(test_cmd_to_run) > 0:
+                if not is_test_thread_created and len(test_cmd_to_run) > 0:
                     if device.status == "device":
-                        cmd = test_cmd_to_run.pop(0)
-                        cmd = cmd.replace(device_name_mark, device.adb_name)
+                        launch_cmd = test_cmd_to_run.pop(0)
+                        launch_cmd = launch_cmd.replace(device_name_mark, device.adb_name)
 
                         Printer.system_message(self.TAG, str(len(test_cmd_to_run)) + " packages to run left...")
 
-                        test_thread = TestThread(cmd, device)
-                        test_thread.start()
+                        test_thread = TestThread(launch_cmd, device)
                         test_threads.append(test_thread)
+                        test_thread.start()
                     else:
                         message = ("Something went wrong. At this point all devices should be ready to run. Make sure "
                                    "nothing modifies status of currently connected devices.")
                         raise LauncherFlowInterruptedException(self.TAG, message)
 
+        for thread in logcat_threads:
+            self.log_store.test_logcats.extend(copy.deepcopy(thread.logs))
+
+        for thread in logcat_threads:
+            thread.kill_logcat_monitoring()
+
+        logcat_threads.clear()
+
         test_end = time.time()
         Printer.message_highlighted(self.TAG,
                                     "Test process took: ", "{:.2f}".format(test_end - test_start)
                                     + Color.BLUE + " seconds.")
+
+
+class LogManager:
+    TAG = "LogManager:"
+
+    TEST_LOGS_FILENAME = "test_logs"
+    TEST_LOGCAT_FILENAME = "test_logcat"
+
+    def __init__(self, log_store):
+        self.log_store = log_store
+
+    def dump_logs_to_file(self):
+        FileUtils.create_dir(GlobalConfig.OUTPUT_DIR)
+
+        test_summary_wrapper_dict = self.log_store.get_test_log_summary_wrapper_json_dict()
+        test_logcat_wrapper_dict = self.log_store.get_test_logcat_wrapper_json_dict()
+
+        FileUtils.save_json_dict_to_json(test_summary_wrapper_dict, self.TEST_LOGS_FILENAME)
+        FileUtils.save_json_dict_to_json(test_logcat_wrapper_dict, self.TEST_LOGCAT_FILENAME)

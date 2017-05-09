@@ -35,11 +35,18 @@ class AdbSettingsCommand:
     GET_DEVICE_ANDROID_ID = "get secure android_id"
 
 
+class AdbLogCatCommand:
+    LOG_CAT = "logcat"
+    FLUSH = "-c"
+    DUMP = "-d"
+
+
 class InstrumentationRunnerCommand:
     INSTRUMENT_PROCESS = "instrument -w"
     NUM_SHARD = "-e numShards {}"
     SHARD_INDEX = "-e shardIndex {}"
     PACKAGE = "-e package {}"
+    DISPLAY_RAW_MESSAGE = "-r"
     INSTRUMENTATION_RUNNER = "{}"
     RUN_TEST_PACKAGE = "{} {} shell am instrument -w -e package {} {}"
 

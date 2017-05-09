@@ -126,3 +126,55 @@ class ApkCandidate:
 
     def _set_field(self, field):
         return field if field is not None and field != "" else self.MISSING_VALUE
+
+
+class TestSummaryWrapper:
+    def __init__(self):
+        self.test_summary_packages = list()
+
+
+class TestSummaryPackage:
+    def __init__(self):
+        self.test_package = None
+        self.test_summaries = list()
+
+
+class TestSummary:
+    def __init__(self):
+        self.test_name = None
+        self.test_container = None
+        self.test_full_package = None
+        self.test_status = None
+        self.device = None
+        self.test_start_time = None
+
+        self.test_end_time = None
+        self.error_messages = list()
+
+
+class TestLogCatWrapper:
+    def __init__(self):
+        self.test_logcat_packages = list()
+
+
+class TestLogCatPackage:
+    def __init__(self):
+        self.test_package = None
+        self.test_logcats = list()
+
+
+class TestLogCat:
+    def __init__(self):
+        self.test_name = None
+        self.test_container = None
+        self.test_full_package = None
+        self.lines = list()
+
+
+class TestLogCatLine:
+    def __init__(self):
+        self.date = None
+        self.time = None
+        self.level = None
+        self.tag = None
+        self.text = None

@@ -1,6 +1,7 @@
 import os
 import shutil
 import codecs
+import json
 
 from error.Exceptions import LauncherFlowInterruptedException
 
@@ -8,7 +9,7 @@ from system.console import Printer
 
 from settings import GlobalConfig
 
-TAG = "FileManager:"
+TAG = "FileUtils:"
 
 
 def create_dir(directory):
@@ -27,8 +28,8 @@ def create_dir(directory):
     return absolute_path
 
 
-def create_output_file(folder, file_name, extension):
-    directory = add_ending_slash(GlobalConfig.OUTPUT_DIR) + add_ending_slash(str(folder))
+def create_output_file(file_name, extension):
+    directory = add_ending_slash(GlobalConfig.OUTPUT_DIR)
     file_path = clean_path(directory + str(file_name) + "." + extension)
 
     try:
@@ -41,6 +42,32 @@ def create_output_file(folder, file_name, extension):
         message = "Unable to create file '{}.{}'. Error message: {}"
         message = message.format(file_path, extension, str(e))
         raise LauncherFlowInterruptedException(TAG, message)
+
+    return absolute_path
+
+
+def save_json_dict_to_json(json_dict, file_name):
+    directory = add_ending_slash(GlobalConfig.OUTPUT_DIR)
+    extension = ".json"
+    file_path = clean_path(directory + str(file_name) + extension)
+
+    output_file = None
+    try:
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        output_file = open(file_path, "w")
+        absolute_path = os.path.abspath(file_path)
+
+        Printer.system_message(TAG, "Created json file '" + absolute_path + "'.")
+
+        json.dump(json_dict, output_file, indent=4, ensure_ascii=False)
+    except Exception as e:
+        message = "Unable to create file '{}.{}'. Error message: {}"
+        message = message.format(file_path, extension, str(e))
+        raise LauncherFlowInterruptedException(TAG, message)
+    finally:
+        if output_file is not None and hasattr(output_file, "close"):
+            output_file.close()
 
     return absolute_path
 

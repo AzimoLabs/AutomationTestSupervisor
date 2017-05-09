@@ -9,13 +9,13 @@
       "avd_adb_boot_timeout_millis": 240000,
       "avd_system_boot_timeout_millis": 120000,
 
-      "should_build_new_apk": true,
+      "should_build_new_apk": false,
       "should_restart_adb": true,
 
       "adb_call_buffer_size": 3,
       "adb_call_buffer_delay_between_cmd": 2500,
 
-      "device_android_id_to_ignore": ["test"]
+      "device_android_id_to_ignore": []
     }
   ]
 }

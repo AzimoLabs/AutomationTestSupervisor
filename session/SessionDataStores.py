@@ -9,7 +9,11 @@ from session.SessionModels import (
     OutsideSessionVirtualDevice,
     OutsideSessionDevice,
     SessionVirtualDevice,
-    ApkCandidate
+    ApkCandidate,
+    TestLogCatWrapper,
+    TestLogCatPackage,
+    TestSummaryWrapper,
+    TestSummaryPackage
 )
 
 from system.file import FileUtils
@@ -211,7 +215,7 @@ class DeviceStore:
                 avd_schema = copy.deepcopy(avd_schemas[avd.avd_name])
                 avd_schema.avd_name = avd_schema.avd_name + "-" + str(i)
                 port = avd_ports.pop(0)
-                log_file = FileUtils.create_output_file("avd_logs", avd_schema.avd_name, "txt")
+                log_file = FileUtils.create_output_file(avd_schema.avd_name, "txt")
 
                 session_device = SessionVirtualDevice(avd_schema,
                                                       port,
@@ -283,6 +287,84 @@ class DeviceStore:
             self.session_devices.remove(device)
         Printer.system_message(self.TAG, "Device with name "
                                + Color.GREEN + "'" + device.adb_name + "'" + Color.BLUE + " was removed from session.")
+
+
+class LogStore:
+    TAG = "LogStore:"
+
+    def __init__(self):
+        self.test_log_summaries = list()
+        self.test_logcats = list()
+
+    def get_test_log_summary_wrapper(self):
+        log_summary_wrapper_dict = dict()
+
+        for test_log in self.test_log_summaries:
+            full_package = test_log.test_full_package
+            package_parts = full_package.split(".")
+            package = ".".join(package_parts[:-2])
+
+            test_summary_package = log_summary_wrapper_dict.get(package, TestSummaryPackage())
+            test_summary_package.test_package = package
+            test_summary_package.test_summaries.append(test_log)
+            log_summary_wrapper_dict.update({package: test_summary_package})
+
+        test_summary_wrapper = TestSummaryWrapper()
+        test_summary_wrapper.test_summary_packages.extend(list(log_summary_wrapper_dict.values()))
+        return test_summary_wrapper
+
+    def get_test_logcat_wrapper(self):
+        logcat_wrapper_dict = dict()
+
+        for test_log_cat in self.test_logcats:
+            full_package = test_log_cat.test_full_package
+            package_parts = full_package.split(".")
+            package = ".".join(package_parts[:-2])
+
+            test_logcat_package = logcat_wrapper_dict.get(package, TestLogCatPackage())
+            test_logcat_package.test_package = package
+            test_logcat_package.test_logcats.append(test_log_cat)
+            logcat_wrapper_dict.update({package: test_logcat_package})
+
+        logcat_wrapper = TestLogCatWrapper()
+        logcat_wrapper.test_logcat_packages.extend(list(logcat_wrapper_dict.values()))
+        return logcat_wrapper
+
+    def get_test_log_summary_wrapper_json_dict(self):
+        return self.test_summary_wrapper_to_json_dict(self.get_test_log_summary_wrapper())
+
+    def get_test_logcat_wrapper_json_dict(self):
+        return self.test_logcats_wrapper_to_json_dict(self.get_test_logcat_wrapper())
+
+    @staticmethod
+    def test_summary_wrapper_to_json_dict(test_summary_wrapper):
+        summary_packages_var = list()
+        for summary_package in test_summary_wrapper.test_summary_packages:
+            summaries_var = list()
+            for test_summary in summary_package.test_summaries:
+                summaries_var.append(vars(test_summary))
+            summary_package.test_summaries = summaries_var
+            summary_packages_var.append(vars(summary_package))
+        temp_summary_wrapper = TestSummaryWrapper()
+        temp_summary_wrapper.test_summary_packages = summary_packages_var
+        return vars(temp_summary_wrapper)
+
+    @staticmethod
+    def test_logcats_wrapper_to_json_dict(test_logcat_wrapper):
+        logcat_packages_var = list()
+        for logcat_package in test_logcat_wrapper.test_logcat_packages:
+            logcats_var = list()
+            for logcat in logcat_package.test_logcats:
+                logcat_lines_var = list()
+                for logcat_line in logcat.lines:
+                    logcat_lines_var.append(vars(logcat_line))
+                logcat.lines = logcat_lines_var
+                logcats_var.append(vars(logcat))
+            logcat_package.test_logcats = logcats_var
+            logcat_packages_var.append(vars(logcat_package))
+        temp_test_logcat_wrapper = TestLogCatWrapper()
+        temp_test_logcat_wrapper.test_logcat_packages = logcat_packages_var
+        return vars(temp_test_logcat_wrapper)
 
 
 class TestStore:

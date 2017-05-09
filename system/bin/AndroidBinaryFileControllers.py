@@ -11,6 +11,7 @@ from system.bin.AndroidShellCommandAssemblers import (
     AdbShellCommandAssembler,
     AdbPackageManagerCommandAssembler,
     AdbSettingsCommandAssembler,
+    AdbLogCatCommandAssembler,
     AvdManagerCommandAssembler,
     EmulatorCommandAssembler,
     GradleCommandAssembler,
@@ -190,6 +191,38 @@ class AdbSettingsController:
     def get_device_android_id(self, device_adb_name):
         cmd = self.adb_settings_command_assembler.assemble_get_device_android_id_cmd(self.adb_bin,
                                                                                      device_adb_name)
+        return ShellHelper.execute_shell(cmd, False, False)
+
+
+class AdbLogCatController:
+    TAG = "AdbLogCatController:"
+
+    def __init__(self):
+        self.adb_bin = clean_path(add_ending_slash(GlobalConfig.SDK_DIR) + "platform-tools/adb")
+        self._assert_bin_directory_exists()
+        self.adb_logcat_command_assembler = AdbLogCatCommandAssembler()
+
+    def _assert_bin_directory_exists(self):
+        if os.path.isfile(self.adb_bin):
+            Printer.system_message(self.TAG, "ADB binary file found at '" + self.adb_bin + "'.")
+        else:
+            message = "Unable to find ADB binary at '{}'."
+            message = message.format(self.adb_bin)
+            raise LauncherFlowInterruptedException(self.TAG, message)
+
+    def flush_logcat(self, device_adb_name):
+        cmd = self.adb_logcat_command_assembler.assemble_flush_log_cat_cmd(self.adb_bin, device_adb_name)
+
+        return ShellHelper.execute_shell(cmd, False, False)
+
+    def read_logcat(self, device_adb_name):
+        cmd = self.adb_logcat_command_assembler.assemble_dump_log_cat_cmd(self.adb_bin, device_adb_name)
+
+        return ShellHelper.execute_shell(cmd, False, False)
+
+    def monitor_logcat(self, device_adb_name):
+        cmd = self.adb_logcat_command_assembler.monitor_logcat_schema(self.adb_bin, device_adb_name)
+
         return ShellHelper.execute_shell(cmd, False, False)
 
 

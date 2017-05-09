@@ -3,13 +3,15 @@ from error.Exceptions import LauncherFlowInterruptedException
 from session.SessionDataStores import (
     ApkStore,
     DeviceStore,
+    LogStore,
     TestStore
 )
 
 from session.SessionManagers import (
     ApkManager,
     DeviceManager,
-    TestManager
+    TestManager,
+    LogManager
 )
 
 from settings import GlobalConfig
@@ -28,6 +30,7 @@ from system.bin.AndroidBinaryFileControllers import (
     AdbShellController,
     AdbPackageManagerController,
     AdbSettingsController,
+    AdbLogCatController,
     AvdManagerController,
     EmulatorController,
     GradleController,
@@ -40,6 +43,7 @@ adb_controller = None
 adb_shell_controller = None
 adb_package_manager_controller = None
 adb_settings_controller = None
+adb_logcat_controller = None
 avdmanager_controller = None
 emulator_controller = None
 aapt_controller = None
@@ -51,6 +55,8 @@ device_manager = None
 
 apk_store = None
 apk_manager = None
+
+log_store = None
 
 test_store = None
 test_manager = None
@@ -77,6 +83,7 @@ if __name__ == "__main__":
         adb_package_manager_controller = AdbPackageManagerController()
         adb_settings_controller = AdbSettingsController()
         avdmanager_controller = AvdManagerController()
+        adb_logcat_controller = AdbLogCatController()
         emulator_controller = EmulatorController()
         aapt_controller = AaptController()
         gradle_controller = GradleController()
@@ -89,8 +96,12 @@ if __name__ == "__main__":
         apk_store = ApkStore(aapt_controller)
         apk_manager = ApkManager(device_store, apk_store, gradle_controller, aapt_controller)
 
+        log_store = LogStore()
+        log_manager = LogManager(log_store)
+
         test_store = TestStore()
-        test_manager = TestManager(instrumentation_runner_controller, device_store, test_store)
+        test_manager = TestManager(instrumentation_runner_controller, adb_logcat_controller, device_store, test_store,
+                                   log_store)
 
         if FileUtils.output_dir_has_files:
             Printer.step(TAG, "Performing output dir clean up.")
@@ -98,6 +109,7 @@ if __name__ == "__main__":
 
         if GlobalConfig.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION:
             Printer.step(TAG, "Preparing device session - killing currently launched AVD.")
+
             device_manager.add_models_representing_outside_session_virtual_devices()
             if device_manager.is_any_avd_visible():
                 device_manager.kill_all_avd()
@@ -151,6 +163,9 @@ if __name__ == "__main__":
 
         Printer.step(TAG, "Starting tests.")
         test_manager.run_with_boosted_shards(test_set, test_list)
+
+        Printer.step(TAG, "Tests finished. Parsing logs.")
+        log_manager.dump_logs_to_file()
 
     except LauncherFlowInterruptedException as e:
         Printer.error(e.caller_tag, str(e))

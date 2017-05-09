@@ -5,6 +5,7 @@ from system.bin.AndroidShellCommands import (
     AdbActivityManagerCommand,
     AdbPackageManagerCommand,
     AdbSettingsCommand,
+    AdbLogCatCommand,
     AvdManagerCommand,
     EmulatorCommand,
     GradleCommand,
@@ -108,6 +109,29 @@ class AdbSettingsCommandAssembler:
                                                         AdbSettingsCommand.GET_DEVICE_ANDROID_ID)
 
 
+class AdbLogCatCommandAssembler:
+    flush_logcat_schema = "{} {} {} {}"
+    dump_logcat_schema = "{} {} {} {}"
+    monitor_logcat_schema = "{} {} {}"
+
+    def assemble_monitor_logcat_cmd(self, adb_bin, device_adb_name):
+        return self.monitor_logcat_schema.format(adb_bin,
+                                                 AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                                 AdbLogCatCommand.LOG_CAT)
+
+    def assemble_flush_log_cat_cmd(self, adb_bin, device_adb_name):
+        return self.flush_logcat_schema.format(adb_bin,
+                                               AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                               AdbLogCatCommand.LOG_CAT,
+                                               AdbLogCatCommand.FLUSH)
+
+    def assemble_dump_log_cat_cmd(self, adb_bin, device_adb_name):
+        return self.dump_logcat_schema.format(adb_bin,
+                                              AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                              AdbLogCatCommand.LOG_CAT,
+                                              AdbLogCatCommand.DUMP)
+
+
 class AvdManagerCommandAssembler:
     list_avd_schema = "{} {}"
     delete_avd_schema = "{} {}"
@@ -201,7 +225,7 @@ class GradleCommandAssembler:
 
 
 class InstrumentationRunnerCommandAssembler:
-    test_command_schema = "{} {} {} {} {} {} {}"
+    test_command_schema = "{} {} {} {} {} {} {} {}"
 
     def assemble_run_test_package_cmd(self, adb_binary, device_adb_name, params, instrumentation_runner):
         parameters = self._assemble_params(params)
@@ -210,6 +234,7 @@ class InstrumentationRunnerCommandAssembler:
                                                AdbShellCommand.SHELL,
                                                AdbActivityManagerCommand.ACTIVITY_MANAGER,
                                                InstrumentationRunnerCommand.INSTRUMENT_PROCESS,
+                                               InstrumentationRunnerCommand.DISPLAY_RAW_MESSAGE,
                                                parameters,
                                                InstrumentationRunnerCommand.INSTRUMENTATION_RUNNER.format(
                                                    instrumentation_runner))

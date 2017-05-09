@@ -30,7 +30,7 @@
       "avd_list": [
         {
           "avd_name": "Test-Emulator-API23-Nexus-5",
-          "instances": 2
+          "instances": 3
         }
       ],
       "avd_port_rules": {
