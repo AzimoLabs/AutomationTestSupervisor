@@ -18,7 +18,11 @@ from system.bin.AndroidShellCommandAssemblers import (
     InstrumentationRunnerCommandAssembler
 
 )
-from system.console import (Printer, ShellHelper)
+from system.console import (
+    Printer,
+    ShellHelper,
+    Color
+)
 from system.file.FileUtils import (clean_path, add_ending_slash, )
 
 
@@ -53,8 +57,8 @@ class AaptController:
             raise LauncherFlowInterruptedException(self.TAG, message)
 
         else:
-            Printer.message_highlighted(self.TAG, "Android SDK Build-Tools with latest version were selected: ",
-                                        str(build_tools_folder_with_highest_ver))
+            Printer.system_message(self.TAG, "Android SDK Build-Tools with latest version were selected: "
+                                   + Color.GREEN + str(build_tools_folder_with_highest_ver) + Color.BLUE + ".")
         return build_tools_folder_with_highest_ver
 
     def _assert_bin_directory_exists(self):
@@ -116,6 +120,13 @@ class AdbController:
         cmd = self.adb_command_assembler.assemble_install_apk_cmd(self.adb_bin, device_adb_name, apk_name)
         return ShellHelper.execute_shell(cmd, True, False)
 
+    def pull(self, device_adb_name, file_dir, file_destination):
+        cmd = self.adb_command_assembler.assemble_pull_file_cmd(self.adb_bin,
+                                                                device_adb_name,
+                                                                file_dir,
+                                                                file_destination)
+        return ShellHelper.execute_shell(cmd, True, True)
+
 
 class AdbShellController:
     TAG = "AdbShellController:"
@@ -137,6 +148,10 @@ class AdbShellController:
 
     def get_property(self, device_adb_name, device_property):
         cmd = self.adb_shell_command_assembler.assemble_get_property_cmd(self.adb_bin, device_adb_name, device_property)
+        return ShellHelper.execute_shell(cmd, False, False)
+
+    def record_screen(self, device_adb_name, file_dir):
+        cmd = self.adb_shell_command_assembler.assemble_record_screen_cmd(self.adb_bin, device_adb_name, file_dir)
         return ShellHelper.execute_shell(cmd, False, False)
 
 

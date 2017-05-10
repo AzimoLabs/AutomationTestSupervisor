@@ -16,12 +16,12 @@
         {
           "path_name": "output_dir",
           "path_value": "",
-          "path_description": "Path to where test process logs will be saved."
+          "path_description": "Path to where test process logs will be saved. By default ./output/"
         },
         {
           "path_name": "project_root_dir",
           "path_value": "",
-          "path_description": "Path to root of application under test."
+          "path_description": "Path to root of application under test. (optional)"
         },
         {
           "path_name": "apk_dir",
@@ -46,12 +46,12 @@
         {
           "path_name": "output_dir",
           "path_value": "output",
-          "path_description": "Path to where test process logs will be saved."
+          "path_description": "Path to where test process logs will be saved. By default ./output/"
         },
         {
           "path_name": "project_root_dir",
           "path_value": "~/Dev/Azimo-Android",
-          "path_description": "Path to root of application under test."
+          "path_description": "Path to root of application under test. (optional)"
         },
         {
           "path_name": "apk_dir",

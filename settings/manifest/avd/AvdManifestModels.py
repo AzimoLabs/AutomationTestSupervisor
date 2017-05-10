@@ -1,13 +1,13 @@
 import copy
 
-from settings.loader import JsonLoader
+from system.file import FileUtils
 
 
 class AvdManifest:
     TAG = "AvdManifest:"
 
     def __init__(self, manifest_dir):
-        self.avd_manifest_source = JsonLoader.load_json(manifest_dir)
+        self.avd_manifest_source = FileUtils.load_json(manifest_dir)
         self.avd_schema_dict = dict()
         self.avd_set_dict = dict()
 

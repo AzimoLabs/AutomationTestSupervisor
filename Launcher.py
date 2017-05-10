@@ -100,8 +100,8 @@ if __name__ == "__main__":
         log_manager = LogManager(log_store)
 
         test_store = TestStore()
-        test_manager = TestManager(instrumentation_runner_controller, adb_logcat_controller, device_store, test_store,
-                                   log_store)
+        test_manager = TestManager(instrumentation_runner_controller, adb_shell_controller, adb_logcat_controller,
+                                   device_store, test_store, log_store)
 
         if FileUtils.output_dir_has_files:
             Printer.step(TAG, "Performing output dir clean up.")

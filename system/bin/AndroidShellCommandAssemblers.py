@@ -35,6 +35,7 @@ class AdbCommandAssembler:
     kill_device_schema = "{} {} {}"
     install_apk_schema = "{} {} {} {}"
     uninstall_package_schema = "{} {} {}"
+    pull_file_schema = "{} {} {} {} {}"
 
     def assemble_start_server_cmd(self, adb_bin):
         return self.start_server_schema.format(adb_bin,
@@ -68,15 +69,29 @@ class AdbCommandAssembler:
                                                     AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
                                                     AdbCommand.UNINSTALL_PACKAGE.format(package))
 
+    def assemble_pull_file_cmd(self, adb_bin, device_adb_name, file_dir, file_destination_dir):
+        return self.pull_file_schema.format(adb_bin,
+                                            AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                            AdbCommand.PULL,
+                                            file_dir,
+                                            file_destination_dir)
+
 
 class AdbShellCommandAssembler:
     get_property_schema = "{} {} {} {}"
+    record_screen = "{} {} {} {}"
 
     def assemble_get_property_cmd(self, adb_bin, device_adb_name, device_property):
         return self.get_property_schema.format(adb_bin,
                                                AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
                                                AdbShellCommand.SHELL,
                                                AdbShellCommand.GET_PROPERTY.format(device_property))
+
+    def assemble_record_screen_cmd(self, adb_bin, device_adb_name, file_dir):
+        return self.record_screen.format(adb_bin,
+                                         AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                         AdbShellCommand.SHELL,
+                                         AdbShellCommand.RECORD.format(file_dir))
 
 
 class AdbPackageManagerCommandAssembler:

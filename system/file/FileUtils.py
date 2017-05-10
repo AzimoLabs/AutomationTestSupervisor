@@ -46,6 +46,31 @@ def create_output_file(file_name, extension):
     return absolute_path
 
 
+def load_json(json_dir):
+    json_dir = clean_path(json_dir)
+    json_file = None
+
+    try:
+        json_file = open(json_dir, "r")
+        json_data = json_file.read()
+    except Exception as e:
+        message = "Unable to open file '{}/{}'. Error message: {}"
+        message = message.format(os.getcwd(), json_dir, str(e))
+        raise LauncherFlowInterruptedException(TAG, message)
+    finally:
+        if json_file is not None and hasattr(json_file, "close"):
+            json_file.close()
+
+    try:
+        json_dict = json.loads(json_data)
+    except Exception as e:
+        message = "Unable to parse JSON file '{}/{}'. Error message: {}"
+        message = message.format(os.getcwd(), json_dir, str(e))
+        raise LauncherFlowInterruptedException(TAG, message)
+
+    return json_dict
+
+
 def save_json_dict_to_json(json_dict, file_name):
     directory = add_ending_slash(GlobalConfig.OUTPUT_DIR)
     extension = ".json"

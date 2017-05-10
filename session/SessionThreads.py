@@ -18,6 +18,32 @@ from system.console import (
 )
 
 
+class TestRecordingThread(threading.Thread):
+    TAG = "TestRecordingThread<device_adb_name>:"
+
+    def __init__(self, start_recording_cmd, device):
+        super().__init__()
+        self.start_recording_cmd = start_recording_cmd
+
+        self.device = device
+        self.TAG = self.TAG.replace("device_adb_name", device.adb_name)
+
+        self.device = list()
+        self.process = None
+
+    def run(self):
+        with subprocess.Popen(self.start_recording_cmd, shell=True, stdout=subprocess.PIPE, bufsize=1,
+                              universal_newlines=True) as p:
+            self.process = p
+
+            if p.returncode != 0:
+                message = str(p.returncode) + " : " + str(p.args)
+                raise LauncherFlowInterruptedException(self.TAG, message)
+
+    def kill(self):
+        self.process.kill()
+
+
 class TestLogCatMonitorThread(threading.Thread):
     TAG = "TestLogCatMonitorThread<device_adb_name>:"
 
@@ -32,22 +58,25 @@ class TestLogCatMonitorThread(threading.Thread):
     LEVEL_INDEX = 4
     TAG_INDEX = 5
 
-    def __init__(self, monitor_logcat_cmd, flush_logcat_cmd, device):
+    def __init__(self, monitor_logcat_cmd, flush_logcat_cmd, record_screen_cmd, device):
         super().__init__()
         self.monitor_logcat_cmd = monitor_logcat_cmd
         self.flush_logcat_cmd = flush_logcat_cmd
+        self.record_screen_cmd = record_screen_cmd
 
         self.device = device
         self.TAG = self.TAG.replace("device_adb_name", device.adb_name)
 
         self.logs = list()
-        self.process = None
+
+        self.logcat_recording_process = None
+        self.screen_recording_process = None
 
     def run(self):
         ShellHelper.execute_shell(self.flush_logcat_cmd, False, False)
         with subprocess.Popen(self.monitor_logcat_cmd, shell=True, stdout=subprocess.PIPE, bufsize=1,
                               universal_newlines=True, errors="replace") as p:
-            self.process = p
+            self.logcat_recording_process = p
 
             current_log = None
             current_process_pid = None
@@ -65,12 +94,20 @@ class TestLogCatMonitorThread(threading.Thread):
                     current_process_pid = line_parts[self.PID_INDEX]
 
                     test_name = re.findall("TestRunner: started:(.+)\(", line_cleaned)
-                    current_log.test_name = test_name[0]
+                    current_log.test_name = test_name[0].strip()
 
                     full_test_package = re.findall("\((.+)\)", line_cleaned)
                     package_parts = full_test_package[0].split(".")
                     current_log.test_container = package_parts.pop().strip()
                     current_log.test_full_package = full_test_package[0].strip() + "." + test_name[0].strip()
+
+                    if self.screen_recording_process is not None:
+                        self.screen_recording_process.kill()
+
+                    self.screen_recording_process = TestRecordingThread(self.record_screen_cmd
+                                                                        + current_log.test_name + ".mp4",
+                                                                        self.device)
+                    self.screen_recording_process.start()
 
                 if current_log is not None:
                     if line_parts[self.PID_INDEX] == current_process_pid:
@@ -105,8 +142,12 @@ class TestLogCatMonitorThread(threading.Thread):
                     current_log = None
                     current_process_pid = None
 
-    def kill_logcat_monitoring(self):
-        self.process.kill()
+    def kill(self):
+        if self.screen_recording_process is not None and hasattr(self.screen_recording_process, "kill"):
+            self.screen_recording_process.kill()
+
+        if self.logcat_recording_process is not None and hasattr(self.logcat_recording_process, "kill"):
+            self.logcat_recording_process.kill()
 
 
 class TestThread(threading.Thread):
@@ -139,6 +180,7 @@ class TestThread(threading.Thread):
                 reading_stack_in_progress = False
                 current_log = None
                 stack = None
+
                 for line in p.stdout:
                     if self.TEST_NAME in line and current_log is None:
                         current_log = TestSummary()

@@ -1,13 +1,13 @@
 import copy
 
-from settings.loader import JsonLoader
+from system.file import FileUtils
 
 
 class TestManifest:
     TAG = "TestManifest:"
 
     def __init__(self, manifest_dir):
-        self.path_manifest_source = JsonLoader.load_json(manifest_dir)
+        self.path_manifest_source = FileUtils.load_json(manifest_dir)
         self.test_package_list = dict()
         self.test_set_list = dict()
 

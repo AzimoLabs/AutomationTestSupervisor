@@ -1,13 +1,13 @@
 import copy
 
-from settings.loader import JsonLoader
+from system.file import FileUtils
 
 
 class PathManifest:
     TAG = "PathManifest:"
 
     def __init__(self, manifest_dir):
-        self.path_manifest_source = JsonLoader.load_json(manifest_dir)
+        self.path_manifest_source = FileUtils.load_json(manifest_dir)
         self.path_set_list = dict()
         for path_set in self.path_manifest_source["path_set_list"]:
             self.path_set_list.update({path_set["set_name"]: PathSet(path_set)})

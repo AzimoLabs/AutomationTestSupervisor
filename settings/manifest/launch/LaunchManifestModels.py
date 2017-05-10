@@ -1,13 +1,13 @@
 import copy
 
-from settings.loader import JsonLoader
+from system.file import FileUtils
 
 
 class LaunchManifest:
     TAG = "LaunchManifest:"
 
     def __init__(self, manifest_dir):
-        self.launch_manifest_source = JsonLoader.load_json(manifest_dir)
+        self.launch_manifest_source = FileUtils.load_json(manifest_dir)
         self.launch_plan_dict = dict()
 
         for launch_plan in self.launch_manifest_source["launch_plan_list"]:
@@ -33,17 +33,39 @@ class LaunchManifest:
 class LaunchPlan:
     def __init__(self, launch_plan_dict):
         self.plan_name = launch_plan_dict["plan_name"]
+        self.general = LaunchGeneralOptions(launch_plan_dict["general"])
+        self.device_preparation_phase = DevicePreparationPhaseOptions(launch_plan_dict["device_preparation_phase"])
+        self.device_launching_phase = DeviceLaunchingPhaseOptions(launch_plan_dict["device_launching_phase"])
+        self.apk_preparation_phase = ApkPreparationPhaseOptions(launch_plan_dict["apk_preparation_phase"])
+        self.testing_phase = TestingPhaseOptions(launch_plan_dict["testing_phase"])
 
-        self.should_recreate_existing_avd = launch_plan_dict["should_recreate_existing_avd"]
-        self.should_launch_avd_sequentially = launch_plan_dict["should_launch_avd_sequentially"]
-        self.adb_scan_interval_millis = launch_plan_dict["adb_scan_interval_millis"]
-        self.avd_adb_boot_timeout_millis = launch_plan_dict["avd_adb_boot_timeout_millis"]
-        self.avd_system_boot_timeout_millis = launch_plan_dict["avd_system_boot_timeout_millis"]
 
-        self.should_build_new_apk = launch_plan_dict["should_build_new_apk"]
-        self.should_restart_adb = launch_plan_dict["should_restart_adb"]
+class LaunchGeneralOptions:
+    def __init__(self, general_options_dict):
+        self.adb_call_buffer_size = general_options_dict["adb_call_buffer_size"]
+        self.adb_call_buffer_delay_between_cmd = general_options_dict["adb_call_buffer_delay_between_cmd"]
 
-        self.adb_call_buffer_size = launch_plan_dict["adb_call_buffer_size"]
-        self.adb_call_buffer_delay_between_cmd = launch_plan_dict["adb_call_buffer_delay_between_cmd"]
 
-        self.device_android_id_to_ignore = launch_plan_dict["device_android_id_to_ignore"]
+class DevicePreparationPhaseOptions:
+    def __init__(self, device_preparation_phase_dict):
+        self.avd_should_recreate_existing = device_preparation_phase_dict["avd_should_recreate_existing"]
+        self.device_android_id_to_ignore = device_preparation_phase_dict["device_android_id_to_ignore"]
+
+
+class DeviceLaunchingPhaseOptions:
+    def __init__(self, launching_phase_dict):
+        self.avd_launch_sequentially = launching_phase_dict["avd_launch_sequentially"]
+        self.avd_status_scan_interval_millis = launching_phase_dict["avd_status_scan_interval_millis"]
+        self.avd_wait_for_adb_boot_timeout_millis = launching_phase_dict["avd_wait_for_adb_boot_timeout_millis"]
+        self.avd_wait_for_system_boot_timeout_millis = launching_phase_dict["avd_wait_for_system_boot_timeout_millis"]
+        self.device_before_launching_restart_adb = launching_phase_dict["device_before_launching_restart_adb"]
+
+
+class ApkPreparationPhaseOptions:
+    def __init__(self, apk_preparation_phase_dict):
+        self.build_new_apk = apk_preparation_phase_dict["build_new_apk"]
+
+
+class TestingPhaseOptions:
+    def __init__(self, testing_phase_dict):
+        self.record_tests = testing_phase_dict["record_tests"]

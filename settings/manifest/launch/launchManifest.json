@@ -2,20 +2,27 @@
   "launch_plan_list": [
     {
       "plan_name": "default",
-
-      "should_recreate_existing_avd": true,
-      "should_launch_avd_sequentially": true,
-      "adb_scan_interval_millis": 10000,
-      "avd_adb_boot_timeout_millis": 240000,
-      "avd_system_boot_timeout_millis": 120000,
-
-      "should_build_new_apk": false,
-      "should_restart_adb": true,
-
-      "adb_call_buffer_size": 3,
-      "adb_call_buffer_delay_between_cmd": 2500,
-
-      "device_android_id_to_ignore": []
+      "general": {
+        "adb_call_buffer_size": 3,
+        "adb_call_buffer_delay_between_cmd": 2500
+      },
+      "device_preparation_phase": {
+        "avd_should_recreate_existing": true,
+        "device_android_id_to_ignore": []
+      },
+      "device_launching_phase": {
+        "avd_launch_sequentially": true,
+        "avd_status_scan_interval_millis": 10000,
+        "avd_wait_for_adb_boot_timeout_millis": 240000,
+        "avd_wait_for_system_boot_timeout_millis": 120000,
+        "device_before_launching_restart_adb": true
+      },
+      "apk_preparation_phase": {
+        "build_new_apk": false
+      },
+      "testing_phase": {
+        "record_tests": true
+      }
     }
   ]
 }

@@ -13,10 +13,12 @@ class AdbCommand:
     SPECIFIC_DEVICE = "-s {}"
     INSTALL_APK = "install {}"
     UNINSTALL_PACKAGE = "uninstall {}"
+    PULL = "pull {} {}"
 
 
 class AdbShellCommand:
     SHELL = "shell"
+    RECORD = "screenrecord {}"
     GET_PROPERTY = "getprop {}"
 
 

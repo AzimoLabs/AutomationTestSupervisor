@@ -289,6 +289,8 @@ class DeviceManager:
         Printer.system_message(self.TAG, "ADB wait finished with success!")
 
     def _wait_for_property_statuses(self, monitored_devices):
+        # TODO It should be possible to specify in LaunchPlan which parameters should be awaited
+        # TODO Disable wait for 'init.svc.bootanim' when '-no-boot-anim' is set to launched AVDs
         Printer.system_message(self.TAG,
                                "Waiting for 'dev.bootcomplete', 'sys.boot_completed', 'init.svc.bootanim', "
                                "properties of devices (" + " ".join(
@@ -368,8 +370,11 @@ class DeviceManager:
 class TestManager:
     TAG = "TestManager:"
 
-    def __init__(self, instrumentation_runner_controller, logcat_controller, device_store, test_store, log_store):
+    def __init__(self, instrumentation_runner_controller, adb_shell_controller, logcat_controller, device_store,
+                 test_store, log_store):
+
         self.instrumentation_runner_controller = instrumentation_runner_controller
+        self.adb_shell_controller = adb_shell_controller
         self.logcat_controller = logcat_controller
         self.device_store = device_store
         self.test_store = test_store
@@ -378,6 +383,7 @@ class TestManager:
     def run_tests(self, test_set, test_list):
         self.test_store.get_packages(test_set, test_list)
         instrumentation_cmd_assembler = self.instrumentation_runner_controller.instrumentation_runner_command_assembler
+        adb_shell_cmd_assembler = self.adb_shell_controller.adb_shell_command_assembler
         logcat_cmd_assembler = self.logcat_controller.adb_logcat_command_assembler
 
         for package in self.test_store.packages_to_run:
@@ -400,12 +406,19 @@ class TestManager:
                     self.instrumentation_runner_controller.adb_bin,
                     device.adb_name)
 
+                record_screen_cmd = adb_shell_cmd_assembler.assemble_record_screen_cmd(
+                    self.adb_shell_controller.adb_bin,
+                    device.adb_name,
+                    "/sdcard/test_recordings/"
+                )
+
                 if device.status == "device":
                     test_thread = TestThread(launch_cmd, device)
                     test_thread.start()
                     test_threads.append(test_thread)
 
-                    logcat_thread = TestLogCatMonitorThread(monitor_logcat_cmd, flush_logcat_cmd, device)
+                    logcat_thread = TestLogCatMonitorThread(monitor_logcat_cmd, flush_logcat_cmd, record_screen_cmd,
+                                                            device)
                     logcat_threads.append(logcat_thread)
                     logcat_thread.start()
                 else:
@@ -419,14 +432,20 @@ class TestManager:
             for thread in test_threads:
                 self.log_store.test_log_summaries.extend(copy.deepcopy(thread.logs))
 
+            test_threads.clear()
+
             for thread in logcat_threads:
                 self.log_store.test_logcats.extend(copy.deepcopy(thread.logs))
-                thread.kill_logcat_monitoring()
-                logcat_threads.remove(thread)
+
+            for thread in logcat_threads:
+                thread.kill()
+
+            logcat_threads.clear()
 
     def run_with_boosted_shards(self, test_set, test_list):
         self.test_store.get_packages(test_set, test_list)
         instrumentation_cmd_assembler = self.instrumentation_runner_controller.instrumentation_runner_command_assembler
+        adb_shell_cmd_assembler = self.adb_shell_controller.adb_shell_command_assembler
         logcat_cmd_assembler = self.logcat_controller.adb_logcat_command_assembler
 
         device_name_mark = "device_name_to_replace"
@@ -466,7 +485,13 @@ class TestManager:
                         self.instrumentation_runner_controller.adb_bin,
                         device.adb_name)
 
-                    logcat_thread = TestLogCatMonitorThread(monitor_logcat_cmd, flush_logcat_cmd, device)
+                    record_screen_cmd = adb_shell_cmd_assembler.assemble_record_screen_cmd(
+                        self.adb_shell_controller.adb_bin,
+                        device.adb_name,
+                        "/sdcard/test_recordings/")
+
+                    logcat_thread = TestLogCatMonitorThread(monitor_logcat_cmd, flush_logcat_cmd, record_screen_cmd,
+                                                            device)
                     logcat_threads.append(logcat_thread)
                     logcat_thread.start()
 
@@ -504,7 +529,7 @@ class TestManager:
             self.log_store.test_logcats.extend(copy.deepcopy(thread.logs))
 
         for thread in logcat_threads:
-            thread.kill_logcat_monitoring()
+            thread.kill()
 
         logcat_threads.clear()
 

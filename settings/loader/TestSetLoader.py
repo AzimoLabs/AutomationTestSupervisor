@@ -3,7 +3,10 @@ from error.Exceptions import LauncherFlowInterruptedException
 from settings.loader import ArgLoader
 from settings.manifest.test.TestManifestModels import TestManifest
 
-from system.console import Printer
+from system.console import (
+    Printer,
+    Color
+)
 
 TAG = "TestSetLoader:"
 
@@ -23,14 +26,14 @@ def _load_test_set_name():
         message = "No test set inserted. Launcher will quit."
         raise LauncherFlowInterruptedException(TAG, message)
     else:
-        Printer.message_highlighted(TAG, "Selected test set: ", test_set_name)
+        Printer.system_message(TAG, "Selected test set: " + Color.GREEN + test_set_name + Color.BLUE + ".")
     return test_set_name
 
 
 def _load_manifest():
     test_manifest_dir = ArgLoader.get_arg_loaded_by(ArgLoader.TEST_MANIFEST_DIR_PREFIX)
     test_manifest = TestManifest(test_manifest_dir)
-    Printer.message_highlighted(TAG, "Created TestManifest from file: ", test_manifest_dir)
+    Printer.system_message(TAG, "Created TestManifest from file: " + Color.GREEN + test_manifest_dir + Color.BLUE + ".")
     return test_manifest
 
 
@@ -44,10 +47,13 @@ def _load_test_list(test_manifest):
 
 def _load_test_set(test_manifest, test_set_name):
     if test_manifest.contains_set(test_set_name):
-        Printer.system_message(TAG, "Test set '" + test_set_name + "' was found in TestManifest.")
+        Printer.system_message(TAG, "Test set " + Color.GREEN + test_set_name + Color.BLUE
+                               + " was found in TestManifest.")
+
         test_set = test_manifest.get_set(test_set_name)
-        Printer.message_highlighted(TAG, "Test set contains following package names: ",
-                                    ", ".join("'" + package_name + "'" for package_name in test_set.set_package_names))
+        Printer.system_message(TAG, "Test set contains following package names: ")
+        for package_name in test_set.set_package_names:
+            Printer.system_message(TAG, "\t * " + Color.GREEN + package_name + Color.BLUE)
 
         found_all_packages = True
         errors = ""
@@ -57,8 +63,8 @@ def _load_test_set(test_manifest, test_set_name):
                 errors += "\n              - Test package '" + package_name + "' was not found in TestManifest!"
 
         if found_all_packages:
-            Printer.system_message(TAG, "All test packages from set '" + test_set_name
-                                   + "' were found in TestManifest.")
+            Printer.system_message(TAG, "All test packages from set " + Color.GREEN + test_set_name + Color.BLUE +
+                                   " were found in TestManifest.")
         else:
             raise LauncherFlowInterruptedException(TAG, errors)
     else:
