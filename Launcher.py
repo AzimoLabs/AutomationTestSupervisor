@@ -103,12 +103,11 @@ if __name__ == "__main__":
         test_manager = TestManager(instrumentation_runner_controller, adb_shell_controller, adb_logcat_controller,
                                    device_store, test_store, log_store)
 
-        if FileUtils.output_dir_has_files:
-            Printer.step(TAG, "Performing output dir clean up.")
-            FileUtils.clean_output_dir()
+        Printer.step(TAG, "Performing output dir clean up.")
+        FileUtils.clean_output_dir()
 
         if GlobalConfig.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION:
-            Printer.step(TAG, "Preparing device session - killing currently launched AVD.")
+            Printer.step(TAG, "Killing currently launched AVD.")
 
             device_manager.add_models_representing_outside_session_virtual_devices()
             if device_manager.is_any_avd_visible():
@@ -116,7 +115,7 @@ if __name__ == "__main__":
             device_manager.clear_models_representing_outside_session_virtual_devices()
 
             if avd_set.avd_list:
-                Printer.step(TAG, "Preparing device session - creating models for devices specified in AVD set.")
+                Printer.step(TAG, "Creating models for devices specified in AVD set.")
                 device_manager.add_models_based_on_avd_schema(avd_set, avd_schemas)
 
                 if GlobalConfig.SHOULD_RECREATE_EXISTING_AVD:
@@ -133,7 +132,7 @@ if __name__ == "__main__":
                     Printer.step(TAG, "Launching AVD - all at once.")
                     device_manager.launch_all_avd_at_once()
         else:
-            Printer.step(TAG, "Preparing device session - creating models for currently visible Android Devices "
+            Printer.step(TAG, "Creating models for currently visible Android Devices "
                               "and AVD.")
             device_manager.add_models_representing_outside_session_devices()
             device_manager.add_models_representing_outside_session_virtual_devices()

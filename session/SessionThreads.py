@@ -283,7 +283,8 @@ class ApkInstallThread(threading.Thread):
         regex_result = re.findall("package: name='(.+?)'", dump)
         if regex_result:
             package = str(regex_result[0])
-            Printer.message_highlighted(self.TAG, "Package that is about to be installed: ", package)
+            Printer.system_message(self.TAG, "Package that is about to be installed: " + Color.GREEN + package
+                                   + Color.BLUE + ".")
         else:
             message = "Unable to find package of .*apk file: " + self.apk_name
             raise LauncherFlowInterruptedException(self.TAG, message)

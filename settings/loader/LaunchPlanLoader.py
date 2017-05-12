@@ -32,7 +32,7 @@ def _load_launch_plan_to_global_settings(launch_plan):
 
     GlobalConfig.ADB_CALL_BUFFER_SIZE = general_settings.adb_call_buffer_size
     if GlobalConfig.ADB_CALL_BUFFER_SIZE > 0:
-        Printer.system_message(TAG, "\t * ADB call buffer size set to: " + Color.GREEN +
+        Printer.system_message(TAG, "    * ADB call buffer size set to: " + Color.GREEN +
                                str(GlobalConfig.ADB_CALL_BUFFER_SIZE) + " slot(s)" + Color.BLUE + ".")
     else:
         message = "ADB_CALL_BUFFER_SIZE cannot be smaller than 1. Launcher will quit."
@@ -41,10 +41,10 @@ def _load_launch_plan_to_global_settings(launch_plan):
     GlobalConfig.ADB_CALL_BUFFER_DELAY_BETWEEN_CMD = general_settings.adb_call_buffer_delay_between_cmd
     if GlobalConfig.ADB_CALL_BUFFER_DELAY_BETWEEN_CMD >= 0:
         if GlobalConfig.ADB_CALL_BUFFER_DELAY_BETWEEN_CMD == 0:
-            Printer.system_message(TAG, "\t * ADB call buffer is disabled. ADB_CALL_BUFFER_DELAY_BETWEEN_CMD"
+            Printer.system_message(TAG, "    * ADB call buffer is disabled. ADB_CALL_BUFFER_DELAY_BETWEEN_CMD"
                                         " param set to: " + + Color.GREEN + "0 second(s)" + + Color.BLUE + ".")
         else:
-            Printer.system_message(TAG, "\t * ADB call buffer will clear slots after " + Color.GREEN +
+            Printer.system_message(TAG, "    * ADB call buffer will clear slots after " + Color.GREEN +
                                    str(GlobalConfig.ADB_CALL_BUFFER_DELAY_BETWEEN_CMD / 1000) + " second(s)" +
                                    Color.BLUE + " from ADB call.")
     else:
@@ -57,14 +57,14 @@ def _load_launch_plan_to_global_settings(launch_plan):
     if is_avd_session_requested:
         GlobalConfig.SHOULD_RECREATE_EXISTING_AVD = device_prep_settings.avd_should_recreate_existing
         if GlobalConfig.SHOULD_RECREATE_EXISTING_AVD:
-            Printer.system_message(TAG, "\t * If requested AVD already exists - it will be" + Color.GREEN +
+            Printer.system_message(TAG, "    * If requested AVD already exists - it will be" + Color.GREEN +
                                    " recreated from scratch" + Color.BLUE + ".")
         else:
-            Printer.system_message(TAG, "\t * If requested AVD already exists - it will be" + Color.GREEN +
+            Printer.system_message(TAG, "    * If requested AVD already exists - it will be" + Color.GREEN +
                                    " reused" + Color.BLUE + ".")
 
     GlobalConfig.IGNORED_DEVICE_LIST = device_prep_settings.device_android_id_to_ignore
-    Printer.system_message(TAG, "\t * Devices with following Android-IDs will be ignored: " + Color.GREEN +
+    Printer.system_message(TAG, "    * Devices with following Android-IDs will be ignored: " + Color.GREEN +
                            str(GlobalConfig.IGNORED_DEVICE_LIST) + Color.BLUE + ".")
 
     Printer.system_message(TAG, "Device launching phase settings:")
@@ -74,42 +74,42 @@ def _load_launch_plan_to_global_settings(launch_plan):
         GlobalConfig.SHOULD_LAUNCH_AVD_SEQUENTIALLY = device_launch_settings.avd_launch_sequentially
         if GlobalConfig.SHOULD_LAUNCH_AVD_SEQUENTIALLY:
             Printer.system_message(TAG,
-                                   "\t * AVD will be launched " + Color.GREEN + "one by one" + Color.BLUE +
+                                   "    * AVD will be launched " + Color.GREEN + "one by one" + Color.BLUE +
                                    ". Wait for start will be performed for each AVD separately and it will take more"
                                    " time.")
         else:
-            Printer.system_message(TAG, "\t * AVD will be launched " + Color.GREEN + "all at once" + Color.BLUE + ".")
+            Printer.system_message(TAG, "    * AVD will be launched " + Color.GREEN + "all at once" + Color.BLUE + ".")
             Printer.error(TAG, "Warning: when launching AVD simultaneously ADB is unaware of the amount of memory"
                                " that specific AVD will use. If there is not enough memory in the system and you launch"
                                " too many AVD at the same time your PC might turn off due to lack of RAM memory.")
 
         GlobalConfig.ADB_SCAN_INTERVAL = device_launch_settings.avd_status_scan_interval_millis
         if GlobalConfig.ADB_SCAN_INTERVAL is "":
-            message = "\t * ADB_SCAN_INTERVAL not specified in LaunchManifest. Launcher will quit."
+            message = "    * ADB_SCAN_INTERVAL not specified in LaunchManifest. Launcher will quit."
             raise LauncherFlowInterruptedException(TAG, message)
         else:
-            Printer.system_message(TAG, "\t * ADB will be scanned with interval of " + Color.GREEN +
+            Printer.system_message(TAG, "    * ADB will be scanned with interval of " + Color.GREEN +
                                    str(GlobalConfig.ADB_SCAN_INTERVAL / 1000) + " second(s)" + Color.BLUE + ".")
 
         GlobalConfig.AVD_ADB_BOOT_TIMEOUT = device_launch_settings.avd_wait_for_adb_boot_timeout_millis
         if GlobalConfig.AVD_ADB_BOOT_TIMEOUT is "":
-            message = "\t * AVD_ADB_BOOT_TIMEOUT not specified in LaunchManifest. Launcher will quit."
+            message = "    * AVD_ADB_BOOT_TIMEOUT not specified in LaunchManifest. Launcher will quit."
             raise LauncherFlowInterruptedException(TAG, message)
         else:
-            Printer.system_message(TAG, "\t * AVD - ADB boot timeout set to " + Color.GREEN +
+            Printer.system_message(TAG, "    * AVD - ADB boot timeout set to " + Color.GREEN +
                                    str(GlobalConfig.AVD_ADB_BOOT_TIMEOUT / 1000) + " second(s)" + Color.BLUE + ".")
 
         GlobalConfig.AVD_SYSTEM_BOOT_TIMEOUT = device_launch_settings.avd_wait_for_system_boot_timeout_millis
         if GlobalConfig.AVD_SYSTEM_BOOT_TIMEOUT is "":
-            message = "\t * AVD_SYSTEM_BOOT_TIMEOUT not specified in LaunchManifest. Launcher will quit."
+            message = "    * AVD_SYSTEM_BOOT_TIMEOUT not specified in LaunchManifest. Launcher will quit."
             raise LauncherFlowInterruptedException(TAG, message)
         else:
-            Printer.system_message(TAG, "\t * AVD - ADB system boot timeout set to " + Color.GREEN +
+            Printer.system_message(TAG, "    * AVD - ADB system boot timeout set to " + Color.GREEN +
                                    str(GlobalConfig.AVD_SYSTEM_BOOT_TIMEOUT / 1000) + " second(s)" + Color.BLUE + ".")
 
     GlobalConfig.SHOULD_RESTART_ADB = device_launch_settings.device_before_launching_restart_adb
     if GlobalConfig.SHOULD_RESTART_ADB:
-        Printer.system_message(TAG, "\t * " + Color.GREEN + "ADB will be restarted" + Color.BLUE
+        Printer.system_message(TAG, "    * " + Color.GREEN + "ADB will be restarted" + Color.BLUE
                                + " before launching tests.")
 
     Printer.system_message(TAG, "Apk preparation phase settings:")
@@ -117,10 +117,10 @@ def _load_launch_plan_to_global_settings(launch_plan):
 
     GlobalConfig.SHOULD_BUILD_NEW_APK = apk_preparation_settings.build_new_apk
     if GlobalConfig.SHOULD_BUILD_NEW_APK:
-        Printer.system_message(TAG, "\t * Launcher will " + Color.GREEN + "build .*apk" + Color.BLUE
+        Printer.system_message(TAG, "    * Launcher will " + Color.GREEN + "build .*apk" + Color.BLUE
                                + " for tests with commands specified in test set.")
     else:
-        Printer.system_message(TAG, "\t * Launcher will " + Color.GREEN + "look for existing .*apk" + Color.BLUE
+        Printer.system_message(TAG, "    * Launcher will " + Color.GREEN + "look for existing .*apk" + Color.BLUE
                                + " look for existing .*apk for tests and try to build only if nothing was found.")
 
     Printer.system_message(TAG, "Test run  phase settings:")
@@ -128,10 +128,10 @@ def _load_launch_plan_to_global_settings(launch_plan):
 
     GlobalConfig.SHOULD_RECORD_TESTS = testing_phase.record_tests
     if GlobalConfig.SHOULD_RECORD_TESTS:
-        Printer.system_message(TAG, "\t * Launcher will " + Color.GREEN + "record device screens" + Color.BLUE
+        Printer.system_message(TAG, "    * Launcher will " + Color.GREEN + "record device screens" + Color.BLUE
                                + " during test session.")
     else:
-        Printer.system_message(TAG, "\t * Launcher test " + Color.GREEN + "recording is turned off" +
+        Printer.system_message(TAG, "    * Launcher test " + Color.GREEN + "recording is turned off" +
                                + Color.BLUE + ".")
 
 
@@ -156,7 +156,7 @@ def _load_launch_plan_manifest():
 
 def _load_launch_plan(launch_manifest, launch_plan_name):
     if launch_manifest.contains_plan(launch_plan_name):
-        Printer.system_message(TAG, "Launch plan " + Color.GREEN  + launch_plan_name + Color.BLUE
+        Printer.system_message(TAG, "Launch plan " + Color.GREEN + launch_plan_name + Color.BLUE
                                + " was found in LaunchManifest.")
         return launch_manifest.get_plan(launch_plan_name)
     else:

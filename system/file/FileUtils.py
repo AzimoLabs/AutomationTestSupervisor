@@ -5,7 +5,10 @@ import json
 
 from error.Exceptions import LauncherFlowInterruptedException
 
-from system.console import Printer
+from system.console import (
+    Printer,
+    Color
+)
 
 from settings import GlobalConfig
 
@@ -19,7 +22,7 @@ def create_dir(directory):
         if not os.path.exists(directory):
             os.makedirs(directory)
         absolute_path = os.path.abspath(dir_path)
-        Printer.system_message(TAG, "Created directory '" + absolute_path + "'.")
+        Printer.system_message(TAG, "Created directory " + Color.GREEN + absolute_path + Color.BLUE + ".")
     except Exception as e:
         message = "Unable to create directory '{}'. Error message: {}"
         message = message.format(dir_path, str(e))
@@ -37,7 +40,7 @@ def create_output_file(file_name, extension):
             os.makedirs(directory)
         open(file_path, "w")
         absolute_path = os.path.abspath(file_path)
-        Printer.system_message(TAG, "Created file '" + absolute_path + "'.")
+        Printer.system_message(TAG, "Created file " + Color.GREEN + absolute_path + Color.BLUE + ".")
     except Exception as e:
         message = "Unable to create file '{}.{}'. Error message: {}"
         message = message.format(file_path, extension, str(e))
@@ -83,7 +86,7 @@ def save_json_dict_to_json(json_dict, file_name):
         output_file = open(file_path, "w")
         absolute_path = os.path.abspath(file_path)
 
-        Printer.system_message(TAG, "Created json file '" + absolute_path + "'.")
+        Printer.system_message(TAG, "Created json file " + Color.GREEN + absolute_path + Color.BLUE + ".")
 
         json.dump(json_dict, output_file, indent=4, ensure_ascii=False)
     except Exception as e:
@@ -101,7 +104,8 @@ def copy_file(file_to_copy, new_file):
     try:
         if os.path.isfile(file_to_copy):
             shutil.copy2(file_to_copy, new_file)
-            Printer.system_message(TAG, "Copied file '" + file_to_copy + "' to dir '" + new_file + "'.")
+            Printer.system_message(TAG, "Copied file " + Color.GREEN + file_to_copy + Color.BLUE + " to dir "
+                                   + Color.GREEN + new_file + Color.BLUE + ".")
     except Exception as e:
         message = "Unable to copy file '{}'. Error message: {}"
         message = message.format(file_to_copy, str(e))
@@ -114,10 +118,10 @@ def delete_file(file_to_delete):
     try:
         if os.path.isfile(file_to_delete):
             os.unlink(file_to_delete)
-            Printer.system_message(TAG, "Deleted file '" + file_to_delete + "'.")
+            Printer.system_message(TAG, "Deleted file " + Color.GREEN +  file_to_delete + Color.BLUE + ".")
         elif os.path.isdir(file_to_delete):
             shutil.rmtree(file_to_delete)
-            Printer.system_message(TAG, "Deleted directory '" + absolute_path + "'.")
+            Printer.system_message(TAG, "Deleted directory " + Color.GREEN + absolute_path + Color.BLUE + ".")
     except Exception as e:
         message = "Unable to delete file or directory '{}'. Error message: {}"
         message = message.format(absolute_path, str(e))
@@ -127,21 +131,24 @@ def delete_file(file_to_delete):
 def clean_output_dir():
     directory = add_ending_slash(GlobalConfig.OUTPUT_DIR)
 
-    for the_file in os.listdir(directory):
-        file_path = os.path.join(directory, the_file)
-        absolute_path = os.path.abspath(file_path)
+    if os.listdir(directory):
+        for the_file in os.listdir(directory):
+            file_path = os.path.join(directory, the_file)
+            absolute_path = os.path.abspath(file_path)
 
-        try:
-            if os.path.isfile(file_path):
-                os.unlink(file_path)
-                Printer.system_message(TAG, "Deleted file '" + absolute_path + "'.")
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
-                Printer.system_message(TAG, "Deleted directory '" + absolute_path + "'.")
-        except Exception as e:
-            message = "Unable to delete files in directory '{}'. Error message: {}"
-            message = message.format(directory, str(e))
-            raise LauncherFlowInterruptedException(TAG, message)
+            try:
+                if os.path.isfile(file_path):
+                    os.unlink(file_path)
+                    Printer.system_message(TAG, "Deleted file " + Color.GREEN + absolute_path + Color.BLUE + ".")
+                elif os.path.isdir(file_path):
+                    shutil.rmtree(file_path)
+                    Printer.system_message(TAG, "Deleted directory " + Color.GREEN + absolute_path + Color.BLUE + ".")
+            except Exception as e:
+                message = "Unable to delete files in directory '{}'. Error message: {}"
+                message = message.format(directory, str(e))
+                raise LauncherFlowInterruptedException(TAG, message)
+    else:
+        Printer.system_message(TAG, "Nothing to clean. Directory is empty...")
 
 
 def output_dir_has_files():

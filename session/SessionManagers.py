@@ -37,7 +37,8 @@ class ApkManager:
     def get_apk(self, test_set):
         apk_candidate = self.apk_store.provide_apk(test_set)
         if apk_candidate is not None:
-            Printer.message_highlighted(self.TAG, "Picked .*apk with highest version code:\n", str(apk_candidate))
+            Printer.system_message(self.TAG, "Picked .*apk with highest version code:\n" +
+                                   Color.GREEN + str(apk_candidate) + Color.BLUE + ".")
         return apk_candidate
 
     def build_apk(self, test_set):
@@ -50,7 +51,8 @@ class ApkManager:
             message = "No .apk* candidates for test session were found. Check your config. Launcher will quit."
             raise LauncherFlowInterruptedException(self.TAG, message)
         else:
-            Printer.message_highlighted(self.TAG, "Picked .*apk with highest version code:\n", str(apk_candidate))
+            Printer.system_message(self.TAG, "Picked .*apk with highest version code:\n" +
+                                   Color.GREEN + str(apk_candidate) + Color.BLUE + ".")
         return apk_candidate
 
     def install_apk_on_devices(self, apk):
@@ -68,11 +70,10 @@ class ApkManager:
         aapt_command_assembler = self.aapt_controller.aapt_command_assembler
         dump_badging_cmd = aapt_command_assembler.assemble_dump_badging_cmd(self.aapt_controller.aapt_bin, apk_path)
 
-        Printer.message_highlighted(self.TAG, "Attempting to install " + Color.GREEN + "'" + apk_name + "'" + Color.BLUE
-                                    + " on devices: ", "("
-                                    + " ".join("'" + device.adb_name + "'"
-                                               for device in self.device_store.get_devices())
-                                    + ").")
+        Printer.system_message(self.TAG, "Attempting to install " + Color.GREEN + apk_name + Color.BLUE
+                               + " on devices: " + Color.GREEN + "("
+                               + " ".join("'" + device.adb_name + "'" for device in self.device_store.get_devices())
+                               + ")" + Color.BLUE + ".")
 
         apk_install_threads = list()
         for device in self.device_store.get_devices():
@@ -133,7 +134,8 @@ class ApkManager:
             raise LauncherFlowInterruptedException(self.TAG, message)
 
         GlobalConfig.INSTRUMENTATION_RUNNER = target_package + "/" + instrumentation_runner_name
-        Printer.message_highlighted(self.TAG, "Instrumentation Runner found: ", GlobalConfig.INSTRUMENTATION_RUNNER)
+        Printer.system_message(self.TAG, "Instrumentation Runner found: " + Color.GREEN +
+                               GlobalConfig.INSTRUMENTATION_RUNNER + Color.BLUE + ".")
 
 
 class DeviceManager:
@@ -170,14 +172,14 @@ class DeviceManager:
         for device in self.device_store.get_devices():
             if device.get_android_id() in GlobalConfig.IGNORED_DEVICE_LIST:
                 Printer.system_message(self.TAG, "Android-ID "
-                                       + Color.GREEN + "'" + device.android_id + "'" + Color.BLUE +
-                                       " of device " + Color.GREEN + "'" + device.adb_name + "'" + Color.BLUE +
+                                       + Color.GREEN + device.android_id + Color.BLUE +
+                                       " of device " + Color.GREEN + device.adb_name + Color.BLUE +
                                        " was found in ignore list.")
                 self.device_store.remove_device_from_session(device)
             else:
                 Printer.system_message(self.TAG, "Android-ID "
-                                       + Color.GREEN + "'" + device.android_id + "'" + Color.BLUE +
-                                       " of device " + Color.GREEN + "'" + device.adb_name + "'" + Color.BLUE +
+                                       + Color.GREEN + device.android_id + Color.BLUE +
+                                       " of device " + Color.GREEN + device.adb_name + Color.BLUE +
                                        " is allowed to run in session.")
 
     def create_all_avd_and_reuse_existing(self):
@@ -188,28 +190,29 @@ class DeviceManager:
 
                 start_time = int(round(time.time() * 1000))
                 if device.avd_schema.avd_name in created_avd_list:
-                    Printer.system_message(self.TAG, "AVD with name '"
-                                           + str(device.avd_schema.avd_name) + "' currently exists and will be reused.")
+                    Printer.system_message(self.TAG, "AVD with name " + Color.GREEN + str(device.avd_schema.avd_name)
+                                           + Color.BLUE + " currently exists and will be reused.")
                 else:
                     device.create()
 
                 if device.avd_schema.create_avd_hardware_config_filepath != "":
                     Printer.system_message(self.TAG,
-                                           "'config.ini' file was specified in AVD schema of device '"
-                                           + device.adb_name + " in location '"
-                                           + device.avd_schema.create_avd_hardware_config_filepath + "'. Applying...")
+                                           "'config.ini' file was specified in AVD schema of device " + Color.GREEN
+                                           + device.adb_name + Color.BLUE + " in location " + Color.GREEN
+                                           + device.avd_schema.create_avd_hardware_config_filepath + Color.BLUE
+                                           + ". Applying...")
                     device.apply_config_ini()
                 end_time = int(round(time.time() * 1000))
 
                 creation_time = (end_time - start_time) / 1000
                 reasonable_time = 25
                 if creation_time > reasonable_time and "--force" not in device.avd_schema.create_avd_additional_options:
-                    Printer.message_highlighted(self.TAG, "AVD creation took: ", str(creation_time) + " sec" + Color.RED
-                                                + " (Attention! Creation process could ran faster. Try adding '--force'"
-                                                  " to your AVD schema in 'create_avd_additional_options' field.)")
+                    Printer.system_message(self.TAG, "AVD creation took: " + Color.GREEN + str(creation_time) + " sec"
+                                           + Color.RED + " (Attention! Creation process could ran faster. Try adding "
+                                           + "'--force' to your AVD schema in 'create_avd_additional_options' field.)")
                 else:
-                    Printer.message_highlighted(self.TAG, "AVD creation took: ", str(creation_time) + Color.BLUE +
-                                                " seconds.")
+                    Printer.system_message(self.TAG, "AVD creation took: " + Color.GREEN + str(creation_time)
+                                           + Color.BLUE + " seconds.")
 
     def create_all_avd_and_recreate_existing(self):
         created_avd_list = re.findall("Name: (.+)", self.avdmanager_controller.list_avd())
@@ -219,8 +222,8 @@ class DeviceManager:
 
                 start_time = int(round(time.time() * 1000))
                 if device.avd_schema.avd_name in created_avd_list:
-                    Printer.system_message(self.TAG, "AVD with name '"
-                                           + device.avd_schema.avd_name + "' already exists and will be re-created.")
+                    Printer.system_message(self.TAG, "AVD with name " + Color.GREEN + device.avd_schema.avd_name
+                                           + Color.BLUE + " already exists and will be re-created.")
                     device.delete()
                     device.create()
                 else:
@@ -228,20 +231,22 @@ class DeviceManager:
 
                 if device.avd_schema.create_avd_hardware_config_filepath != "":
                     Printer.system_message(self.TAG,
-                                           "'config.ini' file was specified in AVD schema of device '"
-                                           + device.adb_name + " in location '"
-                                           + device.avd_schema.create_avd_hardware_config_filepath + "'. Applying...")
+                                           "'config.ini' file was specified in AVD schema of device " + Color.GREEN
+                                           + device.adb_name + Color.BLUE + " in location " + Color.GREEN +
+                                           + device.avd_schema.create_avd_hardware_config_filepath + Color.BLUE
+                                           + ". Applying...")
                     device.apply_config_ini()
                 end_time = int(round(time.time() * 1000))
 
                 creation_time = (end_time - start_time) / 1000
                 reasonable_time = 25
                 if creation_time > reasonable_time and "--force" not in device.avd_schema.create_avd_additional_options:
-                    Printer.message_highlighted(self.TAG, "AVD creation took: ", str(creation_time) + " sec" + Color.RED
-                                                + " (Attention! Creation process could ran faster. Try adding '--force'"
-                                                  " to your AVD schema in 'create_avd_additional_options' field.)")
+                    Printer.system_message(self.TAG, "AVD creation took: " + Color.GREEN + str(creation_time) + " sec"
+                                           + Color.RED + " (Attention! Creation process could ran faster. Try adding "
+                                           + "'--force' to your AVD schema in 'create_avd_additional_options' field.)")
                 else:
-                    Printer.message_highlighted(self.TAG, "AVD creation took: ", str(creation_time) + " sec")
+                    Printer.system_message(self.TAG, "AVD creation took: " + Color.GREEN + str(creation_time)
+                                           + Color.BLUE + " sec")
 
     def launch_all_avd_sequentially(self):
         for device in self.device_store.get_devices():
@@ -273,8 +278,8 @@ class DeviceManager:
                 self.device_store.update_model_statuses()
                 Printer.system_message(self.TAG, "  - Current wait status:")
                 for device in monitored_devices:
-                    Printer.message_highlighted(self.TAG, "      * " + device.adb_name
-                                                + " ", "('" + device.status + "')")
+                    Printer.system_message(self.TAG, "      * " + device.adb_name + " " + Color.GREEN
+                                           + "('" + device.status + "')")
 
                 if all(device.status == status for device in monitored_devices):
                     break
@@ -324,16 +329,15 @@ class DeviceManager:
 
                 Printer.system_message(self.TAG, "  - Current wait status:")
                 for device_name, status_dict in device_statuses.items():
-                    Printer.message_highlighted(self.TAG, "      * " + device_name + " properties: "
-                                                + "('dev.bootcomplete'" + " : "
-                                                + str(status_dict["dev.bootcomplete"]
-                                                      if status_dict["dev.bootcomplete"] != "" else "0") + ", "
-                                                + "'sys.boot_completed'" + " : "
-                                                + str(status_dict["sys.boot_completed"]
-                                                      if status_dict["sys.boot_completed"] != "" else "0") + ", "
-                                                + "'init.svc.bootanim'" + " : " + str(status_dict["init.svc.bootanim"])
-                                                + ") - ",
-                                                "launched" if status_dict["boot_finished"] else "not-launched")
+                    bcplte = str(status_dict["dev.bootcomplete"] if status_dict["dev.bootcomplete"] != "" else "0")
+                    bcplted = str(status_dict["sys.boot_completed"] if status_dict["sys.boot_completed"] != "" else "0")
+                    banim = str(status_dict["init.svc.bootanim"])
+                    launched_status = "launched" if status_dict["boot_finished"] else "not-launched"
+                    Printer.system_message(self.TAG, "      * " + device_name + " properties: "
+                                           + "('dev.bootcomplete' : " + bcplte + ", "
+                                           + "'sys.boot_completed' : " + bcplted + ", "
+                                           + "'init.svc.bootanim' : " + banim + ") - "
+                                           + Color.GREEN + launched_status + Color.BLUE)
 
                 if all(status_dict["boot_finished"] for status_dict in device_statuses.values()):
                     break
@@ -355,7 +359,8 @@ class DeviceManager:
         for device in self.device_store.get_devices():
             if isinstance(device, OutsideSessionVirtualDevice) or isinstance(device, SessionVirtualDevice):
                 avd_list.append(device)
-                Printer.message_highlighted(self.TAG, "- " + device.adb_name + " ", "('" + device.status + "')")
+                Printer.system_message(self.TAG, "- " + device.adb_name + Color.GREEN + " ('" + device.status + "')"
+                                       + Color.BLUE)
                 if device.status != "not-launched":
                     device.kill()
                     time.sleep(2)
@@ -534,9 +539,8 @@ class TestManager:
         logcat_threads.clear()
 
         test_end = time.time()
-        Printer.message_highlighted(self.TAG,
-                                    "Test process took: ", "{:.2f}".format(test_end - test_start)
-                                    + Color.BLUE + " seconds.")
+        Printer.system_message(self.TAG, "Test process took: " + Color.GREEN + "{:.2f}".format(test_end - test_start)
+                               + Color.BLUE + " seconds.")
 
 
 class LogManager:

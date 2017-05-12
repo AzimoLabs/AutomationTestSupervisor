@@ -34,9 +34,11 @@ class ApkStore:
 
     def _create_apk_dir_if_not_exists(self):
         if os.path.isdir(GlobalConfig.APK_DIR):
-            Printer.system_message(self.TAG, "Directory '" + GlobalConfig.APK_DIR + "' was found.")
+            Printer.system_message(self.TAG, "Directory " + Color.GREEN + GlobalConfig.APK_DIR + Color.BLUE
+                                   + " was found.")
         else:
-            Printer.system_message(self.TAG, "Directory '" + GlobalConfig.APK_DIR + "' not found. Creating...")
+            Printer.system_message(self.TAG, "Directory " + Color.GREEN + GlobalConfig.APK_DIR + Color.BLUE
+                                   + " not found. Creating...")
             FileUtils.create_dir(GlobalConfig.APK_DIR)
 
     def provide_apk(self, test_set):
@@ -47,8 +49,8 @@ class ApkStore:
     def _find_candidates(self, test_set):
         name_part = test_set.apk_name_part.replace(".apk", "")
         Printer.system_message(self.TAG,
-                               "Checking '" + GlobalConfig.APK_DIR + "' directory for .*apk list with names " +
-                               "containing '" + name_part + "':")
+                               "Checking " + Color.GREEN + GlobalConfig.APK_DIR + Color.BLUE + " directory for .*apk" +
+                               " list with names containing " + Color.GREEN + name_part + Color.BLUE + ":")
 
         app_apk_list = self.get_list_with_application_apk(name_part, GlobalConfig.APK_DIR)
         app_apk_filepath_list = self.get_list_with_application_apk_filepath(name_part, GlobalConfig.APK_DIR)
@@ -184,7 +186,7 @@ class DeviceStore:
                                                               self.adb_package_manager_controller,
                                                               self.adb_settings_controller)
                 Printer.system_message(self.TAG, "Android Device model representing device with name "
-                                       + Color.GREEN + "'" + device_name + "'" + Color.BLUE + " was added to test run.")
+                                       + Color.GREEN + device_name + Color.BLUE + " was added to test run.")
                 self.outside_session_devices.append(outside_session_device)
 
         if not any(isinstance(device, OutsideSessionDevice) for device in self.outside_session_devices):
@@ -201,7 +203,7 @@ class DeviceStore:
                                                                              self.adb_package_manager_controller,
                                                                              self.adb_settings_controller)
                 Printer.system_message(self.TAG, "AVD model representing device with name "
-                                       + Color.GREEN + "'" + device_name + "'" + Color.BLUE + " was added to test run.")
+                                       + Color.GREEN + device_name + Color.BLUE + " was added to test run.")
                 self.outside_session_virtual_devices.append(outside_session_virtual_device)
 
         if not any(isinstance(device, OutsideSessionVirtualDevice) for device in self.outside_session_virtual_devices):
@@ -227,7 +229,7 @@ class DeviceStore:
                                                       self.adb_settings_controller)
                 self.session_devices.append(session_device)
                 Printer.system_message(self.TAG, "Android Virtual Device model was created according to schema "
-                                       + Color.GREEN + "'" + avd_schema.avd_name + "'" + Color.BLUE +
+                                       + Color.GREEN + avd_schema.avd_name + Color.BLUE +
                                        ". Instance number: " + str(i) + ". Assigned to port: " + str(port) + ".")
 
     def _get_visible_devices(self):
@@ -237,6 +239,11 @@ class DeviceStore:
         for line in adb_devices_output.splitlines():
             device_name = line.split()[0]
             device_status = line.split()[1]
+
+            # edge case
+            if device_name == "*":
+                continue
+
             currently_visible_devices.update({device_name: device_status})
 
         return currently_visible_devices
@@ -286,7 +293,20 @@ class DeviceStore:
         elif device in self.session_devices:
             self.session_devices.remove(device)
         Printer.system_message(self.TAG, "Device with name "
-                               + Color.GREEN + "'" + device.adb_name + "'" + Color.BLUE + " was removed from session.")
+                               + Color.GREEN + device.adb_name + Color.BLUE + " was removed from session.")
+
+
+class TestStore:
+    TAG = "TestStore:"
+
+    def __init__(self):
+        self.packages_to_run = list()
+
+    def get_packages(self, test_set, test_list):
+        for package_name in test_set.set_package_names:
+            for test_package in test_list[package_name].test_packages:
+                if test_package not in self.packages_to_run:
+                    self.packages_to_run.append(test_package)
 
 
 class LogStore:
@@ -365,16 +385,3 @@ class LogStore:
         temp_test_logcat_wrapper = TestLogCatWrapper()
         temp_test_logcat_wrapper.test_logcat_packages = logcat_packages_var
         return vars(temp_test_logcat_wrapper)
-
-
-class TestStore:
-    TAG = "TestStore:"
-
-    def __init__(self):
-        self.packages_to_run = list()
-
-    def get_packages(self, test_set, test_list):
-        for package_name in test_set.set_package_names:
-            for test_package in test_list[package_name].test_packages:
-                if test_package not in self.packages_to_run:
-                    self.packages_to_run.append(test_package)

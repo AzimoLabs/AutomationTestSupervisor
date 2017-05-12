@@ -63,7 +63,8 @@ class AaptController:
 
     def _assert_bin_directory_exists(self):
         if os.path.isfile(self.aapt_bin):
-            Printer.system_message(self.TAG, "Aapt binary file found at '" + self.aapt_bin + "'.")
+            Printer.system_message(self.TAG, "Aapt binary file found at: " + Color.GREEN + self.aapt_bin
+                                   + Color.BLUE + ".")
         else:
             message = "Unable to find Aapt binary at '{}'."
             message = message.format(self.aapt_bin)
@@ -90,7 +91,8 @@ class AdbController:
 
     def _assert_bin_directory_exists(self):
         if os.path.isfile(self.adb_bin):
-            Printer.system_message(self.TAG, "ADB binary file found at '" + self.adb_bin + "'.")
+            Printer.system_message(self.TAG, "ADB binary file found at " + Color.GREEN + self.adb_bin + Color.BLUE
+                                   + ".")
         else:
             message = "Unable to find ADB binary at '{}'."
             message = message.format(self.adb_bin)
@@ -140,7 +142,8 @@ class AdbShellController:
 
     def _assert_bin_directory_exists(self):
         if os.path.isfile(self.adb_bin):
-            Printer.system_message(self.TAG, "ADB binary file found at '" + self.adb_bin + "'.")
+            Printer.system_message(self.TAG, "ADB binary file found at " + Color.GREEN + self.adb_bin + Color.BLUE
+                                   + ".")
         else:
             message = "Unable to find ADB binary at '{}'."
             message = message.format(self.adb_bin)
@@ -167,7 +170,8 @@ class AdbPackageManagerController:
 
     def _assert_bin_directory_exists(self):
         if os.path.isfile(self.adb_bin):
-            Printer.system_message(self.TAG, "ADB binary file found at '" + self.adb_bin + "'.")
+            Printer.system_message(self.TAG, "ADB binary file found at " + Color.GREEN + self.adb_bin + Color.BLUE
+                                   + ".")
         else:
             message = "Unable to find ADB binary at '{}'."
             message = message.format(self.adb_bin)
@@ -197,7 +201,8 @@ class AdbSettingsController:
 
     def _assert_bin_directory_exists(self):
         if os.path.isfile(self.adb_bin):
-            Printer.system_message(self.TAG, "ADB binary file found at '" + self.adb_bin + "'.")
+            Printer.system_message(self.TAG, "ADB binary file found at " + Color.GREEN + self.adb_bin + Color.BLUE
+                                   + ".")
         else:
             message = "Unable to find ADB binary at '{}'."
             message = message.format(self.adb_bin)
@@ -219,7 +224,8 @@ class AdbLogCatController:
 
     def _assert_bin_directory_exists(self):
         if os.path.isfile(self.adb_bin):
-            Printer.system_message(self.TAG, "ADB binary file found at '" + self.adb_bin + "'.")
+            Printer.system_message(self.TAG, "ADB binary file found at " + Color.GREEN + self.adb_bin + Color.BLUE
+                                   + ".")
         else:
             message = "Unable to find ADB binary at '{}'."
             message = message.format(self.adb_bin)
@@ -253,7 +259,8 @@ class AvdManagerController:
 
     def _assert_bin_directory_exists(self):
         if os.path.isfile(self.avdmanager_bin):
-            Printer.system_message(self.TAG, "AvdManager binary file found at '" + self.avdmanager_bin + "'.")
+            Printer.system_message(self.TAG, "AvdManager binary file found at " + Color.GREEN + self.avdmanager_bin
+                                   + Color.BLUE + ".")
         else:
             message = "Unable to find ADB binary at '{}'."
             message = message.format(self.avdmanager_bin)
@@ -300,8 +307,9 @@ class EmulatorController:
                 raise LauncherFlowInterruptedException(self.TAG, message)
 
             else:
-                Printer.system_message(self.TAG, "Emulator related binary files found in Android SDK:\n" + '\n'.join(
-                    ["              - '" + path + "'" for path in emulator_binaries.values()]))
+                Printer.system_message(self.TAG, "Emulator related binary files found in Android SDK:")
+                for path in emulator_binaries.values():
+                    Printer.system_message(self.TAG, "    * " + Color.GREEN + path + Color.BLUE)
 
         return emulator_binaries
 
@@ -359,10 +367,11 @@ class GradleController:
         self.project_root_found = GlobalConfig.PROJECT_ROOT_DIR != "" and os.path.isdir(GlobalConfig.PROJECT_ROOT_DIR)
         self.gradlew_found = os.path.isfile(self.gradle_bin)
         if self.project_root_found:
-            Printer.system_message(self.TAG, "Project root dir '" + GlobalConfig.PROJECT_ROOT_DIR +
-                                   "' was found! Building new .*apk is possible.")
+            Printer.system_message(self.TAG, "Project root dir " + Color.GREEN + GlobalConfig.PROJECT_ROOT_DIR
+                                   + Color.BLUE + " was found! Building new .*apk is possible.")
             if self.gradlew_found:
-                Printer.system_message(self.TAG, "gradlew binary found at'" + str(self.gradle_bin) + "'.")
+                Printer.system_message(self.TAG, "gradlew binary found at " + Color.GREEN + str(self.gradle_bin)
+                                       + Color.BLUE + ".")
 
     def build_application_apk(self, test_set):
         assemble_task = test_set.application_apk_assemble_task
@@ -411,7 +420,8 @@ class InstrumentationRunnerController:
 
     def _assert_bin_directory_exists(self):
         if os.path.isfile(self.adb_bin):
-            Printer.system_message(self.TAG, "ADB binary file found at '" + self.adb_bin + "'.")
+            Printer.system_message(self.TAG, "ADB binary file found at " + Color.GREEN + self.adb_bin + Color.BLUE
+                                   + ".")
         else:
             message = "Unable to find ADB binary at '{}'."
             message = message.format(self.adb_bin)
