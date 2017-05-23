@@ -104,10 +104,10 @@ class TestLogCatMonitorThread(threading.Thread):
                     if self.screen_recording_process is not None:
                         self.screen_recording_process.kill()
 
-                    self.screen_recording_process = TestRecordingThread(self.record_screen_cmd
-                                                                        + current_log.test_name + ".mp4",
-                                                                        self.device)
-                    self.screen_recording_process.start()
+                    # self.screen_recording_process = TestRecordingThread(self.record_screen_cmd
+                    #                                                     + current_log.test_name + ".mp4",
+                    #                                                     self.device)
+                    # self.screen_recording_process.start()
 
                 if current_log is not None:
                     if line_parts[self.PID_INDEX] == current_process_pid:

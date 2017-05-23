@@ -61,32 +61,56 @@ class ApkManager:
             message = message.format(str(GlobalConfig.AVD_SYSTEM_BOOT_TIMEOUT))
             raise LauncherFlowInterruptedException(self.TAG, message)
 
-        # TODO it should be one install_apk process instead of two
-        # TODO (now 2nd can start only when all threads from 1st are done)
-        self._install_apk(apk.apk_name, apk.apk_path)
-        self._install_apk(apk.test_apk_name, apk.test_apk_path)
+        self._install_apk(apk)
 
-    def _install_apk(self, apk_name, apk_path):
-        aapt_command_assembler = self.aapt_controller.aapt_command_assembler
-        dump_badging_cmd = aapt_command_assembler.assemble_dump_badging_cmd(self.aapt_controller.aapt_bin, apk_path)
+    def _install_apk(self, apk):
+        aapt_cmd_assembler = self.aapt_controller.aapt_command_assembler
 
-        Printer.system_message(self.TAG, "Attempting to install " + Color.GREEN + apk_name + Color.BLUE
-                               + " on devices: " + Color.GREEN + "("
-                               + " ".join("'" + device.adb_name + "'" for device in self.device_store.get_devices())
-                               + ")" + Color.BLUE + ".")
-
-        apk_install_threads = list()
         for device in self.device_store.get_devices():
-            if device.status == "device":
-                apk_install_thread = ApkInstallThread(dump_badging_cmd, device, apk_name, apk_path)
-                apk_install_thread.start()
-                apk_install_threads.append(apk_install_thread)
-            else:
-                Printer.error(self.TAG, ".*apk won't be installed on device with name '" + device.adb_name
-                              + "' because it's ADB status is set to '" + device.status + "' instead of 'device'.")
+            if device.status != "device":
+                message = (".*apk won't be installed on device with name " + device.adb_name + " because it's ADB "
+                           + "status is set to " + device.status + " instead of 'device'.")
+                raise LauncherFlowInterruptedException(self.TAG, message)
 
-        while any(not thread.is_finished for thread in apk_install_threads):
-            time.sleep(1)
+        apk_install_threads = dict()
+        for device in self.device_store.get_devices():
+            app_dump_badging_cmd = aapt_cmd_assembler.assemble_dump_badging_cmd(self.aapt_controller.aapt_bin,
+                                                                                apk.apk_path)
+            app_apk_thread = ApkInstallThread(app_dump_badging_cmd, device, apk.apk_name, apk.apk_path)
+
+            test_dump_badging_cmd = aapt_cmd_assembler.assemble_dump_badging_cmd(self.aapt_controller.aapt_bin,
+                                                                                 apk.test_apk_path)
+
+            test_apk_thread = ApkInstallThread(test_dump_badging_cmd, device, apk.test_apk_name, apk.test_apk_path)
+
+            thread_list = list()
+            thread_list.append(app_apk_thread)
+            thread_list.append(test_apk_thread)
+
+            apk_install_threads.update({device: thread_list})
+
+        all_devices_have_apk_installed = False
+        while not all_devices_have_apk_installed:
+            for device in self.device_store.get_devices():
+                device_threads = apk_install_threads[device]
+
+                for thread in device_threads:
+                    if any(thread.is_alive() for thread in device_threads):
+                        break
+
+                    if not thread.is_finished:
+                        thread.start()
+
+            all_threads_has_finished = True
+            for device in self.device_store.get_devices():
+                device_threads = apk_install_threads[device]
+
+                if any(not thread.is_finished for thread in device_threads):
+                    all_threads_has_finished = False
+                    break
+
+            all_devices_have_apk_installed = all_threads_has_finished
+            
 
     def set_instrumentation_runner_according_to(self, apk):
         Printer.system_message(self.TAG, "Scanning test .*apk file for Instrumentation Runner data.")
@@ -232,7 +256,7 @@ class DeviceManager:
                 if device.avd_schema.create_avd_hardware_config_filepath != "":
                     Printer.system_message(self.TAG,
                                            "'config.ini' file was specified in AVD schema of device " + Color.GREEN
-                                           + device.adb_name + Color.BLUE + " in location " + Color.GREEN +
+                                           + device.adb_name + Color.BLUE + " in location " + Color.GREEN
                                            + device.avd_schema.create_avd_hardware_config_filepath + Color.BLUE
                                            + ". Applying...")
                     device.apply_config_ini()
