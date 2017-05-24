@@ -110,7 +110,6 @@ class ApkManager:
                     break
 
             all_devices_have_apk_installed = all_threads_has_finished
-            
 
     def set_instrumentation_runner_according_to(self, apk):
         Printer.system_message(self.TAG, "Scanning test .*apk file for Instrumentation Runner data.")

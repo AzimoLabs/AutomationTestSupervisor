@@ -16,7 +16,12 @@
   "avd_set_list": [
     {
       "set_name": "default",
-      "avd_list": [],
+      "avd_list": [
+        {
+          "avd_name": "",
+          "instances": -1
+        }
+      ],
       "avd_port_rules": {
         "assign_missing_ports": true,
         "search_range_min": 5556,
