@@ -10,7 +10,7 @@
       "create_avd_hardware_config_filepath": "~/Android/AVD_Snapshots/Nexus_5X_API_23/config.ini",
       "launch_avd_snapshot_filepath": "~/Android/AVD_Snapshots/Nexus_5X_API_23/Nexus_5X_API_23_SNAPSHOT.img",
       "launch_avd_launch_binary_name": "emulator",
-      "launch_avd_additional_options": "-gpu on -show-kernel -verbose"
+      "launch_avd_additional_options": "-gpu on -show-kernel -no-boot-anim -verbose"
     }
   ],
   "avd_set_list": [

@@ -317,8 +317,6 @@ class DeviceManager:
         Printer.system_message(self.TAG, "ADB wait finished with success!")
 
     def _wait_for_property_statuses(self, monitored_devices):
-        # TODO It should be possible to specify in LaunchPlan which parameters should be awaited
-        # TODO Disable wait for 'init.svc.bootanim' when '-no-boot-anim' is set to launched AVDs
         Printer.system_message(self.TAG,
                                "Waiting for 'dev.bootcomplete', 'sys.boot_completed', 'init.svc.bootanim', "
                                "properties of devices (" + " ".join(

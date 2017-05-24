@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fe754bc4-9da6-479c-8fe2-66b4852721c5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/session/SessionDataStores.py" afterPath="$PROJECT_DIR$/session/SessionDataStores.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/bin/AndroidShellCommands.py" afterPath="$PROJECT_DIR$/system/bin/AndroidShellCommands.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/session/SessionManagers.py" afterPath="$PROJECT_DIR$/session/SessionManagers.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/manifest/avd/avdManifest.json" afterPath="$PROJECT_DIR$/settings/manifest/avd/avdManifest.json" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,8 +21,8 @@
       <file leaf-file-name="SessionThreads.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/session/SessionThreads.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1245">
-              <caret line="100" column="69" lean-forward="false" selection-start-line="100" selection-start-column="69" selection-end-line="100" selection-end-column="69" />
+            <state relative-caret-position="345">
+              <caret line="73" column="0" lean-forward="true" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -62,14 +62,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SessionManagers.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SessionManagers.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/session/SessionManagers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2970">
-              <caret line="112" column="0" lean-forward="false" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+            <state relative-caret-position="-4137">
+              <caret line="248" column="54" lean-forward="true" selection-start-line="248" selection-start-column="54" selection-end-line="248" selection-end-column="54" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
-                <marker date="1495550241000" expanded="true" signature="27784:27785" ph="..." />
+                <marker date="1495620013000" expanded="true" signature="27590:27591" ph="..." />
               </folding>
             </state>
           </provider>
@@ -80,6 +80,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="189">
               <caret line="108" column="12" lean-forward="false" selection-start-line="108" selection-start-column="12" selection-end-line="108" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="avdManifest.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings/manifest/avd/avdManifest.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="465">
+              <caret line="31" column="6" lean-forward="true" selection-start-line="31" selection-start-column="6" selection-end-line="31" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -98,7 +108,7 @@
       <file leaf-file-name="AndroidShellCommandAssemblers.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system/bin/AndroidShellCommandAssemblers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
+            <state relative-caret-position="705">
               <caret line="47" column="22" lean-forward="false" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="11" />
               <folding>
                 <element signature="e#0#304#0" expanded="true" />
@@ -107,25 +117,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SessionDataStores.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SessionDataStores.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/session/SessionDataStores.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="543">
-              <caret line="239" column="0" lean-forward="true" selection-start-line="239" selection-start-column="0" selection-end-line="239" selection-end-column="0" />
+            <state relative-caret-position="-357">
+              <caret line="223" column="63" lean-forward="true" selection-start-line="222" selection-start-column="59" selection-end-line="223" selection-end-column="63" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Printer.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/system/console/Printer.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="5" column="7" lean-forward="false" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -235,10 +233,10 @@
         <option value="$PROJECT_DIR$/Launcher.py" />
         <option value="$PROJECT_DIR$/system/console/Printer.py" />
         <option value="$PROJECT_DIR$/session/SessionThreads.py" />
-        <option value="$PROJECT_DIR$/session/SessionManagers.py" />
-        <option value="$PROJECT_DIR$/settings/manifest/avd/avdManifest.json" />
         <option value="$PROJECT_DIR$/system/bin/AndroidShellCommands.py" />
         <option value="$PROJECT_DIR$/session/SessionDataStores.py" />
+        <option value="$PROJECT_DIR$/settings/manifest/avd/avdManifest.json" />
+        <option value="$PROJECT_DIR$/session/SessionManagers.py" />
       </list>
     </option>
   </component>
@@ -1130,41 +1128,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/session/SessionThreads.py">
+    <entry file="file://$PROJECT_DIR$/system/bin/AndroidBinaryFileControllers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1245">
-          <caret line="100" column="69" lean-forward="false" selection-start-line="100" selection-start-column="69" selection-end-line="100" selection-end-column="69" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings/manifest/avd/avdManifest.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="34" column="19" lean-forward="true" selection-start-line="34" selection-start-column="19" selection-end-line="34" selection-end-column="19" />
+        <state relative-caret-position="189">
+          <caret line="108" column="12" lean-forward="false" selection-start-line="108" selection-start-column="12" selection-end-line="108" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/session/SessionManagers.py">
+    <entry file="file://$PROJECT_DIR$/session/SessionDataStores.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2970">
-          <caret line="112" column="0" lean-forward="false" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+        <state relative-caret-position="-357">
+          <caret line="223" column="63" lean-forward="true" selection-start-line="222" selection-start-column="59" selection-end-line="223" selection-end-column="63" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
-            <marker date="1495550241000" expanded="true" signature="27784:27785" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/bin/AndroidShellCommandAssemblers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="47" column="22" lean-forward="false" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#304#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1177,20 +1154,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/bin/AndroidBinaryFileControllers.py">
+    <entry file="file://$PROJECT_DIR$/system/bin/AndroidShellCommandAssemblers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="108" column="12" lean-forward="false" selection-start-line="108" selection-start-column="12" selection-end-line="108" selection-end-column="12" />
+        <state relative-caret-position="705">
+          <caret line="47" column="22" lean-forward="false" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#304#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/session/SessionThreads.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="73" column="0" lean-forward="true" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/manifest/avd/avdManifest.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="31" column="6" lean-forward="true" selection-start-line="31" selection-start-column="6" selection-end-line="31" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/session/SessionDataStores.py">
+    <entry file="file://$PROJECT_DIR$/session/SessionManagers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="543">
-          <caret line="239" column="0" lean-forward="true" selection-start-line="239" selection-start-column="0" selection-end-line="239" selection-end-column="0" />
+        <state relative-caret-position="-4137">
+          <caret line="248" column="54" lean-forward="true" selection-start-line="248" selection-start-column="54" selection-end-line="248" selection-end-column="54" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#9#0" expanded="true" />
+            <marker date="1495620013000" expanded="true" signature="27590:27591" ph="..." />
           </folding>
         </state>
       </provider>
