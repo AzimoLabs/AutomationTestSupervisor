@@ -188,7 +188,7 @@ class TestThread(threading.Thread):
                         current_log.test_start_time = int(round(time.time() * 1000))
                         current_log.device = self.device.adb_name
 
-                        Printer.console(self.TAG + " Test '" + current_log.test_name + "'\n", end='')
+                        Printer.console(self.TAG + " Test " + current_log.test_name + "\n", end='')
 
                     if self.TEST_PACKAGE in line:
                         line = line.replace(self.TEST_PACKAGE, "").strip()
@@ -220,7 +220,7 @@ class TestThread(threading.Thread):
 
                     if reading_stack_in_progress:
                         if self.TEST_OUTPUT_STACK_STARTED in line:
-                            test_error_info = self.TAG + " Test '" + current_log.test_name + "' - FAILED\n"
+                            test_error_info = self.TAG + " Test " + current_log.test_name + " - FAILED\n"
                             Printer.console(test_error_info, end="")
                             line = line.replace(self.TEST_OUTPUT_STACK_STARTED, "")
                         stack += line
@@ -256,14 +256,13 @@ class ApkInstallThread(threading.Thread):
         installed_packages_str = self.device.get_installed_packages()
 
         if package in installed_packages_str:
-            Printer.system_message(self.TAG, "Package " + Color.GREEN + "'" + package + "'" + Color.BLUE +
+            Printer.system_message(self.TAG, "Package " + Color.GREEN + package + Color.BLUE +
                                    " is currently installed on device '" + Color.GREEN + self.device.adb_name
-                                   + Color.BLUE + "'. Removing from device...")
+                                   + Color.BLUE + ". Removing from device...")
             self.device.uninstall_package(package)
         else:
-            Printer.system_message(self.TAG, "Package " + Color.GREEN + "'" + package + "'" + Color.BLUE +
-                                   " was not found on device '" + Color.GREEN + self.device.adb_name + Color.BLUE +
-                                   "'.")
+            Printer.system_message(self.TAG, "Package " + Color.GREEN + package + Color.BLUE +
+                                   " was not found on device '" + Color.GREEN + self.device.adb_name + Color.BLUE + ".")
 
         Printer.system_message(self.TAG, "Installing .*apk file...")
         self.device.install_apk(self.apk_path)
@@ -271,9 +270,9 @@ class ApkInstallThread(threading.Thread):
         end_time = int(round(time.time() * 1000))
         self.install_time = (end_time - start_time) / 1000
 
-        Printer.system_message(self.TAG, ".*apk " + Color.GREEN + "'" + self.apk_path + "'" + Color.BLUE
-                               + " was successfully installed on device " + Color.GREEN + "'" + self.device.adb_name
-                               + "'" + Color.BLUE + ". It took " + Color.GREEN + str(self.install_time) + Color.BLUE
+        Printer.system_message(self.TAG, ".*apk " + Color.GREEN + self.apk_path + Color.BLUE
+                               + " was successfully installed on device " + Color.GREEN + self.device.adb_name
+                               + Color.BLUE + ". It took " + Color.GREEN + str(self.install_time) + Color.BLUE
                                + " seconds.")
 
         self.is_finished = True

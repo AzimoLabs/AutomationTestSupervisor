@@ -50,7 +50,7 @@ def _load_avd_set(avd_manifest, avd_set_name):
         avd_set = avd_manifest.get_set(avd_set_name)
         Printer.system_message(TAG, "Requested AVD in set:")
         for requested_avd_schema in avd_set.avd_list:
-            Printer.system_message(TAG, "    * " + Color.GREEN + requested_avd_schema.avd_name + Color.BLUE
+            Printer.system_message(TAG, "  * " + Color.GREEN + requested_avd_schema.avd_name + Color.BLUE
                                    + " - instances num: " + Color.GREEN + str(requested_avd_schema.instances)
                                    + Color.BLUE + ".")
     else:

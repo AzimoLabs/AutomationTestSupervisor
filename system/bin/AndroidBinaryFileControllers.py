@@ -309,7 +309,7 @@ class EmulatorController:
             else:
                 Printer.system_message(self.TAG, "Emulator related binary files found in Android SDK:")
                 for path in emulator_binaries.values():
-                    Printer.system_message(self.TAG, "    * " + Color.GREEN + path + Color.BLUE)
+                    Printer.system_message(self.TAG, "  * " + Color.GREEN + path + Color.BLUE)
 
         return emulator_binaries
 

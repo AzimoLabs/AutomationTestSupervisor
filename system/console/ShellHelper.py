@@ -7,7 +7,6 @@ TAG = "ShellHelper:"
 
 
 def execute_shell(cmd, show_cmd, monitor_output):
-
     if AdbCallBuffer.is_adb_cmd(cmd):
         AdbCallBuffer.report_adb_call()
 

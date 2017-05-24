@@ -299,9 +299,9 @@ class DeviceManager:
                 Printer.system_message(self.TAG, "Scanning...")
 
                 self.device_store.update_model_statuses()
-                Printer.system_message(self.TAG, "  - Current wait status:")
+                Printer.system_message(self.TAG, "  * Current wait status:")
                 for device in monitored_devices:
-                    Printer.system_message(self.TAG, "      * " + device.adb_name + " " + Color.GREEN
+                    Printer.system_message(self.TAG, "    " + device.adb_name + " " + Color.GREEN
                                            + "('" + device.status + "')")
 
                 if all(device.status == status for device in monitored_devices):
@@ -348,13 +348,13 @@ class DeviceManager:
                                                                   "init.svc.bootanim": boot_anim,
                                                                   "boot_finished": boot_finished}})
 
-                Printer.system_message(self.TAG, "  - Current wait status:")
+                Printer.system_message(self.TAG, "  * Current wait status:")
                 for device_name, status_dict in device_statuses.items():
                     bcplte = str(status_dict["dev.bootcomplete"] if status_dict["dev.bootcomplete"] != "" else "0")
                     bcplted = str(status_dict["sys.boot_completed"] if status_dict["sys.boot_completed"] != "" else "0")
                     banim = str(status_dict["init.svc.bootanim"])
                     launched_status = "launched" if status_dict["boot_finished"] else "not-launched"
-                    Printer.system_message(self.TAG, "      * " + device_name + " properties: "
+                    Printer.system_message(self.TAG, "    " + device_name + " properties: "
                                            + "('dev.bootcomplete' : " + bcplte + ", "
                                            + "'sys.boot_completed' : " + bcplted + ", "
                                            + "'init.svc.bootanim' : " + banim + ") - "

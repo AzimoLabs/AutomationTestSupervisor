@@ -10,15 +10,15 @@
         "avd_should_recreate_existing": true,
         "device_android_id_to_ignore": []
       },
+      "apk_preparation_phase": {
+        "build_new_apk": true
+      },
       "device_launching_phase": {
         "avd_launch_sequentially": true,
         "avd_status_scan_interval_millis": 10000,
         "avd_wait_for_adb_boot_timeout_millis": 240000,
         "avd_wait_for_system_boot_timeout_millis": 120000,
         "device_before_launching_restart_adb": true
-      },
-      "apk_preparation_phase": {
-        "build_new_apk": false
       },
       "testing_phase": {
         "record_tests": true

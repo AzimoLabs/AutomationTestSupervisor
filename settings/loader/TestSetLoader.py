@@ -53,7 +53,7 @@ def _load_test_set(test_manifest, test_set_name):
         test_set = test_manifest.get_set(test_set_name)
         Printer.system_message(TAG, "Test set contains following package names: ")
         for package_name in test_set.set_package_names:
-            Printer.system_message(TAG, "    * " + Color.GREEN + package_name + Color.BLUE)
+            Printer.system_message(TAG, "  * " + Color.GREEN + package_name + Color.BLUE)
 
         found_all_packages = True
         errors = ""

@@ -92,18 +92,18 @@ class ApkStore:
         candidate_no = 0
         for apk_info in self.apk_candidates:
             candidate_no += 1
-            Printer.system_message(self.TAG, "- Candidate no." + str(candidate_no) + " "
+            Printer.system_message(self.TAG, "  * Candidate no." + str(candidate_no) + " "
                                    + (Color.GREEN + "('can be used in test')" if apk_info.is_usable()
                                       else Color.RED + "('cannot be used in test - missing fields')"))
             Printer.system_message(self.TAG,
-                                   "  Apk candidate name: " + Color.GREEN + str(apk_info.apk_name) + Color.END)
+                                   "    Apk candidate name: " + Color.GREEN + str(apk_info.apk_name) + Color.END)
             Printer.system_message(self.TAG,
-                                   "  Apk candidate path: " + Color.GREEN + str(apk_info.apk_path) + Color.END)
+                                   "    Apk candidate path: " + Color.GREEN + str(apk_info.apk_path) + Color.END)
             Printer.system_message(self.TAG,
-                                   "  Related test apk: " + Color.GREEN + str(apk_info.test_apk_name) + Color.END)
-            Printer.system_message(self.TAG, "  Related test apk path: " + Color.GREEN + str(apk_info.test_apk_path)
+                                   "    Related test apk: " + Color.GREEN + str(apk_info.test_apk_name) + Color.END)
+            Printer.system_message(self.TAG, "    Related test apk path: " + Color.GREEN + str(apk_info.test_apk_path)
                                    + Color.END)
-            Printer.system_message(self.TAG, "  Version: " + Color.GREEN + str(apk_info.apk_version) + Color.END)
+            Printer.system_message(self.TAG, "    Version: " + Color.GREEN + str(apk_info.apk_version) + Color.END)
 
     def _get_usable_apk_candidate_for_latest_version(self):
         latest_apk_info = None

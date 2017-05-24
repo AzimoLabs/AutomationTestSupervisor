@@ -37,144 +37,214 @@ from system.bin.AndroidBinaryFileControllers import (
     InstrumentationRunnerController,
 )
 
-TAG = "Launcher:"
 
-adb_controller = None
-adb_shell_controller = None
-adb_package_manager_controller = None
-adb_settings_controller = None
-adb_logcat_controller = None
-avdmanager_controller = None
-emulator_controller = None
-aapt_controller = None
-gradle_controller = None
-instrumentation_runner_controller = None
+class Launcher:
+    def __init__(self):
+        self.avd_set = None
+        self.avd_schemas = None
 
-device_store = None
-device_manager = None
+        self.test_set = None
+        self.test_list = None
 
-apk_store = None
-apk_manager = None
+        self.adb_controller = None
+        self.adb_shell_controller = None
+        self.adb_package_manager_controller = None
+        self.adb_settings_controller = None
+        self.adb_logcat_controller = None
+        self.avdmanager_controller = None
+        self.emulator_controller = None
+        self.aapt_controller = None
+        self.gradle_controller = None
+        self.instrumentation_runner_controller = None
 
-log_store = None
+        self.device_store = None
+        self.device_manager = None
 
-test_store = None
-test_manager = None
+        self.apk_store = None
+        self.apk_manager = None
 
-if __name__ == "__main__":
-    try:
-        Printer.step(TAG, "AutomationTestSupervisor has started working!")
+        self.log_store = None
+        self.log_manager = None
 
-        Printer.step(TAG, "Preparing paths.")
+        self.test_store = None
+        self.test_manager = None
+
+    def _load_config_phase(self):
+        Printer.phase("LOADING CONFIG")
+
+        Printer.step("Preparing paths.")
         PathsLoader.init_paths()
 
-        Printer.step(TAG, "Preparing launch plan.")
+        Printer.step("Preparing launch plan.")
         LaunchPlanLoader.init_launch_plan()
 
-        Printer.step(TAG, "Preparing avd settings.")
-        avd_set, avd_schemas = AvdSetLoader.init_avd_settings()
+        Printer.step("Preparing avd settings.")
+        self.avd_set, self.avd_schemas = AvdSetLoader.init_avd_settings()
 
-        Printer.step(TAG, "Preparing test settings.")
-        test_set, test_list = TestSetLoader.init_test_settings()
+        Printer.step("Preparing test settings.")
+        self.test_set, self.test_list = TestSetLoader.init_test_settings()
 
-        Printer.step(TAG, "Initiating objects.")
-        adb_controller = AdbController()
-        adb_shell_controller = AdbShellController()
-        adb_package_manager_controller = AdbPackageManagerController()
-        adb_settings_controller = AdbSettingsController()
-        avdmanager_controller = AvdManagerController()
-        adb_logcat_controller = AdbLogCatController()
-        emulator_controller = EmulatorController()
-        aapt_controller = AaptController()
-        gradle_controller = GradleController()
-        instrumentation_runner_controller = InstrumentationRunnerController()
+    def _object_init_phase(self):
+        Printer.phase("OBJECT GRAPH INITIALIZATION")
 
-        device_store = DeviceStore(adb_controller, adb_package_manager_controller, adb_settings_controller,
-                                   avdmanager_controller, emulator_controller)
-        device_manager = DeviceManager(device_store, adb_controller, adb_shell_controller, avdmanager_controller)
+        Printer.step("Creating objects handling binary file communication.")
+        self.adb_controller = AdbController()
+        self.adb_shell_controller = AdbShellController()
+        self.adb_package_manager_controller = AdbPackageManagerController()
+        self.adb_settings_controller = AdbSettingsController()
+        self.avdmanager_controller = AvdManagerController()
+        self.adb_logcat_controller = AdbLogCatController()
+        self.emulator_controller = EmulatorController()
+        self.aapt_controller = AaptController()
+        self.gradle_controller = GradleController()
+        self.instrumentation_runner_controller = InstrumentationRunnerController()
 
-        apk_store = ApkStore(aapt_controller)
-        apk_manager = ApkManager(device_store, apk_store, gradle_controller, aapt_controller)
+        Printer.step("Creating objects controlling devices.")
+        self.device_store = DeviceStore(self.adb_controller,
+                                        self.adb_package_manager_controller,
+                                        self.adb_settings_controller,
+                                        self.avdmanager_controller,
+                                        self.emulator_controller)
 
-        log_store = LogStore()
-        log_manager = LogManager(log_store)
+        self.device_manager = DeviceManager(self.device_store,
+                                            self.adb_controller,
+                                            self.adb_shell_controller,
+                                            self.avdmanager_controller)
 
-        test_store = TestStore()
-        test_manager = TestManager(instrumentation_runner_controller, adb_shell_controller, adb_logcat_controller,
-                                   device_store, test_store, log_store)
+        Printer.step("Creating objects handling .*apk file related operations.")
+        self.apk_store = ApkStore(self.aapt_controller)
+        self.apk_manager = ApkManager(self.device_store,
+                                      self.apk_store,
+                                      self.gradle_controller,
+                                      self.aapt_controller)
 
-        Printer.step(TAG, "Performing output dir clean up.")
+        Printer.step("Creating objects handling logging and monitoring.")
+        self.log_store = LogStore()
+        self.log_manager = LogManager(self.log_store)
+
+        Printer.step("Creating objects controlling test session.")
+        self.test_store = TestStore()
+        self.test_manager = TestManager(self.instrumentation_runner_controller,
+                                        self.adb_shell_controller,
+                                        self.adb_logcat_controller,
+                                        self.device_store,
+                                        self.test_store,
+                                        self.log_store)
+
+    def _pre_device_preparation_clean_up_phase(self):
+        Printer.phase("PRE-DEVICE PREPARATION CLEAN UP")
+
+        Printer.step("Performing output dir clean up.")
         FileUtils.clean_output_dir()
 
-        if GlobalConfig.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION:
-            Printer.step(TAG, "Killing currently launched AVD.")
-
-            device_manager.add_models_representing_outside_session_virtual_devices()
-            if device_manager.is_any_avd_visible():
-                device_manager.kill_all_avd()
-            device_manager.clear_models_representing_outside_session_virtual_devices()
-
-            if avd_set.avd_list:
-                Printer.step(TAG, "Creating models for devices specified in AVD set.")
-                device_manager.add_models_based_on_avd_schema(avd_set, avd_schemas)
-
-                if GlobalConfig.SHOULD_RECREATE_EXISTING_AVD:
-                    Printer.step(TAG, "Creating all requested AVD from scratch. Recreating existing ones.")
-                    device_manager.create_all_avd_and_recreate_existing()
-                else:
-                    Printer.step(TAG, "Creating all requested AVD from scratch. Reusing existing ones.")
-                    device_manager.create_all_avd_and_reuse_existing()
-
-                if GlobalConfig.SHOULD_LAUNCH_AVD_SEQUENTIALLY:
-                    Printer.step(TAG, "Launching AVD - sequentially.")
-                    device_manager.launch_all_avd_sequentially()
-                else:
-                    Printer.step(TAG, "Launching AVD - all at once.")
-                    device_manager.launch_all_avd_at_once()
-        else:
-            Printer.step(TAG, "Creating models for currently visible Android Devices "
-                              "and AVD.")
-            device_manager.add_models_representing_outside_session_devices()
-            device_manager.add_models_representing_outside_session_virtual_devices()
-
-        Printer.step(TAG, "Restarting ADB server.")
+        Printer.step("Restarting ADB server.")
         if GlobalConfig.SHOULD_RESTART_ADB:
-            adb_controller.kill_server()
-            adb_controller.start_server()
+            self.adb_controller.kill_server()
+            self.adb_controller.start_server()
+
+    def _device_preparation_phase(self):
+        Printer.phase("DEVICE PREPARATION")
 
         if GlobalConfig.IGNORED_DEVICE_LIST:
-            Printer.step(TAG, "Checking device ignore list")
-            device_manager.clear_models_with_android_ids_in_ignore_list()
+            Printer.step("Checking device ignore list")
+            self.device_manager.clear_models_with_android_ids_in_ignore_list()
 
-        Printer.step(TAG, "Preparing .*apk for test.")
-        if GlobalConfig.SHOULD_BUILD_NEW_APK:
-            apk = apk_manager.build_apk(test_set)
+        if GlobalConfig.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION:
+            Printer.step("Killing currently launched AVD.")
+
+            self.device_manager.add_models_representing_outside_session_virtual_devices()
+            if self.device_manager.is_any_avd_visible():
+                self.device_manager.kill_all_avd()
+            self.device_manager.clear_models_representing_outside_session_virtual_devices()
+
+            if self.avd_set.avd_list:
+                Printer.step("Creating models for devices specified in AVD set.")
+                self.device_manager.add_models_based_on_avd_schema(self.avd_set, self.avd_schemas)
+
+                if GlobalConfig.SHOULD_RECREATE_EXISTING_AVD:
+                    Printer.step("Creating all requested AVD from scratch. Recreating existing ones.")
+                    self.device_manager.create_all_avd_and_recreate_existing()
+                else:
+                    Printer.step("Creating all requested AVD from scratch. Reusing existing ones.")
+                    self.device_manager.create_all_avd_and_reuse_existing()
         else:
-            apk = apk_manager.get_apk(test_set)
+            Printer.step("Creating models for currently visible Android Devices and AVD.")
+            self.device_manager.add_models_representing_outside_session_devices()
+            self.device_manager.add_models_representing_outside_session_virtual_devices()
+
+    def _device_launch_phase(self):
+        Printer.phase("DEVICE LAUNCH")
+
+        if GlobalConfig.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION:
+            if GlobalConfig.SHOULD_LAUNCH_AVD_SEQUENTIALLY:
+                Printer.step("Launching AVD - sequentially.")
+                self.device_manager.launch_all_avd_sequentially()
+            else:
+                Printer.step("Launching AVD - all at once.")
+                self.device_manager.launch_all_avd_at_once()
+        else:
+            Printer.step("Using currently launched devices.")
+
+    def _apk_preparation_phase(self):
+        Printer.phase("APK PREPARATION")
+
+        Printer.step("Preparing .*apk for test.")
+        if GlobalConfig.SHOULD_BUILD_NEW_APK:
+            apk = self.apk_manager.build_apk(self.test_set)
+        else:
+            apk = self.apk_manager.get_apk(self.test_set)
             if apk is None:
-                apk = apk_manager.build_apk(test_set)
+                apk = self.apk_manager.build_apk(self.test_set)
 
-        Printer.step(TAG, "Scanning .*apk for helpful data.")
-        apk_manager.set_instrumentation_runner_according_to(apk)
+        Printer.step("Scanning .*apk for helpful data.")
+        self.apk_manager.set_instrumentation_runner_according_to(apk)
 
-        Printer.step(TAG, "Installing .*apk on devices included in test session.")
-        apk_manager.install_apk_on_devices(apk)
+        Printer.step("Installing .*apk on devices included in test session.")
+        self.apk_manager.install_apk_on_devices(apk)
 
-        Printer.step(TAG, "Starting tests.")
-        test_manager.run_with_boosted_shards(test_set, test_list)
+    def _pre_test_clean_up_phase(self):
+        Printer.phase("PRE-TESTING CLEAN UP")
+        pass
 
-        Printer.step(TAG, "Tests finished. Parsing logs.")
-        log_manager.dump_logs_to_file()
+    def _testing_phase(self):
+        Printer.phase("TESTING")
 
-    except LauncherFlowInterruptedException as e:
-        Printer.error(e.caller_tag, str(e))
-        quit()
+        Printer.step("Starting tests.")
+        self.test_manager.run_with_boosted_shards(self.test_set, self.test_list)
 
-    finally:
-        if device_manager is not None and device_manager.is_any_avd_visible() \
+    def _reporting_phase(self):
+        Printer.phase("REPORTING")
+
+        Printer.step("Saving logs.")
+        self.log_manager.dump_logs_to_file()
+
+    def _finalization_phase(self):
+        Printer.phase("FINALIZATION")
+
+        if self.device_manager is not None and self.device_manager.is_any_avd_visible() \
                 and GlobalConfig.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION:
-            Printer.step(TAG, "Killing AVD spawned for test session.")
-            device_manager.kill_all_avd()
-            device_manager.clear_models_based_on_avd_schema()
+            Printer.step("Killing AVD spawned for test session.")
+            self.device_manager.kill_all_avd()
+            self.device_manager.clear_models_based_on_avd_schema()
 
-        Printer.step(TAG, "Launcher finished work!")
+    def run(self):
+        try:
+            self._load_config_phase()
+            self._object_init_phase()
+            self._pre_device_preparation_clean_up_phase()
+            self._device_preparation_phase()
+            self._device_launch_phase()
+            self._apk_preparation_phase()
+            self._pre_test_clean_up_phase()
+            self._testing_phase()
+            self._reporting_phase()
+        except LauncherFlowInterruptedException as e:
+            Printer.error(e.caller_tag, str(e))
+            quit()
+        finally:
+            self._finalization_phase()
+
+
+if __name__ == "__main__":
+    launcher = Launcher()
+    launcher.run()
