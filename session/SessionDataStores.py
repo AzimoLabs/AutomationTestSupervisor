@@ -234,9 +234,11 @@ class DeviceStore:
 
     def _get_visible_devices(self):
         currently_visible_devices = dict()
-        adb_devices_output = self.adb_controller.devices()
 
-        for line in adb_devices_output.splitlines():
+        adb_devices_output = self.adb_controller.devices()
+        adb_devices_lines = [line for line in adb_devices_output.splitlines() if len(line.split()) == 2]
+
+        for line in adb_devices_lines:
             device_name = line.split()[0]
             device_status = line.split()[1]
 
