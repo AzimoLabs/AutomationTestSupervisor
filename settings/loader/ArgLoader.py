@@ -1,5 +1,7 @@
 import argparse
 
+from system.file import FileUtils
+
 TAG = "ArgLoader:"
 
 LAUNCH_PLAN_PREFIX = "-lplan"
@@ -17,10 +19,10 @@ TEST_SET_DEFAULT = None
 AVD_SET_DEFAULT = "default"
 PATH_SET_DEFAULT = "default"
 
-LAUNCH_MANIFEST_DIR_DEFAULT = "settings/manifest/launch/launchManifest.json"
-TEST_MANIFEST_DIR_DEFAULT = "settings/manifest/test/testManifest.json"
-AVD_MANIFEST_DIR_DEFAULT = "settings/manifest/avd/avdManifest.json"
-PATH_MANIFEST_DIR_DEFAULT = "settings/manifest/path/pathManifest.json"
+LAUNCH_MANIFEST_DIR_DEFAULT = FileUtils.get_project_root() + "/settings/manifest/launch/launchManifest.json"
+TEST_MANIFEST_DIR_DEFAULT = FileUtils.get_project_root() + "/settings/manifest/test/testManifest.json"
+AVD_MANIFEST_DIR_DEFAULT = FileUtils.get_project_root() + "/settings/manifest/avd/avdManifest.json"
+PATH_MANIFEST_DIR_DEFAULT = FileUtils.get_project_root() + "/settings/manifest/path/pathManifest.json"
 
 parser = argparse.ArgumentParser()
 parser.add_argument(LAUNCH_PLAN_PREFIX,

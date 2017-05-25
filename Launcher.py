@@ -145,10 +145,6 @@ class Launcher:
     def _device_preparation_phase(self):
         Printer.phase("DEVICE PREPARATION")
 
-        if GlobalConfig.IGNORED_DEVICE_LIST:
-            Printer.step("Checking device ignore list")
-            self.device_manager.clear_models_with_android_ids_in_ignore_list()
-
         if GlobalConfig.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION:
             Printer.step("Killing currently launched AVD.")
 
@@ -171,6 +167,10 @@ class Launcher:
             Printer.step("Creating models for currently visible Android Devices and AVD.")
             self.device_manager.add_models_representing_outside_session_devices()
             self.device_manager.add_models_representing_outside_session_virtual_devices()
+
+        if GlobalConfig.IGNORED_DEVICE_LIST:
+            Printer.step("Checking device ignore list")
+            self.device_manager.clear_models_with_android_ids_in_ignore_list()
 
     def _device_launch_phase(self):
         Printer.phase("DEVICE LAUNCH")

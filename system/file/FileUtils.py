@@ -118,7 +118,7 @@ def delete_file(file_to_delete):
     try:
         if os.path.isfile(file_to_delete):
             os.unlink(file_to_delete)
-            Printer.system_message(TAG, "Deleted file " + Color.GREEN +  file_to_delete + Color.BLUE + ".")
+            Printer.system_message(TAG, "Deleted file " + Color.GREEN + file_to_delete + Color.BLUE + ".")
         elif os.path.isdir(file_to_delete):
             shutil.rmtree(file_to_delete)
             Printer.system_message(TAG, "Deleted directory " + Color.GREEN + absolute_path + Color.BLUE + ".")
@@ -163,8 +163,12 @@ def output_dir_has_files():
     return found_file
 
 
+def clean_folder_only_dir(path):
+    return remove_slash_pairs(add_starting_slash(add_ending_slash(clean_path(path))))
+
+
 def clean_path(path):
-    return codecs.getdecoder('unicode_escape')(os.path.expanduser(path))[0]
+    return codecs.getdecoder("unicode_escape")(os.path.expanduser(path))[0]
 
 
 def add_starting_slash(path):
@@ -179,3 +183,11 @@ def add_ending_slash(path):
         return path + "/"
     else:
         return path
+
+
+def remove_slash_pairs(path):
+    return path.replace("//", "/")
+
+
+def get_project_root():
+    return os.path.abspath(os.path.dirname(__name__))

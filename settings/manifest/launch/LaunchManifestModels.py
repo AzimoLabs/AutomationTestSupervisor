@@ -49,11 +49,11 @@ class LaunchGeneralOptions:
 class DevicePreparationPhaseOptions:
     def __init__(self, device_preparation_phase_dict):
         self.avd_should_recreate_existing = device_preparation_phase_dict["avd_should_recreate_existing"]
-        self.device_android_id_to_ignore = device_preparation_phase_dict["device_android_id_to_ignore"]
 
 
 class DeviceLaunchingPhaseOptions:
     def __init__(self, launching_phase_dict):
+        self.device_android_id_to_ignore = launching_phase_dict["device_android_id_to_ignore"]
         self.avd_launch_sequentially = launching_phase_dict["avd_launch_sequentially"]
         self.avd_status_scan_interval_millis = launching_phase_dict["avd_status_scan_interval_millis"]
         self.avd_wait_for_adb_boot_timeout_millis = launching_phase_dict["avd_wait_for_adb_boot_timeout_millis"]

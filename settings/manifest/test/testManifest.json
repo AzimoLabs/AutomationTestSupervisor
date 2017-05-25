@@ -121,6 +121,14 @@
       "test_classes": [],
       "test_cases": []
     },
+        {
+      "test_package_name": "EndToEnd-FacebookMessenger",
+      "test_packages": [
+        "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.endToEnd.FacebookMessenger"
+      ],
+      "test_classes": [],
+      "test_cases": []
+    },
     {
       "test_package_name": "EndToEnd-ExistingUserFlow",
       "test_packages": [
@@ -286,6 +294,7 @@
       "set_package_names": [
         "EndToEnd-CardsManagement",
         "EndToEnd-ExistingUserFlow",
+        "EndToEnd-FacebookMessenger",
         "EndToEnd-Login",
         "EndToEnd-NewUserFlow",
         "EndToEnd-P2PStatuses",

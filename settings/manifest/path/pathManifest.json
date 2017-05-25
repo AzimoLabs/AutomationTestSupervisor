@@ -45,8 +45,8 @@
         },
         {
           "path_name": "output_dir",
-          "path_value": "output",
-          "path_description": "Path to where test process logs will be saved. By default ./output/"
+          "path_value": "",
+          "path_description": "Path to where test process logs will be saved. By default <project_root>/output/"
         },
         {
           "path_name": "project_root_dir",

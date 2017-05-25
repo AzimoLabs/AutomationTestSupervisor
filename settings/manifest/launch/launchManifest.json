@@ -7,13 +7,13 @@
         "adb_call_buffer_delay_between_cmd": 2000
       },
       "device_preparation_phase": {
-        "avd_should_recreate_existing": true,
-        "device_android_id_to_ignore": []
+        "avd_should_recreate_existing": true
       },
       "apk_preparation_phase": {
         "build_new_apk": true
       },
       "device_launching_phase": {
+        "device_android_id_to_ignore": [],
         "avd_launch_sequentially": true,
         "avd_status_scan_interval_millis": 10000,
         "avd_wait_for_adb_boot_timeout_millis": 240000,

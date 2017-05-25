@@ -63,12 +63,12 @@ def _load_launch_plan_to_global_settings(launch_plan):
             Printer.system_message(TAG, "  * If requested AVD already exists - it will be" + Color.GREEN +
                                    " reused" + Color.BLUE + ".")
 
-    GlobalConfig.IGNORED_DEVICE_LIST = device_prep_settings.device_android_id_to_ignore
-    Printer.system_message(TAG, "  * Devices with following Android-IDs will be ignored: " + Color.GREEN +
-                           str(GlobalConfig.IGNORED_DEVICE_LIST) + Color.BLUE + ".")
-
     Printer.system_message(TAG, "Device launching phase settings:")
     device_launch_settings = launch_plan.device_launching_phase
+
+    GlobalConfig.IGNORED_DEVICE_LIST = device_launch_settings.device_android_id_to_ignore
+    Printer.system_message(TAG, "  * Devices with following Android-IDs will be ignored: " + Color.GREEN +
+                           str(GlobalConfig.IGNORED_DEVICE_LIST) + Color.BLUE + ".")
 
     if is_avd_session_requested:
         GlobalConfig.SHOULD_LAUNCH_AVD_SEQUENTIALLY = device_launch_settings.avd_launch_sequentially

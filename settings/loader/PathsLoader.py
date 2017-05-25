@@ -11,14 +11,20 @@ from system.console import (
     Color
 )
 from system.file.FileUtils import (
-    clean_path,
-    add_ending_slash
+    clean_folder_only_dir
 )
+
+HOME = "~/"
 
 ANDROID_HOME_ENV = os.getenv('ANDROID_HOME')
 ANDROID_SDK_HOME_ENV = os.getenv('ANDROID_SDK_HOME')
 
-OUTPUT_DIR_DEFAULT = "output"
+OUTPUT_DIR_DEFAULT = os.path.abspath(os.path.dirname(__name__)) + "/output/"
+OUTPUT_AVD_LOG_FOLDER_DEFAULT = "/avd_logs"
+OUTPUT_TEST_LOG_FOLDER_DEFAULT = "/test_results"
+OUTPUT_TEST_LOGCAT_FOLDER_DEFAULT = "/test_logcats"
+OUTPUT_TEST_VIDEO_FOLDER_DEFAULT = "/recordings"
+DEVICE_VIDEO_STORAGE_FOLDER_DEFAULT = "/test_automation_recordings"
 
 TAG = "PathsLoader:"
 
@@ -60,7 +66,7 @@ def _load_path_set(path_manifest, path_set_name):
 
 
 def _load_paths_to_global_settings(path_set):
-    GlobalConfig.SDK_DIR = add_ending_slash(clean_path((path_set.paths["sdk_dir"]).path_value))
+    GlobalConfig.SDK_DIR = clean_folder_only_dir((path_set.paths["sdk_dir"]).path_value)
     if GlobalConfig.SDK_DIR == "":
         Printer.system_message(TAG, "SDK path not set in PathManifest. Will use path set in env variable "
                                + Color.GREEN + "ANDROID_HOME" + Color.BLUE + ".")
@@ -68,30 +74,22 @@ def _load_paths_to_global_settings(path_set):
             message = "Env variable 'ANDROID_HOME' is not set. Launcher will quit."
             raise LauncherFlowInterruptedException(TAG, message)
         else:
-            GlobalConfig.SDK_DIR = add_ending_slash(clean_path(ANDROID_HOME_ENV))
-    Printer.system_message(TAG, "Launcher will look for SDK at dir: " + Color.GREEN + GlobalConfig.SDK_DIR
+            GlobalConfig.SDK_DIR = clean_folder_only_dir(ANDROID_HOME_ENV)
+    Printer.system_message(TAG, "Launcher will look for SDK in dir: " + Color.GREEN + GlobalConfig.SDK_DIR
                            + Color.BLUE + ".")
 
-    GlobalConfig.AVD_DIR = add_ending_slash(clean_path((path_set.paths["avd_dir"]).path_value))
+    GlobalConfig.AVD_DIR = clean_folder_only_dir((path_set.paths["avd_dir"]).path_value)
     if GlobalConfig.AVD_DIR == "":
         Printer.system_message(TAG, "AVD path not set in PathManifest. "
                                     "Will use path set in env variable 'ANDROID_SDK_HOME'.")
         if ANDROID_SDK_HOME_ENV is None:
             Printer.system_message(TAG, "Env variable 'ANDROID_SDK_HOME' is not set. "
                                         "Trying to recreate default path from user root.")
-            GlobalConfig.AVD_DIR = add_ending_slash(clean_path("~")) + ".android"
-    Printer.system_message(TAG, "Launcher will look for AVD images at dir: " + Color.GREEN + GlobalConfig.AVD_DIR
+            GlobalConfig.AVD_DIR = clean_folder_only_dir(HOME) + ".android"
+    Printer.system_message(TAG, "Launcher will look for AVD images in dir: " + Color.GREEN + GlobalConfig.AVD_DIR
                            + Color.BLUE + ".")
 
-    GlobalConfig.OUTPUT_DIR = add_ending_slash(clean_path((path_set.paths["output_dir"]).path_value))
-    if GlobalConfig.OUTPUT_DIR == "":
-        Printer.system_message(TAG, "Output path not set in PathManifest. Default value " + Color.GREEN +
-                               OUTPUT_DIR_DEFAULT + Color.BLUE + " will be used.")
-        GlobalConfig.OUTPUT_DIR = OUTPUT_DIR_DEFAULT
-    Printer.system_message(TAG, "Launcher will generate log from tests in dir: " + Color.GREEN +
-                           GlobalConfig.OUTPUT_DIR + Color.BLUE + ".")
-
-    GlobalConfig.PROJECT_ROOT_DIR = add_ending_slash(clean_path((path_set.paths["project_root_dir"]).path_value))
+    GlobalConfig.PROJECT_ROOT_DIR = clean_folder_only_dir((path_set.paths["project_root_dir"]).path_value)
     if GlobalConfig.PROJECT_ROOT_DIR == "":
         Printer.system_message(TAG, "Project root was not specified. This field is not obligatory.")
         Printer.error(TAG, "Warning: Without project root directory launcher will quit if no "
@@ -100,9 +98,53 @@ def _load_paths_to_global_settings(path_set):
         Printer.system_message(TAG, "Project root dir: " + Color.GREEN + GlobalConfig.PROJECT_ROOT_DIR
                                + Color.BLUE + ".")
 
-    GlobalConfig.APK_DIR = add_ending_slash(clean_path((path_set.paths["apk_dir"]).path_value))
+    GlobalConfig.APK_DIR = clean_folder_only_dir((path_set.paths["apk_dir"]).path_value)
     if GlobalConfig.APK_DIR == "":
         message = "Directory with .*apk files was not specified. Launcher will quit."
         raise LauncherFlowInterruptedException(TAG, message)
     Printer.system_message(TAG, "Launcher will look for .*apk files in dir: " + Color.GREEN + GlobalConfig.APK_DIR
                            + Color.BLUE + ".")
+
+    GlobalConfig.OUTPUT_DIR = clean_folder_only_dir((path_set.paths["output_dir"]).path_value)
+    if GlobalConfig.OUTPUT_DIR == "":
+        Printer.system_message(TAG, "Output path not set in PathManifest. Default value will be used.")
+        GlobalConfig.OUTPUT_DIR = OUTPUT_DIR_DEFAULT
+    if not os.path.isabs(GlobalConfig.OUTPUT_DIR):
+        message = "Path " + GlobalConfig.OUTPUT_DIR + " needs to be absolute!"
+        raise LauncherFlowInterruptedException(TAG, message)
+    Printer.system_message(TAG, "Launcher will generate log from tests in dir: " + Color.GREEN +
+                           GlobalConfig.OUTPUT_DIR + Color.BLUE + ".")
+
+    GlobalConfig.OUTPUT_AVD_LOG_DIR = clean_folder_only_dir(GlobalConfig.OUTPUT_DIR + OUTPUT_AVD_LOG_FOLDER_DEFAULT)
+    if not os.path.isabs(GlobalConfig.OUTPUT_AVD_LOG_DIR):
+        message = "Path " + GlobalConfig.OUTPUT_AVD_LOG_DIR + " needs to be absolute!"
+        raise LauncherFlowInterruptedException(TAG, message)
+    Printer.system_message(TAG, "Logs from AVD will be stored in dir: " + Color.GREEN + GlobalConfig.OUTPUT_AVD_LOG_DIR
+                           + Color.BLUE + ".")
+
+    GlobalConfig.OUTPUT_TEST_LOG_DIR = clean_folder_only_dir(GlobalConfig.OUTPUT_DIR + OUTPUT_TEST_LOG_FOLDER_DEFAULT)
+    if not os.path.isabs(GlobalConfig.OUTPUT_TEST_LOG_DIR):
+        message = "Path " + GlobalConfig.OUTPUT_TEST_LOG_DIR + " needs to be absolute!"
+        raise LauncherFlowInterruptedException(TAG, message)
+    Printer.system_message(TAG, "Logs from tests will be stored in dir: " + Color.GREEN +
+                           GlobalConfig.OUTPUT_TEST_LOG_DIR + Color.BLUE + ".")
+
+    GlobalConfig.OUTPUT_TEST_LOGCAT_DIR = clean_folder_only_dir(
+        GlobalConfig.OUTPUT_DIR + OUTPUT_TEST_LOGCAT_FOLDER_DEFAULT)
+    if not os.path.isabs(GlobalConfig.OUTPUT_TEST_LOGCAT_DIR):
+        message = "Path " + GlobalConfig.OUTPUT_TEST_LOGCAT_DIR + " needs to be absolute!"
+        raise LauncherFlowInterruptedException(TAG, message)
+    Printer.system_message(TAG, "Logcat logs from tests will be stored in dir: " + Color.GREEN +
+                           GlobalConfig.OUTPUT_TEST_LOGCAT_DIR + Color.BLUE + ".")
+
+    GlobalConfig.OUTPUT_TEST_VIDEO_DIR = clean_folder_only_dir(
+        GlobalConfig.OUTPUT_DIR + OUTPUT_TEST_VIDEO_FOLDER_DEFAULT)
+    if not os.path.isabs(GlobalConfig.OUTPUT_TEST_VIDEO_DIR):
+        message = "Path " + GlobalConfig.OUTPUT_TEST_VIDEO_DIR + " needs to be absolute!"
+        raise LauncherFlowInterruptedException(TAG, message)
+    Printer.system_message(TAG, "Recordings from tests will be stored in dir: " + Color.GREEN +
+                           GlobalConfig.OUTPUT_TEST_VIDEO_DIR + Color.BLUE + ".")
+
+    GlobalConfig.DEVICE_VIDEO_STORAGE_DIR = clean_folder_only_dir(DEVICE_VIDEO_STORAGE_FOLDER_DEFAULT)
+    Printer.system_message(TAG, "Recordings will be stored on ROOT directory of test device storage in " + Color.GREEN
+                           + GlobalConfig.DEVICE_VIDEO_STORAGE_DIR + Color.BLUE + " folder.")
