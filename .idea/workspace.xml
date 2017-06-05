@@ -2,27 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fe754bc4-9da6-479c-8fe2-66b4852721c5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/session/SessionGlobalLogger.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/settings/Version.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/F1sherKK.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/F1sherKK.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Launcher.py" afterPath="$PROJECT_DIR$/Launcher.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/session/SessionDataStores.py" afterPath="$PROJECT_DIR$/session/SessionDataStores.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/session/SessionManagers.py" afterPath="$PROJECT_DIR$/session/SessionManagers.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/session/SessionModels.py" afterPath="$PROJECT_DIR$/session/SessionModels.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/session/SessionThreads.py" afterPath="$PROJECT_DIR$/session/SessionThreads.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/GlobalConfig.py" afterPath="$PROJECT_DIR$/settings/GlobalConfig.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/loader/LaunchPlanLoader.py" afterPath="$PROJECT_DIR$/settings/loader/LaunchPlanLoader.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/loader/PathsLoader.py" afterPath="$PROJECT_DIR$/settings/loader/PathsLoader.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/manifest/launch/launchManifest.json" afterPath="$PROJECT_DIR$/settings/manifest/launch/launchManifest.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/manifest/test/testManifest.json" afterPath="$PROJECT_DIR$/settings/manifest/test/testManifest.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/bin/AndroidBinaryFileControllers.py" afterPath="$PROJECT_DIR$/system/bin/AndroidBinaryFileControllers.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/bin/AndroidShellCommandAssemblers.py" afterPath="$PROJECT_DIR$/system/bin/AndroidShellCommandAssemblers.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/bin/AndroidShellCommands.py" afterPath="$PROJECT_DIR$/system/bin/AndroidShellCommands.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/console/Printer.py" afterPath="$PROJECT_DIR$/system/console/Printer.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/file/FileUtils.py" afterPath="$PROJECT_DIR$/system/file/FileUtils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/port/PortManager.py" afterPath="$PROJECT_DIR$/system/port/PortManager.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -37,14 +18,36 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Launcher.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Launcher.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Launcher.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="569">
-              <caret line="270" column="33" lean-forward="true" selection-start-line="270" selection-start-column="33" selection-end-line="270" selection-end-column="33" />
+            <state relative-caret-position="410">
+              <caret line="250" column="65" lean-forward="false" selection-start-line="250" selection-start-column="65" selection-end-line="250" selection-end-column="65" />
               <folding>
                 <element signature="e#0#61#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PathsLoader.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings/loader/PathsLoader.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="265">
+              <caret line="69" column="34" lean-forward="true" selection-start-line="69" selection-start-column="34" selection-end-line="69" selection-end-column="34" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FileUtils.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/system/file/FileUtils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="314">
+              <caret line="110" column="4" lean-forward="false" selection-start-line="110" selection-start-column="4" selection-end-line="110" selection-end-column="4" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -57,6 +60,16 @@
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="testManifest.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/settings/manifest/test/testManifest.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -85,31 +98,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SessionModels.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/session/SessionModels.py">
+      <file leaf-file-name="PathManifestModels.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings/manifest/path/PathManifestModels.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="157" column="0" lean-forward="false" selection-start-line="157" selection-start-column="0" selection-end-line="163" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="645">
+              <caret line="43" column="49" lean-forward="false" selection-start-line="43" selection-start-column="49" selection-end-line="43" selection-end-column="49" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="testLogin_withIncorrectData_shouldDisplayErrorForField_emulator-5554_test_summary.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/output/test_results/testLogin_withIncorrectData_shouldDisplayErrorForField_emulator-5554_test_summary.json">
+      <file leaf-file-name="TestManifestModels.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings/manifest/test/TestManifestModels.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="testScreenLock_ifPinCodeIsSetUp_shouldAllowToLoginWithIt_emulator-5554_test_summary.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/output/test_results/testScreenLock_ifPinCodeIsSetUp_shouldAllowToLoginWithIt_emulator-5554_test_summary.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="255">
+              <caret line="19" column="16" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -126,10 +131,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>try ca</find>
-      <find>TEST_SUMMARY_APPENDIX</find>
-      <find>system_message</find>
-      <find>message</find>
       <find>cleanuPmanager</find>
       <find>session</find>
       <find>recording</find>
@@ -156,6 +157,10 @@
       <find>self.apk_candidates</find>
       <find>provide_apk</find>
       <find>provide_apk()</find>
+      <find>path</find>
+      <find>path_value</find>
+      <find>ANDROID_HOME_</find>
+      <find>instru</find>
     </findStrings>
     <replaceStrings>
       <replace>create_avd_tag</replace>
@@ -193,7 +198,6 @@
         <option value="$PROJECT_DIR$/error/Exceptions.py" />
         <option value="$PROJECT_DIR$/output/test_logs.json" />
         <option value="$PROJECT_DIR$/settings/manifest/avd/AvdManifestModels.py" />
-        <option value="$PROJECT_DIR$/settings/manifest/path/PathManifestModels.py" />
         <option value="$PROJECT_DIR$/settings/manifest/test/TestManifestModels.py" />
         <option value="$PROJECT_DIR$/settings/loader/AvdSetLoader.py" />
         <option value="$PROJECT_DIR$/settings/manifest/avd/avdManifest.json" />
@@ -204,7 +208,6 @@
         <option value="$PROJECT_DIR$/settings/manifest/path/pathManifest.json" />
         <option value="$PROJECT_DIR$/settings/manifest/launch/LaunchManifestModels.py" />
         <option value="$PROJECT_DIR$/system/port/PortManager.py" />
-        <option value="$PROJECT_DIR$/settings/loader/PathsLoader.py" />
         <option value="$PROJECT_DIR$/output/avd_logs/Test-Emulator-API23-Nexus-5-0.txt" />
         <option value="$PROJECT_DIR$/session/SessionLogger.py" />
         <option value="$PROJECT_DIR$/Version.py" />
@@ -219,12 +222,14 @@
         <option value="$PROJECT_DIR$/system/file/FileUtils.py" />
         <option value="$PROJECT_DIR$/session/SessionThreads.py" />
         <option value="$PROJECT_DIR$/settings/GlobalConfig.py" />
-        <option value="$PROJECT_DIR$/settings/manifest/test/testManifest.json" />
         <option value="$PROJECT_DIR$/session/SessionModels.py" />
         <option value="$PROJECT_DIR$/session/SessionDataStores.py" />
         <option value="$PROJECT_DIR$/session/SessionManagers.py" />
         <option value="$PROJECT_DIR$/session/SessionGlobalLogger.py" />
         <option value="$PROJECT_DIR$/Launcher.py" />
+        <option value="$PROJECT_DIR$/settings/manifest/path/PathManifestModels.py" />
+        <option value="$PROJECT_DIR$/settings/loader/PathsLoader.py" />
+        <option value="$PROJECT_DIR$/settings/manifest/test/testManifest.json" />
       </list>
     </option>
   </component>
@@ -309,42 +314,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="session" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="output" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test_results" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="output" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test_logcats" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -704,8 +673,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/output/test_logcats/testLogin_withIncorrectData_shouldDisplayErrorForField_logcat.json" />
-    <entry file="file://$PROJECT_DIR$/output/test_logcats/testWelcomeActivity_ifUserWasNotLoggedBefore_shouldNotShowLoginWithFingerprintButton_logcat.json" />
     <entry file="file://$PROJECT_DIR$/output/test_results/testLogin_withIncorrectData_shouldDisplayErrorForField_test_summary.json" />
     <entry file="file://$PROJECT_DIR$/output/test_results/testWelcomeActivity_ifUserWasNotLoggedBefore_shouldNotShowLoginWithPinCodeButton_test_summary.json" />
     <entry file="file://$PROJECT_DIR$/settings/Version.py">
@@ -749,13 +716,6 @@
     <entry file="file://$PROJECT_DIR$/output/test_logcats/testWelcomeActivity_ifUserWasNotLoggedBefore_shouldNotShowLoginWithPinCodeButton_logcat.json" />
     <entry file="file://$PROJECT_DIR$/output/test_results/testWelcomeActivity_ifUserWasLoggedAndLoggedOut_shouldShowLoginWithFingerprintButton_test_summary.json" />
     <entry file="file://$PROJECT_DIR$/output/test_results/testRegister_withCorrectData_shouldEnterMainActivity_test_summary.json" />
-    <entry file="file://$PROJECT_DIR$/system/file/FileUtils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/system/console/Printer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="164">
@@ -824,16 +784,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/settings/manifest/test/TestManifestModels.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="871">
-          <caret line="68" column="18" lean-forward="false" selection-start-line="68" selection-start-column="13" selection-end-line="68" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#11#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/settings/loader/AvdSetLoader.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -848,14 +798,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings/manifest/test/testManifest.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="543">
-          <caret line="264" column="33" lean-forward="false" selection-start-line="264" selection-start-column="33" selection-end-line="264" selection-end-column="33" />
           <folding />
         </state>
       </provider>
@@ -892,21 +834,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/session/SessionDataStores.py">
+    <entry file="file://$PROJECT_DIR$/Launcher.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="707">
-          <caret line="286" column="35" lean-forward="false" selection-start-line="286" selection-start-column="35" selection-end-line="286" selection-end-column="35" />
+        <state relative-caret-position="410">
+          <caret line="250" column="65" lean-forward="false" selection-start-line="250" selection-start-column="65" selection-end-line="250" selection-end-column="65" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#61#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/session/SessionModels.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="157" column="0" lean-forward="false" selection-start-line="157" selection-start-column="0" selection-end-line="163" selection-end-column="0" />
+        <state relative-caret-position="265">
+          <caret line="106" column="23" lean-forward="false" selection-start-line="106" selection-start-column="22" selection-end-line="106" selection-end-column="23" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/manifest/path/PathManifestModels.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="43" column="49" lean-forward="false" selection-start-line="43" selection-start-column="49" selection-end-line="43" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -930,13 +882,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Launcher.py">
+    <entry file="file://$PROJECT_DIR$/session/SessionDataStores.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="569">
-          <caret line="270" column="33" lean-forward="true" selection-start-line="270" selection-start-column="33" selection-end-line="270" selection-end-column="33" />
+        <state relative-caret-position="707">
+          <caret line="286" column="35" lean-forward="false" selection-start-line="286" selection-start-column="35" selection-end-line="286" selection-end-column="35" />
           <folding>
-            <element signature="e#0#61#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/file/FileUtils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="314">
+          <caret line="110" column="4" lean-forward="false" selection-start-line="110" selection-start-column="4" selection-end-line="110" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/loader/PathsLoader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="69" column="34" lean-forward="true" selection-start-line="69" selection-start-column="34" selection-end-line="69" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/manifest/test/TestManifestModels.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="19" column="16" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/manifest/test/testManifest.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

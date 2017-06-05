@@ -1,5 +1,4 @@
 {
-  "instrumentation_runner": "com.azimo.sendmoney.debug1.test/com.azimo.sendmoney.instrumentation.config.AzimoTestRunner",
   "test_list": [
     {
       "test_package_name": "Function-AuthFlow",
