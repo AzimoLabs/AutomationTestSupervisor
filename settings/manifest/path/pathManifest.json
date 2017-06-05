@@ -80,12 +80,12 @@
         },
         {
           "path_name": "project_root_dir",
-          "path_value": "~/dev/azimo-android",
+          "path_value": "~/azimo-android",
           "path_description": "Path to root of application under test. (optional)"
         },
         {
           "path_name": "apk_dir",
-          "path_value": "~/dev/azimo-android/app/build/outputs/apk/",
+          "path_value": "~/azimo-android/app/build/outputs/apk/",
           "path_description": "Directory where .apk files of application under test are stored."
         }
       ]
