@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fe754bc4-9da6-479c-8fe2-66b4852721c5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/manifest/launch/launchManifest.json" afterPath="$PROJECT_DIR$/settings/manifest/launch/launchManifest.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/manifest/path/pathManifest.json" afterPath="$PROJECT_DIR$/settings/manifest/path/pathManifest.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/manifest/test/testManifest.json" afterPath="$PROJECT_DIR$/settings/manifest/test/testManifest.json" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -63,11 +61,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pathManifest.json" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pathManifest.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/settings/manifest/path/pathManifest.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="635">
-              <caret line="83" column="53" lean-forward="false" selection-start-line="83" selection-start-column="53" selection-end-line="83" selection-end-column="53" />
+            <state relative-caret-position="320">
+              <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="91" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -95,11 +93,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="launchManifest.json" pinned="false" current-in-tab="false">
+      <file leaf-file-name="launchManifest.json" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/settings/manifest/launch/launchManifest.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="29" lean-forward="false" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
+            <state relative-caret-position="405">
+              <caret line="27" column="28" lean-forward="false" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -907,22 +905,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/settings/manifest/launch/launchManifest.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="29" lean-forward="false" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings/loader/LaunchPlanLoader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="17" column="2" lean-forward="false" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/session/SessionDataStores.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2834">
@@ -935,8 +917,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/settings/manifest/path/pathManifest.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="635">
-          <caret line="83" column="53" lean-forward="false" selection-start-line="83" selection-start-column="53" selection-end-line="83" selection-end-column="53" />
+        <state relative-caret-position="320">
+          <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="91" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/loader/LaunchPlanLoader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="17" column="2" lean-forward="false" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/manifest/launch/launchManifest.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="28" lean-forward="false" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="28" />
           <folding />
         </state>
       </provider>
