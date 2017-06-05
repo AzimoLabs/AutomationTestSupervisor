@@ -128,15 +128,46 @@ class ApkCandidate:
         return field if field is not None and field != "" else self.MISSING_VALUE
 
 
-class TestSummaryWrapper:
+class SessionSummary:
     def __init__(self):
-        self.test_summary_packages = list()
+        self.device_summaries = None
+        self.time_summary = None
+        self.apk_summaries = None
+        self.test_summary = None
 
 
-class TestSummaryPackage:
+class SessionDeviceSummary:
     def __init__(self):
-        self.test_package = None
-        self.test_summaries = list()
+        self.device_name = None
+        self.launch_time = None
+        self.apk_install_time = None
+        self.test_apk_install_time = None
+        self.device_launch_time = None
+
+
+class SessionTimeSummary:
+    def __init__(self):
+        self.total_device_launch_time = None
+        self.total_apk_build_time = None
+        self.total_apk_install_time = None
+        self.total_test_time = None
+        self.total_session_time = None
+
+
+class SessionApkSummary:
+    def __init__(self):
+        self.apk = None
+        self.test_apk = None
+        self.version = None
+        self.apk_build_time = None
+        self.test_apk_build_time = None
+
+
+class SessionTestSummary:
+    def __init__(
+            self):
+        self.test_passed = None
+        self.test_failed = None
 
 
 class TestSummary:
@@ -150,17 +181,6 @@ class TestSummary:
 
         self.test_end_time = None
         self.error_messages = list()
-
-
-class TestLogCatWrapper:
-    def __init__(self):
-        self.test_logcat_packages = list()
-
-
-class TestLogCatPackage:
-    def __init__(self):
-        self.test_package = None
-        self.test_logcats = list()
 
 
 class TestLogCat:

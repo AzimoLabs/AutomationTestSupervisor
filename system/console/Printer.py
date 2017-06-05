@@ -17,7 +17,14 @@ def step(message):
 
 
 def system_message(tag, message):
-    print(Color.BLUE + '[{:%H:%M:%S}] - '.format(datetime.datetime.now()) + tag + " " + message + Color.END)
+    message_assembly = ""
+
+    message_assembly += Color.BLUE + '[{:%H:%M:%S}] - '.format(datetime.datetime.now())
+    if tag != "":
+        message_assembly += tag + " "
+    message_assembly += message + Color.END
+
+    print(message_assembly)
 
 
 def console_highlighted(tag, message, cmd):

@@ -1,9 +1,12 @@
 import time
 import re
+import os
 import subprocess
 import threading
 
 from error.Exceptions import LauncherFlowInterruptedException
+
+from settings import GlobalConfig
 
 from session.SessionModels import (
     TestLogCat,
@@ -11,6 +14,7 @@ from session.SessionModels import (
     TestSummary
 )
 
+from system.file import FileUtils
 from system.console import ShellHelper
 from system.console import (
     Printer,
@@ -18,12 +22,74 @@ from system.console import (
 )
 
 
+class TestSummarySavingThread(threading.Thread):
+    TAG = "TestSummarySavingThread"
+
+    TEST_SUMMARY_APPENDIX = "test_summary.json"
+
+    def __init__(self, device, test_summary_list):
+        super().__init__()
+        self.device = device
+        self.test_summary_list = test_summary_list
+        self.created_files = None
+
+    def run(self):
+        self.created_files = list()
+
+        for test_summary in self.test_summary_list:
+            test_summary_json_dict = vars(test_summary)
+            created_file_path = FileUtils.save_json_dict_to_json(GlobalConfig.OUTPUT_TEST_LOG_DIR,
+                                                                 test_summary_json_dict,
+                                                                 test_summary_json_dict["test_name"]
+                                                                 + "_" + self.device.adb_name
+                                                                 + "_" + self.TEST_SUMMARY_APPENDIX)
+            self.created_files.append(created_file_path)
+
+    def is_finished(self):
+        return self.created_files is not None and len(self.created_files) == len(self.test_summary_list) \
+               and all(os.path.isfile(file) for file in self.created_files)
+
+
+class TestLogcatSavingThread(threading.Thread):
+    TAG = "TestLogcatSavingThread"
+
+    TEST_LOGCAT_APPENDIX = "logcat.json"
+
+    def __init__(self, device, test_logcat_list):
+        super().__init__()
+        self.device = device
+        self.test_logcat_list = test_logcat_list
+        self.created_files = None
+
+    def run(self):
+        self.created_files = list()
+
+        for logcat in self.test_logcat_list:
+            logcat_lines_json_dict = list()
+            for logcat_line in logcat.lines:
+                logcat_lines_json_dict.append(vars(logcat_line))
+            logcat.lines = logcat_lines_json_dict
+
+            logcat_json_dict = vars(logcat)
+            created_file_path = FileUtils.save_json_dict_to_json(GlobalConfig.OUTPUT_TEST_LOGCAT_DIR,
+                                                                 logcat_json_dict,
+                                                                 logcat_json_dict["test_name"]
+                                                                 + "_" + self.device.adb_name
+                                                                 + "_" + self.TEST_LOGCAT_APPENDIX)
+            self.created_files.append(created_file_path)
+
+    def is_finished(self):
+        return self.created_files is not None and len(self.created_files) == len(self.test_logcat_list) \
+               and all(os.path.isfile(file) for file in self.created_files)
+
+
 class TestRecordingThread(threading.Thread):
     TAG = "TestRecordingThread<device_adb_name>:"
 
-    def __init__(self, start_recording_cmd, device):
+    def __init__(self, start_recording_cmd, recording_name, device):
         super().__init__()
         self.start_recording_cmd = start_recording_cmd
+        self.recording_name = recording_name
 
         self.device = device
         self.TAG = self.TAG.replace("device_adb_name", device.adb_name)
@@ -32,16 +98,13 @@ class TestRecordingThread(threading.Thread):
         self.process = None
 
     def run(self):
-        with subprocess.Popen(self.start_recording_cmd, shell=True, stdout=subprocess.PIPE, bufsize=1,
-                              universal_newlines=True) as p:
+        with subprocess.Popen(self.start_recording_cmd + self.recording_name, shell=True, stdout=subprocess.PIPE,
+                              bufsize=1, universal_newlines=True) as p:
             self.process = p
 
-            if p.returncode != 0:
-                message = str(p.returncode) + " : " + str(p.args)
-                raise LauncherFlowInterruptedException(self.TAG, message)
-
-    def kill(self):
-        self.process.kill()
+    def kill_processes(self):
+        if self.process is not None and hasattr(self.process, "kill"):
+            self.process.kill()
 
 
 class TestLogCatMonitorThread(threading.Thread):
@@ -58,28 +121,31 @@ class TestLogCatMonitorThread(threading.Thread):
     LEVEL_INDEX = 4
     TAG_INDEX = 5
 
-    def __init__(self, monitor_logcat_cmd, flush_logcat_cmd, record_screen_cmd, device):
+    def __init__(self, device, device_commands_dict, should_record_screen):
         super().__init__()
-        self.monitor_logcat_cmd = monitor_logcat_cmd
-        self.flush_logcat_cmd = flush_logcat_cmd
-        self.record_screen_cmd = record_screen_cmd
+        self.monitor_logcat_cmd = device_commands_dict["monitor_logcat_cmd"]
+        self.flush_logcat_cmd = device_commands_dict["flush_logcat_cmd"]
+        self.record_screen_cmd = device_commands_dict["record_screen_cmd"]
 
         self.device = device
         self.TAG = self.TAG.replace("device_adb_name", device.adb_name)
+        self.should_record_screen = should_record_screen
 
         self.logs = list()
+        self.recordings = list()
 
-        self.logcat_recording_process = None
-        self.screen_recording_process = None
+        self.logcat_process = None
+        self.screen_recording_thread = None
 
     def run(self):
         ShellHelper.execute_shell(self.flush_logcat_cmd, False, False)
         with subprocess.Popen(self.monitor_logcat_cmd, shell=True, stdout=subprocess.PIPE, bufsize=1,
                               universal_newlines=True, errors="replace") as p:
-            self.logcat_recording_process = p
+            self.logcat_process = p
 
             current_log = None
             current_process_pid = None
+            current_recording_name = None
 
             for line in p.stdout:
                 line_cleaned = line.strip()
@@ -100,14 +166,11 @@ class TestLogCatMonitorThread(threading.Thread):
                     package_parts = full_test_package[0].split(".")
                     current_log.test_container = package_parts.pop().strip()
                     current_log.test_full_package = full_test_package[0].strip() + "." + test_name[0].strip()
-
-                    if self.screen_recording_process is not None:
-                        self.screen_recording_process.kill()
-
-                    # self.screen_recording_process = TestRecordingThread(self.record_screen_cmd
-                    #                                                     + current_log.test_name + ".mp4",
-                    #                                                     self.device)
-                    # self.screen_recording_process.start()
+                    if self.should_record_screen:
+                        self._restart_recording(current_log.test_name)
+                        if current_recording_name is not None:
+                            self.recordings.append(current_recording_name)
+                        current_recording_name = self.screen_recording_thread.recording_name
 
                 if current_log is not None:
                     if line_parts[self.PID_INDEX] == current_process_pid:
@@ -139,15 +202,32 @@ class TestLogCatMonitorThread(threading.Thread):
 
                 if self.TEST_FINISHED in line:
                     self.logs.append(current_log)
+
+                    if self.should_record_screen:
+                        self._stop_recording()
+                        self.recordings.append(current_recording_name)
+
                     current_log = None
                     current_process_pid = None
+                    current_recording_name = None
 
-    def kill(self):
-        if self.screen_recording_process is not None and hasattr(self.screen_recording_process, "kill"):
-            self.screen_recording_process.kill()
+    def _stop_recording(self):
+        if self.screen_recording_thread is not None:
+            self.screen_recording_thread.kill_processes()
+            self.screen_recording_thread = None
 
-        if self.logcat_recording_process is not None and hasattr(self.logcat_recording_process, "kill"):
-            self.logcat_recording_process.kill()
+    def _restart_recording(self, test_name):
+        if self.screen_recording_thread is None or not self.screen_recording_thread.is_alive():
+            recording_name = test_name + "-" + str(int(round(time.time() * 1000))) + ".mp4"
+            self.screen_recording_thread = TestRecordingThread(self.record_screen_cmd, recording_name, self.device)
+            self.screen_recording_thread.start()
+
+    def kill_processes(self):
+        if self.screen_recording_thread is not None:
+            self.screen_recording_thread.kill_processes()
+
+        if self.logcat_process is not None and hasattr(self.logcat_process, "kill"):
+            self.logcat_process.kill()
 
 
 class TestThread(threading.Thread):
@@ -169,68 +249,67 @@ class TestThread(threading.Thread):
         self.TAG = self.TAG.replace("device_adb_name", device.adb_name)
 
         self.logs = list()
-        self.is_finished = False
+
+        self.test_process = None
 
     def run(self):
-        try:
-            Printer.console_highlighted(self.TAG, "Executing shell command: ", self.launch_tests_cmd)
-            with subprocess.Popen(self.launch_tests_cmd, shell=True, stdout=subprocess.PIPE, bufsize=1,
-                                  universal_newlines=True) as p:
+        Printer.console_highlighted(self.TAG, "Executing shell command: ", self.launch_tests_cmd)
+        with subprocess.Popen(self.launch_tests_cmd, shell=True, stdout=subprocess.PIPE, bufsize=1,
+                              universal_newlines=True) as p:
+            self.test_process = p
 
-                reading_stack_in_progress = False
-                current_log = None
-                stack = None
+            reading_stack_in_progress = False
+            current_log = None
+            stack = None
 
-                for line in p.stdout:
-                    if self.TEST_NAME in line and current_log is None:
-                        current_log = TestSummary()
-                        current_log.test_name = line.replace(self.TEST_NAME, "").strip()
-                        current_log.test_start_time = int(round(time.time() * 1000))
-                        current_log.device = self.device.adb_name
+            for line in p.stdout:
+                if self.TEST_NAME in line and current_log is None:
+                    current_log = TestSummary()
+                    current_log.test_name = line.replace(self.TEST_NAME, "").strip()
+                    current_log.test_start_time = int(round(time.time() * 1000))
+                    current_log.device = self.device.adb_name
 
-                        Printer.console(self.TAG + " Test " + current_log.test_name + "\n", end='')
+                    Printer.console(self.TAG + " Test " + current_log.test_name + "\n", end='')
 
-                    if self.TEST_PACKAGE in line:
-                        line = line.replace(self.TEST_PACKAGE, "").strip()
-                        package_parts = line.split(".")
-                        current_log.test_container = package_parts.pop()
-                        current_log.test_full_package = line + "." + current_log.test_name
+                if self.TEST_PACKAGE in line:
+                    line = line.replace(self.TEST_PACKAGE, "").strip()
+                    package_parts = line.split(".")
+                    current_log.test_container = package_parts.pop()
+                    current_log.test_full_package = line + "." + current_log.test_name
 
+                if self.TEST_OUTPUT_STACK_STARTED in line:
+                    stack = ""
+                    reading_stack_in_progress = True
+
+                if self.TEST_CURRENT_TEST_NUMBER in line:
+                    if stack is not None:
+                        current_log.error_messages.append(stack)
+                    reading_stack_in_progress = False
+                    stack = None
+
+                if self.TEST_ENDED_WITH_SUCCESS_0 in line:
+                    current_log.test_end_time = int(round(time.time() * 1000))
+                    current_log.test_status = "success"
+                    self.logs.append(current_log)
+                    current_log = None
+
+                if self.TEST_ENDED_WITH_FAILURE in line:
+                    current_log.test_end_time = int(round(time.time() * 1000))
+                    current_log.test_status = "failure"
+                    self.logs.append(current_log)
+                    current_log = None
+
+                if reading_stack_in_progress:
                     if self.TEST_OUTPUT_STACK_STARTED in line:
-                        stack = ""
-                        reading_stack_in_progress = True
+                        test_error_info = self.TAG + " Test " + current_log.test_name + " - FAILED\n"
+                        Printer.console(test_error_info, end="")
+                        line = line.replace(self.TEST_OUTPUT_STACK_STARTED, "")
+                    stack += line
+                    Printer.console(line, end="")
 
-                    if self.TEST_CURRENT_TEST_NUMBER in line:
-                        if stack is not None:
-                            current_log.error_messages.append(stack)
-                        reading_stack_in_progress = False
-                        stack = None
-
-                    if self.TEST_ENDED_WITH_SUCCESS_0 in line:
-                        current_log.test_end_time = int(round(time.time() * 1000))
-                        current_log.test_status = "success"
-                        self.logs.append(current_log)
-                        current_log = None
-
-                    if self.TEST_ENDED_WITH_FAILURE in line:
-                        current_log.test_end_time = int(round(time.time() * 1000))
-                        current_log.test_status = "failure"
-                        self.logs.append(current_log)
-                        current_log = None
-
-                    if reading_stack_in_progress:
-                        if self.TEST_OUTPUT_STACK_STARTED in line:
-                            test_error_info = self.TAG + " Test " + current_log.test_name + " - FAILED\n"
-                            Printer.console(test_error_info, end="")
-                            line = line.replace(self.TEST_OUTPUT_STACK_STARTED, "")
-                        stack += line
-                        Printer.console(line, end="")
-
-            if p.returncode != 0:
-                message = str(p.returncode) + " : " + str(p.args)
-                raise LauncherFlowInterruptedException(self.TAG, message)
-        finally:
-            self.is_finished = True
+    def kill_processes(self):
+        if self.test_process is not None and hasattr(self.test_process, "kill"):
+            self.test_process.kill()
 
 
 class ApkInstallThread(threading.Thread):
@@ -246,8 +325,8 @@ class ApkInstallThread(threading.Thread):
         self.apk_name = apk_name
         self.apk_path = apk_path
 
-        self.is_finished = False
         self.install_time = 0
+        self.is_finished = False
 
     def run(self):
         start_time = int(round(time.time() * 1000))
@@ -274,7 +353,6 @@ class ApkInstallThread(threading.Thread):
                                + " was successfully installed on device " + Color.GREEN + self.device.adb_name
                                + Color.BLUE + ". It took " + Color.GREEN + str(self.install_time) + Color.BLUE
                                + " seconds.")
-
         self.is_finished = True
 
     def _get_apk_package(self):

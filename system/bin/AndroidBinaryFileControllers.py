@@ -23,7 +23,10 @@ from system.console import (
     ShellHelper,
     Color
 )
-from system.file.FileUtils import (clean_path, add_ending_slash, )
+from system.file.FileUtils import (
+    clean_path,
+    add_ending_slash
+)
 
 
 class AaptController:
@@ -127,7 +130,7 @@ class AdbController:
                                                                 device_adb_name,
                                                                 file_dir,
                                                                 file_destination)
-        return ShellHelper.execute_shell(cmd, True, True)
+        return ShellHelper.execute_shell(cmd, False, False)
 
 
 class AdbShellController:
@@ -156,6 +159,18 @@ class AdbShellController:
     def record_screen(self, device_adb_name, file_dir):
         cmd = self.adb_shell_command_assembler.assemble_record_screen_cmd(self.adb_bin, device_adb_name, file_dir)
         return ShellHelper.execute_shell(cmd, False, False)
+
+    def remove_dir(self, device_adb_name, file_dir):
+        cmd = self.adb_shell_command_assembler.assemble_remove_dir_cmd(self.adb_bin, device_adb_name, file_dir)
+        return ShellHelper.execute_shell(cmd, True, True)
+
+    def remove_files_in_dir(self, device_adb_name, file_dir):
+        cmd = self.adb_shell_command_assembler.assemble_remove_files_in_dir_cmd(self.adb_bin, device_adb_name, file_dir)
+        return ShellHelper.execute_shell(cmd, True, True)
+
+    def create_dir(self, device_adb_name, file_dir):
+        cmd = self.adb_shell_command_assembler.assemble_create_dir_cmd(self.adb_bin, device_adb_name, file_dir)
+        return ShellHelper.execute_shell(cmd, True, True)
 
 
 class AdbPackageManagerController:
@@ -232,12 +247,12 @@ class AdbLogCatController:
             raise LauncherFlowInterruptedException(self.TAG, message)
 
     def flush_logcat(self, device_adb_name):
-        cmd = self.adb_logcat_command_assembler.assemble_flush_log_cat_cmd(self.adb_bin, device_adb_name)
+        cmd = self.adb_logcat_command_assembler.assemble_flush_logcat_cmd(self.adb_bin, device_adb_name)
 
         return ShellHelper.execute_shell(cmd, False, False)
 
     def read_logcat(self, device_adb_name):
-        cmd = self.adb_logcat_command_assembler.assemble_dump_log_cat_cmd(self.adb_bin, device_adb_name)
+        cmd = self.adb_logcat_command_assembler.assemble_dump_logcat_cmd(self.adb_bin, device_adb_name)
 
         return ShellHelper.execute_shell(cmd, False, False)
 

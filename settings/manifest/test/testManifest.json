@@ -262,11 +262,11 @@
     },
     {
       "set_name": "function_all",
-      "apk_name_part": "integrationTest",
-      "application_apk_assemble_task": "assembleAutomationIntegrationTest",
-      "test_apk_assemble_task": "assembleAutomationIntegrationTestAndroidTest",
+      "apk_name_part": "staging",
+      "application_apk_assemble_task": "assembleStaging",
+      "test_apk_assemble_task": "assembleStagingAndroidTest",
       "gradle_build_params": "-PtestApiBasePath=azimoF",
-      "shard": false,
+      "shard": true,
       "set_package_names": [
         "Function-AuthFlow",
         "Function-CheckRates",
@@ -286,11 +286,11 @@
     },
     {
       "set_name": "end_to_end_all",
-      "apk_name_part": "integrationTest",
-      "application_apk_assemble_task": "assembleAutomationIntegrationTest",
-      "test_apk_assemble_task": "assembleAutomationIntegrationTestAndroidTest",
+      "apk_name_part": "staging",
+      "application_apk_assemble_task": "assembleStaging",
+      "test_apk_assemble_task": "assembleStagingAndroidTest",
       "gradle_build_params": "-PtestApiBasePath=azimoF",
-      "shard": false,
+      "shard": true,
       "set_package_names": [
         "EndToEnd-CardsManagement",
         "EndToEnd-ExistingUserFlow",
@@ -313,11 +313,11 @@
     },
     {
       "set_name": "function_authFlow",
-      "apk_name_part": "integrationTest",
-      "application_apk_assemble_task": "assembleAutomationIntegrationTest",
-      "test_apk_assemble_task": "assembleAutomationIntegrationTestAndroidTest",
+      "apk_name_part": "staging",
+      "application_apk_assemble_task": "assembleStaging",
+      "test_apk_assemble_task": "assembleStagingAndroidTest",
       "gradle_build_params": "-PtestApiBasePath=azimoF",
-      "shard": false,
+      "shard": true,
       "set_package_names": [
         "Function-AuthFlow"
       ]

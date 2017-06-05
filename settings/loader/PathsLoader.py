@@ -24,7 +24,7 @@ OUTPUT_AVD_LOG_FOLDER_DEFAULT = "/avd_logs"
 OUTPUT_TEST_LOG_FOLDER_DEFAULT = "/test_results"
 OUTPUT_TEST_LOGCAT_FOLDER_DEFAULT = "/test_logcats"
 OUTPUT_TEST_VIDEO_FOLDER_DEFAULT = "/recordings"
-DEVICE_VIDEO_STORAGE_FOLDER_DEFAULT = "/test_automation_recordings"
+DEVICE_VIDEO_STORAGE_FOLDER_DEFAULT = "/sdcard/test_automation_recordings"
 
 TAG = "PathsLoader:"
 
@@ -137,13 +137,13 @@ def _load_paths_to_global_settings(path_set):
     Printer.system_message(TAG, "Logcat logs from tests will be stored in dir: " + Color.GREEN +
                            GlobalConfig.OUTPUT_TEST_LOGCAT_DIR + Color.BLUE + ".")
 
-    GlobalConfig.OUTPUT_TEST_VIDEO_DIR = clean_folder_only_dir(
+    GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR = clean_folder_only_dir(
         GlobalConfig.OUTPUT_DIR + OUTPUT_TEST_VIDEO_FOLDER_DEFAULT)
-    if not os.path.isabs(GlobalConfig.OUTPUT_TEST_VIDEO_DIR):
-        message = "Path " + GlobalConfig.OUTPUT_TEST_VIDEO_DIR + " needs to be absolute!"
+    if not os.path.isabs(GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR):
+        message = "Path " + GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR + " needs to be absolute!"
         raise LauncherFlowInterruptedException(TAG, message)
     Printer.system_message(TAG, "Recordings from tests will be stored in dir: " + Color.GREEN +
-                           GlobalConfig.OUTPUT_TEST_VIDEO_DIR + Color.BLUE + ".")
+                           GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR + Color.BLUE + ".")
 
     GlobalConfig.DEVICE_VIDEO_STORAGE_DIR = clean_folder_only_dir(DEVICE_VIDEO_STORAGE_FOLDER_DEFAULT)
     Printer.system_message(TAG, "Recordings will be stored on ROOT directory of test device storage in " + Color.GREEN

@@ -18,7 +18,10 @@ class AdbCommand:
 
 class AdbShellCommand:
     SHELL = "shell"
-    RECORD = "screenrecord {}"
+    CREATE_DIR = "mkdir {}"
+    REMOVE_DIR = "rm {}"
+    REMOVE_FILES_IN_DIR = "rm -r {}"
+    RECORD = "screenrecord --bit-rate 2000000 {}"
     GET_PROPERTY = "getprop {}"
 
 

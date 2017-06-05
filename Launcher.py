@@ -1,20 +1,22 @@
 from error.Exceptions import LauncherFlowInterruptedException
 
 from session.SessionDataStores import (
-    ApkStore,
     DeviceStore,
-    LogStore,
+    ApkStore,
     TestStore
 )
-
+from session import SessionGlobalLogger as session_logger
 from session.SessionManagers import (
-    ApkManager,
+    CleanUpManager,
     DeviceManager,
+    ApkManager,
     TestManager,
-    LogManager
 )
 
-from settings import GlobalConfig
+from settings import (
+    GlobalConfig,
+    Version
+)
 from settings.loader import (
     PathsLoader,
     LaunchPlanLoader,
@@ -23,7 +25,6 @@ from settings.loader import (
 )
 
 from system.console import Printer
-from system.file import FileUtils
 from system.bin.AndroidBinaryFileControllers import (
     AaptController,
     AdbController,
@@ -57,17 +58,27 @@ class Launcher:
         self.gradle_controller = None
         self.instrumentation_runner_controller = None
 
+        self.log_store = None
+        self.log_manager = None
+
         self.device_store = None
         self.device_manager = None
 
         self.apk_store = None
         self.apk_manager = None
 
-        self.log_store = None
-        self.log_manager = None
-
         self.test_store = None
         self.test_manager = None
+
+        self.clean_up_manager = None
+
+    @staticmethod
+    def _init_phase():
+        Printer.phase("INIT")
+        session_logger.log_session_start_time()
+
+        Printer.step("Launcher started working!")
+        Version.info()
 
     def _load_config_phase(self):
         Printer.phase("LOADING CONFIG")
@@ -118,29 +129,29 @@ class Launcher:
                                       self.gradle_controller,
                                       self.aapt_controller)
 
-        Printer.step("Creating objects handling logging and monitoring.")
-        self.log_store = LogStore()
-        self.log_manager = LogManager(self.log_store)
-
         Printer.step("Creating objects controlling test session.")
         self.test_store = TestStore()
         self.test_manager = TestManager(self.instrumentation_runner_controller,
+                                        self.adb_controller,
                                         self.adb_shell_controller,
                                         self.adb_logcat_controller,
                                         self.device_store,
-                                        self.test_store,
-                                        self.log_store)
+                                        self.test_store)
+
+        Printer.step("Creating objects handling clean up.")
+        self.clean_up_manager = CleanUpManager(self.device_store,
+                                               self.adb_controller,
+                                               self.adb_shell_controller)
 
     def _pre_device_preparation_clean_up_phase(self):
         Printer.phase("PRE-DEVICE PREPARATION CLEAN UP")
 
-        Printer.step("Performing output dir clean up.")
-        FileUtils.clean_output_dir()
+        Printer.step("Clean-up of launcher output directories")
+        self.clean_up_manager.prepare_output_directories()
 
         Printer.step("Restarting ADB server.")
         if GlobalConfig.SHOULD_RESTART_ADB:
-            self.adb_controller.kill_server()
-            self.adb_controller.start_server()
+            self.clean_up_manager.restart_adb()
 
     def _device_preparation_phase(self):
         Printer.phase("DEVICE PREPARATION")
@@ -174,6 +185,7 @@ class Launcher:
 
     def _device_launch_phase(self):
         Printer.phase("DEVICE LAUNCH")
+        session_logger.log_total_device_launch_start_time()
 
         if GlobalConfig.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION:
             if GlobalConfig.SHOULD_LAUNCH_AVD_SEQUENTIALLY:
@@ -185,38 +197,51 @@ class Launcher:
         else:
             Printer.step("Using currently launched devices.")
 
+        session_logger.log_total_device_launch_end_time()
+
     def _apk_preparation_phase(self):
         Printer.phase("APK PREPARATION")
+        session_logger.log_total_apk_build_start_time()
 
         Printer.step("Preparing .*apk for test.")
         if GlobalConfig.SHOULD_BUILD_NEW_APK:
             apk = self.apk_manager.build_apk(self.test_set)
         else:
-            apk = self.apk_manager.get_apk(self.test_set)
+            apk = self.apk_manager.get_existing_apk(self.test_set)
             if apk is None:
                 apk = self.apk_manager.build_apk(self.test_set)
+        self.apk_manager.display_picked_apk_info()
 
         Printer.step("Scanning .*apk for helpful data.")
         self.apk_manager.set_instrumentation_runner_according_to(apk)
 
+        session_logger.log_total_apk_build_end_time()
+
+    def _apk_installation_phase(self):
+        Printer.phase("APK INSTALLATION")
+        session_logger.log_total_apk_install_start_time()
+
         Printer.step("Installing .*apk on devices included in test session.")
+        apk = self.apk_manager.get_existing_apk(self.test_set)
         self.apk_manager.install_apk_on_devices(apk)
+
+        session_logger.log_total_apk_install_end_time()
 
     def _pre_test_clean_up_phase(self):
         Printer.phase("PRE-TESTING CLEAN UP")
-        pass
+
+        if GlobalConfig.SHOULD_RECORD_TESTS:
+            Printer.step("Preparing directory for recordings storage on test devices")
+            self.clean_up_manager.prepare_device_directories()
 
     def _testing_phase(self):
         Printer.phase("TESTING")
+        session_logger.log_total_test_start_time()
 
         Printer.step("Starting tests.")
-        self.test_manager.run_with_boosted_shards(self.test_set, self.test_list)
+        self.test_manager.run_tests(self.test_set, self.test_list)
 
-    def _reporting_phase(self):
-        Printer.phase("REPORTING")
-
-        Printer.step("Saving logs.")
-        self.log_manager.dump_logs_to_file()
+        session_logger.log_total_test_end_time()
 
     def _finalization_phase(self):
         Printer.phase("FINALIZATION")
@@ -227,17 +252,23 @@ class Launcher:
             self.device_manager.kill_all_avd()
             self.device_manager.clear_models_based_on_avd_schema()
 
+        Printer.step("Displaying saved files during test session.")
+        session_logger.log_session_end_time()
+        session_logger.dump_saved_files_history()
+        session_logger.dump_session_summary()
+
     def run(self):
         try:
+            self._init_phase()
             self._load_config_phase()
             self._object_init_phase()
             self._pre_device_preparation_clean_up_phase()
             self._device_preparation_phase()
             self._device_launch_phase()
             self._apk_preparation_phase()
+            self._apk_installation_phase()
             self._pre_test_clean_up_phase()
             self._testing_phase()
-            self._reporting_phase()
         except LauncherFlowInterruptedException as e:
             Printer.error(e.caller_tag, str(e))
             quit()

@@ -1,7 +1,6 @@
 import copy
 import re
 import os
-import glob
 
 from settings import GlobalConfig
 
@@ -10,10 +9,6 @@ from session.SessionModels import (
     OutsideSessionDevice,
     SessionVirtualDevice,
     ApkCandidate,
-    TestLogCatWrapper,
-    TestLogCatPackage,
-    TestSummaryWrapper,
-    TestSummaryPackage
 )
 
 from system.file import FileUtils
@@ -30,10 +25,11 @@ class ApkStore:
     def __init__(self, aapt_controller):
         self.aapt_controller = aapt_controller
         self.apk_candidates = list()
+        self.usable_apk_candidate = None
         self._create_apk_dir_if_not_exists()
 
     def _create_apk_dir_if_not_exists(self):
-        if os.path.isdir(GlobalConfig.APK_DIR):
+        if FileUtils.dir_exists(GlobalConfig.APK_DIR):
             Printer.system_message(self.TAG, "Directory " + Color.GREEN + GlobalConfig.APK_DIR + Color.BLUE
                                    + " was found.")
         else:
@@ -43,8 +39,8 @@ class ApkStore:
 
     def provide_apk(self, test_set):
         self._find_candidates(test_set)
-        self._display_candidates()
-        return self._get_usable_apk_candidate_for_latest_version()
+        self.usable_apk_candidate = self._get_usable_apk_candidate_for_latest_version()
+        return self.usable_apk_candidate
 
     def _find_candidates(self, test_set):
         name_part = test_set.apk_name_part.replace(".apk", "")
@@ -53,42 +49,37 @@ class ApkStore:
                                " list with names containing " + Color.GREEN + name_part + Color.BLUE + ":")
 
         app_apk_list = self.get_list_with_application_apk(name_part, GlobalConfig.APK_DIR)
-        app_apk_filepath_list = self.get_list_with_application_apk_filepath(name_part, GlobalConfig.APK_DIR)
         test_apk_list = self.get_list_with_test_apk(name_part, GlobalConfig.APK_DIR)
-        test_apk_filepath_list = self.get_list_with_test_apk_filepath(name_part, GlobalConfig.APK_DIR)
 
-        for apk in app_apk_list:
-            apk_filename = apk
-            apk_filename_without_extension = apk_filename.replace(".apk", "")
+        path = 0
+        name = 1
+        if app_apk_list:
+            for apk in app_apk_list:
+                apk_filename = apk[name]
+                apk_filepath = FileUtils.clean_folder_only_dir(
+                    FileUtils.add_ending_slash(apk[path])) + apk[name]
 
-            apk_filepath = ""
-            for path in app_apk_filepath_list:
-                if apk_filename_without_extension and "-androidTest" not in path:
-                    apk_filepath = path
+                apk_test_filename = ""
+                apk_test_filepath = ""
+                for test_apk in test_apk_list:
+                    if apk_filename.replace(".apk", "") in test_apk[name] and "-androidTest" in test_apk[name]:
+                        apk_test_filename = test_apk[name]
+                        apk_test_filepath = FileUtils.clean_folder_only_dir(
+                            FileUtils.add_ending_slash(test_apk[path])) + test_apk[name]
 
-            version_code = -1
-            if apk_filepath is not None:
                 dump = self.aapt_controller.dump_badging(apk_filepath)
                 version_code = re.findall("versionCode='(.+?)'", dump)
                 version_code = int(version_code[0])
 
-            apk_test_filename = ""
-            for apk_name in test_apk_list:
-                if apk_filename_without_extension in apk_name and "-androidTest" in apk_name:
-                    apk_test_filename = apk_name
+                self.apk_candidates.append(ApkCandidate(apk_filename,
+                                                        apk_filepath,
+                                                        apk_test_filename,
+                                                        apk_test_filepath,
+                                                        version_code))
+        else:
+            Printer.system_message(self.TAG, "  * No .apk* files found.")
 
-            apk_test_filepath = ""
-            for path in test_apk_filepath_list:
-                if apk_filename_without_extension in path and "-androidTest" in path:
-                    apk_test_filepath = path
-
-            self.apk_candidates.append(ApkCandidate(apk_filename,
-                                                    apk_filepath,
-                                                    apk_test_filename,
-                                                    apk_test_filepath,
-                                                    version_code))
-
-    def _display_candidates(self):
+    def display_candidates(self):
         candidate_no = 0
         for apk_info in self.apk_candidates:
             candidate_no += 1
@@ -116,43 +107,23 @@ class ApkStore:
 
     @staticmethod
     def get_list_with_application_apk(apk_name_part_cleaned, apk_dir):
-        apk_filenames = os.listdir(apk_dir)
+        app_apk_files = list()
+        for path, subdirs, files in os.walk(apk_dir):
+            for filename in files:
+                if apk_name_part_cleaned in filename and ".apk" in filename and "androidTest" not in filename:
+                    app_apk_files.append((path, filename))
 
-        application_apk_list = list()
-        for apk_filename in apk_filenames:
-            if apk_name_part_cleaned in apk_filename and "androidTest" not in apk_filename:
-                application_apk_list.append(apk_filename)
-        return application_apk_list
-
-    @staticmethod
-    def get_list_with_application_apk_filepath(apk_name_part_cleaned, apk_dir):
-        apk_absolute_paths = glob.glob(apk_dir + "*")
-
-        application_apk_filepath_list = list()
-        for apk_path in apk_absolute_paths:
-            if apk_name_part_cleaned in apk_path and "androidTest" not in apk_path:
-                application_apk_filepath_list.append(apk_path)
-        return application_apk_filepath_list
+        return app_apk_files
 
     @staticmethod
     def get_list_with_test_apk(apk_name_part_cleaned, apk_dir):
-        apk_filenames = os.listdir(apk_dir)
+        test_apk_files = list()
+        for path, subdirs, files in os.walk(apk_dir):
+            for filename in files:
+                if apk_name_part_cleaned in filename and ".apk" in filename and "androidTest" in filename:
+                    test_apk_files.append((path, filename))
 
-        test_apk_list = list()
-        for apk_filename in apk_filenames:
-            if apk_name_part_cleaned in apk_filename and "androidTest" in apk_filename:
-                test_apk_list.append(apk_filename)
-        return test_apk_list
-
-    @staticmethod
-    def get_list_with_test_apk_filepath(apk_name_part_cleaned, apk_dir):
-        apk_absolute_paths = glob.glob(apk_dir + "*")
-
-        application_apk_filepath_list = list()
-        for apk_path in apk_absolute_paths:
-            if apk_name_part_cleaned in apk_path and "androidTest" in apk_path:
-                application_apk_filepath_list.append(apk_path)
-        return application_apk_filepath_list
+        return test_apk_files
 
 
 class DeviceStore:
@@ -217,7 +188,10 @@ class DeviceStore:
                 avd_schema = copy.deepcopy(avd_schemas[avd.avd_name])
                 avd_schema.avd_name = avd_schema.avd_name + "-" + str(i)
                 port = avd_ports.pop(0)
-                log_file = FileUtils.create_output_file(avd_schema.avd_name, "txt")
+
+                log_file = FileUtils.clean_path(GlobalConfig.OUTPUT_AVD_LOG_DIR + avd_schema.avd_name + ".txt")
+                FileUtils.create_file(GlobalConfig.OUTPUT_AVD_LOG_DIR, avd_schema.avd_name, "txt")
+                Printer.system_message(self.TAG, "Created file " + Color.GREEN + log_file + Color.BLUE + ".")
 
                 session_device = SessionVirtualDevice(avd_schema,
                                                       port,
@@ -304,86 +278,10 @@ class TestStore:
     def __init__(self):
         self.packages_to_run = list()
 
+    # TODO split into init and getter
     def get_packages(self, test_set, test_list):
         for package_name in test_set.set_package_names:
             for test_package in test_list[package_name].test_packages:
                 if test_package not in self.packages_to_run:
                     self.packages_to_run.append(test_package)
-
-
-class LogStore:
-    TAG = "LogStore:"
-
-    def __init__(self):
-        self.test_log_summaries = list()
-        self.test_logcats = list()
-
-    def get_test_log_summary_wrapper(self):
-        log_summary_wrapper_dict = dict()
-
-        for test_log in self.test_log_summaries:
-            full_package = test_log.test_full_package
-            package_parts = full_package.split(".")
-            package = ".".join(package_parts[:-2])
-
-            test_summary_package = log_summary_wrapper_dict.get(package, TestSummaryPackage())
-            test_summary_package.test_package = package
-            test_summary_package.test_summaries.append(test_log)
-            log_summary_wrapper_dict.update({package: test_summary_package})
-
-        test_summary_wrapper = TestSummaryWrapper()
-        test_summary_wrapper.test_summary_packages.extend(list(log_summary_wrapper_dict.values()))
-        return test_summary_wrapper
-
-    def get_test_logcat_wrapper(self):
-        logcat_wrapper_dict = dict()
-
-        for test_log_cat in self.test_logcats:
-            full_package = test_log_cat.test_full_package
-            package_parts = full_package.split(".")
-            package = ".".join(package_parts[:-2])
-
-            test_logcat_package = logcat_wrapper_dict.get(package, TestLogCatPackage())
-            test_logcat_package.test_package = package
-            test_logcat_package.test_logcats.append(test_log_cat)
-            logcat_wrapper_dict.update({package: test_logcat_package})
-
-        logcat_wrapper = TestLogCatWrapper()
-        logcat_wrapper.test_logcat_packages.extend(list(logcat_wrapper_dict.values()))
-        return logcat_wrapper
-
-    def get_test_log_summary_wrapper_json_dict(self):
-        return self.test_summary_wrapper_to_json_dict(self.get_test_log_summary_wrapper())
-
-    def get_test_logcat_wrapper_json_dict(self):
-        return self.test_logcats_wrapper_to_json_dict(self.get_test_logcat_wrapper())
-
-    @staticmethod
-    def test_summary_wrapper_to_json_dict(test_summary_wrapper):
-        summary_packages_var = list()
-        for summary_package in test_summary_wrapper.test_summary_packages:
-            summaries_var = list()
-            for test_summary in summary_package.test_summaries:
-                summaries_var.append(vars(test_summary))
-            summary_package.test_summaries = summaries_var
-            summary_packages_var.append(vars(summary_package))
-        temp_summary_wrapper = TestSummaryWrapper()
-        temp_summary_wrapper.test_summary_packages = summary_packages_var
-        return vars(temp_summary_wrapper)
-
-    @staticmethod
-    def test_logcats_wrapper_to_json_dict(test_logcat_wrapper):
-        logcat_packages_var = list()
-        for logcat_package in test_logcat_wrapper.test_logcat_packages:
-            logcats_var = list()
-            for logcat in logcat_package.test_logcats:
-                logcat_lines_var = list()
-                for logcat_line in logcat.lines:
-                    logcat_lines_var.append(vars(logcat_line))
-                logcat.lines = logcat_lines_var
-                logcats_var.append(vars(logcat))
-            logcat_package.test_logcats = logcats_var
-            logcat_packages_var.append(vars(logcat_package))
-        temp_test_logcat_wrapper = TestLogCatWrapper()
-        temp_test_logcat_wrapper.test_logcat_packages = logcat_packages_var
-        return vars(temp_test_logcat_wrapper)
+        return self.packages_to_run

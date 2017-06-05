@@ -35,7 +35,7 @@ class AdbCommandAssembler:
     kill_device_schema = "{} {} {}"
     install_apk_schema = "{} {} {} {}"
     uninstall_package_schema = "{} {} {}"
-    pull_file_schema = "{} {} {} {} {}"
+    pull_file_schema = "{} {} {}"
 
     def assemble_start_server_cmd(self, adb_bin):
         return self.start_server_schema.format(adb_bin,
@@ -72,14 +72,15 @@ class AdbCommandAssembler:
     def assemble_pull_file_cmd(self, adb_bin, device_adb_name, file_dir, file_destination_dir):
         return self.pull_file_schema.format(adb_bin,
                                             AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
-                                            AdbCommand.PULL,
-                                            file_dir,
-                                            file_destination_dir)
+                                            AdbCommand.PULL.format(file_dir, file_destination_dir))
 
 
 class AdbShellCommandAssembler:
     get_property_schema = "{} {} {} {}"
     record_screen = "{} {} {} {}"
+    remove_dir = "{} {} {} {}"
+    remove_files_in_dir = "{} {} {} {}"
+    create_dir = "{} {} {} {}"
 
     def assemble_get_property_cmd(self, adb_bin, device_adb_name, device_property):
         return self.get_property_schema.format(adb_bin,
@@ -92,6 +93,24 @@ class AdbShellCommandAssembler:
                                          AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
                                          AdbShellCommand.SHELL,
                                          AdbShellCommand.RECORD.format(file_dir))
+
+    def assemble_remove_dir_cmd(self, adb_bin, device_adb_name, file_dir):
+        return self.remove_dir.format(adb_bin,
+                                      AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                      AdbShellCommand.SHELL,
+                                      AdbShellCommand.REMOVE_DIR.format(file_dir))
+
+    def assemble_remove_files_in_dir_cmd(self, adb_bin, device_adb_name, file_dir):
+        return self.remove_files_in_dir.format(adb_bin,
+                                               AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                               AdbShellCommand.SHELL,
+                                               AdbShellCommand.REMOVE_FILES_IN_DIR.format(file_dir))
+
+    def assemble_create_dir_cmd(self, adb_bin, device_adb_name, file_dir):
+        return self.create_dir.format(adb_bin,
+                                      AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                      AdbShellCommand.SHELL,
+                                      AdbShellCommand.CREATE_DIR.format(file_dir))
 
 
 class AdbPackageManagerCommandAssembler:
@@ -134,13 +153,13 @@ class AdbLogCatCommandAssembler:
                                                  AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
                                                  AdbLogCatCommand.LOG_CAT)
 
-    def assemble_flush_log_cat_cmd(self, adb_bin, device_adb_name):
+    def assemble_flush_logcat_cmd(self, adb_bin, device_adb_name):
         return self.flush_logcat_schema.format(adb_bin,
                                                AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
                                                AdbLogCatCommand.LOG_CAT,
                                                AdbLogCatCommand.FLUSH)
 
-    def assemble_dump_log_cat_cmd(self, adb_bin, device_adb_name):
+    def assemble_dump_logcat_cmd(self, adb_bin, device_adb_name):
         return self.dump_logcat_schema.format(adb_bin,
                                               AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
                                               AdbLogCatCommand.LOG_CAT,

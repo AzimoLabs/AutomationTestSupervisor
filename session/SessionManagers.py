@@ -6,13 +6,16 @@ from error.Exceptions import LauncherFlowInterruptedException
 
 from settings import GlobalConfig
 
+from session import SessionGlobalLogger as session_logger
 from session.SessionModels import (
     OutsideSessionVirtualDevice,
     SessionVirtualDevice,
 )
 from session.SessionThreads import (
     TestThread,
+    TestSummarySavingThread,
     TestLogCatMonitorThread,
+    TestLogcatSavingThread,
     ApkInstallThread
 )
 
@@ -25,140 +28,48 @@ from system.console import (
 )
 
 
-class ApkManager:
-    TAG = "ApkManager:"
+class CleanUpManager:
+    TAG = "CleanUpManager"
 
-    def __init__(self, device_store, apk_store, gradle_controller, aapt_controller):
+    def __init__(self, device_store, adb_controller, adb_shell_controller):
         self.device_store = device_store
-        self.apk_store = apk_store
-        self.gradle_controller = gradle_controller
-        self.aapt_controller = aapt_controller
+        self.adb_controller = adb_controller
+        self.adb_shell_controller = adb_shell_controller
 
-    def get_apk(self, test_set):
-        apk_candidate = self.apk_store.provide_apk(test_set)
-        if apk_candidate is not None:
-            Printer.system_message(self.TAG, "Picked .*apk with highest version code:\n" +
-                                   Color.GREEN + str(apk_candidate) + Color.BLUE + ".")
-        return apk_candidate
-
-    def build_apk(self, test_set):
-        Printer.system_message(self.TAG, "Building application and test .*apk from scratch.")
-        self.gradle_controller.build_application_apk(test_set)
-        self.gradle_controller.build_test_apk(test_set)
-
-        apk_candidate = self.apk_store.provide_apk(test_set)
-        if apk_candidate is None:
-            message = "No .apk* candidates for test session were found. Check your config. Launcher will quit."
-            raise LauncherFlowInterruptedException(self.TAG, message)
+    def prepare_output_directories(self):
+        if FileUtils.dir_exists(GlobalConfig.OUTPUT_DIR):
+            Printer.system_message(self.TAG, "Directory " + Color.GREEN + GlobalConfig.OUTPUT_DIR + Color.BLUE
+                                   + " was found.")
         else:
-            Printer.system_message(self.TAG, "Picked .*apk with highest version code:\n" +
-                                   Color.GREEN + str(apk_candidate) + Color.BLUE + ".")
-        return apk_candidate
+            Printer.system_message(self.TAG, "Directory " + Color.GREEN + GlobalConfig.OUTPUT_DIR + Color.BLUE
+                                   + " not found. Creating...")
+            FileUtils.create_dir(GlobalConfig.OUTPUT_DIR)
 
-    def install_apk_on_devices(self, apk):
-        if not self.device_store.get_devices():
-            message = "No devices were found in test session. Launcher will quit."
-            message = message.format(str(GlobalConfig.AVD_SYSTEM_BOOT_TIMEOUT))
-            raise LauncherFlowInterruptedException(self.TAG, message)
+        for directory in [GlobalConfig.OUTPUT_AVD_LOG_DIR,
+                          GlobalConfig.OUTPUT_TEST_LOG_DIR,
+                          GlobalConfig.OUTPUT_TEST_LOGCAT_DIR,
+                          GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR]:
 
-        self._install_apk(apk)
+            if FileUtils.dir_exists(directory):
+                Printer.system_message(self.TAG, "Directory " + Color.GREEN + directory + Color.BLUE
+                                       + " was found. Removing all files in directory...")
+                FileUtils.clear_dir(directory)
+            else:
+                Printer.system_message(self.TAG, "Directory " + Color.GREEN + directory + Color.BLUE
+                                       + " not found. Creating...")
+                FileUtils.create_dir(directory)
 
-    def _install_apk(self, apk):
-        aapt_cmd_assembler = self.aapt_controller.aapt_command_assembler
+    def restart_adb(self):
+        self.adb_controller.kill_server()
+        self.adb_controller.start_server()
 
+    def prepare_device_directories(self):
         for device in self.device_store.get_devices():
-            if device.status != "device":
-                message = (".*apk won't be installed on device with name " + device.adb_name + " because it's ADB "
-                           + "status is set to " + device.status + " instead of 'device'.")
-                raise LauncherFlowInterruptedException(self.TAG, message)
-
-        apk_install_threads = dict()
-        for device in self.device_store.get_devices():
-            app_dump_badging_cmd = aapt_cmd_assembler.assemble_dump_badging_cmd(self.aapt_controller.aapt_bin,
-                                                                                apk.apk_path)
-            app_apk_thread = ApkInstallThread(app_dump_badging_cmd, device, apk.apk_name, apk.apk_path)
-
-            test_dump_badging_cmd = aapt_cmd_assembler.assemble_dump_badging_cmd(self.aapt_controller.aapt_bin,
-                                                                                 apk.test_apk_path)
-
-            test_apk_thread = ApkInstallThread(test_dump_badging_cmd, device, apk.test_apk_name, apk.test_apk_path)
-
-            thread_list = list()
-            thread_list.append(app_apk_thread)
-            thread_list.append(test_apk_thread)
-
-            apk_install_threads.update({device: thread_list})
-
-        all_devices_have_apk_installed = False
-        while not all_devices_have_apk_installed:
-            for device in self.device_store.get_devices():
-                device_threads = apk_install_threads[device]
-
-                for thread in device_threads:
-                    if any(thread.is_alive() for thread in device_threads):
-                        break
-
-                    if not thread.is_finished:
-                        thread.start()
-
-            all_threads_has_finished = True
-            for device in self.device_store.get_devices():
-                device_threads = apk_install_threads[device]
-
-                if any(not thread.is_finished for thread in device_threads):
-                    all_threads_has_finished = False
-                    break
-
-            all_devices_have_apk_installed = all_threads_has_finished
-
-    def set_instrumentation_runner_according_to(self, apk):
-        Printer.system_message(self.TAG, "Scanning test .*apk file for Instrumentation Runner data.")
-
-        resources = self.aapt_controller.list_resources(apk.test_apk_path)
-        target_package = ""
-        instrumentation_runner_name = ""
-
-        inside_instrumentation_section = False
-        inside_manifest_section = False
-        for line in resources.splitlines():
-            if "E: instrumentation" in line:
-                inside_instrumentation_section = True
-                continue
-
-            if "E: manifest" in line:
-                inside_manifest_section = True
-                continue
-
-            if inside_instrumentation_section and "E: " in line:
-                inside_instrumentation_section = False
-
-            if inside_manifest_section and "E: " in line:
-                inside_manifest_section = False
-
-            if inside_instrumentation_section:
-                if "A: android:name" in line:
-                    regex_result = re.findall("=\"(.+?)\"", line)
-                    if regex_result:
-                        instrumentation_runner_name = str(regex_result[0])
-
-            if inside_manifest_section:
-                if "A: package" in line:
-                    regex_result = re.findall("=\"(.+?)\"", line)
-                    if regex_result:
-                        target_package = str(regex_result[0])
-
-        if target_package == "":
-            message = "Unable to find package of tested application in test .*apk file. Tests won't start without it."
-            raise LauncherFlowInterruptedException(self.TAG, message)
-
-        if instrumentation_runner_name == "":
-            message = ("Unable to find Instrumentation Runner name of tested application in test .*apk file."
-                       " Tests won't start without it.")
-            raise LauncherFlowInterruptedException(self.TAG, message)
-
-        GlobalConfig.INSTRUMENTATION_RUNNER = target_package + "/" + instrumentation_runner_name
-        Printer.system_message(self.TAG, "Instrumentation Runner found: " + Color.GREEN +
-                               GlobalConfig.INSTRUMENTATION_RUNNER + Color.BLUE + ".")
+            Printer.system_message(self.TAG, "Attempting to re-create " + Color.GREEN
+                                   + GlobalConfig.DEVICE_VIDEO_STORAGE_DIR + Color.BLUE + " directory on device "
+                                   + Color.GREEN + device.adb_name + Color.BLUE + ".")
+            self.adb_shell_controller.remove_files_in_dir(device.adb_name, GlobalConfig.DEVICE_VIDEO_STORAGE_DIR)
+            self.adb_shell_controller.create_dir(device.adb_name, GlobalConfig.DEVICE_VIDEO_STORAGE_DIR)
 
 
 class DeviceManager:
@@ -393,191 +304,310 @@ class DeviceManager:
         return any("emulator" in device.adb_name for device in self.device_store.get_devices())
 
 
+class ApkManager:
+    TAG = "ApkManager:"
+
+    def __init__(self, device_store, apk_store, gradle_controller, aapt_controller):
+        self.device_store = device_store
+        self.apk_store = apk_store
+        self.gradle_controller = gradle_controller
+        self.aapt_controller = aapt_controller
+
+    def display_picked_apk_info(self):
+        self.apk_store.display_candidates()
+        if self.apk_store.usable_apk_candidate is not None:
+            Printer.system_message(self.TAG, "Picked .*apk with highest version code:\n" +
+                                   Color.GREEN + str(self.apk_store.usable_apk_candidate) + Color.BLUE + ".")
+
+    def build_apk(self, test_set):
+        Printer.system_message(self.TAG, "Building application and test .*apk from scratch.")
+        self.gradle_controller.build_application_apk(test_set)
+        self.gradle_controller.build_test_apk(test_set)
+
+        return self.apk_store.get_existing_apk(test_set)
+
+    def get_existing_apk(self, test_set):
+        apk_candidate = self.apk_store.usable_apk_candidate
+        if apk_candidate is None:
+            apk_candidate = self.apk_store.provide_apk(test_set)
+            if apk_candidate is None:
+                message = "No .apk* candidates for test session were found. Check your config. Launcher will quit."
+                raise LauncherFlowInterruptedException(self.TAG, message)
+
+        return apk_candidate
+
+    def install_apk_on_devices(self, apk):
+        if not self.device_store.get_devices():
+            message = "No devices were found in test session. Launcher will quit."
+            message = message.format(str(GlobalConfig.AVD_SYSTEM_BOOT_TIMEOUT))
+            raise LauncherFlowInterruptedException(self.TAG, message)
+
+        self._install_apk(apk)
+
+    def _install_apk(self, apk):
+        aapt_cmd_assembler = self.aapt_controller.aapt_command_assembler
+
+        for device in self.device_store.get_devices():
+            if device.status != "device":
+                message = (".*apk won't be installed on device with name " + device.adb_name + " because it's ADB "
+                           + "status is set to " + device.status + " instead of 'device'.")
+                raise LauncherFlowInterruptedException(self.TAG, message)
+
+        apk_install_threads = dict()
+        for device in self.device_store.get_devices():
+            app_dump_badging_cmd = aapt_cmd_assembler.assemble_dump_badging_cmd(self.aapt_controller.aapt_bin,
+                                                                                apk.apk_path)
+            app_apk_thread = ApkInstallThread(app_dump_badging_cmd, device, apk.apk_name, apk.apk_path)
+
+            test_dump_badging_cmd = aapt_cmd_assembler.assemble_dump_badging_cmd(self.aapt_controller.aapt_bin,
+                                                                                 apk.test_apk_path)
+
+            test_apk_thread = ApkInstallThread(test_dump_badging_cmd, device, apk.test_apk_name, apk.test_apk_path)
+
+            thread_list = list()
+            thread_list.append(app_apk_thread)
+            thread_list.append(test_apk_thread)
+
+            apk_install_threads.update({device: thread_list})
+
+        all_devices_have_apk_installed = False
+        while not all_devices_have_apk_installed:
+            for device in self.device_store.get_devices():
+                device_threads = apk_install_threads[device]
+
+                for thread in device_threads:
+                    if any(thread.is_alive() for thread in device_threads):
+                        break
+
+                    if not thread.is_finished:
+                        thread.start()
+
+            all_threads_has_finished = True
+            for device in self.device_store.get_devices():
+                device_threads = apk_install_threads[device]
+
+                if any(not thread.is_finished for thread in device_threads):
+                    all_threads_has_finished = False
+                    break
+
+            all_devices_have_apk_installed = all_threads_has_finished
+
+    def set_instrumentation_runner_according_to(self, apk):
+        Printer.system_message(self.TAG, "Scanning test .*apk file for Instrumentation Runner data.")
+
+        resources = self.aapt_controller.list_resources(apk.test_apk_path)
+        target_package = ""
+        instrumentation_runner_name = ""
+
+        inside_instrumentation_section = False
+        inside_manifest_section = False
+        for line in resources.splitlines():
+            if "E: instrumentation" in line:
+                inside_instrumentation_section = True
+                continue
+
+            if "E: manifest" in line:
+                inside_manifest_section = True
+                continue
+
+            if inside_instrumentation_section and "E: " in line:
+                inside_instrumentation_section = False
+
+            if inside_manifest_section and "E: " in line:
+                inside_manifest_section = False
+
+            if inside_instrumentation_section:
+                if "A: android:name" in line:
+                    regex_result = re.findall("=\"(.+?)\"", line)
+                    if regex_result:
+                        instrumentation_runner_name = str(regex_result[0])
+
+            if inside_manifest_section:
+                if "A: package" in line:
+                    regex_result = re.findall("=\"(.+?)\"", line)
+                    if regex_result:
+                        target_package = str(regex_result[0])
+
+        if target_package == "":
+            message = "Unable to find package of tested application in test .*apk file. Tests won't start without it."
+            raise LauncherFlowInterruptedException(self.TAG, message)
+
+        if instrumentation_runner_name == "":
+            message = ("Unable to find Instrumentation Runner name of tested application in test .*apk file."
+                       " Tests won't start without it.")
+            raise LauncherFlowInterruptedException(self.TAG, message)
+
+        GlobalConfig.INSTRUMENTATION_RUNNER = target_package + "/" + instrumentation_runner_name
+        Printer.system_message(self.TAG, "Instrumentation Runner found: " + Color.GREEN +
+                               GlobalConfig.INSTRUMENTATION_RUNNER + Color.BLUE + ".")
+
+
 class TestManager:
     TAG = "TestManager:"
+    DEVICE_NAME_PLACEHOLDER = "device_name_to_replace"
 
-    def __init__(self, instrumentation_runner_controller, adb_shell_controller, logcat_controller, device_store,
-                 test_store, log_store):
+    def __init__(self, instrumentation_runner_controller, adb_controller, adb_shell_controller, logcat_controller,
+                 device_store, test_store):
 
         self.instrumentation_runner_controller = instrumentation_runner_controller
+        self.adb_controller = adb_controller
         self.adb_shell_controller = adb_shell_controller
         self.logcat_controller = logcat_controller
         self.device_store = device_store
         self.test_store = test_store
-        self.log_store = log_store
 
     def run_tests(self, test_set, test_list):
-        self.test_store.get_packages(test_set, test_list)
-        instrumentation_cmd_assembler = self.instrumentation_runner_controller.instrumentation_runner_command_assembler
-        adb_shell_cmd_assembler = self.adb_shell_controller.adb_shell_command_assembler
-        logcat_cmd_assembler = self.logcat_controller.adb_logcat_command_assembler
+        devices = self.device_store.get_devices()
+        test_packages = self.test_store.get_packages(test_set, test_list)
 
-        for package in self.test_store.packages_to_run:
-            test_threads = list()
-            logcat_threads = list()
-            for device in self.device_store.get_devices():
+        launch_variant_string = "TESTS SPLIT INTO SHARDS" if test_set.shard else "EACH TEST ON EACH DEVICE"
+        Printer.system_message(self.TAG, "According to test set settings, tests will be run with following variant: "
+                               + Color.GREEN + launch_variant_string + Color.BLUE + ".")
 
-                params = {"package": package}
-                launch_cmd = instrumentation_cmd_assembler.assemble_run_test_package_cmd(
-                    self.instrumentation_runner_controller.adb_bin,
-                    device.adb_name,
-                    params,
-                    GlobalConfig.INSTRUMENTATION_RUNNER)
+        device_commands_dict = self._prepare_device_control_cmds(devices)
+        test_cmd_templates = self._prepare_launch_test_cmds_for_run(test_packages, devices, test_set.shard)
 
-                monitor_logcat_cmd = logcat_cmd_assembler.assemble_monitor_logcat_cmd(
-                    self.instrumentation_runner_controller.adb_bin,
-                    device.adb_name)
+        threads_finished = False
+        logcat_threads_num = len(devices)
+        test_threads_num = len(test_cmd_templates)
 
-                flush_logcat_cmd = logcat_cmd_assembler.assemble_flush_log_cat_cmd(
-                    self.instrumentation_runner_controller.adb_bin,
-                    device.adb_name)
-
-                record_screen_cmd = adb_shell_cmd_assembler.assemble_record_screen_cmd(
-                    self.adb_shell_controller.adb_bin,
-                    device.adb_name,
-                    "/sdcard/test_recordings/"
-                )
-
-                if device.status == "device":
-                    test_thread = TestThread(launch_cmd, device)
-                    test_thread.start()
-                    test_threads.append(test_thread)
-
-                    logcat_thread = TestLogCatMonitorThread(monitor_logcat_cmd, flush_logcat_cmd, record_screen_cmd,
-                                                            device)
-                    logcat_threads.append(logcat_thread)
-                    logcat_thread.start()
-                else:
-                    message = ("Something went wrong. At this point all devices should be ready to run. Make sure "
-                               "nothing modifies status of currently connected devices.")
-                    raise LauncherFlowInterruptedException(self.TAG, message)
-
-            while any(not thread.is_finished for thread in test_threads):
-                time.sleep(1)
-
-            for thread in test_threads:
-                self.log_store.test_log_summaries.extend(copy.deepcopy(thread.logs))
-
-            test_threads.clear()
-
-            for thread in logcat_threads:
-                self.log_store.test_logcats.extend(copy.deepcopy(thread.logs))
-
-            for thread in logcat_threads:
-                thread.kill()
-
-            logcat_threads.clear()
-
-    def run_with_boosted_shards(self, test_set, test_list):
-        self.test_store.get_packages(test_set, test_list)
-        instrumentation_cmd_assembler = self.instrumentation_runner_controller.instrumentation_runner_command_assembler
-        adb_shell_cmd_assembler = self.adb_shell_controller.adb_shell_command_assembler
-        logcat_cmd_assembler = self.logcat_controller.adb_logcat_command_assembler
-
-        device_name_mark = "device_name_to_replace"
-        num_devices = len(self.device_store.get_devices())
-
-        test_cmd_to_run = list()
-        for package in self.test_store.packages_to_run:
-            for i in range(0, num_devices):
-                params = {"package": package, "numShards": num_devices, "shardIndex": i}
-                launch_cmd = instrumentation_cmd_assembler.assemble_run_test_package_cmd(
-                    self.instrumentation_runner_controller.adb_bin,
-                    device_name_mark,
-                    params,
-                    GlobalConfig.INSTRUMENTATION_RUNNER)
-                test_cmd_to_run.append(launch_cmd)
-
-        num_test_processes_to_run = len(test_cmd_to_run)
-        num_test_processes_finished = 0
-
-        test_start = time.time()
-        test_threads = list()
         logcat_threads = list()
-        while num_test_processes_to_run != num_test_processes_finished:
-            for device in self.device_store.get_devices():
-                is_logcat_thread_created = False
+        test_threads = list()
+        test_log_saving_threads = list()
+        logcat_saving_threads = list()
 
-                for thread in logcat_threads:
-                    if thread.device.adb_name == device.adb_name:
-                        is_logcat_thread_created = True
+        try:
+            while not threads_finished:
+                if len(logcat_threads) != logcat_threads_num:
+                    for device in devices:
+                        logcat_thread = TestLogCatMonitorThread(device,
+                                                                device_commands_dict.get(device),
+                                                                GlobalConfig.SHOULD_RECORD_TESTS)
+                        logcat_threads.append(logcat_thread)
+                        logcat_thread.start()
 
-                if not is_logcat_thread_created:
-                    monitor_logcat_cmd = logcat_cmd_assembler.assemble_monitor_logcat_cmd(
-                        self.instrumentation_runner_controller.adb_bin,
-                        device.adb_name)
+                if len(test_threads) != test_threads_num and all(t.logcat_process is not None for t in logcat_threads):
+                    for device in devices:
+                        if not any(t.device.adb_name == device.adb_name and t.is_alive() for t in test_threads) \
+                                and len(test_cmd_templates) > 0:
+                            launch_cmd_template = test_cmd_templates.pop(0)
+                            launch_cmd = launch_cmd_template.replace(self.DEVICE_NAME_PLACEHOLDER, device.adb_name)
 
-                    flush_logcat_cmd = logcat_cmd_assembler.assemble_flush_log_cat_cmd(
-                        self.instrumentation_runner_controller.adb_bin,
-                        device.adb_name)
+                            Printer.system_message(self.TAG,
+                                                   str(len(test_cmd_templates)) + " packages to run left...")
 
-                    record_screen_cmd = adb_shell_cmd_assembler.assemble_record_screen_cmd(
-                        self.adb_shell_controller.adb_bin,
-                        device.adb_name,
-                        "/sdcard/test_recordings/")
+                            test_thread = TestThread(launch_cmd, device)
+                            test_threads.append(test_thread)
+                            test_thread.start()
 
-                    logcat_thread = TestLogCatMonitorThread(monitor_logcat_cmd, flush_logcat_cmd, record_screen_cmd,
-                                                            device)
-                    logcat_threads.append(logcat_thread)
-                    logcat_thread.start()
+                for test_thread in test_threads:
+                    if len(test_thread.logs) > 0:
+                        current_test_logs = copy.deepcopy(test_thread.logs)
 
-                is_test_thread_created = False
-                test_threads_to_clean = list()
-                for thread in test_threads:
-                    if thread.device.adb_name == device.adb_name:
-                        is_test_thread_created = True
+                        for log in current_test_logs:
+                            if log.test_status == "success":
+                                session_logger.increment_passed_tests()
 
-                    if thread.device.adb_name == device.adb_name and thread.is_finished:
-                        self.log_store.test_log_summaries.extend(copy.deepcopy(thread.logs))
-                        num_test_processes_finished += 1
-                        test_threads_to_clean.append(thread)
+                            if log.test_status == "failed":
+                                session_logger.increment_failed_tests()
 
-                for thread in test_threads_to_clean:
-                    test_threads.remove(thread)
-                    is_test_thread_created = False
+                        test_log_saving_thread = TestSummarySavingThread(test_thread.device, current_test_logs)
+                        test_log_saving_threads.append(test_log_saving_thread)
+                        test_log_saving_thread.start()
+                        test_thread.logs.clear()
 
-                if not is_test_thread_created and len(test_cmd_to_run) > 0:
-                    if device.status == "device":
-                        launch_cmd = test_cmd_to_run.pop(0)
-                        launch_cmd = launch_cmd.replace(device_name_mark, device.adb_name)
+                for logcat_thread in logcat_threads:
+                    if len(logcat_thread.logs) > 0:
+                        current_logcats = copy.deepcopy(logcat_thread.logs)
+                        logcat_saving_thread = TestLogcatSavingThread(logcat_thread.device, current_logcats)
+                        logcat_saving_threads.append(logcat_saving_thread)
+                        logcat_saving_thread.start()
+                        logcat_thread.logs.clear()
 
-                        Printer.system_message(self.TAG, str(len(test_cmd_to_run)) + " packages to run left...")
+                    # if len(logcat_thread.recordings) > 0:
+                    #     logger.save_recordings(self.adb_controller,
+                    #                            copy.deepcopy(logcat_thread.device),
+                    #                            copy.deepcopy(logcat_thread.recordings))
+                    #     logcat_thread.recordings.clear()
 
-                        test_thread = TestThread(launch_cmd, device)
-                        test_threads.append(test_thread)
-                        test_thread.start()
-                    else:
-                        message = ("Something went wrong. At this point all devices should be ready to run. Make sure "
-                                   "nothing modifies status of currently connected devices.")
-                        raise LauncherFlowInterruptedException(self.TAG, message)
+                if len(test_threads) == test_threads_num \
+                        and all(not t.is_alive() for t in test_threads) \
+                        and all(t.is_finished() for t in test_log_saving_threads) \
+                        and all(t.is_finished() for t in logcat_saving_threads):
+                    for test_thread in test_threads:
+                        test_thread.kill_processes()
+                    test_threads.clear()
 
-        for thread in logcat_threads:
-            self.log_store.test_logcats.extend(copy.deepcopy(thread.logs))
+                    for logcat_thread in logcat_threads:
+                        logcat_thread.kill_processes()
+                    logcat_threads.clear()
 
-        for thread in logcat_threads:
-            thread.kill()
+                    test_log_saving_threads.clear()
+                    logcat_saving_threads.clear()
 
-        logcat_threads.clear()
+                threads_finished = len(test_threads) == 0 and len(logcat_threads) == 0 and len(test_cmd_templates) == 0
+        except Exception as e:
+            message = "Error has occurred during test session: \n" + str(e)
+            raise LauncherFlowInterruptedException(self.TAG, message)
+        finally:
+            if len(test_threads) > 0:
+                for test_thread in test_threads:
+                    test_thread.kill_processes()
+                test_threads.clear()
 
-        test_end = time.time()
-        Printer.system_message(self.TAG, "Test process took: " + Color.GREEN + "{:.2f}".format(test_end - test_start)
-                               + Color.BLUE + " seconds.")
+            if len(logcat_threads) > 0:
+                for logcat_thread in logcat_threads:
+                    logcat_thread.kill_processes()
+                logcat_threads.clear()
 
+            test_log_saving_threads.clear()
+            logcat_saving_threads.clear()
 
-class LogManager:
-    TAG = "LogManager:"
+    def _prepare_device_control_cmds(self, devices):
+        device_commands_dict = dict()
+        for device in devices:
+            monitor_logcat_cmd = self._prepare_monitor_logcat_cmd(device)
+            flush_logcat_cmd = self._prepare_flush_logcat_cmd(device)
+            record_screen_cmd = self._prepare_record_screen_cmd(device)
+            device_commands_dict[device] = {"monitor_logcat_cmd": monitor_logcat_cmd,
+                                            "flush_logcat_cmd": flush_logcat_cmd,
+                                            "record_screen_cmd": record_screen_cmd}
+        return device_commands_dict
 
-    TEST_LOGS_FILENAME = "test_logs"
-    TEST_LOGCAT_FILENAME = "test_logcat"
+    def _prepare_monitor_logcat_cmd(self, device):
+        logcat_cmd_assembler = self.logcat_controller.adb_logcat_command_assembler
+        return logcat_cmd_assembler.assemble_monitor_logcat_cmd(self.instrumentation_runner_controller.adb_bin,
+                                                                device.adb_name)
 
-    def __init__(self, log_store):
-        self.log_store = log_store
+    def _prepare_flush_logcat_cmd(self, device):
+        logcat_cmd_assembler = self.logcat_controller.adb_logcat_command_assembler
+        return logcat_cmd_assembler.assemble_flush_logcat_cmd(self.instrumentation_runner_controller.adb_bin,
+                                                              device.adb_name)
 
-    def dump_logs_to_file(self):
-        FileUtils.create_dir(GlobalConfig.OUTPUT_DIR)
+    def _prepare_record_screen_cmd(self, device):
+        adb_shell_cmd_assembler = self.adb_shell_controller.adb_shell_command_assembler
+        return adb_shell_cmd_assembler.assemble_record_screen_cmd(self.adb_shell_controller.adb_bin,
+                                                                  device.adb_name,
+                                                                  GlobalConfig.DEVICE_VIDEO_STORAGE_DIR)
 
-        test_summary_wrapper_dict = self.log_store.get_test_log_summary_wrapper_json_dict()
-        test_logcat_wrapper_dict = self.log_store.get_test_logcat_wrapper_json_dict()
+    def _prepare_launch_test_cmds_for_run(self, test_packages, devices, use_shards):
 
-        FileUtils.save_json_dict_to_json(test_summary_wrapper_dict, self.TEST_LOGS_FILENAME)
-        FileUtils.save_json_dict_to_json(test_logcat_wrapper_dict, self.TEST_LOGCAT_FILENAME)
+        cmd_list = list()
+        for package in test_packages:
+            for i in range(0, len(devices)):
+
+                if use_shards:
+                    parameters = {"package": package, "numShards": len(devices), "shardIndex": i}
+                else:
+                    parameters = {"package": package}
+
+                launch_cmd = self._prepare_launch_test_cmd_for_run(parameters)
+                cmd_list.append(launch_cmd)
+        return cmd_list
+
+    def _prepare_launch_test_cmd_for_run(self, parameters):
+        instr_cmd_assembler = self.instrumentation_runner_controller.instrumentation_runner_command_assembler
+        return instr_cmd_assembler.assemble_run_test_package_cmd(self.instrumentation_runner_controller.adb_bin,
+                                                                 self.DEVICE_NAME_PLACEHOLDER,
+                                                                 parameters,
+                                                                 GlobalConfig.INSTRUMENTATION_RUNNER)

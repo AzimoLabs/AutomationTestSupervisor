@@ -14,7 +14,7 @@ def get_open_ports(avd_set):
 
     ports_to_use = avd_set.avd_port_rules.ports_to_use
     if len(ports_to_use) > 0:
-        message = "Requested ports for AVD:"
+        message = "Requested ports:"
         for port in ports_to_use:
             message += (" '" + str(port) + "'")
         message += "."

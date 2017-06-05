@@ -131,7 +131,7 @@ def _load_launch_plan_to_global_settings(launch_plan):
         Printer.system_message(TAG, "  * Launcher will " + Color.GREEN + "record device screens" + Color.BLUE
                                + " during test session.")
     else:
-        Printer.system_message(TAG, "  * Launcher test " + Color.GREEN + "recording is turned off" +
+        Printer.system_message(TAG, "  * Launcher test " + Color.GREEN + "recording is turned off"
                                + Color.BLUE + ".")
 
 
