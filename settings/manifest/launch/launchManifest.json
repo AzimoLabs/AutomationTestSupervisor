@@ -21,7 +21,7 @@
         "device_before_launching_restart_adb": true
       },
       "testing_phase": {
-        "record_tests": true
+        "record_tests": false
       }
     }
   ]
