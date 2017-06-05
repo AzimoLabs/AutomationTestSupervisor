@@ -10,7 +10,7 @@
         "avd_should_recreate_existing": true
       },
       "apk_preparation_phase": {
-        "build_new_apk": false
+        "build_new_apk": true
       },
       "device_launching_phase": {
         "device_android_id_to_ignore": [],

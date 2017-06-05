@@ -324,7 +324,7 @@ class ApkManager:
         self.gradle_controller.build_application_apk(test_set)
         self.gradle_controller.build_test_apk(test_set)
 
-        return self.apk_store.get_existing_apk(test_set)
+        return self.get_existing_apk(test_set)
 
     def get_existing_apk(self, test_set):
         apk_candidate = self.apk_store.usable_apk_candidate
