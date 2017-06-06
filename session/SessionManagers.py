@@ -37,15 +37,8 @@ class CleanUpManager:
         self.adb_shell_controller = adb_shell_controller
 
     def prepare_output_directories(self):
-        if FileUtils.dir_exists(GlobalConfig.OUTPUT_DIR):
-            Printer.system_message(self.TAG, "Directory " + Color.GREEN + GlobalConfig.OUTPUT_DIR + Color.BLUE
-                                   + " was found.")
-        else:
-            Printer.system_message(self.TAG, "Directory " + Color.GREEN + GlobalConfig.OUTPUT_DIR + Color.BLUE
-                                   + " not found. Creating...")
-            FileUtils.create_dir(GlobalConfig.OUTPUT_DIR)
-
-        for directory in [GlobalConfig.OUTPUT_AVD_LOG_DIR,
+        for directory in [GlobalConfig.OUTPUT_DIR,
+                          GlobalConfig.OUTPUT_AVD_LOG_DIR,
                           GlobalConfig.OUTPUT_TEST_LOG_DIR,
                           GlobalConfig.OUTPUT_TEST_LOGCAT_DIR,
                           GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR]:
@@ -122,6 +115,7 @@ class DeviceManager:
         for device in self.device_store.get_devices():
             if isinstance(device, SessionVirtualDevice):
 
+                session_logger.log_device_creation_start_time(device.adb_name)
                 start_time = int(round(time.time() * 1000))
                 if device.avd_schema.avd_name in created_avd_list:
                     Printer.system_message(self.TAG, "AVD with name " + Color.GREEN + str(device.avd_schema.avd_name)
@@ -137,6 +131,7 @@ class DeviceManager:
                                            + ". Applying...")
                     device.apply_config_ini()
                 end_time = int(round(time.time() * 1000))
+                session_logger.log_device_creation_end_time(device.adb_name)
 
                 creation_time = (end_time - start_time) / 1000
                 reasonable_time = 25
@@ -154,6 +149,7 @@ class DeviceManager:
         for device in self.device_store.get_devices():
             if isinstance(device, SessionVirtualDevice):
 
+                session_logger.log_device_creation_start_time(device.adb_name)
                 start_time = int(round(time.time() * 1000))
                 if device.avd_schema.avd_name in created_avd_list:
                     Printer.system_message(self.TAG, "AVD with name " + Color.GREEN + device.avd_schema.avd_name
@@ -171,6 +167,7 @@ class DeviceManager:
                                            + ". Applying...")
                     device.apply_config_ini()
                 end_time = int(round(time.time() * 1000))
+                session_logger.log_device_creation_end_time(device.adb_name)
 
                 creation_time = (end_time - start_time) / 1000
                 reasonable_time = 25
@@ -185,14 +182,18 @@ class DeviceManager:
     def launch_all_avd_sequentially(self):
         for device in self.device_store.get_devices():
             if isinstance(device, SessionVirtualDevice) and device.status == "not-launched":
+                session_logger.log_device_launch_start_time(device.adb_name)
                 device.launch()
+
             self._wait_for_adb_statuses_change_to("device", (device,))
         self._wait_for_property_statuses(self.device_store.get_devices())
 
     def launch_all_avd_at_once(self):
         for device in self.device_store.get_devices():
             if isinstance(device, SessionVirtualDevice) and device.status == "not-launched":
+                session_logger.log_device_launch_start_time(device.adb_name)
                 device.launch()
+
         self._wait_for_adb_statuses_change_to("device", self.device_store.get_devices())
         self._wait_for_property_statuses(self.device_store.get_devices())
 
@@ -258,6 +259,8 @@ class DeviceManager:
                                                                   "sys.boot_completed": sys_boot,
                                                                   "init.svc.bootanim": boot_anim,
                                                                   "boot_finished": boot_finished}})
+                        if boot_finished:
+                            session_logger.log_device_launch_end_time(device.adb_name)
 
                 Printer.system_message(self.TAG, "  * Current wait status:")
                 for device_name, status_dict in device_statuses.items():
@@ -321,8 +324,14 @@ class ApkManager:
 
     def build_apk(self, test_set):
         Printer.system_message(self.TAG, "Building application and test .*apk from scratch.")
+
+        session_logger.log_app_apk_build_start_time()
         self.gradle_controller.build_application_apk(test_set)
+        session_logger.log_app_apk_build_end_time()
+
+        session_logger.log_test_apk_build_start_time()
         self.gradle_controller.build_test_apk(test_set)
+        session_logger.log_test_apk_build_end_time()
 
         return self.get_existing_apk(test_set)
 
@@ -333,6 +342,16 @@ class ApkManager:
             if apk_candidate is None:
                 message = "No .apk* candidates for test session were found. Check your config. Launcher will quit."
                 raise LauncherFlowInterruptedException(self.TAG, message)
+
+        session_logger.log_app_apk(apk_candidate.apk_name)
+        session_logger.log_test_apk(apk_candidate.test_apk_name)
+        session_logger.log_apk_version_code(apk_candidate.apk_version)
+
+        if session_logger.session_log.apk_summary.apk_build_time is None:
+            session_logger.session_log.apk_summary.apk_build_time = 0
+
+        if session_logger.session_log.apk_summary.test_apk_build_time is None:
+            session_logger.session_log.apk_summary.test_apk_build_time = 0
 
         return apk_candidate
 
@@ -347,6 +366,9 @@ class ApkManager:
     def _install_apk(self, apk):
         aapt_cmd_assembler = self.aapt_controller.aapt_command_assembler
 
+        app_apk_log_note = "appApkThread"
+        test_apk_log_note = "testApkThread"
+
         for device in self.device_store.get_devices():
             if device.status != "device":
                 message = (".*apk won't be installed on device with name " + device.adb_name + " because it's ADB "
@@ -358,11 +380,13 @@ class ApkManager:
             app_dump_badging_cmd = aapt_cmd_assembler.assemble_dump_badging_cmd(self.aapt_controller.aapt_bin,
                                                                                 apk.apk_path)
             app_apk_thread = ApkInstallThread(app_dump_badging_cmd, device, apk.apk_name, apk.apk_path)
+            app_apk_thread.note = app_apk_log_note
 
             test_dump_badging_cmd = aapt_cmd_assembler.assemble_dump_badging_cmd(self.aapt_controller.aapt_bin,
                                                                                  apk.test_apk_path)
 
             test_apk_thread = ApkInstallThread(test_dump_badging_cmd, device, apk.test_apk_name, apk.test_apk_path)
+            test_apk_thread.note = test_apk_log_note
 
             thread_list = list()
             thread_list.append(app_apk_thread)
@@ -381,13 +405,25 @@ class ApkManager:
 
                     if not thread.is_finished:
                         thread.start()
+                        if thread.note == app_apk_log_note:
+                            session_logger.log_app_apk_install_start_time_on_device(device.adb_name)
+                        if thread.note == test_apk_log_note:
+                            session_logger.log_test_apk_install_start_time_on_device(device.adb_name)
 
             all_threads_has_finished = True
             for device in self.device_store.get_devices():
                 device_threads = apk_install_threads[device]
 
-                if any(not thread.is_finished for thread in device_threads):
-                    all_threads_has_finished = False
+                for thread in device_threads:
+                    if thread.is_finished:
+                        if thread.note == app_apk_log_note:
+                            session_logger.log_app_apk_install_end_time_on_device(device.adb_name)
+                        if thread.note == test_apk_log_note:
+                            session_logger.log_test_apk_install_end_time_on_device(device.adb_name)
+                    else:
+                        all_threads_has_finished = False
+
+                if not all_threads_has_finished:
                     break
 
             all_devices_have_apk_installed = all_threads_has_finished
@@ -508,7 +544,7 @@ class TestManager:
                             if log.test_status == "success":
                                 session_logger.increment_passed_tests()
 
-                            if log.test_status == "failed":
+                            if log.test_status == "failure":
                                 session_logger.increment_failed_tests()
 
                         test_log_saving_thread = TestSummarySavingThread(test_thread.device, current_test_logs)
@@ -524,11 +560,11 @@ class TestManager:
                         logcat_saving_thread.start()
                         logcat_thread.logs.clear()
 
-                    # if len(logcat_thread.recordings) > 0:
-                    #     logger.save_recordings(self.adb_controller,
-                    #                            copy.deepcopy(logcat_thread.device),
-                    #                            copy.deepcopy(logcat_thread.recordings))
-                    #     logcat_thread.recordings.clear()
+                        # if len(logcat_thread.recordings) > 0:
+                        #     logger.save_recordings(self.adb_controller,
+                        #                            copy.deepcopy(logcat_thread.device),
+                        #                            copy.deepcopy(logcat_thread.recordings))
+                        #     logcat_thread.recordings.clear()
 
                 if len(test_threads) == test_threads_num \
                         and all(not t.is_alive() for t in test_threads) \

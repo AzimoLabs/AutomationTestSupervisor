@@ -158,6 +158,7 @@ class Launcher:
 
         if GlobalConfig.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION:
             Printer.step("Killing currently launched AVD.")
+            session_logger.log_total_device_creation_start_time()
 
             self.device_manager.add_models_representing_outside_session_virtual_devices()
             if self.device_manager.is_any_avd_visible():
@@ -174,6 +175,8 @@ class Launcher:
                 else:
                     Printer.step("Creating all requested AVD from scratch. Reusing existing ones.")
                     self.device_manager.create_all_avd_and_reuse_existing()
+
+            session_logger.log_total_device_creation_end_time()
         else:
             Printer.step("Creating models for currently visible Android Devices and AVD.")
             self.device_manager.add_models_representing_outside_session_devices()
@@ -253,8 +256,11 @@ class Launcher:
             self.device_manager.clear_models_based_on_avd_schema()
 
         Printer.step("Displaying saved files during test session.")
-        session_logger.log_session_end_time()
         session_logger.dump_saved_files_history()
+
+        Printer.step("Session summary.")
+        session_logger.log_session_end_time()
+        session_logger.save_session_summary()
         session_logger.dump_session_summary()
 
     def run(self):

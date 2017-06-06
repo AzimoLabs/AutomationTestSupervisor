@@ -1,28 +1,50 @@
 import argparse
+import os
 
-from system.file import FileUtils
+from system.file.FileUtils import (
+    clean_path,
+    get_project_root,
+    load_json,
+    add_ending_slash
+)
 
 TAG = "ArgLoader:"
 
-LAUNCH_PLAN_PREFIX = "-lplan"
-TEST_SET_PREFIX = "-tset"
-AVD_SET_PREFIX = "-aset"
-PATH_SET_PREFIX = "-pset"
+CONFIG_FILES_DIR_DEFAULT_DIR = clean_path(add_ending_slash(get_project_root()) + "config_files_dir_default.json")
+CONFIG_FILES_DIR_CUSTOM_DIR = clean_path(add_ending_slash(get_project_root()) + "config_files_dir.json")
 
-LAUNCH_MANIFEST_DIR_PREFIX = "-ldir"
-TEST_MANIFEST_DIR_PREFIX = "-tdir"
-AVD_MANIFEST_DIR_PREFIX = "-adir"
-PATH_MANIFEST_DIR_PREFIX = "-pdir"
+LAUNCH_MANIFEST_DIR_KEY = "launch_manifest_path"
+TEST_MANIFEST_DIR_KEY = "test_manifest_path"
+AVD_MANIFEST_DIR_KEY = "avd_manifest_path"
+PATH_MANIFEST_DIR_KEY = "path_manifest_path"
+
+config_files_dir = None
+loading_from_default_file = False
+
+if os.path.isfile(CONFIG_FILES_DIR_CUSTOM_DIR):
+    config_files_dir = load_json(CONFIG_FILES_DIR_CUSTOM_DIR)
+    loading_from_default_file = False
+elif os.path.isfile(CONFIG_FILES_DIR_DEFAULT_DIR):
+    config_files_dir = load_json(CONFIG_FILES_DIR_DEFAULT_DIR)
+    loading_from_default_file = True
+
+
+def get_manifest_dir(key):
+    if config_files_dir is None:
+        return config_files_dir
+    else:
+        return config_files_dir[key]
+
 
 LAUNCH_PLAN_DEFAULT = "default"
 TEST_SET_DEFAULT = None
 AVD_SET_DEFAULT = "default"
 PATH_SET_DEFAULT = "default"
 
-LAUNCH_MANIFEST_DIR_DEFAULT = FileUtils.get_project_root() + "/settings/manifest/launch/launchManifest.json"
-TEST_MANIFEST_DIR_DEFAULT = FileUtils.get_project_root() + "/settings/manifest/test/testManifest.json"
-AVD_MANIFEST_DIR_DEFAULT = FileUtils.get_project_root() + "/settings/manifest/avd/avdManifest.json"
-PATH_MANIFEST_DIR_DEFAULT = FileUtils.get_project_root() + "/settings/manifest/path/pathManifest.json"
+LAUNCH_PLAN_PREFIX = "-lplan"
+TEST_SET_PREFIX = "-tset"
+AVD_SET_PREFIX = "-aset"
+PATH_SET_PREFIX = "-pset"
 
 parser = argparse.ArgumentParser()
 parser.add_argument(LAUNCH_PLAN_PREFIX,
@@ -45,25 +67,6 @@ parser.add_argument(PATH_SET_PREFIX,
                     default=PATH_SET_DEFAULT,
                     help="Name of path set set specified in PathManifest.json.")
 
-parser.add_argument(LAUNCH_MANIFEST_DIR_PREFIX,
-                    type=str,
-                    default=LAUNCH_MANIFEST_DIR_DEFAULT,
-                    help="Absolute path to LaunchManifest.json.")
-
-parser.add_argument(TEST_MANIFEST_DIR_PREFIX,
-                    type=str,
-                    default=TEST_MANIFEST_DIR_DEFAULT,
-                    help="Absolute path to TestManifest.json.")
-
-parser.add_argument(AVD_MANIFEST_DIR_PREFIX,
-                    type=str,
-                    default=AVD_MANIFEST_DIR_DEFAULT,
-                    help="Absolute path to AvdManifest.json.")
-
-parser.add_argument(PATH_MANIFEST_DIR_PREFIX,
-                    type=str,
-                    default=PATH_MANIFEST_DIR_DEFAULT,
-                    help="Absolute path to PathManifest.json.")
 parser_args = parser.parse_args()
 
 
@@ -76,12 +79,4 @@ def get_arg_loaded_by(param):
         return parser_args.aset
     if param == PATH_SET_PREFIX:
         return parser_args.pset
-    if param == LAUNCH_MANIFEST_DIR_PREFIX:
-        return parser_args.ldir
-    if param == TEST_MANIFEST_DIR_PREFIX:
-        return parser_args.tdir
-    if param == AVD_MANIFEST_DIR_PREFIX:
-        return parser_args.adir
-    if param == PATH_MANIFEST_DIR_PREFIX:
-        return parser_args.pdir
     return None

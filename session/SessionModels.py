@@ -132,25 +132,55 @@ class SessionSummary:
     def __init__(self):
         self.device_summaries = None
         self.time_summary = None
-        self.apk_summaries = None
+        self.apk_summary = None
         self.test_summary = None
 
 
 class SessionDeviceSummary:
     def __init__(self):
         self.device_name = None
+
+        self.creation_start_time = None
+        self.creation_end_time = None
+        self.creation_time = None
+
+        self.launch_start_time = None
+        self.launch_end_time = None
         self.launch_time = None
+
+        self.apk_install_start_time = None
+        self.apk_install_end_time = None
         self.apk_install_time = None
+
+        self.test_apk_install_start_time = None
+        self.test_apk_install_end_time = None
         self.test_apk_install_time = None
-        self.device_launch_time = None
 
 
 class SessionTimeSummary:
     def __init__(self):
+        self.total_device_creation_start_time = None
+        self.total_device_creation_end_time = None
+        self.total_device_creation_time = None
+
+        self.total_device_launch_start_time = None
+        self.total_device_launch_end_time = None
         self.total_device_launch_time = None
+
+        self.total_apk_build_start_time = None
+        self.total_apk_build_end_time = None
         self.total_apk_build_time = None
+
+        self.total_apk_install_start_time = None
+        self.total_apk_install_end_time = None
         self.total_apk_install_time = None
+
+        self.total_test_start_time = None
+        self.total_test_end_time = None
         self.total_test_time = None
+
+        self.total_session_start_time = None
+        self.total_session_end_time = None
         self.total_session_time = None
 
 
@@ -158,16 +188,23 @@ class SessionApkSummary:
     def __init__(self):
         self.apk = None
         self.test_apk = None
-        self.version = None
+        self.version_code = None
+
+        self.apk_build_start_time = None
+        self.apk_build_end_time = None
         self.apk_build_time = None
+
+        self.test_apk_build_start_time = None
+        self.test_apk_build_end_time = None
         self.test_apk_build_time = None
 
 
 class SessionTestSummary:
-    def __init__(
-            self):
+    def __init__(self):
+        self.test_number = None
         self.test_passed = None
         self.test_failed = None
+        self.health_rate = None
 
 
 class TestSummary:

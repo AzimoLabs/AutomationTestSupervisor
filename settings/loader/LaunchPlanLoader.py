@@ -147,10 +147,16 @@ def _load_launch_plan_name():
 
 
 def _load_launch_plan_manifest():
-    launch_manifest_dir = ArgLoader.get_arg_loaded_by(ArgLoader.LAUNCH_MANIFEST_DIR_PREFIX)
-    launch_manifest = LaunchManifest(launch_manifest_dir)
-    Printer.system_message(TAG, "Created LaunchManifest from file: " + Color.GREEN + launch_manifest_dir
-                           + Color.BLUE + ".")
+    launch_manifest_dir = ArgLoader.get_manifest_dir(ArgLoader.LAUNCH_MANIFEST_DIR_KEY)
+
+    if launch_manifest_dir is None:
+        message = ("LaunchManifest file directory was not found. Check if config_files_dir_default.json exists in root " 
+                   "of project. Otherwise check if it's linking to existing file.")
+        raise LauncherFlowInterruptedException(TAG, message)
+    else:
+        launch_manifest = LaunchManifest(launch_manifest_dir)
+        Printer.system_message(TAG, "Created LaunchManifest from file: " + Color.GREEN + launch_manifest_dir
+                               + Color.BLUE + ".")
     return launch_manifest
 
 

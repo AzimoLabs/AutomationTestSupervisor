@@ -37,9 +37,16 @@ def _load_avd_set_name():
 
 
 def _load_avd_manifest():
-    avd_manifest_dir = ArgLoader.get_arg_loaded_by(ArgLoader.AVD_MANIFEST_DIR_PREFIX)
-    avd_manifest = AvdManifest(avd_manifest_dir)
-    Printer.system_message(TAG, "Created AvdManifest from file: " + Color.GREEN + avd_manifest_dir + Color.BLUE + ".")
+    avd_manifest_dir = ArgLoader.get_manifest_dir(ArgLoader.AVD_MANIFEST_DIR_KEY)
+
+    if avd_manifest_dir is None:
+        message = ("AvdManifest file directory was not found. Check if config_files_dir_default.json exists in root of"
+                   + "project. Otherwise check if it's linking to existing file.")
+        raise LauncherFlowInterruptedException(TAG, message)
+    else:
+        avd_manifest = AvdManifest(avd_manifest_dir)
+        Printer.system_message(TAG, "Created AvdManifest from file: " + Color.GREEN + avd_manifest_dir + Color.BLUE
+                               + ".")
     return avd_manifest
 
 

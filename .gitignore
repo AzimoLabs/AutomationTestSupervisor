@@ -95,3 +95,6 @@ ENV/
 
 # Launcher output
 output/
+
+# Config file
+config_files_dir.json

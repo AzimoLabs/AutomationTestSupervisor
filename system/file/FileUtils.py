@@ -65,8 +65,8 @@ def load_json(json_dir):
         json_file = open(json_dir, "r")
         json_data = json_file.read()
     except Exception as e:
-        message = "Unable to open file '{}/{}'. Error message: {}"
-        message = message.format(os.getcwd(), json_dir, str(e))
+        message = "Unable to open file '{}'. Error message: {}"
+        message = message.format(json_dir, str(e))
         raise LauncherFlowInterruptedException(TAG, message)
     finally:
         if json_file is not None and hasattr(json_file, "close"):
@@ -98,7 +98,7 @@ def save_json_dict_to_json(directory, json_dict, file_name):
 
         json.dump(json_dict, output_file, indent=4, ensure_ascii=False)
     except Exception as e:
-        message = "Unable to create file '{}.{}'. Error message: {}"
+        message = "Unable to create file '{}'. Error message: {}"
         message = message.format(file_path, extension, str(e))
         raise LauncherFlowInterruptedException(TAG, message)
     finally:

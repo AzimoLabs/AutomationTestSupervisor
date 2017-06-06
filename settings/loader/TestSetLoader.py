@@ -31,9 +31,16 @@ def _load_test_set_name():
 
 
 def _load_manifest():
-    test_manifest_dir = ArgLoader.get_arg_loaded_by(ArgLoader.TEST_MANIFEST_DIR_PREFIX)
-    test_manifest = TestManifest(test_manifest_dir)
-    Printer.system_message(TAG, "Created TestManifest from file: " + Color.GREEN + test_manifest_dir + Color.BLUE + ".")
+    test_manifest_dir = ArgLoader.get_manifest_dir(ArgLoader.TEST_MANIFEST_DIR_KEY)
+
+    if test_manifest_dir is None:
+        message = ("TestManifest file directory was not found. Check if config_files_dir_default.json exists in root "
+                   "of project. Otherwise check if it's linking to existing file.")
+        raise LauncherFlowInterruptedException(TAG, message)
+    else:
+        test_manifest = TestManifest(test_manifest_dir)
+        Printer.system_message(TAG, "Created TestManifest from file: " + Color.GREEN + test_manifest_dir + Color.BLUE
+                               + ".")
     return test_manifest
 
 

@@ -30,11 +30,26 @@ TAG = "PathsLoader:"
 
 
 def init_paths():
+    _display_manifest_source_info()
+
     path_set_name = _load_path_set_name()
     path_manifest = _load_path_manifest()
     path_set = _load_path_set(path_manifest, path_set_name)
 
     _load_paths_to_global_settings(path_set)
+
+
+def _display_manifest_source_info():
+    if ArgLoader.loading_from_default_file:
+        Printer.system_message(TAG,
+                               "File " + Color.GREEN + ArgLoader.CONFIG_FILES_DIR_CUSTOM_DIR + Color.BLUE
+                               + " was not found! Default will be used!")
+        Printer.system_message(TAG, "File used for locating manifest files: " + Color.GREEN
+                               + ArgLoader.CONFIG_FILES_DIR_DEFAULT_DIR + Color.BLUE + ".")
+    else:
+        Printer.system_message(TAG,
+                               "File used for locating manifest files: " + Color.GREEN
+                               + ArgLoader.CONFIG_FILES_DIR_CUSTOM_DIR + Color.BLUE + ".")
 
 
 def _load_path_set_name():
@@ -48,9 +63,16 @@ def _load_path_set_name():
 
 
 def _load_path_manifest():
-    path_manifest_dir = ArgLoader.get_arg_loaded_by(ArgLoader.PATH_MANIFEST_DIR_PREFIX)
-    path_manifest = PathManifest(path_manifest_dir)
-    Printer.system_message(TAG, "Created PathManifest from file: " + Color.GREEN + path_manifest_dir + Color.BLUE + ".")
+    path_manifest_dir = ArgLoader.get_manifest_dir(ArgLoader.PATH_MANIFEST_DIR_KEY)
+
+    if path_manifest_dir is None:
+        message = ("PathManifest file directory was not found. Check if config_files_dir_default.json exists in root "
+                   "of project. Otherwise check if it's linking to existing file.")
+        raise LauncherFlowInterruptedException(TAG, message)
+    else:
+        path_manifest = PathManifest(path_manifest_dir)
+        Printer.system_message(TAG, "Created PathManifest from file: " + Color.GREEN + path_manifest_dir + Color.BLUE
+                               + ".")
     return path_manifest
 
 

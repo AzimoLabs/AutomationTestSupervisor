@@ -326,6 +326,7 @@ class ApkInstallThread(threading.Thread):
         self.apk_path = apk_path
 
         self.install_time = 0
+        self.note = None
         self.is_finished = False
 
     def run(self):
