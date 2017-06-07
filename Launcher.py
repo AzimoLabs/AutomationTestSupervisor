@@ -249,12 +249,6 @@ class Launcher:
     def _finalization_phase(self):
         Printer.phase("FINALIZATION")
 
-        if self.device_manager is not None and self.device_manager.is_any_avd_visible() \
-                and GlobalConfig.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION:
-            Printer.step("Killing AVD spawned for test session.")
-            self.device_manager.kill_all_avd()
-            self.device_manager.clear_models_based_on_avd_schema()
-
         Printer.step("Displaying saved files during test session.")
         session_logger.dump_saved_files_history()
 
@@ -262,6 +256,12 @@ class Launcher:
         session_logger.log_session_end_time()
         session_logger.save_session_summary()
         session_logger.dump_session_summary()
+
+        if self.device_manager is not None and self.device_manager.is_any_avd_visible() \
+                and GlobalConfig.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION:
+            Printer.step("Killing AVD spawned for test session.")
+            self.device_manager.kill_all_avd()
+            self.device_manager.clear_models_based_on_avd_schema()
 
     def run(self):
         try:

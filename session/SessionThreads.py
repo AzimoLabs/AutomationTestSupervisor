@@ -101,8 +101,8 @@ class TestRecordingSavingThread(threading.Thread):
             if self.recordings and self._all_recordings_has_commands():
                 recording = self.recordings.pop()
 
-                time.sleep(5)
-                ShellHelper.execute_shell(self.recording_pull_cmds.get(recording), True, False)
+                time.sleep(10)
+                ShellHelper.execute_shell(self.recording_pull_cmds.get(recording), False, False)
                 ShellHelper.execute_shell(self.recording_clear_cmds.get(recording), False, False)
 
             if self.should_finish:
