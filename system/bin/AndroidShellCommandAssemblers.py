@@ -78,7 +78,7 @@ class AdbCommandAssembler:
 class AdbShellCommandAssembler:
     get_property_schema = "{} {} {} {}"
     record_screen = "{} {} {} {}"
-    remove_dir = "{} {} {} {}"
+    remove_file = "{} {} {} {}"
     remove_files_in_dir = "{} {} {} {}"
     create_dir = "{} {} {} {}"
 
@@ -94,11 +94,11 @@ class AdbShellCommandAssembler:
                                          AdbShellCommand.SHELL,
                                          AdbShellCommand.RECORD.format(file_dir))
 
-    def assemble_remove_dir_cmd(self, adb_bin, device_adb_name, file_dir):
-        return self.remove_dir.format(adb_bin,
-                                      AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
-                                      AdbShellCommand.SHELL,
-                                      AdbShellCommand.REMOVE_DIR.format(file_dir))
+    def assemble_remove_file_cmd(self, adb_bin, device_adb_name, file_dir):
+        return self.remove_file.format(adb_bin,
+                                       AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                       AdbShellCommand.SHELL,
+                                       AdbShellCommand.REMOVE_FILE.format(file_dir))
 
     def assemble_remove_files_in_dir_cmd(self, adb_bin, device_adb_name, file_dir):
         return self.remove_files_in_dir.format(adb_bin,

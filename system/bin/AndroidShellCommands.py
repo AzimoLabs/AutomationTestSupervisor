@@ -19,7 +19,7 @@ class AdbCommand:
 class AdbShellCommand:
     SHELL = "shell"
     CREATE_DIR = "mkdir {}"
-    REMOVE_DIR = "rm {}"
+    REMOVE_FILE = "rm -f {}"
     REMOVE_FILES_IN_DIR = "rm -r {}"
     RECORD = "screenrecord --bit-rate 2000000 {}"
     GET_PROPERTY = "getprop {}"
@@ -42,7 +42,7 @@ class AdbSettingsCommand:
 
 class AdbLogCatCommand:
     LOG_CAT = "logcat"
-    FLUSH = "-c"
+    FLUSH = "-b all -c"
     DUMP = "-d"
 
 

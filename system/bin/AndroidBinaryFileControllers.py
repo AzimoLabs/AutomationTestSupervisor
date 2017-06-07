@@ -160,8 +160,8 @@ class AdbShellController:
         cmd = self.adb_shell_command_assembler.assemble_record_screen_cmd(self.adb_bin, device_adb_name, file_dir)
         return ShellHelper.execute_shell(cmd, False, False)
 
-    def remove_dir(self, device_adb_name, file_dir):
-        cmd = self.adb_shell_command_assembler.assemble_remove_dir_cmd(self.adb_bin, device_adb_name, file_dir)
+    def remove_file(self, device_adb_name, file_dir):
+        cmd = self.adb_shell_command_assembler.assemble_remove_file_cmd(self.adb_bin, device_adb_name, file_dir)
         return ShellHelper.execute_shell(cmd, True, True)
 
     def remove_files_in_dir(self, device_adb_name, file_dir):

@@ -14,6 +14,7 @@ from session.SessionModels import (
 from session.SessionThreads import (
     TestThread,
     TestSummarySavingThread,
+    TestRecordingSavingThread,
     TestLogCatMonitorThread,
     TestLogcatSavingThread,
     ApkInstallThread
@@ -481,6 +482,7 @@ class ApkManager:
 class TestManager:
     TAG = "TestManager:"
     DEVICE_NAME_PLACEHOLDER = "device_name_to_replace"
+    RECORDING_DIR_PLACEHOLDER = "recording_dir_to_replace"
 
     def __init__(self, instrumentation_runner_controller, adb_controller, adb_shell_controller, logcat_controller,
                  device_store, test_store):
@@ -505,12 +507,14 @@ class TestManager:
 
         threads_finished = False
         logcat_threads_num = len(devices)
+        recording_threads_num = len(devices) if GlobalConfig.SHOULD_RECORD_TESTS else 0
         test_threads_num = len(test_cmd_templates)
 
         logcat_threads = list()
         test_threads = list()
         test_log_saving_threads = list()
         logcat_saving_threads = list()
+        test_recording_saving_threads = list()
 
         try:
             while not threads_finished:
@@ -521,6 +525,12 @@ class TestManager:
                                                                 GlobalConfig.SHOULD_RECORD_TESTS)
                         logcat_threads.append(logcat_thread)
                         logcat_thread.start()
+
+                if len(test_recording_saving_threads) != recording_threads_num:
+                    for device in devices:
+                        test_recording_saving_thread = TestRecordingSavingThread(device)
+                        test_recording_saving_threads.append(test_recording_saving_thread)
+                        test_recording_saving_thread.start()
 
                 if len(test_threads) != test_threads_num and all(t.logcat_process is not None for t in logcat_threads):
                     for device in devices:
@@ -560,28 +570,61 @@ class TestManager:
                         logcat_saving_thread.start()
                         logcat_thread.logs.clear()
 
-                        # if len(logcat_thread.recordings) > 0:
-                        #     logger.save_recordings(self.adb_controller,
-                        #                            copy.deepcopy(logcat_thread.device),
-                        #                            copy.deepcopy(logcat_thread.recordings))
-                        #     logcat_thread.recordings.clear()
+                    if len(logcat_thread.recordings) > 0:
+                        device = logcat_thread.device
+                        current_recordings = copy.deepcopy(logcat_thread.recordings)
+
+                        for recording_saving_thread in test_recording_saving_threads:
+                            if recording_saving_thread.device.adb_name == device.adb_name:
+                                pull_cmd_list = list()
+                                clear_cmd_list = list()
+                                for recording_name in current_recordings:
+                                    recording_dir = FileUtils.add_ending_slash(FileUtils.clean_path(
+                                        GlobalConfig.DEVICE_VIDEO_STORAGE_DIR)) + recording_name
+                                    pull_cmd_list.append(self._prepare_pull_recording_cmd(device, recording_dir))
+                                    clear_cmd_list.append(self._prepare_remove_recording_cmd(device, recording_dir))
+
+                                    recording_saving_thread.add_recordings(current_recordings)
+                                    recording_saving_thread.add_pull_recording_cmds(pull_cmd_list)
+                                    recording_saving_thread.add_clear_recordings_cmd(clear_cmd_list)
+
+                        logcat_thread.recordings.clear()
 
                 if len(test_threads) == test_threads_num \
                         and all(not t.is_alive() for t in test_threads) \
                         and all(t.is_finished() for t in test_log_saving_threads) \
                         and all(t.is_finished() for t in logcat_saving_threads):
+
                     for test_thread in test_threads:
                         test_thread.kill_processes()
-                    test_threads.clear()
+                        test_thread.join()
 
                     for logcat_thread in logcat_threads:
                         logcat_thread.kill_processes()
-                    logcat_threads.clear()
+                        logcat_thread.join()
 
+                    for test_log_saving_thread in test_log_saving_threads:
+                        test_log_saving_thread.join()
+
+                    for logcat_saving_thread in logcat_saving_threads:
+                        logcat_saving_thread.join()
+
+                    test_threads.clear()
+                    logcat_threads.clear()
                     test_log_saving_threads.clear()
                     logcat_saving_threads.clear()
 
-                threads_finished = len(test_threads) == 0 and len(logcat_threads) == 0 and len(test_cmd_templates) == 0
+                if len(test_recording_saving_threads) > 0 and len(logcat_threads) == 0:
+                    if all(len(t.recordings) == 0 for t in test_recording_saving_threads):
+                        for recording_thread in test_recording_saving_threads:
+                            recording_thread.kill_processes()
+                            recording_thread.join()
+
+                        test_recording_saving_threads.clear()
+
+                threads_finished = len(logcat_threads) == 0 and len(test_threads) == 0 and len(
+                    test_log_saving_threads) == 0 and len(logcat_saving_threads) == 0 and len(
+                    test_recording_saving_threads) == 0 and len(test_cmd_templates) == 0
         except Exception as e:
             message = "Error has occurred during test session: \n" + str(e)
             raise LauncherFlowInterruptedException(self.TAG, message)
@@ -589,15 +632,44 @@ class TestManager:
             if len(test_threads) > 0:
                 for test_thread in test_threads:
                     test_thread.kill_processes()
-                test_threads.clear()
+                    test_thread.join()
 
             if len(logcat_threads) > 0:
                 for logcat_thread in logcat_threads:
                     logcat_thread.kill_processes()
-                logcat_threads.clear()
+                    logcat_thread.join()
 
+            if len(test_log_saving_threads) > 0:
+                for test_log_saving_thread in test_log_saving_threads:
+                    test_log_saving_thread.join()
+
+            if len(logcat_saving_threads) > 0:
+                for logcat_saving_thread in logcat_saving_threads:
+                    logcat_saving_thread.join()
+
+            if len(test_recording_saving_threads) > 0:
+                for recording_thread in test_recording_saving_threads:
+                    recording_thread.kill_processes()
+                    recording_thread.join()
+
+            test_threads.clear()
+            logcat_threads.clear()
             test_log_saving_threads.clear()
             logcat_saving_threads.clear()
+            test_recording_saving_threads.clear()
+
+    def _prepare_pull_recording_cmd(self, device, file_dir):
+        adb_cmd_assembler = self.adb_controller.adb_command_assembler
+        return adb_cmd_assembler.assemble_pull_file_cmd(self.adb_shell_controller.adb_bin,
+                                                        device.adb_name,
+                                                        file_dir,
+                                                        GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR)
+
+    def _prepare_remove_recording_cmd(self, device, file_dir):
+        adb_shell_cmd_assembler = self.adb_shell_controller.adb_shell_command_assembler
+        return adb_shell_cmd_assembler.assemble_remove_file_cmd(self.adb_shell_controller.adb_bin,
+                                                                device.adb_name,
+                                                                file_dir)
 
     def _prepare_device_control_cmds(self, devices):
         device_commands_dict = dict()

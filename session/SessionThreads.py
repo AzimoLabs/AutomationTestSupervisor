@@ -83,6 +83,62 @@ class TestLogcatSavingThread(threading.Thread):
                and all(os.path.isfile(file) for file in self.created_files)
 
 
+class TestRecordingSavingThread(threading.Thread):
+    TAG = "TestRecordingSavingThread"
+
+    def __init__(self, device):
+        super().__init__()
+        self.device = device
+
+        self.recordings = list()
+        self.recording_pull_cmds = dict()
+        self.recording_clear_cmds = dict()
+
+        self.should_finish = False
+
+    def run(self):
+        while True:
+            if self.recordings and self._all_recordings_has_commands():
+                recording = self.recordings.pop()
+
+                time.sleep(5)
+                ShellHelper.execute_shell(self.recording_pull_cmds.get(recording), True, False)
+                ShellHelper.execute_shell(self.recording_clear_cmds.get(recording), False, False)
+
+            if self.should_finish:
+                break
+
+    def _all_recordings_has_commands(self):
+        all_recordings_have_commands = True
+        for recording in self.recordings:
+            pull_cmd = self.recording_pull_cmds.get(recording)
+            remove_cmd = self.recording_clear_cmds.get(recording)
+
+            if pull_cmd is None or remove_cmd is None:
+                all_recordings_have_commands = False
+                break
+
+        return all_recordings_have_commands
+
+    def add_recordings(self, recording_list):
+        self.recordings.extend(recording_list)
+
+    def add_pull_recording_cmds(self, pull_recording_cmds):
+        for cmd in pull_recording_cmds:
+            for recording_name in self.recordings:
+                if recording_name in cmd:
+                    self.recording_pull_cmds.update({recording_name: cmd})
+
+    def add_clear_recordings_cmd(self, clear_recording_cmds):
+        for cmd in clear_recording_cmds:
+            for recording_name in self.recordings:
+                if recording_name in cmd:
+                    self.recording_clear_cmds.update({recording_name: cmd})
+
+    def kill_processes(self):
+        self.should_finish = True
+
+
 class TestRecordingThread(threading.Thread):
     TAG = "TestRecordingThread<device_adb_name>:"
 
@@ -138,7 +194,6 @@ class TestLogCatMonitorThread(threading.Thread):
         self.screen_recording_thread = None
 
     def run(self):
-        ShellHelper.execute_shell(self.flush_logcat_cmd, False, False)
         with subprocess.Popen(self.monitor_logcat_cmd, shell=True, stdout=subprocess.PIPE, bufsize=1,
                               universal_newlines=True, errors="replace") as p:
             self.logcat_process = p
@@ -210,6 +265,8 @@ class TestLogCatMonitorThread(threading.Thread):
                     current_log = None
                     current_process_pid = None
                     current_recording_name = None
+
+                    ShellHelper.execute_shell(self.flush_logcat_cmd, False, False)
 
     def _stop_recording(self):
         if self.screen_recording_thread is not None:
