@@ -194,6 +194,7 @@ class TestLogCatMonitorThread(threading.Thread):
         self.screen_recording_thread = None
 
     def run(self):
+        ShellHelper.execute_shell(self.flush_logcat_cmd, False, False)
         with subprocess.Popen(self.monitor_logcat_cmd, shell=True, stdout=subprocess.PIPE, bufsize=1,
                               universal_newlines=True, errors="replace") as p:
             self.logcat_process = p
@@ -265,8 +266,6 @@ class TestLogCatMonitorThread(threading.Thread):
                     current_log = None
                     current_process_pid = None
                     current_recording_name = None
-
-                    ShellHelper.execute_shell(self.flush_logcat_cmd, False, False)
 
     def _stop_recording(self):
         if self.screen_recording_thread is not None:

@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fe754bc4-9da6-479c-8fe2-66b4852721c5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Launcher.py" afterPath="$PROJECT_DIR$/Launcher.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/session/SessionThreads.py" afterPath="$PROJECT_DIR$/session/SessionThreads.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,11 +17,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Launcher.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Launcher.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Launcher.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="434">
-              <caret line="263" column="66" lean-forward="false" selection-start-line="263" selection-start-column="66" selection-end-line="263" selection-end-column="66" />
+            <state relative-caret-position="329">
+              <caret line="256" column="45" lean-forward="false" selection-start-line="256" selection-start-column="45" selection-end-line="256" selection-end-column="45" />
               <folding>
                 <element signature="e#0#61#0" expanded="true" />
               </folding>
@@ -34,7 +33,7 @@
         <entry file="file://$PROJECT_DIR$/session/SessionManagers.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="646">
-              <caret line="572" column="57" lean-forward="true" selection-start-line="572" selection-start-column="57" selection-end-line="572" selection-end-column="57" />
+              <caret line="572" column="57" lean-forward="false" selection-start-line="572" selection-start-column="57" selection-end-line="572" selection-end-column="57" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -42,11 +41,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SessionThreads.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SessionThreads.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/session/SessionThreads.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="139">
-              <caret line="85" column="6" lean-forward="false" selection-start-line="85" selection-start-column="6" selection-end-line="85" selection-end-column="6" />
+            <state relative-caret-position="149">
+              <caret line="196" column="70" lean-forward="false" selection-start-line="196" selection-start-column="70" selection-end-line="196" selection-end-column="70" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -107,7 +106,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Summary.</find>
       <find>boot_finished</find>
       <find>status_dict</find>
       <find>apk_install_thread</find>
@@ -137,6 +135,7 @@
       <find>print(</find>
       <find>logcat</find>
       <find>flush</find>
+      <find>lush</find>
     </findStrings>
     <replaceStrings>
       <replace>create_avd_tag</replace>
@@ -205,8 +204,8 @@
         <option value="$PROJECT_DIR$/system/bin/AndroidBinaryFileControllers.py" />
         <option value="$PROJECT_DIR$/system/bin/AndroidShellCommands.py" />
         <option value="$PROJECT_DIR$/session/SessionManagers.py" />
-        <option value="$PROJECT_DIR$/session/SessionThreads.py" />
         <option value="$PROJECT_DIR$/Launcher.py" />
+        <option value="$PROJECT_DIR$/session/SessionThreads.py" />
       </list>
     </option>
   </component>
@@ -381,6 +380,60 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="output" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AutomationTestSupervisor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AutomationTestSupervisor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="output" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test_results" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AutomationTestSupervisor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AutomationTestSupervisor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="output" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test_logcats" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AutomationTestSupervisor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AutomationTestSupervisor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="output" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="recordings" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -674,7 +727,7 @@
     <frame x="-1917" y="-203" width="2020" height="1094" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36435643" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.02920792" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32965517" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.50277776" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3395122" sideWeight="0.4861111" order="1" side_tool="false" content_ui="tabs" />
@@ -1088,29 +1141,29 @@
     <entry file="file://$PROJECT_DIR$/session/SessionManagers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="646">
-          <caret line="572" column="57" lean-forward="true" selection-start-line="572" selection-start-column="57" selection-end-line="572" selection-end-column="57" />
+          <caret line="572" column="57" lean-forward="false" selection-start-line="572" selection-start-column="57" selection-end-line="572" selection-end-column="57" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/session/SessionThreads.py">
+    <entry file="file://$PROJECT_DIR$/Launcher.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="85" column="6" lean-forward="false" selection-start-line="85" selection-start-column="6" selection-end-line="85" selection-end-column="6" />
+        <state relative-caret-position="329">
+          <caret line="256" column="45" lean-forward="false" selection-start-line="256" selection-start-column="45" selection-end-line="256" selection-end-column="45" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#61#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Launcher.py">
+    <entry file="file://$PROJECT_DIR$/session/SessionThreads.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="434">
-          <caret line="263" column="66" lean-forward="false" selection-start-line="263" selection-start-column="66" selection-end-line="263" selection-end-column="66" />
+        <state relative-caret-position="149">
+          <caret line="196" column="70" lean-forward="false" selection-start-line="196" selection-start-column="70" selection-end-line="196" selection-end-column="70" />
           <folding>
-            <element signature="e#0#61#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
