@@ -186,7 +186,7 @@ class AvdManagerCommandAssembler:
         part_package = AvdManagerCommand.CreateAvdCommandPart.AVD_PACKAGE.format(avd_schema.create_avd_package)
 
         if avd_schema.create_avd_device == "":
-            part_device = avd_schema.avd_device
+            part_device = avd_schema.create_avd_device
         else:
             part_device = AvdManagerCommand.CreateAvdCommandPart.AVD_DEVICE.format(avd_schema.create_avd_device)
 

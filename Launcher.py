@@ -79,6 +79,7 @@ class Launcher:
 
         Printer.step("Launcher started working!")
         Version.info()
+        Version.python_check()
 
     def _load_config_phase(self):
         Printer.phase("LOADING CONFIG")

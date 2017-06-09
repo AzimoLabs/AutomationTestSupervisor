@@ -37,7 +37,7 @@ def get_manifest_dir(key):
 
 
 LAUNCH_PLAN_DEFAULT = "default"
-TEST_SET_DEFAULT = None
+TEST_SET_DEFAULT = "default"
 AVD_SET_DEFAULT = "default"
 PATH_SET_DEFAULT = "default"
 

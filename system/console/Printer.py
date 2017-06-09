@@ -9,7 +9,14 @@ def phase(message):
 
 
 def error(tag, message):
-    print(Color.RED + '[{:%H:%M:%S}] - '.format(datetime.datetime.now()) + tag + " " + message + Color.END)
+    message_assembly = ""
+
+    message_assembly += Color.RED + '[{:%H:%M:%S}] - '.format(datetime.datetime.now())
+    if tag != "":
+        message_assembly += tag + " "
+    message_assembly += message + Color.END
+
+    print(message_assembly)
 
 
 def step(message):

@@ -109,7 +109,7 @@ def save_json_dict_to_json(directory, json_dict, file_name):
 
 
 def clean_folder_only_dir(path):
-    return remove_slash_pairs(add_starting_slash(add_ending_slash(clean_path(path))))
+    return remove_slash_pairs(add_ending_slash(clean_path(path)))
 
 
 def clean_path(path):
