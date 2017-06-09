@@ -5,7 +5,7 @@ __pycache__/
 
 # Pyc files
 *.pyc
-*cpython-36.pyc
+*.cpython-36.pyc
 
 # C extensions
 *.so
