@@ -183,6 +183,9 @@ class Launcher:
             self.device_manager.add_models_representing_outside_session_devices()
             self.device_manager.add_models_representing_outside_session_virtual_devices()
 
+        if not self.device_manager.is_any_avd_visible:
+            quit()
+
         if GlobalConfig.IGNORED_DEVICE_LIST:
             Printer.step("Checking device ignore list")
             self.device_manager.clear_models_with_android_ids_in_ignore_list()

@@ -11,7 +11,7 @@ from system.file.FileUtils import (
 TAG = "ArgLoader:"
 
 CONFIG_FILES_DIR_DEFAULT_DIR = clean_path(add_ending_slash(get_project_root()) + "config_files_dir_default.json")
-CONFIG_FILES_DIR_CUSTOM_DIR = clean_path(add_ending_slash(get_project_root()) + "config_files_dir.json")
+CONFIG_FILES_DIR_CUSTOM_DIR = clean_path(add_ending_slash(get_project_root()) + "custom_config/config_files_dir.json")
 
 LAUNCH_MANIFEST_DIR_KEY = "launch_manifest_path"
 TEST_MANIFEST_DIR_KEY = "test_manifest_path"

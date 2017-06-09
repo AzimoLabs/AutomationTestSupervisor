@@ -307,6 +307,8 @@ class DeviceManager:
         self.device_store.update_model_statuses()
         return any("emulator" in device.adb_name for device in self.device_store.get_devices())
 
+    def is_any_device_visible(self):
+        return len(self.device_store.get_devices()) > 0
 
 class ApkManager:
     TAG = "ApkManager:"

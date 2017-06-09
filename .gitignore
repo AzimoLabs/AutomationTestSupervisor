@@ -97,7 +97,7 @@ ENV/
 output/
 
 # Config file
-config_files_dir.json
+custom_config/*
 
 # Project idea
 .idea/
