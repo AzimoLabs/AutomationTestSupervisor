@@ -98,3 +98,6 @@ output/
 
 # Config file
 config_files_dir.json
+
+# Project idea
+.idea/
