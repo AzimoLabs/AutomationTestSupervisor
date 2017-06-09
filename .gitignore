@@ -100,8 +100,5 @@ ENV/
 # Launcher output
 output/
 
-# Config file
-custom_config/*
-
 # Project idea
 .idea/

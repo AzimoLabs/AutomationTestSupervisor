@@ -1,0 +1,6 @@
+{
+  "path_manifest_path": "../automationTestSupervisorConfig/pathManifest.json",
+  "launch_manifest_path": "../automationTestSupervisorConfig/launchManifest.json",
+  "test_manifest_path": "../automationTestSupervisorConfig/testManifest.json",
+  "avd_manifest_path": "../automationTestSupervisorConfig/avdManifest.json"
+}

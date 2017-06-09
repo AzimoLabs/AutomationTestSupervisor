@@ -1,7 +1,7 @@
 from error.Exceptions import LauncherFlowInterruptedException
 
 from settings.loader import ArgLoader
-from settings.manifest.test.TestManifestModels import TestManifest
+from settings.manifest.models.TestManifestModels import TestManifest
 
 from system.console import (
     Printer,
@@ -34,7 +34,7 @@ def _load_manifest():
     test_manifest_dir = ArgLoader.get_manifest_dir(ArgLoader.TEST_MANIFEST_DIR_KEY)
 
     if test_manifest_dir is None:
-        message = ("TestManifest file directory was not found. Check if config_files_dir_default.json exists in root "
+        message = ("TestManifest file directory was not found. Check if config_files_dir.json exists in root "
                    "of project. Otherwise check if it's linking to existing file.")
         raise LauncherFlowInterruptedException(TAG, message)
     else:

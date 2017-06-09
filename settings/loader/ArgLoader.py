@@ -10,28 +10,19 @@ from system.file.FileUtils import (
 
 TAG = "ArgLoader:"
 
-CONFIG_FILES_DIR_DEFAULT_DIR = clean_path(add_ending_slash(get_project_root()) + "config_files_dir_default.json")
-CONFIG_FILES_DIR_CUSTOM_DIR = clean_path(add_ending_slash(get_project_root()) + "custom_config/config_files_dir.json")
+CONFIG_FILES_DIR_DEFAULT_DIR = clean_path(add_ending_slash(get_project_root()) + "config_files_dir.json")
 
 LAUNCH_MANIFEST_DIR_KEY = "launch_manifest_path"
 TEST_MANIFEST_DIR_KEY = "test_manifest_path"
 AVD_MANIFEST_DIR_KEY = "avd_manifest_path"
 PATH_MANIFEST_DIR_KEY = "path_manifest_path"
 
-config_files_dir = None
-loading_from_default_file = False
-
-if os.path.isfile(CONFIG_FILES_DIR_CUSTOM_DIR):
-    config_files_dir = load_json(CONFIG_FILES_DIR_CUSTOM_DIR)
-    loading_from_default_file = False
-elif os.path.isfile(CONFIG_FILES_DIR_DEFAULT_DIR):
-    config_files_dir = load_json(CONFIG_FILES_DIR_DEFAULT_DIR)
-    loading_from_default_file = True
+config_files_dir = load_json(CONFIG_FILES_DIR_DEFAULT_DIR)
 
 
 def get_manifest_dir(key):
     if config_files_dir is None:
-        return config_files_dir
+        return None
     else:
         return config_files_dir[key]
 

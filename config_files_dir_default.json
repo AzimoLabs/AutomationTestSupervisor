@@ -1,6 +1,0 @@
-{
-  "path_manifest_path": "./settings/manifest/path/pathManifest.json",
-  "launch_manifest_path": "./settings/manifest/launch/launchManifest.json",
-  "test_manifest_path": "./settings/manifest/test/testManifest.json",
-  "avd_manifest_path": "./settings/manifest/avd/avdManifest.json"
-}

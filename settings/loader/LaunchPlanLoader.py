@@ -1,11 +1,9 @@
 from error.Exceptions import LauncherFlowInterruptedException
-
 from settings import GlobalConfig
 from settings.loader import ArgLoader
-from settings.manifest.launch.LaunchManifestModels import LaunchManifest
-
-from system.console import Printer
+from settings.manifest.models.LaunchManifestModels import LaunchManifest
 from system.console import Color
+from system.console import Printer
 
 TAG = "LaunchPlanLoader:"
 
@@ -150,7 +148,7 @@ def _load_launch_plan_manifest():
     launch_manifest_dir = ArgLoader.get_manifest_dir(ArgLoader.LAUNCH_MANIFEST_DIR_KEY)
 
     if launch_manifest_dir is None:
-        message = ("LaunchManifest file directory was not found. Check if config_files_dir_default.json exists in root " 
+        message = ("LaunchManifest file directory was not found. Check if config_files_dir.json exists in root " 
                    "of project. Otherwise check if it's linking to existing file.")
         raise LauncherFlowInterruptedException(TAG, message)
     else:

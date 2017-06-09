@@ -1,11 +1,9 @@
 import os
 
 from error.Exceptions import LauncherFlowInterruptedException
-
 from settings import GlobalConfig
 from settings.loader import ArgLoader
-from settings.manifest.path.PathManifestModels import PathManifest
-
+from settings.manifest.models.PathManifestModels import PathManifest
 from system.console import (
     Printer,
     Color
@@ -40,16 +38,9 @@ def init_paths():
 
 
 def _display_manifest_source_info():
-    if ArgLoader.loading_from_default_file:
-        Printer.system_message(TAG,
-                               "File " + Color.GREEN + ArgLoader.CONFIG_FILES_DIR_CUSTOM_DIR + Color.BLUE
-                               + " was not found! Default will be used!")
-        Printer.system_message(TAG, "File used for locating manifest files: " + Color.GREEN
-                               + ArgLoader.CONFIG_FILES_DIR_DEFAULT_DIR + Color.BLUE + ".")
-    else:
-        Printer.system_message(TAG,
-                               "File used for locating manifest files: " + Color.GREEN
-                               + ArgLoader.CONFIG_FILES_DIR_CUSTOM_DIR + Color.BLUE + ".")
+    Printer.system_message(TAG,
+                           "File used for locating manifest files: " + Color.GREEN
+                           + ArgLoader.CONFIG_FILES_DIR_DEFAULT_DIR + Color.BLUE + ".")
 
 
 def _load_path_set_name():
@@ -66,7 +57,7 @@ def _load_path_manifest():
     path_manifest_dir = ArgLoader.get_manifest_dir(ArgLoader.PATH_MANIFEST_DIR_KEY)
 
     if path_manifest_dir is None:
-        message = ("PathManifest file directory was not found. Check if config_files_dir_default.json exists in root "
+        message = ("PathManifest file directory was not found. Check if config_files_dir.json exists in root "
                    "of project. Otherwise check if it's linking to existing file.")
         raise LauncherFlowInterruptedException(TAG, message)
     else:
