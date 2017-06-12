@@ -499,7 +499,7 @@ def dump_saved_files_history():
 
 
 def save_session_summary():
-    if GlobalConfig.OUTPUT_DIR is not None and os.path.exists(GlobalConfig.OUTPUT_DIR):
+    if GlobalConfig.OUTPUT_SUMMARY_LOG_DIR is not None and os.path.exists(GlobalConfig.OUTPUT_SUMMARY_LOG_DIR):
         session_log_json_dict = copy.deepcopy(session_log)
         session_log_json_dict.time_summary = vars(session_log.time_summary)
         session_log_json_dict.apk_summary = vars(session_log.apk_summary)
@@ -509,4 +509,4 @@ def save_session_summary():
             session_log_json_dict.device_summaries.append(vars(device_summary))
         session_log_json_dict = vars(session_log_json_dict)
 
-        FileUtils.save_json_dict_to_json(GlobalConfig.OUTPUT_DIR, session_log_json_dict, "session_summary")
+        FileUtils.save_json_dict_to_json(GlobalConfig.OUTPUT_SUMMARY_LOG_DIR, session_log_json_dict, "session_summary")

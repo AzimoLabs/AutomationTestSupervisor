@@ -18,7 +18,6 @@ from system.console import (
     Color
 )
 
-
 class ApkStore:
     TAG = "ApkStore:"
 

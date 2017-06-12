@@ -18,6 +18,7 @@ ANDROID_HOME_ENV = os.getenv('ANDROID_HOME')
 ANDROID_SDK_HOME_ENV = os.getenv('ANDROID_SDK_HOME')
 
 OUTPUT_DIR_DEFAULT = os.path.abspath(os.path.dirname(__name__)) + "/output/"
+OUTPUT_SUMMARY_LOG_FOLDER_DEFAULT = "/summary"
 OUTPUT_AVD_LOG_FOLDER_DEFAULT = "/avd_logs"
 OUTPUT_TEST_LOG_FOLDER_DEFAULT = "/test_results"
 OUTPUT_TEST_LOGCAT_FOLDER_DEFAULT = "/test_logcats"
@@ -127,6 +128,15 @@ def _load_paths_to_global_settings(path_set):
         raise LauncherFlowInterruptedException(TAG, message)
     Printer.system_message(TAG, "Launcher will generate log from tests in dir: " + Color.GREEN +
                            GlobalConfig.OUTPUT_DIR + Color.BLUE + ".")
+
+    GlobalConfig.OUTPUT_SUMMARY_LOG_DIR = clean_folder_only_dir(
+        GlobalConfig.OUTPUT_DIR + OUTPUT_SUMMARY_LOG_FOLDER_DEFAULT)
+    if not os.path.isabs(GlobalConfig.OUTPUT_SUMMARY_LOG_DIR):
+        message = "Path " + GlobalConfig.OUTPUT_SUMMARY_LOG_DIR + " needs to be absolute!"
+        raise LauncherFlowInterruptedException(TAG, message)
+    Printer.system_message(TAG,
+                           "Summary log will be stored in dir: " + Color.GREEN + GlobalConfig.OUTPUT_SUMMARY_LOG_DIR
+                           + Color.BLUE + ".")
 
     GlobalConfig.OUTPUT_AVD_LOG_DIR = clean_folder_only_dir(GlobalConfig.OUTPUT_DIR + OUTPUT_AVD_LOG_FOLDER_DEFAULT)
     if not os.path.isabs(GlobalConfig.OUTPUT_AVD_LOG_DIR):

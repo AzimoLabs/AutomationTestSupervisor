@@ -38,7 +38,11 @@ class CleanUpManager:
         self.adb_shell_controller = adb_shell_controller
 
     def prepare_output_directories(self):
-        for directory in [GlobalConfig.OUTPUT_DIR,
+        if not FileUtils.dir_exists(GlobalConfig.OUTPUT_DIR):
+            Printer.system_message(self.TAG, "Directory " + Color.GREEN + GlobalConfig.OUTPUT_DIR + Color.BLUE
+                                   + " not found. Creating...")
+
+        for directory in [GlobalConfig.OUTPUT_SUMMARY_LOG_DIR,
                           GlobalConfig.OUTPUT_AVD_LOG_DIR,
                           GlobalConfig.OUTPUT_TEST_LOG_DIR,
                           GlobalConfig.OUTPUT_TEST_LOGCAT_DIR,
@@ -309,6 +313,7 @@ class DeviceManager:
 
     def is_any_device_visible(self):
         return len(self.device_store.get_devices()) > 0
+
 
 class ApkManager:
     TAG = "ApkManager:"

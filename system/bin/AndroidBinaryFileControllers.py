@@ -333,8 +333,7 @@ class EmulatorController:
         cmd = self.emulator_command_assembler.assemble_launch_avd_cmd(emulator_binary, avd_schema, port, log_file)
         return ShellHelper.execute_shell(cmd, True, False)
 
-    @staticmethod
-    def apply_config_to_avd(avd_schema):
+    def apply_config_to_avd(self, avd_schema):
         config_ini_to_apply_filepath = clean_path(avd_schema.create_avd_hardware_config_filepath)
 
         real_config_ini_file_path = clean_path(
@@ -344,18 +343,22 @@ class EmulatorController:
         real_config_ini_file = None
         config_ini_to_apply_file = None
         try:
-            config_ini_to_apply_file = open(config_ini_to_apply_filepath, "r")
-            real_config_ini_file = open(real_config_ini_file_path, "w")
-            real_config_ini_file.seek(0)
-            real_config_ini_file.truncate()
+            if os.path.isfile(config_ini_to_apply_filepath):
+                config_ini_to_apply_file = open(config_ini_to_apply_filepath, "r")
+                real_config_ini_file = open(real_config_ini_file_path, "w")
+                real_config_ini_file.seek(0)
+                real_config_ini_file.truncate()
 
-            for config_line in config_ini_to_apply_file.readlines():
-                temp_lane = config_line
-                if "AvdId=" in config_line:
-                    temp_lane = ("AvdId=" + str(avd_schema.avd_name) + "\n")
-                if "avd.ini.displayname=" in config_line:
-                    temp_lane = ("avd.ini.displayname=" + str(avd_schema.avd_name) + "\n")
-                real_config_ini_file.write(temp_lane)
+                for config_line in config_ini_to_apply_file.readlines():
+                    temp_lane = config_line
+                    if "AvdId=" in config_line:
+                        temp_lane = ("AvdId=" + str(avd_schema.avd_name) + "\n")
+                    if "avd.ini.displayname=" in config_line:
+                        temp_lane = ("avd.ini.displayname=" + str(avd_schema.avd_name) + "\n")
+                    real_config_ini_file.write(temp_lane)
+            else:
+                message = "Filepath '" + config_ini_to_apply_filepath + "' not found!"
+                raise LauncherFlowInterruptedException(self.TAG, message)
         finally:
             if real_config_ini_file is not None:
                 real_config_ini_file.close()
