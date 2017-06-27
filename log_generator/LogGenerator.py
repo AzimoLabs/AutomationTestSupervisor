@@ -65,7 +65,7 @@ GENERATOR_LOGCAT_STYLE_FILE_NAME = "logcat.css"
 
 
 def generate_logs(test_set):
-    if test_set.shard:
+    if test_set is not None and test_set.shard:
         generate_session_logs_for_shard_run()
     else:
         generate_session_logs_for_parallel_run()
