@@ -25,7 +25,8 @@ from system.console import (
 )
 from system.file.FileUtils import (
     clean_path,
-    add_ending_slash
+    add_ending_slash,
+    list_files_in_dir
 )
 
 
@@ -41,7 +42,7 @@ class AaptController:
         self.aapt_command_assembler = AaptCommandAssembler()
 
     def _find_latest_build_tools(self):
-        build_tools = os.listdir(clean_path(add_ending_slash(GlobalConfig.SDK_DIR) + "build-tools"))
+        build_tools =list_files_in_dir(clean_path(add_ending_slash(GlobalConfig.SDK_DIR) + "build-tools"))
         build_tools = [build_tool for build_tool in build_tools if build_tool[0].isdigit()]
         build_tools_folder_with_highest_ver = None
         Printer.system_message(self.TAG, "Available Android SDK Build-Tools versions: " + str(build_tools))
@@ -308,7 +309,7 @@ class EmulatorController:
 
         emulator_dir = clean_path(add_ending_slash(str(GlobalConfig.SDK_DIR)) + "emulator/")
         try:
-            for the_file in os.listdir(emulator_dir):
+            for the_file in list_files_in_dir(emulator_dir):
                 file_path = os.path.join(emulator_dir, the_file)
                 if os.path.isfile(file_path) and "emulator" in file_path:
                     binary_name = re.findall("emulator\/(emulator*.+)", file_path)

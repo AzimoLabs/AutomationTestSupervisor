@@ -34,7 +34,6 @@ class AdbCommandAssembler:
     waif_for_device_schema = "{} {}"
     kill_device_schema = "{} {} {}"
     install_apk_schema = "{} {} {} {}"
-    uninstall_package_schema = "{} {} {}"
     pull_file_schema = "{} {} {}"
 
     def assemble_start_server_cmd(self, adb_bin):
@@ -63,11 +62,6 @@ class AdbCommandAssembler:
                                               AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
                                               AdbCommand.INSTALL_APK.format(apk_name),
                                               GeneralCommand.CHANGE_THREAD)
-
-    def assemble_uninstall_package_cmd(self, adb_bin, device_adb_name, package):
-        return self.uninstall_package_schema.format(adb_bin,
-                                                    AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
-                                                    AdbCommand.UNINSTALL_PACKAGE.format(package))
 
     def assemble_pull_file_cmd(self, adb_bin, device_adb_name, file_dir, file_destination_dir):
         return self.pull_file_schema.format(adb_bin,

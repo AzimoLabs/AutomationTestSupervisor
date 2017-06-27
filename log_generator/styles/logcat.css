@@ -1,0 +1,72 @@
+.logcat_header {
+    width: 100%;
+
+    background-color: #0e2b59;
+    color: #ffffff;
+
+    font-family: "Verdana", Geneva, sans-serif;
+    font-size: 14px;
+    text-align: center;
+
+    padding: 8px;
+}
+
+.logcat_table {   
+  width: 100%;
+}
+
+.logcat_debug_row {
+  display: table-row;
+
+  background-color: #ffffff;
+}
+
+.logcat_info_row {
+  display: table-row;
+
+  background-color: #d3f2ff;
+}
+
+.logcat_verbose_row {
+  display: table-row;
+
+  background-color: #ffffff;
+}
+
+.logcat_warning_row {
+  display: table-row;
+
+  background-color: #fff7d3;
+}
+
+.logcat_error_row {
+  display: table-row;
+
+  background-color: #ffd3d3;
+}
+
+.cell {
+    display: table-cell;
+
+    font-family: "Verdana", Geneva, sans-serif;
+    font-weight: normal;
+    font-size: 12px;
+
+    padding: 3px 6px;
+}
+.date_cell {
+    min-width: 45px;
+}
+
+.message_cell {
+    text-align: left;
+
+    word-wrap: break-word;
+    word-break: break-all;
+
+    padding-left: 12px;
+}
+
+.centered_cell {
+    text-align: center
+}

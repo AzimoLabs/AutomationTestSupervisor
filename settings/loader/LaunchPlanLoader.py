@@ -49,10 +49,10 @@ def _load_launch_plan_to_global_settings(launch_plan):
         message = "ADB_CALL_BUFFER_DELAY_BETWEEN_CMD cannot be negative! Launcher will quit."
         raise LauncherFlowInterruptedException(TAG, message)
 
-    Printer.system_message(TAG, "Device preparation phase settings:")
-    device_prep_settings = launch_plan.device_preparation_phase
-
     if is_avd_session_requested:
+        Printer.system_message(TAG, "Device preparation phase settings:")
+        device_prep_settings = launch_plan.device_preparation_phase
+
         GlobalConfig.SHOULD_RECREATE_EXISTING_AVD = device_prep_settings.avd_should_recreate_existing
         if GlobalConfig.SHOULD_RECREATE_EXISTING_AVD:
             Printer.system_message(TAG, "  * If requested AVD already exists - it will be" + Color.GREEN +

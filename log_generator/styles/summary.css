@@ -1,0 +1,470 @@
+.wrapper {
+    width: 76%;
+    min-width: 800px;
+
+    margin: auto;
+    padding: 10px;
+}
+
+.summary_header {
+    width: 100%;
+
+    background-color: #0e2b59;
+    color: #ffffff;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 18px;
+    text-align: center;
+
+    padding: 8px 0;
+}
+
+.summary_table {
+    width: 100%;
+
+    display: table;
+
+    background-color: #f7faff;
+
+    padding: 3px 0;
+}
+
+.summary_subtable {
+    width: 100%;
+
+    display: table;
+}
+
+.summary_table_row {
+    width: 50%;
+
+    display: table-row;
+}
+
+.summary_table_cell_separator {
+    width: 100%;
+    height: 3px;
+
+    display: table-caption;
+
+    background-color: #f7faff;
+}
+
+.summary_table_cell_subseparator {
+    width: 100%;
+    height: 1px;
+
+    display: table-caption;
+
+    background-color: #f7faff;
+}
+
+.summary_table_results_header {
+    width: 100%;
+
+    display: table-caption;
+
+    background-color: #cbef7a;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+
+    padding: 6px 0;
+}
+
+.summary_table_results_cell {
+    width: 100%;
+    height: 100px;
+
+    display: table-caption;
+
+    background-color: #ebffd3;
+    color: #182301;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-weight: bold;
+    font-size: 400%;
+    text-align: center;
+    vertical-align: middle;
+
+    line-height: 100px;
+}
+
+.summary_table_results_passed_cell_left {
+    width: 60%;
+
+    display: table-cell;
+
+    background-color: #dfffaa;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    text-align: left;
+
+    padding: 6px 6px 6px 18px;
+}
+
+.summary_table_results_passed_cell_right {
+    width: 40%;
+
+    display: table-cell;
+
+    background-color: #d6ff96;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    text-align: center;
+
+    padding: 6px 6px 6px 18px;
+}
+
+.summary_table_results_failed_cell_left {
+    width: 60%;
+
+    display: table-cell;
+
+    background-color: #ffafaf;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    text-align: left;
+
+    padding: 6px 6px 6px 18px;
+}
+
+.summary_table_results_failed_cell_right {
+    width: 40%;
+
+    display: table-cell;
+
+    background-color: #ff9696;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    text-align: center;
+
+    padding: 6px 6px 6px 18px;
+}
+
+.summary_table_general_header {
+    width: 100%;
+
+    display: table-caption;
+
+    background-color: #7aa7ef;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+
+    padding: 6px 0;
+}
+
+.summary_table_general_cell_left {
+    width: 60%;
+
+    display: table-cell;
+
+    background-color: #d1e2ff;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    text-align: left;
+
+    padding: 6px 6px 6px 18px;
+}
+
+.summary_table_general_cell_right {
+    width: 40%;
+
+    display: table-cell;
+
+    background-color: #c9daff;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    text-align: center;
+
+    padding: 6px 6px 6px 18px;
+}
+
+.summary_table_apk_header {
+    width: 100%;
+
+    display: table-caption;
+
+    background-color: #bc7aef;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+
+    padding: 6px 0;
+}
+
+.summary_table_apk_subheader {
+    width: 100%;
+
+    display: table-caption;
+
+    background-color: #d8a5ff;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
+
+    padding: 6px 0;
+}
+
+.summary_table_apk_cell_left {
+    width: 60%;
+
+    display: table-cell;
+
+    background-color: #e8ccff;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    text-align: left;
+
+    padding: 3px 3px 3px 15px;
+}
+
+.summary_table_apk_cell_right {
+    width: 40%;
+
+    display: table-cell;
+
+    background-color: #e5c6ff;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    text-align: center;
+
+    padding: 3px 3px 3px 15px;
+}
+
+.summary_table_devices_header {
+    width: 100%;
+
+    display: table-caption;
+
+    background-color: #efe37a;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+
+    padding: 6px 0;
+}
+
+.summary_table_devices_subheader {
+    width: 100%;
+
+    display: table-caption;
+
+    background-color: #fff493;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
+
+    padding: 6px 0;
+}
+
+.summary_table_devices_cell_left {
+    width: 60%;
+
+    display: table-cell;
+
+    background-color: #fff9c4;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    text-align: left;
+
+    padding: 3px 3px 3px 15px;
+}
+
+.summary_table_devices_cell_right {
+    width: 40%;
+
+    display: table-cell;
+
+    background-color: #fff5af;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    text-align: center;
+
+    padding: 3px 3px 3px 15px;
+}
+
+.package_header {
+    width: 100%;
+
+    background-color: #0e2b59;
+    color: #ffffff;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    text-align: center;
+
+    padding: 8px 0;
+}
+
+.passed_test_table {
+    width: 100%;
+
+    display: table;
+
+    background-color: #ebffd3;
+
+    padding: 5px 0;
+}
+
+.passed_test_header {
+    width: 100%;
+
+    display: table-caption;
+
+    background-color: #b2e278;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    text-align: center;
+
+    padding: 6px 0;
+}
+
+.passed_test_row {
+    width: 100%
+;
+    display: table-row;
+}
+
+.passed_test_cell {
+    width: 25%;
+
+    display: table-cell;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    text-align: center;
+
+    padding: 6px;
+}
+
+.failed_table_wrapper {
+    width: 100%;
+
+    background-color: #ffd3d3;
+}
+
+
+.failed_test_table {
+    width: 100%;
+
+    display: table;
+
+    background-color: #ffd3d3;
+
+    padding: 5px 0;
+}
+
+.failed_test_header {
+    width: 100%;
+
+    display: table-caption;
+
+    background-color: #e27777;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    text-align: center;
+
+    padding: 6px 0;
+}
+
+.failed_test_row {
+    width: 100%;
+
+    display: table-row;
+}
+
+.failed_test_cell {
+    width: 25%;
+
+    display: table-cell;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    text-align: center;
+
+    padding: 6px;
+}
+
+.test_case_separator {
+    width: 100%;
+    height: 3px;
+
+    display: table-caption;
+
+    background-color: #f7faff;
+}
+
+.failed_test_error_table {
+    width: 98%;
+
+    display: table;
+
+    margin: auto;
+    padding: 6px;
+}
+
+.failed_test_error_dark {
+    width: 100%;
+
+    display: table-cell;
+
+    background-color: #f2b5b5;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 11px;
+    text-align: left;
+
+    white-space: pre-wrap; /* CSS3 */
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -pre-wrap; /* Opera <7 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* IE */
+    word-break: break-all;
+
+    padding: 3px;
+}
+
+.failed_test_error_light {
+    width: 100%;
+
+    display: table-cell;
+
+    background-color: #f2bfbf;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 11px;
+    text-align: left;
+
+    white-space: pre-wrap; /* CSS3 */
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -pre-wrap; /* Opera <7 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* IE */
+    word-break: break-all;
+
+    padding: 3px;
+}

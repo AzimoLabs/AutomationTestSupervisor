@@ -459,25 +459,25 @@ def dump_saved_files_history():
 
     if FileUtils.dir_exists(GlobalConfig.OUTPUT_AVD_LOG_DIR):
         nothing_to_display = False
-        saved_avd_logs = os.listdir(GlobalConfig.OUTPUT_AVD_LOG_DIR)
+        saved_avd_logs = FileUtils.list_files_in_dir(GlobalConfig.OUTPUT_AVD_LOG_DIR)
         Printer.system_message(TAG, "Directory " + Color.GREEN + str(GlobalConfig.OUTPUT_AVD_LOG_DIR)
                                + Color.BLUE + " (" + Color.GREEN + str(len(saved_avd_logs)) + " files" + Color.BLUE
                                + ")")
-        for saved_file in os.listdir(GlobalConfig.OUTPUT_AVD_LOG_DIR):
+        for saved_file in FileUtils.list_files_in_dir(GlobalConfig.OUTPUT_AVD_LOG_DIR):
             Printer.system_message(TAG, "  * " + saved_file + ".")
 
     if FileUtils.dir_exists(GlobalConfig.OUTPUT_TEST_LOG_DIR):
         nothing_to_display = False
-        saved_test_summaries = os.listdir(GlobalConfig.OUTPUT_TEST_LOG_DIR)
+        saved_test_summaries = FileUtils.list_files_in_dir(GlobalConfig.OUTPUT_TEST_LOG_DIR)
         Printer.system_message(TAG, "Directory " + Color.GREEN + str(GlobalConfig.OUTPUT_TEST_LOG_DIR)
                                + Color.BLUE + " (" + Color.GREEN + str(len(saved_test_summaries)) + " files"
                                + Color.BLUE + ")")
-        for saved_file in os.listdir(GlobalConfig.OUTPUT_TEST_LOG_DIR):
+        for saved_file in FileUtils.list_files_in_dir(GlobalConfig.OUTPUT_TEST_LOG_DIR):
             Printer.system_message(TAG, "  * " + saved_file + ".")
 
     if FileUtils.dir_exists(GlobalConfig.OUTPUT_TEST_LOGCAT_DIR):
         nothing_to_display = False
-        saved_logcats_summaries = os.listdir(GlobalConfig.OUTPUT_TEST_LOGCAT_DIR)
+        saved_logcats_summaries = FileUtils.list_files_in_dir(GlobalConfig.OUTPUT_TEST_LOGCAT_DIR)
         Printer.system_message(TAG, "Directory " + Color.GREEN + str(GlobalConfig.OUTPUT_TEST_LOGCAT_DIR)
                                + Color.BLUE + " (" + Color.GREEN + str(len(saved_logcats_summaries)) + " files"
                                + Color.BLUE + ")")
@@ -487,7 +487,7 @@ def dump_saved_files_history():
     if GlobalConfig.SHOULD_RECORD_TESTS:
         if FileUtils.dir_exists(GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR):
             nothing_to_display = False
-            saved_recordings_summaries = os.listdir(GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR)
+            saved_recordings_summaries = FileUtils.list_files_in_dir(GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR)
             Printer.system_message(TAG, "Directory " + Color.GREEN + str(GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR)
                                    + Color.BLUE + " (" + Color.GREEN + str(len(saved_recordings_summaries))
                                    + " files" + Color.BLUE + ")")

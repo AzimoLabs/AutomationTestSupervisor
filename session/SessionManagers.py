@@ -38,7 +38,10 @@ class CleanUpManager:
         self.adb_shell_controller = adb_shell_controller
 
     def prepare_output_directories(self):
-        if not FileUtils.dir_exists(GlobalConfig.OUTPUT_DIR):
+        if FileUtils.dir_exists(GlobalConfig.OUTPUT_DIR):
+            Printer.system_message(self.TAG, "Directory " + Color.GREEN + GlobalConfig.OUTPUT_DIR + Color.BLUE
+                                   + " found!. Only session related directories and files will be cleaned.")
+        else:
             Printer.system_message(self.TAG, "Directory " + Color.GREEN + GlobalConfig.OUTPUT_DIR + Color.BLUE
                                    + " not found. Creating...")
 
@@ -46,16 +49,25 @@ class CleanUpManager:
                           GlobalConfig.OUTPUT_AVD_LOG_DIR,
                           GlobalConfig.OUTPUT_TEST_LOG_DIR,
                           GlobalConfig.OUTPUT_TEST_LOGCAT_DIR,
+                          GlobalConfig.OUTPUT_STYLES_FOLDER_DIR,
+                          GlobalConfig.OUTPUT_LOGCAT_HTML_DIR,
                           GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR]:
 
             if FileUtils.dir_exists(directory):
+                files_num = 0 if FileUtils.list_files_in_dir(directory) is None else len(
+                    FileUtils.list_files_in_dir(directory))
                 Printer.system_message(self.TAG, "Directory " + Color.GREEN + directory + Color.BLUE
-                                       + " was found. Removing all files in directory...")
+                                       + " was found. Removing (" + Color.GREEN + str(files_num) + " files"
+                                       + Color.BLUE + ").")
                 FileUtils.clear_dir(directory)
             else:
                 Printer.system_message(self.TAG, "Directory " + Color.GREEN + directory + Color.BLUE
                                        + " not found. Creating...")
                 FileUtils.create_dir(directory)
+
+        if FileUtils.file_exists(GlobalConfig.OUTPUT_INDEX_HTML_DIR):
+            Printer.system_message(self.TAG, "Removing " + Color.GREEN + GlobalConfig.OUTPUT_INDEX_HTML_DIR
+                                   + Color.BLUE + " file from previous session.")
 
     def restart_adb(self):
         self.adb_controller.kill_server()

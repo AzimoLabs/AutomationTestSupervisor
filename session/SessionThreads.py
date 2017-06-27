@@ -101,7 +101,9 @@ class TestRecordingSavingThread(threading.Thread):
             if self.recordings and self._all_recordings_has_commands():
                 recording = self.recordings.pop()
 
+                # TODO Implement proper synchronisation/wait for .mp4 to finish being written to
                 time.sleep(10)
+
                 ShellHelper.execute_shell(self.recording_pull_cmds.get(recording), False, False)
                 ShellHelper.execute_shell(self.recording_clear_cmds.get(recording), False, False)
 
@@ -393,12 +395,12 @@ class ApkInstallThread(threading.Thread):
 
         if package in installed_packages_str:
             Printer.system_message(self.TAG, "Package " + Color.GREEN + package + Color.BLUE +
-                                   " is currently installed on device '" + Color.GREEN + self.device.adb_name
+                                   " is currently installed on device " + Color.GREEN + self.device.adb_name
                                    + Color.BLUE + ". Removing from device...")
             self.device.uninstall_package(package)
         else:
             Printer.system_message(self.TAG, "Package " + Color.GREEN + package + Color.BLUE +
-                                   " was not found on device '" + Color.GREEN + self.device.adb_name + Color.BLUE + ".")
+                                   " was not found on device " + Color.GREEN + self.device.adb_name + Color.BLUE + ".")
 
         Printer.system_message(self.TAG, "Installing .*apk file...")
         self.device.install_apk(self.apk_path)

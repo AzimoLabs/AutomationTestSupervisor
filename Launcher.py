@@ -38,6 +38,8 @@ from system.bin.AndroidBinaryFileControllers import (
     InstrumentationRunnerController,
 )
 
+from log_generator import LogGenerator
+
 
 class Launcher:
     def __init__(self):
@@ -250,6 +252,10 @@ class Launcher:
 
         session_logger.log_total_test_end_time()
 
+    def _log_generation_phase(self):
+        Printer.phase("LOG GENERATION")
+        LogGenerator.generate_logs(self.test_set)
+
     def _finalization_phase(self):
         Printer.phase("FINALIZATION")
 
@@ -284,6 +290,7 @@ class Launcher:
             quit()
         finally:
             self._finalization_phase()
+            self._log_generation_phase()
 
 
 if __name__ == "__main__":

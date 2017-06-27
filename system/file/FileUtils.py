@@ -1,5 +1,6 @@
 import os
 import shutil
+import distutils.dir_util
 import codecs
 import json
 
@@ -8,8 +9,20 @@ from error.Exceptions import LauncherFlowInterruptedException
 TAG = "FileUtils:"
 
 
+def copy(from_dir, to_dir):
+    distutils.dir_util.copy_tree(from_dir, to_dir)
+
+
 def dir_exists(directory):
     return os.path.exists(directory)
+
+
+def file_exists(file):
+    return os.path.isfile(file)
+
+
+def list_files_in_dir(directory):
+    return os.listdir(directory)
 
 
 def create_dir(directory):
@@ -26,13 +39,13 @@ def create_dir(directory):
 
 
 def clear_dir(directory):
-    if os.listdir(directory):
-        for the_file in os.listdir(directory):
+    if list_files_in_dir(directory):
+        for the_file in list_files_in_dir(directory):
             file_path = os.path.join(directory, the_file)
             try:
-                if os.path.isfile(file_path):
+                if file_exists(file_path):
                     os.unlink(file_path)
-                elif os.path.isdir(file_path):
+                elif file_exists(file_path):
                     shutil.rmtree(file_path)
             except Exception as e:
                 message = "Unable to delete files in directory '{}'. Error message: {}"
@@ -46,7 +59,7 @@ def create_file(directory, file_name, extension):
     file_path = clean_path(directory + str(file_name) + "." + extension)
 
     try:
-        if not os.path.exists(directory):
+        if not dir_exists(directory):
             os.makedirs(directory)
         open(file_path, "w")
     except Exception as e:
@@ -91,7 +104,7 @@ def save_json_dict_to_json(directory, json_dict, file_name):
 
     output_file = None
     try:
-        if not os.path.exists(directory):
+        if not dir_exists(directory):
             os.makedirs(directory)
         output_file = open(file_path, "w")
         absolute_path = os.path.abspath(file_path)

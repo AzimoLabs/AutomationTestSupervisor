@@ -18,12 +18,19 @@ ANDROID_HOME_ENV = os.getenv('ANDROID_HOME')
 ANDROID_SDK_HOME_ENV = os.getenv('ANDROID_SDK_HOME')
 
 OUTPUT_DIR_DEFAULT = os.path.abspath(os.path.dirname(__name__)) + "/output/"
-OUTPUT_SUMMARY_LOG_FOLDER_DEFAULT = "/summary"
-OUTPUT_AVD_LOG_FOLDER_DEFAULT = "/avd_logs"
-OUTPUT_TEST_LOG_FOLDER_DEFAULT = "/test_results"
-OUTPUT_TEST_LOGCAT_FOLDER_DEFAULT = "/test_logcats"
-OUTPUT_TEST_VIDEO_FOLDER_DEFAULT = "/recordings"
-DEVICE_VIDEO_STORAGE_FOLDER_DEFAULT = "/sdcard/test_automation_recordings"
+OUTPUT_SUMMARY_LOG_FOLDER_DEFAULT = "/summary/"
+OUTPUT_AVD_LOG_FOLDER_DEFAULT = "/avd_logs/"
+OUTPUT_TEST_LOG_FOLDER_DEFAULT = "/test_results/"
+OUTPUT_TEST_LOGCAT_FOLDER_DEFAULT = "/test_logcats/"
+OUTPUT_TEST_VIDEO_FOLDER_DEFAULT = "/recordings/"
+OUTPUT_TEST_LOGCAT_HTML_FOLDER_DEFAULT = "/test_logcats_html/"
+OUTPUT_HTML_STYLES_FOLDER_DEFAULT = "/styles"
+OUTPUT_HTML_INDEX_FILE_NAME = "index.html"
+
+LOG_GENERATOR_DIR_DEFAULT = os.path.abspath(os.path.dirname(__name__)) + "/log_generator/"
+
+DEVICE_VIDEO_STORAGE_FOLDER_DEFAULT = "/sdcard/test_automation_recordings/"
+
 
 TAG = "PathsLoader:"
 
@@ -109,7 +116,7 @@ def _load_paths_to_global_settings(path_set):
         Printer.error(TAG, "Warning: Without project root directory launcher will quit if no "
                            ".*apk files will be found in directory loaded from 'apk_dir' field of PathManifest.")
     else:
-        Printer.system_message(TAG, "Project root dir: " + Color.GREEN + GlobalConfig.PROJECT_ROOT_DIR
+        Printer.system_message(TAG, "Android project root dir set to: " + Color.GREEN + GlobalConfig.PROJECT_ROOT_DIR
                                + Color.BLUE + ".")
 
     GlobalConfig.APK_DIR = clean_folder_only_dir((path_set.paths["apk_dir"]).path_value)
@@ -160,14 +167,46 @@ def _load_paths_to_global_settings(path_set):
     Printer.system_message(TAG, "Logcat logs from tests will be stored in dir: " + Color.GREEN +
                            GlobalConfig.OUTPUT_TEST_LOGCAT_DIR + Color.BLUE + ".")
 
+    GlobalConfig.DEVICE_VIDEO_STORAGE_DIR = clean_folder_only_dir(DEVICE_VIDEO_STORAGE_FOLDER_DEFAULT)
+    Printer.system_message(TAG, "Firstly recordings will be saved in root directory of test device storage in " +
+                           Color.GREEN + GlobalConfig.DEVICE_VIDEO_STORAGE_DIR + Color.BLUE + " folder.")
+
     GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR = clean_folder_only_dir(
         GlobalConfig.OUTPUT_DIR + OUTPUT_TEST_VIDEO_FOLDER_DEFAULT)
     if not os.path.isabs(GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR):
         message = "Path " + GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR + " needs to be absolute!"
         raise LauncherFlowInterruptedException(TAG, message)
-    Printer.system_message(TAG, "Recordings from tests will be stored in dir: " + Color.GREEN +
-                           GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR + Color.BLUE + ".")
+    Printer.system_message(TAG, "Secondly recordings from tests will be pulled from each device to dir: " + Color.GREEN
+                           + GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR + Color.BLUE + ".")
 
-    GlobalConfig.DEVICE_VIDEO_STORAGE_DIR = clean_folder_only_dir(DEVICE_VIDEO_STORAGE_FOLDER_DEFAULT)
-    Printer.system_message(TAG, "Recordings will be stored on ROOT directory of test device storage in " + Color.GREEN
-                           + GlobalConfig.DEVICE_VIDEO_STORAGE_DIR + Color.BLUE + " folder.")
+    GlobalConfig.OUTPUT_STYLES_FOLDER_DIR = clean_folder_only_dir(
+        GlobalConfig.OUTPUT_DIR + OUTPUT_HTML_STYLES_FOLDER_DEFAULT)
+    if not os.path.isabs(GlobalConfig.OUTPUT_STYLES_FOLDER_DIR):
+        message = "Path " + GlobalConfig.OUTPUT_STYLES_FOLDER_DIR + " needs to be absolute!"
+        raise LauncherFlowInterruptedException(TAG, message)
+    Printer.system_message(TAG, "Styles for all html logs will be stored in dir: " + Color.GREEN
+                           + GlobalConfig.OUTPUT_STYLES_FOLDER_DIR + Color.BLUE + ".")
+
+    GlobalConfig.OUTPUT_LOGCAT_HTML_DIR = clean_folder_only_dir(
+        GlobalConfig.OUTPUT_DIR + OUTPUT_TEST_LOGCAT_HTML_FOLDER_DEFAULT)
+    if not os.path.isabs(GlobalConfig.OUTPUT_LOGCAT_HTML_DIR):
+        message = "Path " + GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR + " needs to be absolute!"
+        raise LauncherFlowInterruptedException(TAG, message)
+    Printer.system_message(TAG, "Html logs presenting logcats from devices will be stored in dir: " + Color.GREEN
+                           + GlobalConfig.OUTPUT_LOGCAT_HTML_DIR + Color.BLUE + ".")
+
+    GlobalConfig.OUTPUT_INDEX_HTML_DIR = (clean_folder_only_dir(GlobalConfig.OUTPUT_DIR)
+                                          + OUTPUT_HTML_INDEX_FILE_NAME)
+    if not os.path.isabs(GlobalConfig.OUTPUT_INDEX_HTML_DIR):
+        message = "Path " + GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR + " needs to be absolute!"
+        raise LauncherFlowInterruptedException(TAG, message)
+    Printer.system_message(TAG, "All html logs containing results from tests, logcats and videos can be accessed from "
+                           + Color.GREEN + GlobalConfig.OUTPUT_INDEX_HTML_DIR + Color.BLUE + " file generated after "
+                           + "session ends.")
+
+    GlobalConfig.LOG_GENERATOR_DIR = clean_folder_only_dir(LOG_GENERATOR_DIR_DEFAULT)
+    if not os.path.isabs(GlobalConfig.LOG_GENERATOR_DIR):
+        message = "Path " + GlobalConfig.LOG_GENERATOR_DIR + " needs to be absolute!"
+        raise LauncherFlowInterruptedException(TAG, message)
+    Printer.system_message(TAG, "Logs will be generated with usage of " + Color.GREEN + "LogGenerator.py" + Color.BLUE +
+                           " file stored in dir: " + Color.GREEN + GlobalConfig.LOG_GENERATOR_DIR + Color.BLUE + ".")
