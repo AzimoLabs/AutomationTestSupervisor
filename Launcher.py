@@ -252,10 +252,6 @@ class Launcher:
 
         session_logger.log_total_test_end_time()
 
-    def _log_generation_phase(self):
-        Printer.phase("LOG GENERATION")
-        LogGenerator.generate_logs(self.test_set)
-
     def _finalization_phase(self):
         Printer.phase("FINALIZATION")
 
@@ -266,6 +262,7 @@ class Launcher:
         session_logger.log_session_end_time()
         session_logger.save_session_summary()
         session_logger.dump_session_summary()
+        LogGenerator.generate_logs(self.test_set)
 
         if self.device_manager is not None and self.device_manager.is_any_avd_visible() \
                 and GlobalConfig.SHOULD_USE_ONLY_DEVICES_SPAWNED_IN_SESSION:
@@ -290,7 +287,6 @@ class Launcher:
             quit()
         finally:
             self._finalization_phase()
-            self._log_generation_phase()
 
 
 if __name__ == "__main__":

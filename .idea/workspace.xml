@@ -2,28 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fe754bc4-9da6-479c-8fe2-66b4852721c5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/log_generator/GeneratorModels.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/log_generator/LogGenerator.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/log_generator/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/log_generator/styles/summary.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/log_generator/utils/HtmlLogcatUtils.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/log_generator/utils/HtmlResultsUtils.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/log_generator/utils/HtmlSummaryUtils.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/log_generator/utils/HtmlUtils.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/jupyter_log_generator/HtmlSummaryTableUtils.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/jupyter_log_generator/JsonLogLoader.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/jupyter_log_generator/SummaryHtmlGenerator.ipynb" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Launcher.py" afterPath="$PROJECT_DIR$/Launcher.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/session/SessionGlobalLogger.py" afterPath="$PROJECT_DIR$/session/SessionGlobalLogger.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/session/SessionManagers.py" afterPath="$PROJECT_DIR$/session/SessionManagers.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/session/SessionThreads.py" afterPath="$PROJECT_DIR$/session/SessionThreads.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/GlobalConfig.py" afterPath="$PROJECT_DIR$/settings/GlobalConfig.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/loader/LaunchPlanLoader.py" afterPath="$PROJECT_DIR$/settings/loader/LaunchPlanLoader.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/loader/PathsLoader.py" afterPath="$PROJECT_DIR$/settings/loader/PathsLoader.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/bin/AndroidBinaryFileControllers.py" afterPath="$PROJECT_DIR$/system/bin/AndroidBinaryFileControllers.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/bin/AndroidShellCommandAssemblers.py" afterPath="$PROJECT_DIR$/system/bin/AndroidShellCommandAssemblers.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/file/FileUtils.py" afterPath="$PROJECT_DIR$/system/file/FileUtils.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -38,11 +17,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Launcher.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Launcher.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Launcher.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2637">
-              <caret line="260" column="0" lean-forward="false" selection-start-line="260" selection-start-column="0" selection-end-line="260" selection-end-column="0" />
+            <state relative-caret-position="346">
+              <caret line="258" column="49" lean-forward="true" selection-start-line="258" selection-start-column="49" selection-end-line="258" selection-end-column="49" />
               <folding>
                 <element signature="e#0#61#0" expanded="true" />
               </folding>
@@ -53,7 +32,7 @@
       <file leaf-file-name="SessionManagers.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/session/SessionManagers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="70">
+            <state relative-caret-position="-2429">
               <caret line="519" column="75" lean-forward="false" selection-start-line="519" selection-start-column="70" selection-end-line="519" selection-end-column="75" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -82,11 +61,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LogGenerator.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LogGenerator.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/log_generator/LogGenerator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="60" column="0" lean-forward="true" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+            <state relative-caret-position="-8129">
+              <caret line="60" column="0" lean-forward="false" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -241,8 +220,8 @@
         <option value="$PROJECT_DIR$/settings/manifest/templates/pathManifest.json" />
         <option value="$PROJECT_DIR$/settings/loader/PathsLoader.py" />
         <option value="$PROJECT_DIR$/settings/loader/PathsLoader.py" />
-        <option value="$PROJECT_DIR$/Launcher.py" />
         <option value="$PROJECT_DIR$/log_generator/LogGenerator.py" />
+        <option value="$PROJECT_DIR$/Launcher.py" />
       </list>
     </option>
   </component>
@@ -1058,9 +1037,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/log_generator/LogGenerator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8129">
+          <caret line="60" column="0" lean-forward="false" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/session/SessionManagers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="70">
+        <state relative-caret-position="-2429">
           <caret line="519" column="75" lean-forward="false" selection-start-line="519" selection-start-column="70" selection-end-line="519" selection-end-column="75" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
@@ -1070,20 +1059,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Launcher.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2637">
-          <caret line="260" column="0" lean-forward="false" selection-start-line="260" selection-start-column="0" selection-end-line="260" selection-end-column="0" />
+        <state relative-caret-position="346">
+          <caret line="258" column="49" lean-forward="true" selection-start-line="258" selection-start-column="49" selection-end-line="258" selection-end-column="49" />
           <folding>
             <element signature="e#0#61#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/log_generator/LogGenerator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="60" column="0" lean-forward="true" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
