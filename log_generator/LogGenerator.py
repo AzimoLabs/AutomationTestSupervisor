@@ -644,7 +644,7 @@ def calculate_duration(test_start_time, test_end_time):
 
 
 def create_link_to_logcat(test_name, text):
-    logcat_html_path = os.path.abspath(GlobalConfig.OUTPUT_LOGCAT_HTML_DIR + test_name + ".html")
+    logcat_html_path = GlobalConfig.OUTPUT_LOGCAT_HTML_DIR + test_name + ".html"
     return HtmlUtils.create_link_to_file(logcat_html_path, text)
 
 
@@ -656,9 +656,8 @@ def create_link_to_recording_file(test_name):
 
     for path, subdirs, files in os.walk(recordings_dir):
         for f in files:
-            recording_uri = os.path.abspath(os.path.join(path, f))
+            recording_uri = "../" + GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR + f
             if test_name in recording_uri:
-                recording_uri.replace(GlobalConfig.OUTPUT_DIR, "")
                 recording_part += 1
                 filename = "p" + str(recording_part)
                 links += HtmlUtils.create_link_to_file(recording_uri, filename)
