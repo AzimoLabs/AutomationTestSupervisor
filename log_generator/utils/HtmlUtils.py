@@ -27,4 +27,4 @@ def end_body():
 
 
 def create_link_to_file(link_destination, text):
-    return "<a href=\"file://{}\">{}</a>".format(link_destination, text)
+    return "<a href=\"{}\">{}</a>".format(link_destination, text)

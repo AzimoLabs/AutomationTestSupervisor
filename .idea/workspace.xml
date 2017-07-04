@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fe754bc4-9da6-479c-8fe2-66b4852721c5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log_generator/LogGenerator.py" afterPath="$PROJECT_DIR$/log_generator/LogGenerator.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log_generator/utils/HtmlUtils.py" afterPath="$PROJECT_DIR$/log_generator/utils/HtmlUtils.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,14 +17,24 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="LogGenerator.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LogGenerator.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/log_generator/LogGenerator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="241">
+              <caret line="647" column="23" lean-forward="true" selection-start-line="647" selection-start-column="23" selection-end-line="647" selection-end-column="23" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HtmlUtils.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/log_generator/utils/HtmlUtils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="450">
+              <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -50,7 +60,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>isfile</find>
       <find>print(</find>
       <find>os.listdir</find>
       <find>FileUtils.</find>
@@ -80,6 +89,7 @@
       <find>GENERATOR_STYLES_DIR</find>
       <find>link_to_css</find>
       <find>recordings_dir</find>
+      <find>link</find>
     </findStrings>
     <replaceStrings>
       <replace>create_avd_tag</replace>
@@ -145,7 +155,6 @@
         <option value="$PROJECT_DIR$/session/SessionGlobalLogger.py" />
         <option value="$PROJECT_DIR$/system/bin/AndroidBinaryFileControllers.py" />
         <option value="$PROJECT_DIR$/session/SessionManagers.py" />
-        <option value="$PROJECT_DIR$/log_generator/utils/HtmlUtils.py" />
         <option value="$PROJECT_DIR$/log_generator/__init.py__.py" />
         <option value="$PROJECT_DIR$/../log_generator/LogGenerator.py" />
         <option value="$PROJECT_DIR$/session/SessionLogGenerator.py" />
@@ -156,6 +165,7 @@
         <option value="$PROJECT_DIR$/system/file/FileUtils.py" />
         <option value="$PROJECT_DIR$/session/SessionThreads.py" />
         <option value="$PROJECT_DIR$/log_generator/LogGenerator.py" />
+        <option value="$PROJECT_DIR$/log_generator/utils/HtmlUtils.py" />
       </list>
     </option>
   </component>
@@ -168,7 +178,7 @@
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1440" />
-    <option name="height" value="812" />
+    <option name="height" value="809" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -517,12 +527,13 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="812" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="809" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28055555" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28055555" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32965517" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.50277776" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.084791385" sideWeight="0.4861111" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.08513513" sideWeight="0.4861111" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22468793" sideWeight="0.49722221" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -682,7 +693,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/log_generator/utils/HtmlUtils.py" />
     <entry file="file://$PROJECT_DIR$/session/SessionModels.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -792,11 +802,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/log_generator/LogGenerator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="241">
+          <caret line="647" column="23" lean-forward="true" selection-start-line="647" selection-start-column="23" selection-end-line="647" selection-end-column="23" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/log_generator/utils/HtmlUtils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
