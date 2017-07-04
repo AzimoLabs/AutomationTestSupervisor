@@ -131,7 +131,9 @@ def _generate_summary_html():
     html_content = ""
     html_content += HtmlUtils.start_html()
     html_content += HtmlUtils.start_head()
-    html_content += HtmlUtils.link_css(GlobalConfig.OUTPUT_STYLES_FOLDER_DIR + GENERATOR_SUMMARY_STYLE_FILE_NAME)
+    link_to_css = GlobalConfig.OUTPUT_STYLES_FOLDER_DIR.replace(GlobalConfig.OUTPUT_DIR, "") \
+                  + GENERATOR_SUMMARY_STYLE_FILE_NAME
+    html_content += HtmlUtils.link_css(link_to_css)
     html_content += HtmlUtils.end_head()
     html_content += HtmlUtils.start_body()
     html_content += HtmlSummaryUtils.start_wrapper()
@@ -493,7 +495,9 @@ def _generate_logcat_html(logcat_json_dict):
 
     html_content += HtmlUtils.start_html()
     html_content += HtmlUtils.start_head()
-    html_content += HtmlUtils.link_css(GlobalConfig.OUTPUT_STYLES_FOLDER_DIR + GENERATOR_LOGCAT_STYLE_FILE_NAME)
+    link_to_css = "../" + GlobalConfig.OUTPUT_STYLES_FOLDER_DIR.replace(GlobalConfig.OUTPUT_DIR, "") \
+                  + GENERATOR_LOGCAT_STYLE_FILE_NAME
+    html_content += HtmlUtils.link_css(link_to_css)
     html_content += HtmlUtils.end_head()
     html_content += HtmlUtils.start_body()
 
@@ -654,6 +658,7 @@ def create_link_to_recording_file(test_name):
         for f in files:
             recording_uri = os.path.abspath(os.path.join(path, f))
             if test_name in recording_uri:
+                recording_uri.replace(GlobalConfig.OUTPUT_DIR, "")
                 recording_part += 1
                 filename = "p" + str(recording_part)
                 links += HtmlUtils.create_link_to_file(recording_uri, filename)
