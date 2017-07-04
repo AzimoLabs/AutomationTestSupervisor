@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fe754bc4-9da6-479c-8fe2-66b4852721c5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log_generator/utils/HtmlUtils.py" afterPath="$PROJECT_DIR$/log_generator/utils/HtmlUtils.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log_generator/LogGenerator.py" afterPath="$PROJECT_DIR$/log_generator/LogGenerator.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,11 +17,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="LogGenerator.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="LogGenerator.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/log_generator/LogGenerator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="647" column="23" lean-forward="true" selection-start-line="647" selection-start-column="23" selection-end-line="647" selection-end-column="23" />
+            <state relative-caret-position="340">
+              <caret line="135" column="51" lean-forward="true" selection-start-line="135" selection-start-column="51" selection-end-line="135" selection-end-column="51" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -29,11 +29,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HtmlUtils.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="HtmlUtils.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/log_generator/utils/HtmlUtils.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="450">
-              <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+              <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -164,8 +164,8 @@
         <option value="$PROJECT_DIR$/Launcher.py" />
         <option value="$PROJECT_DIR$/system/file/FileUtils.py" />
         <option value="$PROJECT_DIR$/session/SessionThreads.py" />
-        <option value="$PROJECT_DIR$/log_generator/LogGenerator.py" />
         <option value="$PROJECT_DIR$/log_generator/utils/HtmlUtils.py" />
+        <option value="$PROJECT_DIR$/log_generator/LogGenerator.py" />
       </list>
     </option>
   </component>
@@ -800,21 +800,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/log_generator/LogGenerator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="647" column="23" lean-forward="true" selection-start-line="647" selection-start-column="23" selection-end-line="647" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/log_generator/utils/HtmlUtils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
-          <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/log_generator/LogGenerator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="135" column="51" lean-forward="true" selection-start-line="135" selection-start-column="51" selection-end-line="135" selection-end-column="51" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
