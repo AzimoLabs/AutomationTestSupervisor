@@ -75,6 +75,7 @@ class AdbShellCommandAssembler:
     remove_file = "{} {} {} {}"
     remove_files_in_dir = "{} {} {} {}"
     create_dir = "{} {} {} {}"
+    check_if_dir_exists = "{} {} {} {}"
 
     def assemble_get_property_cmd(self, adb_bin, device_adb_name, device_property):
         return self.get_property_schema.format(adb_bin,
@@ -105,6 +106,12 @@ class AdbShellCommandAssembler:
                                       AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
                                       AdbShellCommand.SHELL,
                                       AdbShellCommand.CREATE_DIR.format(file_dir))
+
+    def assemble_check_if_dir_exists_cmd(self, adb_bin, device_adb_name, directory):
+        return self.check_if_dir_exists.format(adb_bin,
+                                               AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                               AdbShellCommand.SHELL,
+                                               GeneralCommand.CHECK_IF_DIR_EXISTS.format(directory))
 
 
 class AdbPackageManagerCommandAssembler:

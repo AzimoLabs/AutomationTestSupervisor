@@ -59,6 +59,7 @@ TEST_LOGCAT_LEVEL_WARNING = "W"
 TEST_LOGCAT_LEVEL_ERROR = "E"
 TEST_LOGCAT_LEVEL_INFO = "I"
 
+PREVIOUS_LOCATION = "../"
 GENERATOR_STYLES_DIR = "/styles"
 GENERATOR_SUMMARY_STYLE_FILE_NAME = "summary.css"
 GENERATOR_LOGCAT_STYLE_FILE_NAME = "logcat.css"
@@ -131,9 +132,9 @@ def _generate_summary_html():
     html_content = ""
     html_content += HtmlUtils.start_html()
     html_content += HtmlUtils.start_head()
-    link_to_css = GlobalConfig.OUTPUT_STYLES_FOLDER_DIR.replace(GlobalConfig.OUTPUT_DIR, "") \
-                  + GENERATOR_SUMMARY_STYLE_FILE_NAME
-    html_content += HtmlUtils.link_css(link_to_css)
+    absolute_link_to_css = GlobalConfig.OUTPUT_STYLES_FOLDER_DIR + GENERATOR_SUMMARY_STYLE_FILE_NAME
+    relative_link_to_css = make_absolute_path_relative_to_output_dir(absolute_link_to_css)
+    html_content += HtmlUtils.link_css(relative_link_to_css)
     html_content += HtmlUtils.end_head()
     html_content += HtmlUtils.start_body()
     html_content += HtmlSummaryUtils.start_wrapper()
@@ -495,9 +496,9 @@ def _generate_logcat_html(logcat_json_dict):
 
     html_content += HtmlUtils.start_html()
     html_content += HtmlUtils.start_head()
-    link_to_css = "../" + GlobalConfig.OUTPUT_STYLES_FOLDER_DIR.replace(GlobalConfig.OUTPUT_DIR, "") \
-                  + GENERATOR_LOGCAT_STYLE_FILE_NAME
-    html_content += HtmlUtils.link_css(link_to_css)
+    absolute_link_to_css = GlobalConfig.OUTPUT_STYLES_FOLDER_DIR + GENERATOR_LOGCAT_STYLE_FILE_NAME
+    relative_link_to_css = make_absolute_path_relative_to_output_dir(absolute_link_to_css, dirs_behind=1)
+    html_content += HtmlUtils.link_css(relative_link_to_css)
     html_content += HtmlUtils.end_head()
     html_content += HtmlUtils.start_body()
 
@@ -644,9 +645,9 @@ def calculate_duration(test_start_time, test_end_time):
 
 
 def create_link_to_logcat(test_name, text):
-    logcat_html_path = GlobalConfig.OUTPUT_LOGCAT_HTML_DIR + test_name + ".html"
-    logcat_html_path = logcat_html_path.replace(GlobalConfig.OUTPUT_DIR, "")
-    return HtmlUtils.create_link_to_file(logcat_html_path, text)
+    absolute_logcat_html_path = GlobalConfig.OUTPUT_LOGCAT_HTML_DIR + test_name + ".html"
+    relative_logcat_html_path = make_absolute_path_relative_to_output_dir(absolute_logcat_html_path)
+    return HtmlUtils.create_link_to_file(relative_logcat_html_path, text)
 
 
 def create_link_to_recording_file(test_name):
@@ -657,11 +658,18 @@ def create_link_to_recording_file(test_name):
 
     for path, subdirs, files in os.walk(recordings_dir):
         for f in files:
-            recording_uri = "../" + GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR + f
-            recording_uri = recording_uri.replace(GlobalConfig.OUTPUT_DIR, "")
-            if test_name in recording_uri:
+            absolute_recording_path = GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR + f
+            relative_recording_path = make_absolute_path_relative_to_output_dir(absolute_recording_path, dirs_behind=1)
+            if test_name in relative_recording_path:
                 recording_part += 1
                 filename = "p" + str(recording_part)
-                links += HtmlUtils.create_link_to_file(recording_uri, filename)
+                links += HtmlUtils.create_link_to_file(relative_recording_path, filename)
 
     return TEST_RECORDING_CELL.format(links)
+
+
+def make_absolute_path_relative_to_output_dir(path, dirs_behind=0):
+    result_path = ""
+    for i in range(dirs_behind):
+        result_path += PREVIOUS_LOCATION
+    return result_path + path.replace(GlobalConfig.OUTPUT_DIR, "")

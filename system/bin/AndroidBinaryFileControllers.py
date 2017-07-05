@@ -42,7 +42,7 @@ class AaptController:
         self.aapt_command_assembler = AaptCommandAssembler()
 
     def _find_latest_build_tools(self):
-        build_tools =list_files_in_dir(clean_path(add_ending_slash(GlobalConfig.SDK_DIR) + "build-tools"))
+        build_tools = list_files_in_dir(clean_path(add_ending_slash(GlobalConfig.SDK_DIR) + "build-tools"))
         build_tools = [build_tool for build_tool in build_tools if build_tool[0].isdigit()]
         build_tools_folder_with_highest_ver = None
         Printer.system_message(self.TAG, "Available Android SDK Build-Tools versions: " + str(build_tools))
@@ -171,6 +171,12 @@ class AdbShellController:
 
     def create_dir(self, device_adb_name, file_dir):
         cmd = self.adb_shell_command_assembler.assemble_create_dir_cmd(self.adb_bin, device_adb_name, file_dir)
+        return ShellHelper.execute_shell(cmd, True, True)
+
+    def check_for_directory(self, device_adb_name, directory):
+        cmd = self.adb_shell_command_assembler.assemble_check_if_dir_exists_cmd(self.adb_bin,
+                                                                                device_adb_name,
+                                                                                directory)
         return ShellHelper.execute_shell(cmd, True, True)
 
 

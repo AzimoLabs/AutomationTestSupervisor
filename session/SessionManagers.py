@@ -75,11 +75,28 @@ class CleanUpManager:
 
     def prepare_device_directories(self):
         for device in self.device_store.get_devices():
-            Printer.system_message(self.TAG, "Attempting to re-create " + Color.GREEN
-                                   + GlobalConfig.DEVICE_VIDEO_STORAGE_DIR + Color.BLUE + " directory on device "
-                                   + Color.GREEN + device.adb_name + Color.BLUE + ".")
-            self.adb_shell_controller.remove_files_in_dir(device.adb_name, GlobalConfig.DEVICE_VIDEO_STORAGE_DIR)
-            self.adb_shell_controller.create_dir(device.adb_name, GlobalConfig.DEVICE_VIDEO_STORAGE_DIR)
+            Printer.system_message(self.TAG, "Checking if folder for test recordings exists on device " + Color.GREEN
+                                   + device.adb_name + Color.BLUE + ":")
+            result = self.adb_shell_controller.check_for_directory(device.adb_name,
+                                                                   GlobalConfig.DEVICE_VIDEO_STORAGE_DIR)
+            if "No such file or directory" in result:
+                Printer.system_message(self.TAG, "Creating directory " + Color.GREEN
+                                       + GlobalConfig.DEVICE_VIDEO_STORAGE_DIR + Color.BLUE + " directory on device "
+                                       + Color.GREEN + device.adb_name + Color.BLUE + ".")
+                self.adb_shell_controller.create_dir(device.adb_name, GlobalConfig.DEVICE_VIDEO_STORAGE_DIR)
+            else:
+                Printer.system_message(self.TAG, "Directory " + Color.GREEN
+                                       + GlobalConfig.DEVICE_VIDEO_STORAGE_DIR + Color.BLUE + " already exists."
+                                       + " Re-creating.")
+                self.adb_shell_controller.remove_files_in_dir(device.adb_name, GlobalConfig.DEVICE_VIDEO_STORAGE_DIR)
+                self.adb_shell_controller.create_dir(device.adb_name, GlobalConfig.DEVICE_VIDEO_STORAGE_DIR)
+
+            next_result = self.adb_shell_controller.check_for_directory(device.adb_name,
+                                                                        GlobalConfig.DEVICE_VIDEO_STORAGE_DIR)
+            if "No such file or directory" in next_result:
+                message = ("Directory '" + GlobalConfig.DEVICE_VIDEO_STORAGE_DIR + "' was not created. This will "
+                           + "lead to test session to malfunction and crash. Quitting...")
+                raise LauncherFlowInterruptedException(self.TAG, message)
 
 
 class DeviceManager:
