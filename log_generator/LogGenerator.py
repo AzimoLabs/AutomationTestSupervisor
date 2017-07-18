@@ -1,5 +1,6 @@
 import os
 import datetime
+import time
 
 from log_generator.utils import (
     HtmlUtils,
@@ -136,7 +137,13 @@ def _generate_summary_html():
     relative_link_to_css = make_absolute_path_relative_to_output_dir(absolute_link_to_css)
     html_content += HtmlUtils.link_css(relative_link_to_css)
     html_content += HtmlUtils.end_head()
+    html_content += HtmlUtils.start_script()
+    html_content += HtmlUtils.add_toggle_visibility_function_for_clean_package()
+    html_content += HtmlUtils.add_toggle_visibility_function_for_package_with_fails()
+    html_content += HtmlUtils.end_script()
     html_content += HtmlUtils.start_body()
+
+    # container wrapper - start
     html_content += HtmlSummaryUtils.start_wrapper()
 
     # global header
@@ -178,6 +185,32 @@ def _generate_summary_html():
 
     # results - end table
     html_content += HtmlSummaryUtils.end_table()
+
+    # failed test list - start table
+    failed_test_names = [test_result["test_name"] for test_result in test_results
+                         if test_result["test_status"] != "success"]
+
+    if failed_test_names:
+        html_content += HtmlSummaryUtils.start_summary_failed_test_list_table()
+        html_content += HtmlSummaryUtils.start_summary_failed_test_list_subtable()
+
+        # failed test list - failed test rows
+        displayed_tests = 0
+        for failed_test_name in failed_test_names:
+            html_content += HtmlSummaryUtils.start_summary_failed_test_row()
+
+            counter = str(displayed_tests + 1) + ". "
+            if displayed_tests % 2 == 0:
+                html_content += HtmlSummaryUtils.add_summary_failed_test_row_cell_light(counter + failed_test_name)
+            else:
+                html_content += HtmlSummaryUtils.add_summary_failed_test_row_cell_dark(counter + failed_test_name)
+            html_content += HtmlSummaryUtils.end_row()
+            displayed_tests += 1
+
+        # failed test list - end table
+        html_content += HtmlSummaryUtils.end_row()
+        html_content += HtmlSummaryUtils.end_table()
+        html_content += HtmlSummaryUtils.add_cell_separator()
 
     # time summary - start table
     html_content += HtmlSummaryUtils.start_summary_table()
@@ -267,6 +300,7 @@ def _generate_summary_html():
 
     # time summary - end table
     html_content += HtmlSummaryUtils.end_table()
+    html_content += HtmlSummaryUtils.add_cell_separator()
 
     # apk summary - start table
     html_content += HtmlSummaryUtils.start_summary_table()
@@ -361,6 +395,7 @@ def _generate_summary_html():
 
     # apk summary - end table
     html_content += HtmlSummaryUtils.end_table()
+    html_content += HtmlSummaryUtils.add_cell_separator()
 
     # device summary - start table
     html_content += HtmlSummaryUtils.start_summary_table()
@@ -426,11 +461,36 @@ def _generate_summary_html():
 
     # device summary - end table
     html_content += HtmlSummaryUtils.end_table()
+    html_content += HtmlSummaryUtils.add_cell_separator()
 
     # results from each test case
     for package in log_packages:
-        html_content += HtmlResultsUtils.add_package_header(package.name)
+
+        passed_tests_num = 0
+        failed_tests_num = 0
+        for log in package.logs:
+            if log.status == "success":
+                passed_tests_num += 1
+            else:
+                failed_tests_num += 1
+
+        header_text = package.name + " - (" + str(passed_tests_num) + " passed, " + str(failed_tests_num) + " failed)"
+        package_header_code = HtmlResultsUtils.add_package_header(header_text)
+
+        unique_id = "toggleable_package_" + "".join(str(time.time()).split("."))
+        if failed_tests_num == 0:
+            _add_toggleable_wrapped_id_to_summary_css(unique_id, "none")
+            html_content += HtmlUtils.wrap_in_toggle_visibility_on_click_for_clean_package(
+                package_header_code, unique_id)
+        else:
+            _add_toggleable_wrapped_id_to_summary_css(unique_id, "block")
+            html_content += HtmlUtils.wrap_in_toggle_visibility_on_click_for_package_with_fails(
+                package_header_code, unique_id)
+
         html_content += HtmlResultsUtils.add_test_case_separator()
+
+        # package test results toggleable wrapper - start
+        html_content += HtmlResultsUtils.start_test_package_wrapper(unique_id)
 
         for log in package.logs:
             if log.status == TEST_STATUS_PASSED:
@@ -453,7 +513,7 @@ def _generate_summary_html():
 
                 # failed test summary table
                 html_content += HtmlResultsUtils.start_failed_test_table()
-                html_content += HtmlResultsUtils.add_failed_test_header(log.name)
+                html_content += HtmlResultsUtils.add_failed_test_header(log.name + " - FAILED")
 
                 html_content += HtmlResultsUtils.start_failed_test_row()
                 html_content += HtmlResultsUtils.add_failed_test_cell(TEST_DURATION_CELL.format(log.duration))
@@ -479,16 +539,27 @@ def _generate_summary_html():
                         error_messages += 1
 
                 html_content += HtmlResultsUtils.end_table()
-
                 html_content += HtmlResultsUtils.end_wrapper()
 
             html_content += HtmlResultsUtils.add_test_case_separator()
 
+        # package test results toggleable wrapper - end
+        html_content += HtmlResultsUtils.end_wrapper()
+
+    # container wrapper - end
     html_content += HtmlSummaryUtils.end_wrapper()
     html_content += HtmlUtils.end_body()
     html_content += HtmlUtils.end_html()
 
     return html_content
+
+
+def _add_toggleable_wrapped_id_to_summary_css(wrapper_id, value):
+    with open(GlobalConfig.OUTPUT_STYLES_FOLDER_DIR + GENERATOR_SUMMARY_STYLE_FILE_NAME, "a") as summary_css:
+        summary_css.write("\n\n")
+        summary_css.write("#{}".format(wrapper_id) + " {\n")
+        summary_css.write("    display: {};\n".format(value))
+        summary_css.write("}")
 
 
 def _generate_logcat_html(logcat_json_dict):
