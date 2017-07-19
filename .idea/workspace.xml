@@ -4,12 +4,6 @@
     <list default="true" id="fe754bc4-9da6-479c-8fe2-66b4852721c5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log_generator/LogGenerator.py" afterPath="$PROJECT_DIR$/log_generator/LogGenerator.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log_generator/styles/logcat.css" afterPath="$PROJECT_DIR$/log_generator/styles/logcat.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log_generator/styles/summary.css" afterPath="$PROJECT_DIR$/log_generator/styles/summary.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log_generator/utils/HtmlLogcatUtils.py" afterPath="$PROJECT_DIR$/log_generator/utils/HtmlLogcatUtils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log_generator/utils/HtmlResultsUtils.py" afterPath="$PROJECT_DIR$/log_generator/utils/HtmlResultsUtils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log_generator/utils/HtmlSummaryUtils.py" afterPath="$PROJECT_DIR$/log_generator/utils/HtmlSummaryUtils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log_generator/utils/HtmlUtils.py" afterPath="$PROJECT_DIR$/log_generator/utils/HtmlUtils.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,43 +18,31 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="LogGenerator.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="LogGenerator.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/log_generator/LogGenerator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-6995">
-              <caret line="132" column="21" lean-forward="false" selection-start-line="132" selection-start-column="21" selection-end-line="133" selection-end-column="42" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="logcat.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/log_generator/styles/logcat.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="951">
-              <caret line="70" column="16" lean-forward="false" selection-start-line="70" selection-start-column="16" selection-end-line="70" selection-end-column="16" />
+            <state relative-caret-position="366">
+              <caret line="732" column="103" lean-forward="false" selection-start-line="732" selection-start-column="103" selection-end-line="732" selection-end-column="103" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HtmlUtils.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/log_generator/utils/HtmlUtils.py">
+      <file leaf-file-name="GlobalConfig.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings/GlobalConfig.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
-              <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+            <state relative-caret-position="390">
+              <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/output/index.html">
+      <file leaf-file-name="PathsLoader.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings/loader/PathsLoader.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+            <state relative-caret-position="464">
+              <caret line="188" column="0" lean-forward="false" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -77,7 +59,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>failed</find>
       <find>error l</find>
       <find>com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.CheckRates</find>
       <find>package_header</find>
@@ -107,6 +88,7 @@
       <find>class=&quot;link</find>
       <find>_add</find>
       <find>toggle_visibility_for_clean_package</find>
+      <find>logcat_dir</find>
     </findStrings>
     <replaceStrings>
       <replace>create_avd_tag</replace>
@@ -164,8 +146,6 @@
         <option value="$PROJECT_DIR$/../log_generator/LogGenerator.py" />
         <option value="$PROJECT_DIR$/session/SessionLogGenerator.py" />
         <option value="$PROJECT_DIR$/settings/manifest/templates/pathManifest.json" />
-        <option value="$PROJECT_DIR$/settings/loader/PathsLoader.py" />
-        <option value="$PROJECT_DIR$/settings/loader/PathsLoader.py" />
         <option value="$PROJECT_DIR$/Launcher.py" />
         <option value="$PROJECT_DIR$/system/bin/SystemShellCommands.py" />
         <option value="$PROJECT_DIR$/system/bin/AndroidShellCommandAssemblers.py" />
@@ -180,9 +160,11 @@
         <option value="$PROJECT_DIR$/log_generator/utils/HtmlSummaryUtils.py" />
         <option value="$PROJECT_DIR$/log_generator/styles/logcat.css" />
         <option value="$PROJECT_DIR$/output/styles/summary.css" />
-        <option value="$PROJECT_DIR$/log_generator/LogGenerator.py" />
-        <option value="$PROJECT_DIR$/output/index.html" />
         <option value="$PROJECT_DIR$/log_generator/utils/HtmlUtils.py" />
+        <option value="$PROJECT_DIR$/output/index.html" />
+        <option value="$PROJECT_DIR$/settings/loader/PathsLoader.py" />
+        <option value="$PROJECT_DIR$/settings/loader/PathsLoader.py" />
+        <option value="$PROJECT_DIR$/log_generator/LogGenerator.py" />
       </list>
     </option>
   </component>
@@ -486,6 +468,37 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <method />
     </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="AutomationTestSupervisor" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="AutomationTestSupervisor" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
     <configuration default="true" type="tests" factoryName="Unittests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -535,7 +548,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35090000" />
+    <option name="totallyTimeSpent" value="35264000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -548,11 +561,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1920" y="-203" width="1920" height="1177" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1171875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1171875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32965517" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.50277776" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33032492" sideWeight="0.4861111" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22382672" sideWeight="0.49722221" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -573,7 +586,6 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1171875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.060576923" sideWeight="0.4861111" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -714,20 +726,6 @@
     <entry file="file://$PROJECT_DIR$/log_generator/__init__.py" />
     <entry file="file://$PROJECT_DIR$/output/test_logcats/testWelcomeActivity_ifUserWasLoggedAndLoggedOut_shouldShowLoginWithFingerprintButton_emulator-5556_logcat.json" />
     <entry file="file://$PROJECT_DIR$/output/test_logcats/testLogin_withIncorrectData_shouldDisplayErrorForField_emulator-5554_logcat.json" />
-    <entry file="file://$PROJECT_DIR$/settings/loader/PathsLoader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="29" column="90" lean-forward="false" selection-start-line="29" selection-start-column="90" selection-end-line="29" selection-end-column="90" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings/GlobalConfig.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/system/bin/AndroidShellCommandAssemblers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="740">
@@ -810,7 +808,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="127">
           <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -818,7 +815,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -840,40 +836,53 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="913">
           <caret line="538" column="5" lean-forward="false" selection-start-line="538" selection-start-column="1" selection-end-line="538" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/log_generator/styles/logcat.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="951">
+        <state relative-caret-position="-129">
           <caret line="70" column="16" lean-forward="false" selection-start-line="70" selection-start-column="16" selection-end-line="70" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/log_generator/LogGenerator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6995">
-          <caret line="132" column="21" lean-forward="false" selection-start-line="132" selection-start-column="21" selection-end-line="133" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/output/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        <state relative-caret-position="270">
+          <caret line="18" column="32" lean-forward="false" selection-start-line="18" selection-start-column="32" selection-end-line="18" selection-end-column="32" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/log_generator/utils/HtmlUtils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+        <state relative-caret-position="240">
+          <caret line="16" column="18" lean-forward="false" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/loader/PathsLoader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="464">
+          <caret line="188" column="0" lean-forward="false" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/GlobalConfig.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/log_generator/LogGenerator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="732" column="103" lean-forward="false" selection-start-line="732" selection-start-column="103" selection-end-line="732" selection-end-column="103" />
           <folding />
         </state>
       </provider>

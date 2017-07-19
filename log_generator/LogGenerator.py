@@ -730,7 +730,7 @@ def create_link_to_recording_file(test_name):
     for path, subdirs, files in os.walk(recordings_dir):
         for f in files:
             absolute_recording_path = GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR + f
-            relative_recording_path = make_absolute_path_relative_to_output_dir(absolute_recording_path, dirs_behind=1)
+            relative_recording_path = make_absolute_path_relative_to_output_dir(absolute_recording_path)
             if test_name in relative_recording_path:
                 recording_part += 1
                 filename = "p" + str(recording_part)
