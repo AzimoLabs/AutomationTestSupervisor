@@ -8,6 +8,10 @@ from system.console import (
     Color
 )
 
+from system.file.FileUtils import (
+    make_path_absolute
+)
+
 TAG = "AvdSetLoader:"
 
 
@@ -37,7 +41,7 @@ def _load_avd_set_name():
 
 
 def _load_avd_manifest():
-    avd_manifest_dir = ArgLoader.get_manifest_dir(ArgLoader.AVD_MANIFEST_DIR_KEY)
+    avd_manifest_dir = make_path_absolute(ArgLoader.get_manifest_dir(ArgLoader.AVD_MANIFEST_DIR_KEY))
 
     if avd_manifest_dir is None:
         message = ("AvdManifest file directory was not found. Check if config_files_dir.json exists in root of"

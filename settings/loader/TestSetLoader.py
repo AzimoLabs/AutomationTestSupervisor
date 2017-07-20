@@ -8,6 +8,10 @@ from system.console import (
     Color
 )
 
+from system.file.FileUtils import (
+    make_path_absolute
+)
+
 TAG = "TestSetLoader:"
 
 
@@ -31,7 +35,7 @@ def _load_test_set_name():
 
 
 def _load_manifest():
-    test_manifest_dir = ArgLoader.get_manifest_dir(ArgLoader.TEST_MANIFEST_DIR_KEY)
+    test_manifest_dir = make_path_absolute(ArgLoader.get_manifest_dir(ArgLoader.TEST_MANIFEST_DIR_KEY))
 
     if test_manifest_dir is None:
         message = ("TestManifest file directory was not found. Check if config_files_dir.json exists in root "

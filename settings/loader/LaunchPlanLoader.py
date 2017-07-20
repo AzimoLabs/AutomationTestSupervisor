@@ -5,6 +5,10 @@ from settings.manifest.models.LaunchManifestModels import LaunchManifest
 from system.console import Color
 from system.console import Printer
 
+from system.file.FileUtils import (
+    make_path_absolute
+)
+
 TAG = "LaunchPlanLoader:"
 
 
@@ -145,7 +149,7 @@ def _load_launch_plan_name():
 
 
 def _load_launch_plan_manifest():
-    launch_manifest_dir = ArgLoader.get_manifest_dir(ArgLoader.LAUNCH_MANIFEST_DIR_KEY)
+    launch_manifest_dir = make_path_absolute(ArgLoader.get_manifest_dir(ArgLoader.LAUNCH_MANIFEST_DIR_KEY))
 
     if launch_manifest_dir is None:
         message = ("LaunchManifest file directory was not found. Check if config_files_dir.json exists in root " 

@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="fe754bc4-9da6-479c-8fe2-66b4852721c5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log_generator/LogGenerator.py" afterPath="$PROJECT_DIR$/log_generator/LogGenerator.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/loader/AvdSetLoader.py" afterPath="$PROJECT_DIR$/settings/loader/AvdSetLoader.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/loader/LaunchPlanLoader.py" afterPath="$PROJECT_DIR$/settings/loader/LaunchPlanLoader.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/loader/PathsLoader.py" afterPath="$PROJECT_DIR$/settings/loader/PathsLoader.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/loader/TestSetLoader.py" afterPath="$PROJECT_DIR$/settings/loader/TestSetLoader.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/file/FileUtils.py" afterPath="$PROJECT_DIR$/system/file/FileUtils.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -18,31 +22,69 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="LogGenerator.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/log_generator/LogGenerator.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="366">
-              <caret line="732" column="103" lean-forward="false" selection-start-line="732" selection-start-column="103" selection-end-line="732" selection-end-column="103" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GlobalConfig.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/settings/GlobalConfig.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="PathsLoader.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/settings/loader/PathsLoader.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="464">
-              <caret line="188" column="0" lean-forward="false" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
+            <state relative-caret-position="-348">
+              <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestSetLoader.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings/loader/TestSetLoader.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="215">
+              <caret line="37" column="103" lean-forward="false" selection-start-line="37" selection-start-column="103" selection-end-line="37" selection-end-column="103" />
+              <folding>
+                <element signature="e#0#61#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LaunchPlanLoader.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings/loader/LaunchPlanLoader.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="303">
+              <caret line="153" column="35" lean-forward="true" selection-start-line="153" selection-start-column="35" selection-end-line="153" selection-end-column="35" />
+              <folding>
+                <element signature="e#0#61#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AvdSetLoader.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/settings/loader/AvdSetLoader.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="126">
+              <caret line="35" column="115" lean-forward="true" selection-start-line="35" selection-start-column="115" selection-end-line="35" selection-end-column="115" />
+              <folding>
+                <element signature="e#0#61#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FileUtils.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/system/file/FileUtils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="519">
+              <caret line="138" column="27" lean-forward="true" selection-start-line="138" selection-start-column="27" selection-end-line="138" selection-end-column="27" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ArgLoader.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings/loader/ArgLoader.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-339">
+              <caret line="12" column="28" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -59,16 +101,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>error l</find>
-      <find>com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.CheckRates</find>
-      <find>package_header</find>
-      <find>open(</find>
-      <find>failed_test</find>
-      <find>log</find>
-      <find>package</find>
-      <find>combine_logs</find>
-      <find>passed_test_table</find>
-      <find>combine_l</find>
       <find>1234</find>
       <find>_list</find>
       <find>.6</find>
@@ -89,6 +121,16 @@
       <find>_add</find>
       <find>toggle_visibility_for_clean_package</find>
       <find>logcat_dir</find>
+      <find>get_project_root</find>
+      <find>OUTPUT</find>
+      <find>absolute</find>
+      <find>make_path_absolute</find>
+      <find>make_path_absolute(</find>
+      <find>HOME</find>
+      <find>CONFIG_FILES_DIR_DEFAULT_DIR</find>
+      <find>(HOME)</find>
+      <find>manifest</find>
+      <find>manifest_path</find>
     </findStrings>
     <replaceStrings>
       <replace>create_avd_tag</replace>
@@ -114,8 +156,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/jupyter_log_generator/HtmlUtils.py" />
-        <option value="$PROJECT_DIR$/jupyter_log_generator/HtmlResultsUtils.py" />
         <option value="$PROJECT_DIR$/jupyter_log_generator/HtmlSummaryUtils.py" />
         <option value="$PROJECT_DIR$/output/test_logcats/testCheckRates_whenPickedNewCurrencyOrDeliveryMethod_shouldLoadNewRateAndFee_emulator-5556_logcat.json" />
         <option value="$PROJECT_DIR$/jupyter_log_generator/HtmlLogcatUtils.py" />
@@ -141,7 +181,6 @@
         <option value="$PROJECT_DIR$/system/console/ShellHelper.py" />
         <option value="$PROJECT_DIR$/system/console/Printer.py" />
         <option value="$PROJECT_DIR$/settings/GlobalConfig.py" />
-        <option value="$PROJECT_DIR$/settings/loader/LaunchPlanLoader.py" />
         <option value="$PROJECT_DIR$/log_generator/__init.py__.py" />
         <option value="$PROJECT_DIR$/../log_generator/LogGenerator.py" />
         <option value="$PROJECT_DIR$/session/SessionLogGenerator.py" />
@@ -153,7 +192,6 @@
         <option value="$PROJECT_DIR$/system/bin/AndroidBinaryFileControllers.py" />
         <option value="$PROJECT_DIR$/session/SessionGlobalLogger.py" />
         <option value="$PROJECT_DIR$/session/SessionThreads.py" />
-        <option value="$PROJECT_DIR$/system/file/FileUtils.py" />
         <option value="$PROJECT_DIR$/log_generator/styles/summary.css" />
         <option value="$PROJECT_DIR$/log_generator/utils/HtmlLogcatUtils.py" />
         <option value="$PROJECT_DIR$/log_generator/utils/HtmlResultsUtils.py" />
@@ -162,9 +200,13 @@
         <option value="$PROJECT_DIR$/output/styles/summary.css" />
         <option value="$PROJECT_DIR$/log_generator/utils/HtmlUtils.py" />
         <option value="$PROJECT_DIR$/output/index.html" />
-        <option value="$PROJECT_DIR$/settings/loader/PathsLoader.py" />
-        <option value="$PROJECT_DIR$/settings/loader/PathsLoader.py" />
         <option value="$PROJECT_DIR$/log_generator/LogGenerator.py" />
+        <option value="$PROJECT_DIR$/system/file/FileUtils.py" />
+        <option value="$PROJECT_DIR$/settings/loader/PathsLoader.py" />
+        <option value="$PROJECT_DIR$/settings/loader/PathsLoader.py" />
+        <option value="$PROJECT_DIR$/settings/loader/TestSetLoader.py" />
+        <option value="$PROJECT_DIR$/settings/loader/LaunchPlanLoader.py" />
+        <option value="$PROJECT_DIR$/settings/loader/AvdSetLoader.py" />
       </list>
     </option>
   </component>
@@ -228,112 +270,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="settings" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="session" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="output" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="log_generator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="log_generator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utils" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="log_generator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="styles" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AutomationTestSupervisor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="error" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -626,9 +562,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/output/test_logcats/testCheckRates_whenPickedNewCurrencyOrDeliveryMethod_shouldLoadNewRateAndFee_emulator-5556_logcat.json" />
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/webstorm.jar!/resources/html5-schema/html5/block.rnc" />
-    <entry file="file://$PROJECT_DIR$/log_generation/summary.css" />
     <entry file="file://$PROJECT_DIR$/output/test_logcats/testCheckRates_ifExceedsLimitedValueRange_shouldFormatInsertedAmountOfMoneyToSend_emulator-5556_logcat.json" />
     <entry file="file://$PROJECT_DIR$/log_generation/LogcatHtmlGeneratorStyle.ipynb" />
     <entry file="file://$PROJECT_DIR$/log_generation/index.html" />
@@ -664,31 +597,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config_files_dir.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/settings/manifest/models/AvdManifestModels.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="555">
           <caret line="37" column="41" lean-forward="false" selection-start-line="37" selection-start-column="41" selection-end-line="37" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings/loader/AvdSetLoader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings/loader/LaunchPlanLoader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="50" column="0" lean-forward="false" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -747,13 +659,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/settings/loader/ArgLoader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="30" column="28" lean-forward="false" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/session/SessionThreads.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3105">
@@ -786,13 +691,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1050">
           <caret line="70" column="0" lean-forward="false" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/file/FileUtils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1124">
-          <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -863,14 +761,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/settings/loader/PathsLoader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="188" column="0" lean-forward="false" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/settings/GlobalConfig.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
@@ -881,8 +771,88 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/log_generator/LogGenerator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="732" column="103" lean-forward="false" selection-start-line="732" selection-start-column="103" selection-end-line="732" selection-end-column="103" />
+        <state relative-caret-position="313">
+          <caret line="361" column="28" lean-forward="true" selection-start-line="361" selection-start-column="28" selection-end-line="361" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config_files_dir.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/loader/ArgLoader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-339">
+          <caret line="12" column="28" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/file/FileUtils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="138" column="27" lean-forward="true" selection-start-line="138" selection-start-column="27" selection-end-line="138" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/loader/TestSetLoader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="37" column="103" lean-forward="false" selection-start-line="37" selection-start-column="103" selection-end-line="37" selection-end-column="103" />
+          <folding>
+            <element signature="e#0#61#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/loader/PathsLoader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-348">
+          <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/loader/LaunchPlanLoader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="153" column="35" lean-forward="true" selection-start-line="153" selection-start-column="35" selection-end-line="153" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#61#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/loader/AvdSetLoader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="35" column="115" lean-forward="true" selection-start-line="35" selection-start-column="115" selection-end-line="35" selection-end-column="115" />
+          <folding>
+            <element signature="e#0#61#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/summary/session_summary.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>

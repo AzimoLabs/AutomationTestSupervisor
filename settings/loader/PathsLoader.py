@@ -9,7 +9,8 @@ from system.console import (
     Color
 )
 from system.file.FileUtils import (
-    clean_folder_only_dir
+    clean_folder_only_dir,
+    make_path_absolute
 )
 
 HOME = "~/"
@@ -30,7 +31,6 @@ OUTPUT_HTML_INDEX_FILE_NAME = "index.html"
 LOG_GENERATOR_DIR_DEFAULT = os.path.abspath(os.path.dirname(__name__)) + "/log_generator/"
 
 DEVICE_VIDEO_STORAGE_FOLDER_DEFAULT = "/sdcard/test_automation_recordings/"
-
 
 TAG = "PathsLoader:"
 
@@ -62,7 +62,7 @@ def _load_path_set_name():
 
 
 def _load_path_manifest():
-    path_manifest_dir = ArgLoader.get_manifest_dir(ArgLoader.PATH_MANIFEST_DIR_KEY)
+    path_manifest_dir = make_path_absolute(ArgLoader.get_manifest_dir(ArgLoader.PATH_MANIFEST_DIR_KEY))
 
     if path_manifest_dir is None:
         message = ("PathManifest file directory was not found. Check if config_files_dir.json exists in root "
@@ -95,7 +95,7 @@ def _load_paths_to_global_settings(path_set):
             message = "Env variable 'ANDROID_HOME' is not set. Launcher will quit."
             raise LauncherFlowInterruptedException(TAG, message)
         else:
-            GlobalConfig.SDK_DIR = clean_folder_only_dir(ANDROID_HOME_ENV)
+            GlobalConfig.SDK_DIR = clean_folder_only_dir(make_path_absolute(ANDROID_HOME_ENV))
     Printer.system_message(TAG, "Launcher will look for SDK in dir: " + Color.GREEN + GlobalConfig.SDK_DIR
                            + Color.BLUE + ".")
 
@@ -106,11 +106,12 @@ def _load_paths_to_global_settings(path_set):
         if ANDROID_SDK_HOME_ENV is None:
             Printer.system_message(TAG, "Env variable 'ANDROID_SDK_HOME' is not set. "
                                         "Trying to recreate default path from user root.")
-            GlobalConfig.AVD_DIR = clean_folder_only_dir(HOME) + ".android"
+            GlobalConfig.AVD_DIR = clean_folder_only_dir(make_path_absolute(HOME)) + ".android"
     Printer.system_message(TAG, "Launcher will look for AVD images in dir: " + Color.GREEN + GlobalConfig.AVD_DIR
                            + Color.BLUE + ".")
 
-    GlobalConfig.PROJECT_ROOT_DIR = clean_folder_only_dir((path_set.paths["project_root_dir"]).path_value)
+    GlobalConfig.PROJECT_ROOT_DIR = clean_folder_only_dir(
+        make_path_absolute((path_set.paths["project_root_dir"]).path_value))
     if GlobalConfig.PROJECT_ROOT_DIR == "":
         Printer.system_message(TAG, "Project root was not specified. This field is not obligatory.")
         Printer.error(TAG, "Warning: Without project root directory launcher will quit if no "
@@ -119,7 +120,7 @@ def _load_paths_to_global_settings(path_set):
         Printer.system_message(TAG, "Android project root dir set to: " + Color.GREEN + GlobalConfig.PROJECT_ROOT_DIR
                                + Color.BLUE + ".")
 
-    GlobalConfig.APK_DIR = clean_folder_only_dir((path_set.paths["apk_dir"]).path_value)
+    GlobalConfig.APK_DIR = clean_folder_only_dir(make_path_absolute((path_set.paths["apk_dir"]).path_value))
     if GlobalConfig.APK_DIR == "":
         message = "Directory with .*apk files was not specified. Launcher will quit."
         raise LauncherFlowInterruptedException(TAG, message)
@@ -195,8 +196,7 @@ def _load_paths_to_global_settings(path_set):
     Printer.system_message(TAG, "Html logs presenting logcats from devices will be stored in dir: " + Color.GREEN
                            + GlobalConfig.OUTPUT_LOGCAT_HTML_DIR + Color.BLUE + ".")
 
-    GlobalConfig.OUTPUT_INDEX_HTML_DIR = (clean_folder_only_dir(GlobalConfig.OUTPUT_DIR)
-                                          + OUTPUT_HTML_INDEX_FILE_NAME)
+    GlobalConfig.OUTPUT_INDEX_HTML_DIR = clean_folder_only_dir(GlobalConfig.OUTPUT_DIR) + OUTPUT_HTML_INDEX_FILE_NAME
     if not os.path.isabs(GlobalConfig.OUTPUT_INDEX_HTML_DIR):
         message = "Path " + GlobalConfig.OUTPUT_TEST_RECORDINGS_DIR + " needs to be absolute!"
         raise LauncherFlowInterruptedException(TAG, message)

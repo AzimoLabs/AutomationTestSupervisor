@@ -149,3 +149,7 @@ def remove_slash_pairs(path):
 
 def get_project_root():
     return os.path.abspath(os.path.dirname(__name__))
+
+
+def make_path_absolute(path):
+    return os.path.abspath(clean_path(path))
