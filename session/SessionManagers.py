@@ -552,6 +552,8 @@ class TestManager:
         logcat_saving_threads = list()
         test_recording_saving_threads = list()
 
+        import time
+        debug_time = int(round(time.time() * 1000))
         try:
             while not threads_finished:
                 if len(logcat_threads) != logcat_threads_num:
@@ -567,6 +569,11 @@ class TestManager:
                         test_recording_saving_thread = TestRecordingSavingThread(device)
                         test_recording_saving_threads.append(test_recording_saving_thread)
                         test_recording_saving_thread.start()
+
+                if int(round(time.time() * 1000)) - debug_time > 10000:
+                    print("Can new test thread be created?")
+                    print(" - created test threads != expected test threads: " + str(len(test_threads) != test_threads_num))
+                    print(" - all logcat processes are not none: " + str(all(t.logcat_process is not None for t in logcat_threads)))
 
                 if len(test_threads) != test_threads_num and all(t.logcat_process is not None for t in logcat_threads):
                     for device in devices:
@@ -625,6 +632,14 @@ class TestManager:
                                     recording_saving_thread.add_clear_recordings_cmd(clear_cmd_list)
 
                         logcat_thread.recordings.clear()
+
+                if int(round(time.time() * 1000)) - debug_time > 10000:
+                    debug_time = int(round(time.time() * 1000))
+                    print("Conditions for kill threads: ")
+                    print(" - created num threads == expected num threads: " + str(len(test_threads) == test_threads_num))
+                    print(" - all test threads are not alive: " + str(all(not t.is_alive() for t in test_threads)))
+                    print(" - all test_log_saving_thread finished: " + str(all(t.is_finished() for t in test_log_saving_threads)))
+                    print(" - all test_logcat_saving_threads finished: " + str(all(t.is_finished() for t in logcat_saving_threads)))
 
                 if len(test_threads) == test_threads_num \
                         and all(not t.is_alive() for t in test_threads) \

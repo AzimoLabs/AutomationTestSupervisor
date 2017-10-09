@@ -371,6 +371,8 @@ class TestThread(threading.Thread):
                     stack += line
                     Printer.console(line, end="")
 
+            Printer.system_message(self.TAG, "TestThread loop ended!")
+
     def kill_processes(self):
         if self.test_process is not None and hasattr(self.test_process, "kill"):
             Printer.system_message(self.TAG, "TestThread finished!")
