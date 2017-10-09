@@ -199,6 +199,7 @@ class TestLogCatMonitorThread(threading.Thread):
         ShellHelper.execute_shell(self.flush_logcat_cmd, False, False)
         with subprocess.Popen(self.monitor_logcat_cmd, shell=True, stdout=subprocess.PIPE, bufsize=1,
                               universal_newlines=True, encoding="utf-8", errors="ignore") as p:
+            Printer.system_message(self.TAG, "LogcatMonitoringThread started!")
             self.logcat_process = p
 
             current_log = None
@@ -285,7 +286,11 @@ class TestLogCatMonitorThread(threading.Thread):
             self.screen_recording_thread.kill_processes()
 
         if self.logcat_process is not None and hasattr(self.logcat_process, "kill"):
+            Printer.system_message(self.TAG, "LogcatMonitoringThread finished!")
             self.logcat_process.kill()
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        Printer.system_message(self.TAG, "LogcatMonitoringThread destroyed.")
 
 
 class TestThread(threading.Thread):
@@ -314,6 +319,7 @@ class TestThread(threading.Thread):
         Printer.console_highlighted(self.TAG, "Executing shell command: ", self.launch_tests_cmd)
         with subprocess.Popen(self.launch_tests_cmd, shell=True, stdout=subprocess.PIPE, bufsize=1,
                               universal_newlines=True) as p:
+            Printer.system_message(self.TAG, "TestThread started!")
             self.test_process = p
 
             reading_stack_in_progress = False
@@ -367,6 +373,7 @@ class TestThread(threading.Thread):
 
     def kill_processes(self):
         if self.test_process is not None and hasattr(self.test_process, "kill"):
+            Printer.system_message(self.TAG, "TestThread finished!")
             self.test_process.kill()
 
 
