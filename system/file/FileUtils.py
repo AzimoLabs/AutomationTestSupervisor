@@ -113,7 +113,8 @@ def save_json_dict_to_json(directory, json_dict, file_name):
     except Exception as e:
         message = "Unable to create file '{}'. Error message: {}"
         message = message.format(file_path, extension, str(e))
-        raise LauncherFlowInterruptedException(TAG, message)
+        print(message)
+        # raise LauncherFlowInterruptedException(TAG, message)
     finally:
         if output_file is not None and hasattr(output_file, "close"):
             output_file.close()
