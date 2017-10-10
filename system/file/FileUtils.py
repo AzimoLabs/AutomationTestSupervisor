@@ -72,18 +72,8 @@ def create_file(directory, file_name, extension):
 
 def load_json(json_dir):
     json_dir = clean_path(json_dir)
-    json_file = None
-
-    try:
-        json_file = open(json_dir, "r", encoding='utf-8', errors='ignore')
+    with open(json_dir, "r", encoding='utf-8', errors='ignore') as json_file:
         json_data = json_file.read()
-    except Exception as e:
-        message = "Unable to open file '{}'. Error message: {}"
-        message = message.format(json_dir, str(e))
-        raise LauncherFlowInterruptedException(TAG, message)
-    finally:
-        if json_file is not None and hasattr(json_file, "close"):
-            json_file.close()
 
     try:
         json_dict = json.loads(json_data)
