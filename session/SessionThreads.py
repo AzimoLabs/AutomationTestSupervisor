@@ -206,7 +206,7 @@ class TestLogCatMonitorThread(threading.Thread):
             current_recording_name = None
 
             for line in p.stdout:
-                line_cleaned = line.strip()
+                line_cleaned = line.encode("utf-8", "ignore").decode("utf-8").strip()
                 line_parts = line_cleaned.split()
 
                 if len(line_parts) <= 5:
@@ -321,6 +321,8 @@ class TestThread(threading.Thread):
             stack = None
 
             for line in p.stdout:
+                line = line.encode("utf-8", "ignore").decode("utf-8").strip()
+
                 if self.TEST_NAME in line and current_log is None:
                     current_log = TestSummary()
                     current_log.test_name = line.replace(self.TEST_NAME, "").strip()
