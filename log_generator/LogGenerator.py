@@ -103,7 +103,7 @@ def _create_summary_file():
 
     FileUtils.create_file(file_dir, file_name, file_extension)
 
-    with open(GlobalConfig.OUTPUT_INDEX_HTML_DIR, "w", encoding="utf-8", errors="ignore") as html_file:
+    with open(GlobalConfig.OUTPUT_INDEX_HTML_DIR, "w", encoding="utf-8") as html_file:
         html_content = _generate_summary_html()
         html_file.write(html_content)
 
@@ -120,7 +120,7 @@ def _create_logcats():
         file_extension = "html"
         file = "{}{}.{}".format(file_dir, file_name, file_extension)
 
-        with open(file, "w", encoding="utf-8", errors="ignore") as html_file:
+        with open(file, "w", encoding="utf-8") as html_file:
             html_content = _generate_logcat_html(logcat_dict)
             html_file.write(html_content)
 

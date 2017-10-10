@@ -61,7 +61,7 @@ def create_file(directory, file_name, extension):
     try:
         if not dir_exists(directory):
             os.makedirs(directory)
-        open(file_path, "w")
+        open(file_path, "w", encoding="utf-8")
     except Exception as e:
         message = "Unable to create file '{}.{}'. Error message: {}"
         message = message.format(file_path, extension, str(e))
@@ -72,7 +72,7 @@ def create_file(directory, file_name, extension):
 
 def load_json(json_dir):
     json_dir = clean_path(json_dir)
-    with open(json_dir, "r", encoding="utf-8", errors="ignore") as json_file:
+    with open(json_dir, "r", encoding="utf-8") as json_file:
         json_data = json_file.read()
 
     try:
@@ -94,8 +94,8 @@ def save_json_dict_to_json(directory, json_dict, file_name):
     if not dir_exists(directory):
         os.makedirs(directory)
 
-    with open(file_path, 'wb') as f:
-        f.write(json.dumps(json_dict, indent=4, ensure_ascii=False).encode("utf-8", errors="ignore"))
+    with open(file_path, 'w', encoding="utf-8") as f:
+        f.write(json.dumps(json_dict, indent=4, ensure_ascii=False))
 
     return os.path.abspath(file_path)
 
