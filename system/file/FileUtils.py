@@ -75,7 +75,7 @@ def load_json(json_dir):
     json_file = None
 
     try:
-        json_file = open(json_dir, "r")
+        json_file = open(json_dir, "r", encoding='utf-8', errors='ignore')
         json_data = json_file.read()
     except Exception as e:
         message = "Unable to open file '{}'. Error message: {}"
