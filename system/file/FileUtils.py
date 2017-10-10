@@ -101,25 +101,13 @@ def save_json_dict_to_json(directory, json_dict, file_name):
         file_name = file_name + extension
 
     file_path = clean_path(directory + str(file_name))
+    if not dir_exists(directory):
+        os.makedirs(directory)
 
-    output_file = None
-    try:
-        if not dir_exists(directory):
-            os.makedirs(directory)
-        output_file = open(file_path, "w")
-        absolute_path = os.path.abspath(file_path)
+    with open(file_path, 'wb') as f:
+        f.write(json.dumps(json_dict, indent=4, ensure_ascii=False).encode('utf-8', errors='ignore'))
 
-        json.dump(json_dict, output_file, indent=4, ensure_ascii=False)
-    except Exception as e:
-        message = "Unable to create file '{}'. Error message: {}"
-        message = message.format(file_path, extension, str(e))
-        print(message)
-        # raise LauncherFlowInterruptedException(TAG, message)
-    finally:
-        if output_file is not None and hasattr(output_file, "close"):
-            output_file.close()
-
-    return absolute_path
+    return os.path.abspath(file_path)
 
 
 def clean_folder_only_dir(path):
