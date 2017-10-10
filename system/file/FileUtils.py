@@ -72,7 +72,7 @@ def create_file(directory, file_name, extension):
 
 def load_json(json_dir):
     json_dir = clean_path(json_dir)
-    with open(json_dir, "r", encoding='utf-8', errors='ignore') as json_file:
+    with open(json_dir, "r", encoding="utf-8", errors="ignore") as json_file:
         json_data = json_file.read()
 
     try:
@@ -95,7 +95,7 @@ def save_json_dict_to_json(directory, json_dict, file_name):
         os.makedirs(directory)
 
     with open(file_path, 'wb') as f:
-        f.write(json.dumps(json_dict, indent=4, ensure_ascii=False).encode('utf-8', errors='ignore'))
+        f.write(json.dumps(json_dict, indent=4, ensure_ascii=False).encode("utf-8", errors="ignore"))
 
     return os.path.abspath(file_path)
 

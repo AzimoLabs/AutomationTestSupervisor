@@ -198,7 +198,7 @@ class TestLogCatMonitorThread(threading.Thread):
     def run(self):
         ShellHelper.execute_shell(self.flush_logcat_cmd, False, False)
         with subprocess.Popen(self.monitor_logcat_cmd, shell=True, stdout=subprocess.PIPE, bufsize=1,
-                              universal_newlines=True, encoding='utf-8', errors='ignore') as p:
+                              universal_newlines=True, encoding="utf-8", errors="ignore") as p:
             self.logcat_process = p
 
             current_log = None
@@ -313,7 +313,7 @@ class TestThread(threading.Thread):
     def run(self):
         Printer.console_highlighted(self.TAG, "Executing shell command: ", self.launch_tests_cmd)
         with subprocess.Popen(self.launch_tests_cmd, shell=True, stdout=subprocess.PIPE, bufsize=1,
-                              universal_newlines=True) as p:
+                              universal_newlines=True, encoding="utf-8", errors="ignore") as p:
             self.test_process = p
 
             reading_stack_in_progress = False

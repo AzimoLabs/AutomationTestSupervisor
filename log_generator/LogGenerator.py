@@ -103,7 +103,7 @@ def _create_summary_file():
 
     FileUtils.create_file(file_dir, file_name, file_extension)
 
-    with open(GlobalConfig.OUTPUT_INDEX_HTML_DIR, "w", encoding='utf-8', errors='ignore') as html_file:
+    with open(GlobalConfig.OUTPUT_INDEX_HTML_DIR, "w", encoding="utf-8", errors="ignore") as html_file:
         html_content = _generate_summary_html()
         html_file.write(html_content)
 
@@ -120,7 +120,7 @@ def _create_logcats():
         file_extension = "html"
         file = "{}{}.{}".format(file_dir, file_name, file_extension)
 
-        with open(file, "w", encoding='utf-8', errors='ignore') as html_file:
+        with open(file, "w", encoding="utf-8", errors="ignore") as html_file:
             html_content = _generate_logcat_html(logcat_dict)
             html_file.write(html_content)
 
@@ -555,8 +555,8 @@ def _generate_summary_html():
 
 
 def _add_toggleable_wrapped_id_to_summary_css(wrapper_id, value):
-    with open(GlobalConfig.OUTPUT_STYLES_FOLDER_DIR + GENERATOR_SUMMARY_STYLE_FILE_NAME, "a", encoding='utf-8',
-              errors='ignore') as summary_css:
+    with open(GlobalConfig.OUTPUT_STYLES_FOLDER_DIR + GENERATOR_SUMMARY_STYLE_FILE_NAME, "a", encoding="utf-8",
+              errors="ignore") as summary_css:
         summary_css.write("\n\n")
         summary_css.write("#{}".format(wrapper_id) + " {\n")
         summary_css.write("    display: {};\n".format(value))
