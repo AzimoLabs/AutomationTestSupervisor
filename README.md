@@ -294,8 +294,8 @@ b) Logs from tests in form of JSON files.
 c) Logs from emulators.
 
 <p float="left">
-  <img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/html_dashboard_example1.png" height="361" width="536">
-  <img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/html_dashboard_example2.png" height="361" width="536">
+  <img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/html_dashboard_example1.png" height="273" width="430">
+  <img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/html_dashboard_example2.png" height="273" width="430">
 </p>
 
 #### Boosted sharding
