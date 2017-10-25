@@ -276,6 +276,10 @@ Test set parameters:
 
 ### More AutomationTestSupervisor features
 #### Logging
+<p float="center">
+  <img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/html_dashboard_example1.png" height="273" width="430">
+  <img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/html_dashboard_example2.png" height="273" width="430">
+</p>
 a) HTML dashboard generation - ATS provides you with fully generated HTML website structure where you can preview your test session. It contains:
   - General test health rate.
   - List of failed tests.
@@ -292,11 +296,6 @@ a) HTML dashboard generation - ATS provides you with fully generated HTML websit
 b) Logs from tests in form of JSON files.
 
 c) Logs from emulators.
-
-<p float="left">
-  <img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/html_dashboard_example1.png" height="273" width="430">
-  <img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/html_dashboard_example2.png" height="273" width="430">
-</p>
 
 #### Boosted sharding
   - TODO: Write description
