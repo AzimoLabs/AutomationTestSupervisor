@@ -1,5 +1,5 @@
 # AutomationTestSupervisor
-Python tool for launching and managing Android Virtual Devices and Android Automation Tests. It provides elastic configurations, test and launch profiles, test video recording, html log generation and more.
+AutomationTestSupervisor is a Python tool that is capable of creating, running Android Virtual Devices, building and installing .apk files on devices, running tests and generating logs. It’s strongest point is customizability as it allows you to easily manage which tests should be ran in session, devices to be used, paths on machine to be read and more. It allows to create run profiles which are set once and can be reused after.
 
 ## Related Articles
 - Story behind AutomationTestSupervisor — our custom made tool for Android automation tests
