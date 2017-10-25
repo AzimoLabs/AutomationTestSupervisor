@@ -243,7 +243,7 @@ Overview:
 - You HAVE TO create list of your test packages in `test_list`. Package is a java-package to folder where .java files with @Test annotated code.
 - Check how it's done in `AzimoNote` project -> [link](https://github.com/AzimoLabs/AzimoNote/blob/master/automation/automationTestSupervisorConfig/testManifest.json)
 
-<img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/test_package_example.png" height="411" width="445">
+<img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/test_package_example.png" height="411" width="495">
 
 For example this is a package with 4 test containers:
 - SearchContact_AllContacts_Tests
@@ -292,6 +292,11 @@ a) HTML dashboard generation - ATS provides you with fully generated HTML websit
 b) Logs from tests in form of JSON files.
 
 c) Logs from emulators.
+
+<p float="left">
+  <img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/html_dashboard_example1" height="536" width="361">
+  <img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/html_dashboard_example2" height="536" width="361">
+</p>
 
 #### Boosted sharding
   - TODO: Write description
