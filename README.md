@@ -243,7 +243,7 @@ Overview:
 - You HAVE TO create list of your test packages in `test_list`. Package is a java-package to folder where .java files with @Test annotated code.
 - Check how it's done in `AzimoNote` project -> [link](https://github.com/AzimoLabs/AzimoNote/blob/master/automation/automationTestSupervisorConfig/testManifest.json)
 
-![](git_images/test_package_example.png =411×445)
+<img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/test_package_example.png" height="411" width="445">
 
 For example this is a package with 4 test containers:
 - SearchContact_AllContacts_Tests
@@ -274,24 +274,35 @@ Test set parameters:
 - **`shard`** - Boolean value. Based on this flag you can decide if tests will run in parallel on each device or will be divided into parts (called shards) where each device will receive only part of tests.
 - **`set_package_names`** - If you have finished filling up your `test_list` then you have many test package objects here, where each object has `test_package_name`. **`set_package_names`** is a list for those `test_package_name` values.
 
-### AutomationTestSupervisor features
-1. Logging
-    a) HTML dashboard generation - ATS provides you with fully generated HTML website structure where you can preview your test session. It contains:
-      - General test health rate.
-      - List of failed tests.
-      - List of module sets/plan you have used in this session.
-      - Used .apk name, version, build time.
-      - Device creation, boot, time, .apk install time.
-      - Expandable list of test packages with test cases and their status.
-      - Highlighted error of test.
-      - Test duration.
-      - Device on which test ran.
-      - Link to LogCat from test session (another generated and pre-formatted HTML page).
-      - Link to videos from test (if feature was used).
-    b) Logs from tests in form of JSON files.
-    c) Logs from emulators.
+### More AutomationTestSupervisor features
+#### Logging
+a) HTML dashboard generation - ATS provides you with fully generated HTML website structure where you can preview your test session. It contains:
+  - General test health rate.
+  - List of failed tests.
+  - List of module sets/plan you have used in this session.
+  - Used .apk name, version, build time.
+  - Device creation, boot, time, .apk install time.
+  - Expandable list of test packages with test cases and their status.
+  - Highlighted error of test.
+  - Test duration.
+  - Device on which test ran.
+  - Link to LogCat from test session (another generated and pre-formatted HTML page).
+  - Link to videos from test (if feature was used).
 
-2. Upgraded test sharding
+b) Logs from tests in form of JSON files.
+
+c) Logs from emulators.
+
+#### Boosted sharding
+  - TODO: Write description
+
+#### Secure .apk install
+  - TODO: Write description
+
+#### .apk data scrapping
+  - TODO: Write description
+
+#### AVD separated session
   - TODO: Write description
 
 ### Possible new features
