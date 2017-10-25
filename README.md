@@ -243,7 +243,7 @@ Overview:
 - You HAVE TO create list of your test packages in `test_list`. Package is a java-package to folder where .java files with @Test annotated code.
 - Check how it's done in `AzimoNote` project -> [link](https://github.com/AzimoLabs/AzimoNote/blob/master/automation/automationTestSupervisorConfig/testManifest.json)
 
-<img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/test_package_example.png" height="411" width="495">
+<img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/test_package_example.png" height="495" width="411">
 
 For example this is a package with 4 test containers:
 - SearchContact_AllContacts_Tests
@@ -294,8 +294,8 @@ b) Logs from tests in form of JSON files.
 c) Logs from emulators.
 
 <p float="left">
-  <img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/html_dashboard_example1.png" height="536" width="361">
-  <img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/html_dashboard_example2.png" height="536" width="361">
+  <img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/html_dashboard_example1.png" height="361" width="536">
+  <img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/html_dashboard_example2.png" height="361" width="536">
 </p>
 
 #### Boosted sharding
