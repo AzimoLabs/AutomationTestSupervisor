@@ -244,6 +244,7 @@ Overview:
 - Check how it's done in `AzimoNote` project -> [link](https://github.com/AzimoLabs/AzimoNote/blob/master/automation/automationTestSupervisorConfig/testManifest.json)
 
 Example on our Azimo project:
+
 <img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/test_package_example.png" height="495" width="411">
 
 This is a package with 4 test containers:
