@@ -258,7 +258,7 @@ Which are inside package `com.azimo.sendmoney.instrumentation.azimoTestCases.bdd
 {
   "test_package_name": "SearchContactTests",
   "test_packages": [
-    com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.SearchContact
+    "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.SearchContact"
   ],
   "test_classes": [],
   "test_cases": []
