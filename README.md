@@ -243,9 +243,10 @@ Overview:
 - You HAVE TO create list of your test packages in `test_list`. Package is a java-package to folder where .java files with @Test annotated code.
 - Check how it's done in `AzimoNote` project -> [link](https://github.com/AzimoLabs/AzimoNote/blob/master/automation/automationTestSupervisorConfig/testManifest.json)
 
+Example on our Azimo project:
 <img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/test_package_example.png" height="495" width="411">
 
-For example this is a package with 4 test containers:
+This is a package with 4 test containers:
 - SearchContact_AllContacts_Tests
 - SearchContact_AzimoInstant_Tests
 - SearchContact_MyRecipients_Tests
