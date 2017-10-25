@@ -50,7 +50,7 @@ We wanted to make ATS project as self-contained as possible. That means we didn'
 ```
 It points for directory where you should put config .json files -> [This is how it looks in test project](https://github.com/AzimoLabs/AzimoNote/tree/master/automation).
 
-(Templates for .json manifest files)[https://github.com/AzimoLabs/AutomationTestSupervisor/tree/master/settings/manifest/templates] are located in AutomationTestSupervisor project itself.
+[Templates for .json manifest files](https://github.com/AzimoLabs/AutomationTestSupervisor/tree/master/settings/manifest/templates) are located in AutomationTestSupervisor project itself.
 
 ### Path Module
 File pathManifest.json:
@@ -276,20 +276,23 @@ Test set parameters:
 
 ### AutomationTestSupervisor features
 1. Logging
-  a) HTML dashboard generation - ATS provides you with fully generated HTML website structure where you can preview your test session. It contains:
-    - General test health rate.
-    - List of failed tests.
-    - List of module sets/plan you have used in this session.
-    - Used .apk name, version, build time.
-    - Device creation, boot, time, .apk install time.
-    - Expandable list of test packages with test cases and their status.
-    - Highlighted error of test.
-    - Test duration.
-    - Device on which test ran.
-    - Link to LogCat from test session (another generated and pre-formatted HTML page).
-    - Link to videos from test (if feature was used).
-  b) Logs from tests in form of JSON files.
-  c) Logs from emulators.
+    a) HTML dashboard generation - ATS provides you with fully generated HTML website structure where you can preview your test session. It contains:
+      - General test health rate.
+      - List of failed tests.
+      - List of module sets/plan you have used in this session.
+      - Used .apk name, version, build time.
+      - Device creation, boot, time, .apk install time.
+      - Expandable list of test packages with test cases and their status.
+      - Highlighted error of test.
+      - Test duration.
+      - Device on which test ran.
+      - Link to LogCat from test session (another generated and pre-formatted HTML page).
+      - Link to videos from test (if feature was used).
+    b) Logs from tests in form of JSON files.
+    c) Logs from emulators.
+
+2. Upgraded test sharding
+  - TODO: Write description
 
 ### Possible new features
 a) AutomationTestSupervisor
