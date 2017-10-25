@@ -2,7 +2,7 @@
 AutomationTestSupervisor is a Python tool that is capable of creating, running Android Virtual Devices, building and installing .apk files on devices, running tests and generating logs. It’s strongest point is customizability as it allows you to easily manage which tests should be ran in session, devices to be used, paths on machine to be read and more. It allows to create run profiles which are set once and can be reused after.
 
 ## Related Articles
-- Story behind AutomationTestSupervisor — our custom made tool for Android automation tests
+- (Story behind AutomationTestSupervisor — our custom made tool for Android automation tests)[https://medium.com/azimolabs/story-behind-automationtestsupervisor-our-custom-made-tool-for-android-automation-tests-180c74a5cbfb]
 
 ## Example Project
 We are aware of that ATS has many functions and features. Some people prefer to see code rather then read blocks of text. That's why we have prepared example Android application - **AzimoNote** and wrote few Espresso tests so you can pull it and launch ATS by yourself.
