@@ -146,7 +146,7 @@ Parameters:
 - **`avd_launch_sequentially`** - After you've requested list of AVD to launch you can either wait for their boot in parallel or "one by one". Though non-sequential launch is dangerous for your OS. What's limiting how many AVD can be launched at the same time is HAXM. If you run 10 AVD in exactly same moment (where each takes ~1GB of RAM) - even though limit of your HAXM might be 6GB of RAM - SDK won't stop you from doing that. It will perform 10 checks and each of them will say - there is 6GB of free RAM, go ahead. That way you can launch more AVD - over the limit of your HAXM and in worst case you will crash your OS with out of memory error.
 - **`avd_status_scan_interval_millis`** - When AVD is booting and ATS is waiting for it this parameter allows you to set interval (millis) in which ADB will check device state.
 - **`avd_wait_for_adb_boot_timeout_millis`** - Timeout for so called `ADB BOOT`. It's time from launching terminal command that should start AVD to moment where ADB will display AVD in `adb list` with status `device`. At that point system of AVD just started booting.
-- **`avd_wait_for_system_boot_timeout_millis`** - Wait for system parameters of AVD
+- **`avd_wait_for_system_boot_timeout_millis`** - Wait for system parameters of AVD: `dev.bootcomplete`, `sys.boot_completed`, `init.svc.bootanim`.
 - **`device_before_launching_restart_adb`** - You can choose if ADB should be restarted before it starts working with AVD.
 - **`record_tests`** - You can choose if every test should be recorded. It will put more burden on your machine.
 
