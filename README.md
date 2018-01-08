@@ -2,7 +2,7 @@
 AutomationTestSupervisor is a Python tool that is capable of creating, running Android Virtual Devices, building and installing .apk files on devices, running tests and generating logs. It’s strongest point is customizability as it allows you to easily manage which tests should be ran in session, devices to be used, paths on machine to be read and more. It allows to create run profiles which are set once and can be reused after.
 
 ## Related Articles
-- Story behind AutomationTestSupervisor — our custom made tool for Android automation tests
+- [Story behind AutomationTestSupervisor — our custom made tool for Android automation tests](https://medium.com/azimolabs/story-behind-automationtestsupervisor-our-custom-made-tool-for-android-automation-tests-180c74a5cbfb)
 
 ## Example Project
 We are aware of that ATS has many functions and features. Some people prefer to see code rather then read blocks of text. That's why we have prepared example Android application - **AzimoNote** and wrote few Espresso tests so you can pull it and launch ATS by yourself.
@@ -146,7 +146,7 @@ Parameters:
 - **`avd_launch_sequentially`** - After you've requested list of AVD to launch you can either wait for their boot in parallel or "one by one". Though non-sequential launch is dangerous for your OS. What's limiting how many AVD can be launched at the same time is HAXM. If you run 10 AVD in exactly same moment (where each takes ~1GB of RAM) - even though limit of your HAXM might be 6GB of RAM - SDK won't stop you from doing that. It will perform 10 checks and each of them will say - there is 6GB of free RAM, go ahead. That way you can launch more AVD - over the limit of your HAXM and in worst case you will crash your OS with out of memory error.
 - **`avd_status_scan_interval_millis`** - When AVD is booting and ATS is waiting for it this parameter allows you to set interval (millis) in which ADB will check device state.
 - **`avd_wait_for_adb_boot_timeout_millis`** - Timeout for so called `ADB BOOT`. It's time from launching terminal command that should start AVD to moment where ADB will display AVD in `adb list` with status `device`. At that point system of AVD just started booting.
-- **`avd_wait_for_system_boot_timeout_millis`** - Wait for system parameters of AVD
+- **`avd_wait_for_system_boot_timeout_millis`** - Wait for system parameters of AVD: `dev.bootcomplete`, `sys.boot_completed`, `init.svc.bootanim`.
 - **`device_before_launching_restart_adb`** - You can choose if ADB should be restarted before it starts working with AVD.
 - **`record_tests`** - You can choose if every test should be recorded. It will put more burden on your machine.
 
@@ -243,9 +243,11 @@ Overview:
 - You HAVE TO create list of your test packages in `test_list`. Package is a java-package to folder where .java files with @Test annotated code.
 - Check how it's done in `AzimoNote` project -> [link](https://github.com/AzimoLabs/AzimoNote/blob/master/automation/automationTestSupervisorConfig/testManifest.json)
 
+Example on our Azimo project:
+
 <img src="https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/git_images/test_package_example.png" height="495" width="411">
 
-For example this is a package with 4 test containers:
+This is a package with 4 test containers:
 - SearchContact_AllContacts_Tests
 - SearchContact_AzimoInstant_Tests
 - SearchContact_MyRecipients_Tests
@@ -256,7 +258,7 @@ Which are inside package `com.azimo.sendmoney.instrumentation.azimoTestCases.bdd
 {
   "test_package_name": "SearchContactTests",
   "test_packages": [
-    com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.SearchContact
+    "com.azimo.sendmoney.instrumentation.azimoTestCases.bddTests.functional.SearchContact"
   ],
   "test_classes": [],
   "test_cases": []
