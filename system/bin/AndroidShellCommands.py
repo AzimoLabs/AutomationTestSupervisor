@@ -27,6 +27,7 @@ class AdbShellCommand:
 
 class AdbPackageManagerCommand:
     PACKAGE_MANAGER = "pm"
+    CLEAR_CACHE = "clear {}"
     LIST_SERVICES = "list packages"
     UNINSTALL_PACKAGE = "uninstall {}"
 

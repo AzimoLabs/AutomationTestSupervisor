@@ -520,12 +520,13 @@ class TestManager:
     DEVICE_NAME_PLACEHOLDER = "device_name_to_replace"
     RECORDING_DIR_PLACEHOLDER = "recording_dir_to_replace"
 
-    def __init__(self, instrumentation_runner_controller, adb_controller, adb_shell_controller, logcat_controller,
-                 device_store, test_store):
+    def __init__(self, instrumentation_runner_controller, adb_controller, adb_shell_controller,
+                 adb_package_manager_controller, logcat_controller, device_store, test_store):
 
         self.instrumentation_runner_controller = instrumentation_runner_controller
         self.adb_controller = adb_controller
         self.adb_shell_controller = adb_shell_controller
+        self.adb_package_manager_controller = adb_package_manager_controller
         self.logcat_controller = logcat_controller
         self.device_store = device_store
         self.test_store = test_store
@@ -577,6 +578,9 @@ class TestManager:
 
                             Printer.system_message(self.TAG,
                                                    str(len(test_cmd_templates)) + " packages to run left...")
+
+                            self.adb_package_manager_controller.clear_package_cache(device.adb_name,
+                                                                                    GlobalConfig.APP_PACKAGE)
 
                             test_thread = TestThread(launch_cmd, device)
                             test_threads.append(test_thread)

@@ -210,6 +210,12 @@ class AdbPackageManagerController:
                                                                                         package_name)
         return ShellHelper.execute_shell(cmd, True, True)
 
+    def clear_package_cache(self, device_adb_name, package_name):
+        cmd = self.adb_package_manager_command_assembler.assemble_clear_package_cache_cmd(self.adb_bin,
+                                                                                          device_adb_name,
+                                                                                          package_name)
+        return ShellHelper.execute_shell(cmd, True, True)
+
 
 class AdbSettingsController:
     TAG = "AdbSettingsController:"

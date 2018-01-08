@@ -421,6 +421,10 @@ class ApkInstallThread(threading.Thread):
         regex_result = re.findall("package: name='(.+?)'", dump)
         if regex_result:
             package = str(regex_result[0])
+            if ".test" in package:
+                GlobalConfig.APP_TEST_PACKAGE = package
+            else:
+                GlobalConfig.APP_PACKAGE = package
             Printer.system_message(self.TAG, "Package that is about to be installed: " + Color.GREEN + package
                                    + Color.BLUE + ".")
         else:

@@ -137,6 +137,7 @@ class Launcher:
         self.test_manager = TestManager(self.instrumentation_runner_controller,
                                         self.adb_controller,
                                         self.adb_shell_controller,
+                                        self.adb_package_manager_controller,
                                         self.adb_logcat_controller,
                                         self.device_store,
                                         self.test_store)

@@ -117,6 +117,7 @@ class AdbShellCommandAssembler:
 class AdbPackageManagerCommandAssembler:
     list_installed_packages_schema = "{} {} {} {} {}"
     uninstall_package_schema = "{} {} {} {} {}"
+    clear_package_cache_schema = "{} {} {} {} {}"
 
     def assemble_list_installed_packages_cmd(self, adb_bin, device_adb_name):
         return self.list_installed_packages_schema.format(adb_bin,
@@ -131,6 +132,13 @@ class AdbPackageManagerCommandAssembler:
                                                     AdbShellCommand.SHELL,
                                                     AdbPackageManagerCommand.PACKAGE_MANAGER,
                                                     AdbPackageManagerCommand.UNINSTALL_PACKAGE.format(package_name))
+
+    def assemble_clear_package_cache_cmd(self, adb_bin, device_adb_name, package_name):
+        return self.clear_package_cache_schema.format(adb_bin,
+                                                      AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                                      AdbShellCommand.SHELL,
+                                                      AdbPackageManagerCommand.PACKAGE_MANAGER,
+                                                      AdbPackageManagerCommand.CLEAR_CACHE.format(package_name))
 
 
 class AdbSettingsCommandAssembler:
