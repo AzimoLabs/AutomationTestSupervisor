@@ -316,6 +316,7 @@ class TestThread(threading.Thread):
                               universal_newlines=True, encoding="utf-8", errors="ignore") as p:
             self.test_process = p
 
+            is_using_post_api27_flow = None
             reading_stack_in_progress = False
             current_log = None
             stack = None
@@ -323,49 +324,116 @@ class TestThread(threading.Thread):
             for line in p.stdout:
                 line_cleaned = line.encode("utf-8", "ignore").decode("utf-8")
 
-                if self.TEST_NAME in line_cleaned and current_log is None:
-                    current_log = TestSummary()
-                    current_log.test_name = line_cleaned.replace(self.TEST_NAME, "").strip()
-                    current_log.test_start_time = int(round(time.time() * 1000))
-                    current_log.device = self.device.adb_name
+                if self.TEST_NAME in line_cleaned and is_using_post_api27_flow is None:
+                    is_using_post_api27_flow = False
+                elif self.TEST_PACKAGE in line_cleaned and is_using_post_api27_flow is None:
+                    is_using_post_api27_flow = True
+                elif is_using_post_api27_flow is None:
+                    continue
 
-                    Printer.console(self.TAG + " Test " + current_log.test_name + "\n", end='')
+                if is_using_post_api27_flow:
+                    current_log, stack, reading_stack_in_progress = self._post_api27_logging_flow(
+                        line_cleaned, current_log, stack, reading_stack_in_progress)
+                else:
+                    current_log, stack, reading_stack_in_progress = self._pre_api27_logging_flow(
+                        line_cleaned, current_log, stack, reading_stack_in_progress)
 
-                if self.TEST_PACKAGE in line_cleaned:
-                    line_cleaned = line_cleaned.replace(self.TEST_PACKAGE, "").strip()
-                    package_parts = line_cleaned.split(".")
-                    current_log.test_container = package_parts.pop()
-                    current_log.test_full_package = line_cleaned + "." + current_log.test_name
+    def _post_api27_logging_flow(self, line_cleaned, current_log, stack, reading_stack_in_progress):
+        if self.TEST_PACKAGE in line_cleaned and current_log is None:
+            current_log = TestSummary()
+            line_cleaned = line_cleaned.replace(self.TEST_PACKAGE, "").strip()
+            package_parts = line_cleaned.split(".")
+            current_log.test_container = package_parts.pop()
+            current_log.test_full_package = line_cleaned + "."
 
-                if self.TEST_OUTPUT_STACK_STARTED in line_cleaned:
-                    stack = ""
-                    reading_stack_in_progress = True
+        if self.TEST_OUTPUT_STACK_STARTED in line_cleaned:
+            stack = ""
+            reading_stack_in_progress = True
 
-                if self.TEST_CURRENT_TEST_NUMBER in line_cleaned:
-                    if stack is not None:
-                        current_log.error_messages.append(stack)
-                    reading_stack_in_progress = False
-                    stack = None
+        if self.TEST_CURRENT_TEST_NUMBER in line_cleaned:
+            if stack is not None:
+                current_log.error_messages.append(stack)
+            reading_stack_in_progress = False
+            stack = None
 
-                if self.TEST_ENDED_WITH_SUCCESS_0 in line_cleaned:
-                    current_log.test_end_time = int(round(time.time() * 1000))
-                    current_log.test_status = "success"
-                    self.logs.append(current_log)
-                    current_log = None
+        if self.TEST_ENDED_WITH_SUCCESS_0 in line_cleaned:
+            current_log.test_end_time = int(round(time.time() * 1000))
+            current_log.test_status = "success"
+            self.logs.append(current_log)
+            current_log = None
 
-                if self.TEST_ENDED_WITH_FAILURE in line_cleaned:
-                    current_log.test_end_time = int(round(time.time() * 1000))
-                    current_log.test_status = "failure"
-                    self.logs.append(current_log)
-                    current_log = None
+        if self.TEST_ENDED_WITH_FAILURE in line_cleaned:
+            current_log.test_end_time = int(round(time.time() * 1000))
+            current_log.test_status = "failure"
+            self.logs.append(current_log)
+            current_log = None
 
-                if reading_stack_in_progress:
-                    if self.TEST_OUTPUT_STACK_STARTED in line_cleaned:
-                        test_error_info = self.TAG + " Test " + current_log.test_name + " - FAILED\n"
-                        Printer.console(test_error_info, end="")
-                        line_cleaned = line_cleaned.replace(self.TEST_OUTPUT_STACK_STARTED, "")
-                    stack += line_cleaned
-                    Printer.console(line_cleaned, end="")
+        if self.TEST_NAME in line_cleaned:
+            current_log.test_name = line_cleaned.replace(self.TEST_NAME, "").strip()
+            current_log.test_start_time = int(round(time.time() * 1000))
+            current_log.device = self.device.adb_name
+
+            if current_log.test_name not in current_log.test_full_package:
+                current_log.test_full_package += current_log.test_name
+
+            Printer.console(self.TAG + " Test " + current_log.test_name + "\n", end='')
+
+        if reading_stack_in_progress:
+            if self.TEST_OUTPUT_STACK_STARTED in line_cleaned:
+                test_error_info = self.TAG + " Test " + current_log.test_name + " - FAILED\n"
+                Printer.console(test_error_info, end="")
+                line_cleaned = line_cleaned.replace(self.TEST_OUTPUT_STACK_STARTED, "")
+            stack += line_cleaned
+            Printer.console(line_cleaned, end="")
+
+        return current_log, stack, reading_stack_in_progress
+
+    def _pre_api27_logging_flow(self, line_cleaned, current_log, stack, reading_stack_in_progress):
+        if self.TEST_NAME in line_cleaned and current_log is None:
+            current_log = TestSummary()
+            current_log.test_name = line_cleaned.replace(self.TEST_NAME, "").strip()
+            current_log.test_start_time = int(round(time.time() * 1000))
+            current_log.device = self.device.adb_name
+
+            Printer.console(self.TAG + " Test " + current_log.test_name + "\n", end='')
+
+        if self.TEST_PACKAGE in line_cleaned:
+            line_cleaned = line_cleaned.replace(self.TEST_PACKAGE, "").strip()
+            package_parts = line_cleaned.split(".")
+            current_log.test_container = package_parts.pop()
+            current_log.test_full_package = line_cleaned + "." + current_log.test_name
+
+        if self.TEST_OUTPUT_STACK_STARTED in line_cleaned:
+            stack = ""
+            reading_stack_in_progress = True
+
+        if self.TEST_CURRENT_TEST_NUMBER in line_cleaned:
+            if stack is not None:
+                current_log.error_messages.append(stack)
+            reading_stack_in_progress = False
+            stack = None
+
+        if self.TEST_ENDED_WITH_SUCCESS_0 in line_cleaned:
+            current_log.test_end_time = int(round(time.time() * 1000))
+            current_log.test_status = "success"
+            self.logs.append(current_log)
+            current_log = None
+
+        if self.TEST_ENDED_WITH_FAILURE in line_cleaned:
+            current_log.test_end_time = int(round(time.time() * 1000))
+            current_log.test_status = "failure"
+            self.logs.append(current_log)
+            current_log = None
+
+        if reading_stack_in_progress:
+            if self.TEST_OUTPUT_STACK_STARTED in line_cleaned:
+                test_error_info = self.TAG + " Test " + current_log.test_name + " - FAILED\n"
+                Printer.console(test_error_info, end="")
+                line_cleaned = line_cleaned.replace(self.TEST_OUTPUT_STACK_STARTED, "")
+            stack += line_cleaned
+            Printer.console(line_cleaned, end="")
+
+        return current_log, stack, reading_stack_in_progress
 
     def kill_processes(self):
         if self.test_process is not None and hasattr(self.test_process, "kill"):
