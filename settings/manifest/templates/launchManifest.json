@@ -22,6 +22,10 @@
       },
       "testing_phase": {
         "record_tests": true
+      },
+      "flakiness_check_phase": {
+        "should_rerun_failed_tests": true,
+        "rerun_count": 3
       }
     }
   ]

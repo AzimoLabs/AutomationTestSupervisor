@@ -534,13 +534,36 @@ class TestManager:
     def run_tests(self, test_set, test_list):
         devices = self.device_store.get_devices()
         test_packages = self.test_store.get_packages(test_set, test_list)
+        test_cmd_templates = self._prepare_launch_test_cmds_for_run(test_packages, devices, test_set.shard)
 
         launch_variant_string = "TESTS SPLIT INTO SHARDS" if test_set.shard else "EACH TEST ON EACH DEVICE"
         Printer.system_message(self.TAG, "According to test set settings, tests will be run with following variant: "
                                + Color.GREEN + launch_variant_string + Color.BLUE + ".")
 
+        self._run_tests(devices, test_cmd_templates)
+
+    def rerun_failed_tests(self):
+        devices = self.device_store.get_devices()
+        failed_tests = [s for s in self.test_store.get_test_statuses() if
+                        s.test_status == TestThread.TEST_STATUS_FAILURE]
+        if failed_tests:
+            Printer.system_message(self.TAG, "Re-running {} tests: ".format(len(failed_tests)))
+            for test_status in failed_tests:
+                Printer.system_message(self.TAG, Color.GREEN + "  * {}".format(test_status.test_name))
+
+            test_cmd_templates = []
+            for _ in range(GlobalConfig.FLAKINESS_RERUN_COUNT):
+                test_cmd_templates.extend(
+                    [self._prepare_launch_single_test_cmd(".".join(t.test_full_package.split(".")[:-1]), t.test_name)
+                     for t in failed_tests]
+                )
+
+            self._run_tests(devices, test_cmd_templates, is_rerunning=True)
+        else:
+            Printer.system_message(self.TAG, "No failed tests found!")
+
+    def _run_tests(self, devices, test_cmd_templates, is_rerunning=False):
         device_commands_dict = self._prepare_device_control_cmds(devices)
-        test_cmd_templates = self._prepare_launch_test_cmds_for_run(test_packages, devices, test_set.shard)
 
         threads_finished = False
         logcat_threads_num = len(devices)
@@ -576,8 +599,9 @@ class TestManager:
                             launch_cmd_template = test_cmd_templates.pop(0)
                             launch_cmd = launch_cmd_template.replace(self.DEVICE_NAME_PLACEHOLDER, device.adb_name)
 
+                            instance = "packages" if not is_rerunning else "tests"
                             Printer.system_message(self.TAG,
-                                                   str(len(test_cmd_templates)) + " packages to run left...")
+                                                   str(len(test_cmd_templates)) + " {} to run left...".format(instance))
 
                             self.adb_package_manager_controller.clear_package_cache(device.adb_name,
                                                                                     GlobalConfig.APP_PACKAGE)
@@ -589,15 +613,27 @@ class TestManager:
                 for test_thread in test_threads:
                     if len(test_thread.logs) > 0:
                         current_test_logs = copy.deepcopy(test_thread.logs)
+                        self.test_store.store_test_status(current_test_logs)
 
-                        for log in current_test_logs:
-                            if log.test_status == "success":
-                                session_logger.increment_passed_tests()
+                        for test_log in current_test_logs:
+                            contain_count = self.test_store.test_contain_count(test_log.test_name)
 
-                            if log.test_status == "failure":
-                                session_logger.increment_failed_tests()
+                            if contain_count > 1:
+                                test_log.rerun_count += contain_count - 1
+
+                        if not is_rerunning:
+                            for log in current_test_logs:
+                                if log.test_status == "success":
+                                    session_logger.increment_passed_tests()
+
+                                if log.test_status == "failure":
+                                    session_logger.increment_failed_tests()
+                        else:
+                            for log in current_test_logs:
+                                session_logger.update_flaky_candidate(log)
 
                         test_log_saving_thread = TestSummarySavingThread(test_thread.device, current_test_logs)
+
                         test_log_saving_threads.append(test_log_saving_thread)
                         test_log_saving_thread.start()
                         test_thread.logs.clear()
@@ -605,6 +641,14 @@ class TestManager:
                 for logcat_thread in logcat_threads:
                     if len(logcat_thread.logs) > 0:
                         current_logcats = copy.deepcopy(logcat_thread.logs)
+                        self.test_store.store_test_logcat(current_logcats)
+
+                        for test_logcat in current_logcats:
+                            contain_count = self.test_store.test_logcat_contain_count(test_logcat.test_name)
+
+                            if contain_count > 1:
+                                test_logcat.rerun_count += contain_count - 1
+
                         logcat_saving_thread = TestLogcatSavingThread(logcat_thread.device, current_logcats)
                         logcat_saving_threads.append(logcat_saving_thread)
                         logcat_saving_thread.start()
@@ -739,7 +783,6 @@ class TestManager:
                                                                   GlobalConfig.DEVICE_VIDEO_STORAGE_DIR)
 
     def _prepare_launch_test_cmds_for_run(self, test_packages, devices, use_shards):
-
         cmd_list = list()
         for package in test_packages:
             for i in range(0, len(devices)):
@@ -759,3 +802,11 @@ class TestManager:
                                                                  self.DEVICE_NAME_PLACEHOLDER,
                                                                  parameters,
                                                                  GlobalConfig.INSTRUMENTATION_RUNNER)
+
+    def _prepare_launch_single_test_cmd(self, test_class, test_name):
+        instr_cmd_assembler = self.instrumentation_runner_controller.instrumentation_runner_command_assembler
+        return instr_cmd_assembler.assemble_run_single_test_cmd(self.instrumentation_runner_controller.adb_bin,
+                                                                self.DEVICE_NAME_PLACEHOLDER,
+                                                                test_class,
+                                                                test_name,
+                                                                GlobalConfig.INSTRUMENTATION_RUNNER)

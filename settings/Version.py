@@ -7,7 +7,7 @@ from system.console import (
     Color
 )
 
-NUMBER = "1.0-beta"
+NUMBER = "1.1-beta"
 MIN_PYTHON_VER = (3, 6)
 
 

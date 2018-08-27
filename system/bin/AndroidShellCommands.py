@@ -54,8 +54,8 @@ class InstrumentationRunnerCommand:
     PACKAGE = "-e package {}"
     DISPLAY_RAW_MESSAGE = "-r"
     INSTRUMENTATION_RUNNER = "{}"
-    RUN_TEST_PACKAGE = "{} {} shell am instrument -w -e package {} {}"
-
+    CLASS = "-e class {}"
+    TEST_CASE = "#{}"
 
 class AvdManagerCommand:
     class CreateAvdCommandPart:

@@ -457,3 +457,5 @@ class InstrumentationRunnerController:
             message = "Unable to find ADB binary at '{}'."
             message = message.format(self.adb_bin)
             raise LauncherFlowInterruptedException(self.TAG, message)
+
+

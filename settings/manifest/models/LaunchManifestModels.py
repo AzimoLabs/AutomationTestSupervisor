@@ -38,6 +38,7 @@ class LaunchPlan:
         self.device_launching_phase = DeviceLaunchingPhaseOptions(launch_plan_dict["device_launching_phase"])
         self.apk_preparation_phase = ApkPreparationPhaseOptions(launch_plan_dict["apk_preparation_phase"])
         self.testing_phase = TestingPhaseOptions(launch_plan_dict["testing_phase"])
+        self.flakiness_check_phase = FlakinessCheckPhaseOptions(launch_plan_dict["flakiness_check_phase"])
 
 
 class LaunchGeneralOptions:
@@ -69,3 +70,9 @@ class ApkPreparationPhaseOptions:
 class TestingPhaseOptions:
     def __init__(self, testing_phase_dict):
         self.record_tests = testing_phase_dict["record_tests"]
+
+
+class FlakinessCheckPhaseOptions:
+    def __init__(self, flakiness_check_phase_dict):
+        self.should_rerun_failed_tests = flakiness_check_phase_dict["should_rerun_failed_tests"]
+        self.rerun_count = flakiness_check_phase_dict["rerun_count"]

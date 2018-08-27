@@ -18,6 +18,7 @@ from system.console import (
     Color
 )
 
+
 class ApkStore:
     TAG = "ApkStore:"
 
@@ -276,6 +277,8 @@ class TestStore:
 
     def __init__(self):
         self.packages_to_run = list()
+        self.test_statuses = list()
+        self.test_logcats = list()
 
     # TODO split into init and getter
     def get_packages(self, test_set, test_list):
@@ -284,3 +287,21 @@ class TestStore:
                 if test_package not in self.packages_to_run:
                     self.packages_to_run.append(test_package)
         return self.packages_to_run
+
+    def store_test_status(self, test_status):
+        self.test_statuses.extend(test_status)
+
+    def get_test_statuses(self):
+        return self.test_statuses
+
+    def test_contain_count(self, test_name):
+        return len([t for t in self.get_test_statuses() if t.test_name == test_name])
+
+    def store_test_logcat(self, test_logcat):
+        self.test_logcats.extend(test_logcat)
+
+    def test_logcat_contain_count(self, test_name):
+        return len([t for t in self.get_test_logcats() if t.test_name == test_name])
+
+    def get_test_logcats(self):
+        return self.test_logcats

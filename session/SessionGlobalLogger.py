@@ -8,7 +8,8 @@ from session.SessionModels import (
     SessionDeviceSummary,
     SessionTimeSummary,
     SessionApkSummary,
-    SessionTestSummary
+    SessionTestSummary,
+    SessionFlakinessCheckSummary
 )
 
 from system.file import FileUtils
@@ -30,6 +31,8 @@ session_log.test_summary = SessionTestSummary()
 session_log.test_summary.test_number = 0
 session_log.test_summary.test_passed = 0
 session_log.test_summary.test_failed = 0
+
+session_log.flakiness_summary = SessionFlakinessCheckSummary()
 
 
 def _log_device(device_name):
@@ -314,6 +317,24 @@ def _update_total_test_time():
             session_log.time_summary.total_test_end_time - session_log.time_summary.total_test_start_time
 
 
+def log_total_rerun_start_time():
+    if session_log.time_summary.total_rerun_start_time is None:
+        session_log.time_summary.total_rerun_start_time = time.time()
+
+
+def log_total_rerun_end_time():
+    if session_log.time_summary.total_rerun_end_time is None:
+        session_log.time_summary.total_rerun_end_time = time.time()
+        _update_total_rerun_time()
+
+
+def _update_total_rerun_time():
+    if session_log.time_summary.total_rerun_start_time is not None \
+            and session_log.time_summary.total_rerun_end_time is not None:
+        session_log.time_summary.total_rerun_time = \
+            session_log.time_summary.total_rerun_end_time - session_log.time_summary.total_rerun_start_time
+
+
 def log_session_start_time():
     if session_log.time_summary.total_session_start_time is None:
         session_log.time_summary.total_session_start_time = time.time()
@@ -360,11 +381,26 @@ def _update_health_rate():
                                                session_log.test_summary.test_number
 
 
+def update_flaky_candidate(test_summary):
+    session_log.flakiness_summary.suspects.setdefault(test_summary.test_name, {
+        "failed_count": 1,
+        "passed_count": 0,
+        "is_flaky": False
+    })
+
+    if test_summary.test_status == "success":
+        session_log.flakiness_summary.suspects[test_summary.test_name]["passed_count"] += 1
+        session_log.flakiness_summary.suspects[test_summary.test_name]["is_flaky"] = True
+    else:
+        session_log.flakiness_summary.suspects[test_summary.test_name]["failed_count"] += 1
+
+
 def dump_session_summary():
     print_device_summaries()
     print_time_summary()
     print_apk_summary()
     print_test_summary()
+    print_rerun_summary()
 
 
 def print_device_summaries():
@@ -412,6 +448,9 @@ def print_time_summary():
     if session_log.time_summary.total_test_time is not None:
         Printer.system_message(TAG, "  * Total test process took: " + Color.GREEN +
                                "{:.2f}".format(session_log.time_summary.total_test_time) + Color.BLUE + " seconds.")
+    if session_log.time_summary.total_rerun_time is not None:
+        Printer.system_message(TAG, "  * Total test re-run process took: " + Color.GREEN +
+                               "{:.2f}".format(session_log.time_summary.total_rerun_time) + Color.BLUE + " seconds.")
     if session_log.time_summary.total_session_time is not None:
         Printer.system_message(TAG, "  * Total session time: " + Color.GREEN +
                                "{:.2f}".format(session_log.time_summary.total_session_time) + Color.BLUE + " seconds.")
@@ -452,6 +491,20 @@ def print_test_summary():
     if session_log.test_summary.health_rate is not None:
         Printer.system_message(TAG, "  * Health rate: " + Color.GREEN
                                + "{0:.2f}%".format(session_log.test_summary.health_rate * 100) + Color.BLUE + ".")
+
+
+def print_rerun_summary():
+    if GlobalConfig.SHOULD_RERUN_FAILED_TESTS:
+        Printer.system_message(TAG, "Re-run details:")
+        Printer.system_message(TAG, "  - from " + Color.GREEN + "{}".format(session_log.test_summary.test_failed)
+                               + Color.BLUE + " failed test cases, each was started again " + Color.GREEN
+                               + "{}".format(GlobalConfig.FLAKINESS_RERUN_COUNT) + Color.BLUE + " times:")
+
+        for suspect, status in session_log.flakiness_summary.suspects.items():
+            Printer.system_message(TAG, "   * (failed: " + Color.GREEN +
+                                   "{}".format(status["failed_count"]) + Color.BLUE + ", passed: " + Color.GREEN
+                                   + "{}".format(status["passed_count"]) + Color.BLUE + ", is_flaky: " + Color.GREEN
+                                   + "{}".format(status["is_flaky"]) + Color.BLUE + ") {}".format(suspect))
 
 
 def dump_saved_files_history():
@@ -507,6 +560,7 @@ def save_session_summary():
         session_log_json_dict.device_summaries = list()
         for device_name, device_summary in session_log.device_summaries.items():
             session_log_json_dict.device_summaries.append(vars(device_summary))
+        session_log_json_dict.flakiness_summary = vars(session_log.flakiness_summary)
         session_log_json_dict = vars(session_log_json_dict)
 
         FileUtils.save_json_dict_to_json(GlobalConfig.OUTPUT_SUMMARY_LOG_DIR, session_log_json_dict, "session_summary")

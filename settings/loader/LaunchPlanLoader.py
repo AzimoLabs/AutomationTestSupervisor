@@ -136,6 +136,18 @@ def _load_launch_plan_to_global_settings(launch_plan):
         Printer.system_message(TAG, "  * Launcher test " + Color.GREEN + "recording is turned off"
                                + Color.BLUE + ".")
 
+    Printer.system_message(TAG, "Flakiness check phase settings:")
+    flakiness_check_phase = launch_plan.flakiness_check_phase
+
+    GlobalConfig.SHOULD_RERUN_FAILED_TESTS = flakiness_check_phase.should_rerun_failed_tests
+    GlobalConfig.FLAKINESS_RERUN_COUNT = flakiness_check_phase.rerun_count
+    if GlobalConfig.SHOULD_RERUN_FAILED_TESTS:
+        Printer.system_message(TAG, "  * Launcher will " + Color.GREEN + "re-run failed tests {} times".format(
+            GlobalConfig.FLAKINESS_RERUN_COUNT) + Color.BLUE + " after test session ends.")
+    else:
+        Printer.system_message(TAG, "  * Launcher test " + Color.GREEN + "re-running option is turned off"
+                               + Color.BLUE + ".")
+
 
 def _load_launch_plan_name():
     launch_plan_name = ArgLoader.get_arg_loaded_by(ArgLoader.LAUNCH_PLAN_PREFIX)

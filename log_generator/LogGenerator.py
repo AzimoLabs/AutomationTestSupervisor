@@ -31,6 +31,7 @@ TEST_SUMMARY_TOTAL_DEVICE_LAUNCH_DURATION_CELL = "Total device launch duration:"
 TEST_SUMMARY_TOTAL_APK_BUILD_DURATION_CELL = "Total .apk build duration:"
 TEST_SUMMARY_TOTAL_APK_INSTALL_DURATION_CELL = "Total .apk install duration:"
 TEST_SUMMARY_TOTAL_TEST_SESSION_DURATION_CELL = "Total test session duration:"
+TEST_SUMMARY_TOTAL_SESSION_RERUN_DURATION_CELL = "Total re-run session duration:"
 
 TEST_SUMMARY_RESULTS_CELL = "Test results"
 TEST_SUMMARY_PASSED_TESTS_CELL = "Passed tests:"
@@ -116,7 +117,7 @@ def _create_logcats():
     logcats = load_logcats(GlobalConfig.OUTPUT_TEST_LOGCAT_DIR)
     for logcat_dict in logcats:
         file_dir = logcat_html_path
-        file_name = logcat_dict["test_name"]
+        file_name = add_rerun_number_to_filename_in_dir(file_dir, logcat_dict["test_name"])
         file_extension = "html"
         file = "{}{}.{}".format(file_dir, file_name, file_extension)
 
@@ -187,16 +188,21 @@ def _generate_summary_html():
     html_content += HtmlSummaryUtils.end_table()
 
     # failed test list - start table
-    failed_test_names = [test_result["test_name"] for test_result in test_results
-                         if test_result["test_status"] != "success"]
+    failed_test_info = list()
+    for t in set([test_result["test_name"] for test_result in test_results if test_result["test_status"] != "success"]):
+        flakiness_summary_for_test = test_summary["flakiness_summary"]["suspects"][t]
+        failed_cnt, passed_cnt = flakiness_summary_for_test["failed_count"], flakiness_summary_for_test["passed_count"]
+        info_template = "({} failed, {} passed) {}".format(failed_cnt, passed_cnt, t)
 
-    if failed_test_names:
+        failed_test_info.append(info_template)
+
+    if failed_test_info:
         html_content += HtmlSummaryUtils.start_summary_failed_test_list_table()
         html_content += HtmlSummaryUtils.start_summary_failed_test_list_subtable()
 
         # failed test list - failed test rows
         displayed_tests = 0
-        for failed_test_name in failed_test_names:
+        for failed_test_name in failed_test_info:
             html_content += HtmlSummaryUtils.start_summary_failed_test_row()
 
             counter = str(displayed_tests + 1) + ". "
@@ -291,11 +297,23 @@ def _generate_summary_html():
     html_content += HtmlSummaryUtils.add_cell_separator()
     html_content += HtmlSummaryUtils.end_row()
 
-    # time summary - total session duration
+    # time summary - total test session duration
     html_content += HtmlSummaryUtils.start_summary_table_row()
     html_content += HtmlSummaryUtils.add_summary_table_general_cell_left(TEST_SUMMARY_TOTAL_TEST_SESSION_DURATION_CELL)
     total_apk_test_duration = _sec_to_display_format(test_summary["time_summary"]["total_test_time"])
     html_content += HtmlSummaryUtils.add_summary_table_general_cell_right(total_apk_test_duration)
+    html_content += HtmlSummaryUtils.end_row()
+
+    # time summary - separator
+    html_content += HtmlSummaryUtils.start_summary_table_row()
+    html_content += HtmlSummaryUtils.add_cell_separator()
+    html_content += HtmlSummaryUtils.end_row()
+
+    # time summary - total rerun session duration
+    html_content += HtmlSummaryUtils.start_summary_table_row()
+    html_content += HtmlSummaryUtils.add_summary_table_general_cell_left(TEST_SUMMARY_TOTAL_SESSION_RERUN_DURATION_CELL)
+    total_rerun_duration = _sec_to_display_format(test_summary["time_summary"]["total_rerun_time"])
+    html_content += HtmlSummaryUtils.add_summary_table_general_cell_right(total_rerun_duration)
     html_content += HtmlSummaryUtils.end_row()
 
     # time summary - end table
@@ -468,7 +486,7 @@ def _generate_summary_html():
 
         passed_tests_num = 0
         failed_tests_num = 0
-        for log in package.logs:
+        for log in [l for l in package.logs if l.rerun_count == 0]:
             if log.status == "success":
                 passed_tests_num += 1
             else:
@@ -495,51 +513,102 @@ def _generate_summary_html():
         for log in package.logs:
             if log.status == TEST_STATUS_PASSED:
 
-                # passed test summary table
-                html_content += HtmlResultsUtils.start_passed_test_table()
-                html_content += HtmlResultsUtils.add_passed_test_header(log.name)
+                if log.rerun_count > 0:
+                    # passed rerun test summary table
+                    html_content += HtmlResultsUtils.start_rerun_test_table()
+                    html_content += HtmlResultsUtils.add_rerun_test_header(
+                        log.name + " (RE-RUN no. {}) - PASSED".format(log.rerun_count))
 
-                html_content += HtmlResultsUtils.start_passed_test_row()
-                html_content += HtmlResultsUtils.add_passed_test_cell(TEST_DURATION_CELL.format(log.duration))
-                html_content += HtmlResultsUtils.add_passed_test_cell(TEST_DEVICE_CELL.format(log.device))
-                html_content += HtmlResultsUtils.add_passed_test_cell(log.logcat)
-                html_content += HtmlResultsUtils.add_passed_test_cell(log.recording)
-                html_content += HtmlResultsUtils.end_row()
+                    html_content += HtmlResultsUtils.start_rerun_test_row()
+                    html_content += HtmlResultsUtils.add_rerun_test_cell(TEST_DURATION_CELL.format(log.duration))
+                    html_content += HtmlResultsUtils.add_rerun_test_cell(TEST_DEVICE_CELL.format(log.device))
+                    html_content += HtmlResultsUtils.add_rerun_test_cell(log.logcat)
+                    html_content += HtmlResultsUtils.add_rerun_test_cell(log.recording)
+                    html_content += HtmlResultsUtils.end_row()
 
-                html_content += HtmlResultsUtils.end_table()
+                    html_content += HtmlResultsUtils.end_table()
+                else:
+                    # passed test summary table
+                    html_content += HtmlResultsUtils.start_passed_test_table()
+                    html_content += HtmlResultsUtils.add_passed_test_header(log.name + " - PASSED")
+
+                    html_content += HtmlResultsUtils.start_passed_test_row()
+                    html_content += HtmlResultsUtils.add_passed_test_cell(TEST_DURATION_CELL.format(log.duration))
+                    html_content += HtmlResultsUtils.add_passed_test_cell(TEST_DEVICE_CELL.format(log.device))
+                    html_content += HtmlResultsUtils.add_passed_test_cell(log.logcat)
+                    html_content += HtmlResultsUtils.add_passed_test_cell(log.recording)
+                    html_content += HtmlResultsUtils.end_row()
+
+                    html_content += HtmlResultsUtils.end_table()
 
             if log.status == TEST_STATUS_FAILED:
-                html_content += HtmlResultsUtils.start_failed_table_wrapper()
 
-                # failed test summary table
-                html_content += HtmlResultsUtils.start_failed_test_table()
-                html_content += HtmlResultsUtils.add_failed_test_header(log.name + " - FAILED")
+                if log.rerun_count > 0:
+                    html_content += HtmlResultsUtils.start_rerun_table_wrapper()
 
-                html_content += HtmlResultsUtils.start_failed_test_row()
-                html_content += HtmlResultsUtils.add_failed_test_cell(TEST_DURATION_CELL.format(log.duration))
-                html_content += HtmlResultsUtils.add_failed_test_cell(TEST_DEVICE_CELL.format(log.device))
-                html_content += HtmlResultsUtils.add_failed_test_cell(log.logcat)
-                html_content += HtmlResultsUtils.add_failed_test_cell(log.recording)
-                html_content += HtmlResultsUtils.end_row()
+                    # failed rerun test summary table
+                    html_content += HtmlResultsUtils.start_rerun_test_table()
+                    html_content += HtmlResultsUtils.add_rerun_test_header(
+                        log.name + " (RE-RUN no. {}) - FAILED".format(log.rerun_count))
 
-                html_content += HtmlResultsUtils.end_table()
+                    html_content += HtmlResultsUtils.start_rerun_test_row()
+                    html_content += HtmlResultsUtils.add_rerun_test_cell(TEST_DURATION_CELL.format(log.duration))
+                    html_content += HtmlResultsUtils.add_rerun_test_cell(TEST_DEVICE_CELL.format(log.device))
+                    html_content += HtmlResultsUtils.add_rerun_test_cell(log.logcat)
+                    html_content += HtmlResultsUtils.add_rerun_test_cell(log.recording)
+                    html_content += HtmlResultsUtils.end_row()
 
-                # failed test error stacktrace
-                html_content += HtmlResultsUtils.start_failed_test_error_table()
+                    html_content += HtmlResultsUtils.end_table()
 
-                error_messages = 0
-                for error in log.error:
-                    for line in error.split("\n"):
-                        html_content += HtmlResultsUtils.start_failed_test_row()
-                        if error_messages % 2 == 0:
-                            html_content += HtmlResultsUtils.add_error_cell_light(line.replace("\t", "&emsp;&emsp;"))
-                        else:
-                            html_content += HtmlResultsUtils.add_error_cell_dark(line.replace("\t", "&emsp;&emsp;"))
-                        html_content += HtmlResultsUtils.end_row()
-                        error_messages += 1
+                    # rerun test error stacktrace
+                    html_content += HtmlResultsUtils.start_rerun_test_error_table()
 
-                html_content += HtmlResultsUtils.end_table()
-                html_content += HtmlResultsUtils.end_wrapper()
+                    error_messages = 0
+                    for error in log.error:
+                        for line in error.split("\n"):
+                            html_content += HtmlResultsUtils.start_rerun_test_row()
+                            if error_messages % 2 == 0:
+                                html_content += HtmlResultsUtils.add_rerun_error_cell_light(
+                                    line.replace("\t", "&emsp;&emsp;"))
+                            else:
+                                html_content += HtmlResultsUtils.add_rerun_error_cell_dark(line.replace("\t", "&emsp;&emsp;"))
+                            html_content += HtmlResultsUtils.end_row()
+                            error_messages += 1
+
+                    html_content += HtmlResultsUtils.end_table()
+                    html_content += HtmlResultsUtils.end_wrapper()
+                else:
+                    html_content += HtmlResultsUtils.start_failed_table_wrapper()
+
+                    # failed test summary table
+                    html_content += HtmlResultsUtils.start_failed_test_table()
+                    html_content += HtmlResultsUtils.add_failed_test_header(log.name + " - FAILED")
+
+                    html_content += HtmlResultsUtils.start_failed_test_row()
+                    html_content += HtmlResultsUtils.add_failed_test_cell(TEST_DURATION_CELL.format(log.duration))
+                    html_content += HtmlResultsUtils.add_failed_test_cell(TEST_DEVICE_CELL.format(log.device))
+                    html_content += HtmlResultsUtils.add_failed_test_cell(log.logcat)
+                    html_content += HtmlResultsUtils.add_failed_test_cell(log.recording)
+                    html_content += HtmlResultsUtils.end_row()
+
+                    html_content += HtmlResultsUtils.end_table()
+
+                    # failed test error stacktrace
+                    html_content += HtmlResultsUtils.start_failed_test_error_table()
+
+                    error_messages = 0
+                    for error in log.error:
+                        for line in error.split("\n"):
+                            html_content += HtmlResultsUtils.start_failed_test_row()
+                            if error_messages % 2 == 0:
+                                html_content += HtmlResultsUtils.add_error_cell_light(line.replace("\t", "&emsp;&emsp;"))
+                            else:
+                                html_content += HtmlResultsUtils.add_error_cell_dark(line.replace("\t", "&emsp;&emsp;"))
+                            html_content += HtmlResultsUtils.end_row()
+                            error_messages += 1
+
+                    html_content += HtmlResultsUtils.end_table()
+                    html_content += HtmlResultsUtils.end_wrapper()
 
             html_content += HtmlResultsUtils.add_test_case_separator()
 
@@ -684,10 +753,18 @@ def combine_logs(test_results):
         log.device = test_result["device"]
         log.duration = calculate_duration(test_result["test_start_time"], test_result["test_end_time"])
         log.status = test_result["test_status"]
+        log.rerun_count = test_result["rerun_count"]
         log.error_type = ""
         log.error = test_result["error_messages"]
-        log.logcat = create_link_to_logcat(test_result["test_name"], TEST_LOGCAT_CELL)
-        log.recording = create_link_to_recording_file(test_result["test_name"])
+
+        if log.rerun_count != 0:
+            log.logcat = create_link_to_logcat(
+                test_result["test_name"] + "_rerun_no_{}".format(log.rerun_count), TEST_LOGCAT_CELL)
+            log.recording = create_link_to_recording_file(
+                test_result["test_name"] + "_rerun_no_{}".format(log.rerun_count))
+        else:
+            log.logcat = create_link_to_logcat(test_result["test_name"], TEST_LOGCAT_CELL)
+            log.recording = create_link_to_recording_file(test_result["test_name"])
 
         log_package_exists = False
         for test_package in test_packages:
@@ -701,6 +778,9 @@ def combine_logs(test_results):
             package.logs = list()
             package.logs.append(log)
             test_packages.append(package)
+
+    for test_package in test_packages:
+        test_package.logs = sorted(test_package.logs, key=lambda x: x.name + str(x.rerun_count))
 
     return test_packages
 
@@ -745,3 +825,19 @@ def make_absolute_path_relative_to_output_dir(path, dirs_behind=0):
     for i in range(dirs_behind):
         result_path += PREVIOUS_LOCATION
     return result_path + path.replace(GlobalConfig.OUTPUT_DIR, "")
+
+
+def add_rerun_number_to_filename_in_dir(path, filename):
+    rerun_count = 0
+    for filename_in_dir in FileUtils.list_files_in_dir(path):
+        if filename in filename_in_dir:
+            rerun_count += 1
+
+    if rerun_count > 0:
+        if "." in filename:
+            filename_parts = filename.split(".")
+            filename = filename_parts[0] + "_rerun_no_{}".format(rerun_count) + filename_parts[1]
+        else:
+            filename += "_rerun_no_{}".format(rerun_count)
+
+    return filename

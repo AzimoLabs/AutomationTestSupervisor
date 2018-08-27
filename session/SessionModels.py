@@ -179,6 +179,10 @@ class SessionTimeSummary:
         self.total_test_end_time = None
         self.total_test_time = None
 
+        self.total_rerun_start_time = None
+        self.total_rerun_end_time = None
+        self.total_rerun_time = None
+
         self.total_session_start_time = None
         self.total_session_end_time = None
         self.total_session_time = None
@@ -207,6 +211,11 @@ class SessionTestSummary:
         self.health_rate = None
 
 
+class SessionFlakinessCheckSummary:
+    def __init__(self):
+        self.suspects = dict()
+
+
 class TestSummary:
     def __init__(self):
         self.test_name = None
@@ -215,8 +224,8 @@ class TestSummary:
         self.test_status = None
         self.device = None
         self.test_start_time = None
-
         self.test_end_time = None
+        self.rerun_count = 0
         self.error_messages = list()
 
 
@@ -225,6 +234,7 @@ class TestLogCat:
         self.test_name = None
         self.test_container = None
         self.test_full_package = None
+        self.rerun_count = 0
         self.lines = list()
 
 

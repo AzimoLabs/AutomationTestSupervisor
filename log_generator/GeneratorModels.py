@@ -11,6 +11,7 @@ class Log:
         self.device = None
         self.duration = None
         self.status = None
+        self.rerun_count = None
         self.error = None
         self.error_type = None
         self.logcat = None

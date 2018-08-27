@@ -58,6 +58,38 @@ def add_error_cell_dark(text):
     return "<div class=\"failed-test-error-dark\">{}</div>".format(text)
 
 
+def start_rerun_table_wrapper():
+    return "<div class=\"rerun-table-wrapper\">"
+
+
+def start_rerun_test_table():
+    return "<div class=\"rerun-test-table\">"
+
+
+def start_rerun_test_error_table():
+    return "<div class=\"rerun-test-error-table\">"
+
+
+def add_rerun_test_header(text):
+    return "<div class=\"rerun-test-header\">{}</div>".format(text)
+
+
+def start_rerun_test_row():
+    return "<div class=\"rerun-test-row\">"
+
+
+def add_rerun_test_cell(text):
+    return "<div class=\"rerun-test-cell\">{}</div>".format(text)
+
+
+def add_rerun_error_cell_light(text):
+    return "<div class=\"rerun-test-error-light\">{}</div>".format(text)
+
+
+def add_rerun_error_cell_dark(text):
+    return "<div class=\"rerun-test-error-dark\">{}</div>".format(text)
+
+
 def end_wrapper():
     return "</div>"
 

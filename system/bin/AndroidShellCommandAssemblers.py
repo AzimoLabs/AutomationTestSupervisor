@@ -269,6 +269,7 @@ class GradleCommandAssembler:
 
 class InstrumentationRunnerCommandAssembler:
     test_command_schema = "{} {} {} {} {} {} {} {}"
+    single_test_command_schema = "{} {} {} {} {} {} {}{} {}"
 
     def assemble_run_test_package_cmd(self, adb_binary, device_adb_name, params, instrumentation_runner):
         parameters = self._assemble_params(params)
@@ -280,7 +281,21 @@ class InstrumentationRunnerCommandAssembler:
                                                InstrumentationRunnerCommand.DISPLAY_RAW_MESSAGE,
                                                parameters,
                                                InstrumentationRunnerCommand.INSTRUMENTATION_RUNNER.format(
-                                                   instrumentation_runner))
+                                                   instrumentation_runner)
+                                               )
+
+    def assemble_run_single_test_cmd(self, adb_binary, device_adb_name, test_class, test_name, instrumentation_runner):
+        return self.single_test_command_schema.format(adb_binary,
+                                                      AdbCommand.SPECIFIC_DEVICE.format(device_adb_name),
+                                                      AdbShellCommand.SHELL,
+                                                      AdbActivityManagerCommand.ACTIVITY_MANAGER,
+                                                      InstrumentationRunnerCommand.INSTRUMENT_PROCESS,
+                                                      InstrumentationRunnerCommand.DISPLAY_RAW_MESSAGE,
+                                                      InstrumentationRunnerCommand.CLASS.format(test_class),
+                                                      InstrumentationRunnerCommand.TEST_CASE.format(test_name),
+                                                      InstrumentationRunnerCommand.INSTRUMENTATION_RUNNER.format(
+                                                          instrumentation_runner)
+                                                      )
 
     @staticmethod
     def _assemble_params(params):

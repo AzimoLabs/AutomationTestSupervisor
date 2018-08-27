@@ -10,7 +10,7 @@ from session.SessionManagers import (
     CleanUpManager,
     DeviceManager,
     ApkManager,
-    TestManager,
+    TestManager
 )
 
 from settings import (
@@ -253,6 +253,16 @@ class Launcher:
 
         session_logger.log_total_test_end_time()
 
+    def _flakiness_check_phase(self):
+        if GlobalConfig.SHOULD_RERUN_FAILED_TESTS:
+            Printer.phase("FLAKINESS CHECK")
+            session_logger.log_total_rerun_start_time()
+
+            Printer.step("Re-running failed tests.")
+            self.test_manager.rerun_failed_tests()
+
+            session_logger.log_total_rerun_end_time()
+
     def _finalization_phase(self):
         Printer.phase("FINALIZATION")
 
@@ -283,6 +293,7 @@ class Launcher:
             self._apk_installation_phase()
             self._pre_test_clean_up_phase()
             self._testing_phase()
+            self._flakiness_check_phase()
         except LauncherFlowInterruptedException as e:
             Printer.error(e.caller_tag, str(e))
             quit()

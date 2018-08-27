@@ -38,11 +38,16 @@ class TestSummarySavingThread(threading.Thread):
 
         for test_summary in self.test_summary_list:
             test_summary_json_dict = vars(test_summary)
-            created_file_path = FileUtils.save_json_dict_to_json(GlobalConfig.OUTPUT_TEST_LOG_DIR,
-                                                                 test_summary_json_dict,
-                                                                 test_summary_json_dict["test_name"]
-                                                                 + "_" + self.device.adb_name
-                                                                 + "_" + self.TEST_SUMMARY_APPENDIX)
+
+            filename = test_summary_json_dict["test_name"] + "_" + self.device.adb_name + "_" \
+                       + self.TEST_SUMMARY_APPENDIX
+
+            if test_summary.rerun_count > 0:
+                filename = filename.replace(".json", "_rerun_no_{}.json".format(test_summary.rerun_count))
+
+            created_file_path = FileUtils.save_json_dict_to_json(
+                GlobalConfig.OUTPUT_TEST_LOG_DIR, test_summary_json_dict, filename)
+
             self.created_files.append(created_file_path)
 
     def is_finished(self):
@@ -71,11 +76,15 @@ class TestLogcatSavingThread(threading.Thread):
             logcat.lines = logcat_lines_json_dict
 
             logcat_json_dict = vars(logcat)
-            created_file_path = FileUtils.save_json_dict_to_json(GlobalConfig.OUTPUT_TEST_LOGCAT_DIR,
-                                                                 logcat_json_dict,
-                                                                 logcat_json_dict["test_name"]
-                                                                 + "_" + self.device.adb_name
-                                                                 + "_" + self.TEST_LOGCAT_APPENDIX)
+
+            filename = logcat_json_dict["test_name"] + "_" + self.device.adb_name + "_" + self.TEST_LOGCAT_APPENDIX
+
+            if logcat.rerun_count > 0:
+                filename = filename.replace(".json", "_rerun_no_{}.json".format(logcat.rerun_count))
+
+            created_file_path = FileUtils.save_json_dict_to_json(
+                GlobalConfig.OUTPUT_TEST_LOGCAT_DIR, logcat_json_dict, filename)
+
             self.created_files.append(created_file_path)
 
     def is_finished(self):
@@ -291,6 +300,9 @@ class TestLogCatMonitorThread(threading.Thread):
 class TestThread(threading.Thread):
     TAG = "TestThread<device_adb_name>:"
 
+    TEST_STATUS_SUCCESS = "success"
+    TEST_STATUS_FAILURE = "failure"
+
     TEST_ENDED_WITH_SUCCESS_0 = "INSTRUMENTATION_STATUS_CODE: 0"
     TEST_ENDED_WITH_FAILURE = "INSTRUMENTATION_STATUS_CODE: -2"
 
@@ -341,6 +353,7 @@ class TestThread(threading.Thread):
     def _post_api27_logging_flow(self, line_cleaned, current_log, stack, reading_stack_in_progress):
         if self.TEST_PACKAGE in line_cleaned and current_log is None:
             current_log = TestSummary()
+
             line_cleaned = line_cleaned.replace(self.TEST_PACKAGE, "").strip()
             package_parts = line_cleaned.split(".")
             current_log.test_container = package_parts.pop()
@@ -358,13 +371,13 @@ class TestThread(threading.Thread):
 
         if self.TEST_ENDED_WITH_SUCCESS_0 in line_cleaned:
             current_log.test_end_time = int(round(time.time() * 1000))
-            current_log.test_status = "success"
+            current_log.test_status = self.TEST_STATUS_SUCCESS
             self.logs.append(current_log)
             current_log = None
 
         if self.TEST_ENDED_WITH_FAILURE in line_cleaned:
             current_log.test_end_time = int(round(time.time() * 1000))
-            current_log.test_status = "failure"
+            current_log.test_status = self.TEST_STATUS_FAILURE
             self.logs.append(current_log)
             current_log = None
 

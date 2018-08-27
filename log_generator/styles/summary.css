@@ -539,3 +539,103 @@
 .link {
     text-decoration: none;
 }
+
+.rerun-table-wrapper {
+    width: 100%;
+
+    background-color: #eafeff;
+}
+
+.rerun-test-table {
+    width: 100%;
+
+    display: table;
+
+    background-color: #d3fff9;
+
+    padding: 5px 0;
+}
+
+.rerun-test-header {
+    width: 100%;
+
+    display: table-caption;
+
+    background-color: #77dce2;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    text-align: center;
+
+    padding: 6px 0;
+}
+
+.rerun-test-row {
+    width: 100%;
+
+    display: table-row;
+}
+
+.rerun-test-cell {
+    width: 25%;
+
+    display: table-cell;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    text-align: center;
+
+    padding: 6px;
+}
+
+.rerun-test-error-table {
+    width: 98%;
+
+    display: table;
+
+    margin: auto;
+    padding: 6px;
+}
+
+.rerun-test-error-dark {
+    width: 100%;
+
+    display: table-cell;
+
+    background-color: #baecef;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 11px;
+    text-align: left;
+
+    white-space: pre-wrap; /* CSS3 */
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -pre-wrap; /* Opera <7 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* IE */
+    word-break: break-all;
+
+    padding: 3px;
+}
+
+.rerun-test-error-light {
+    width: 100%;
+
+    display: table-cell;
+
+    background-color: ##d4f5f7;
+
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 11px;
+    text-align: left;
+
+    white-space: pre-wrap; /* CSS3 */
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -pre-wrap; /* Opera <7 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* IE */
+    word-break: break-all;
+
+    padding: 3px;
+}
+
