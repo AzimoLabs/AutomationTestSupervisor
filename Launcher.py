@@ -294,9 +294,12 @@ class Launcher:
             self._pre_test_clean_up_phase()
             self._testing_phase()
             self._flakiness_check_phase()
-        except LauncherFlowInterruptedException as e:
-            Printer.error(e.caller_tag, str(e))
-            quit()
+        except Exception as e:
+            if isinstance(e, LauncherFlowInterruptedException):
+                Printer.error(e.caller_tag, str(e))
+                quit()
+            else:
+                raise e
         finally:
             self._finalization_phase()
 

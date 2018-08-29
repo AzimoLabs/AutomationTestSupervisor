@@ -288,20 +288,22 @@ class TestStore:
                     self.packages_to_run.append(test_package)
         return self.packages_to_run
 
-    def store_test_status(self, test_status):
-        self.test_statuses.extend(test_status)
+    def store_test_status(self, test_statuses):
+        for status in test_statuses:
+            self.test_statuses.append(status)
 
-    def get_test_statuses(self):
-        return self.test_statuses
+    def store_test_logcat(self, test_logcats):
+        for logcat in test_logcats:
+            self.test_logcats.append(logcat)
 
     def test_contain_count(self, test_name):
         return len([t for t in self.get_test_statuses() if t.test_name == test_name])
 
-    def store_test_logcat(self, test_logcat):
-        self.test_logcats.extend(test_logcat)
-
     def test_logcat_contain_count(self, test_name):
         return len([t for t in self.get_test_logcats() if t.test_name == test_name])
+
+    def get_test_statuses(self):
+        return self.test_statuses
 
     def get_test_logcats(self):
         return self.test_logcats

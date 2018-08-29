@@ -621,16 +621,14 @@ class TestManager:
                             if contain_count > 1:
                                 test_log.rerun_count += contain_count - 1
 
-                        if not is_rerunning:
-                            for log in current_test_logs:
-                                if log.test_status == "success":
+                            if is_rerunning:
+                                session_logger.update_flaky_candidate(test_log)
+                            else:
+                                if test_log.test_status == "success":
                                     session_logger.increment_passed_tests()
 
-                                if log.test_status == "failure":
+                                if test_log.test_status == "failure":
                                     session_logger.increment_failed_tests()
-                        else:
-                            for log in current_test_logs:
-                                session_logger.update_flaky_candidate(log)
 
                         test_log_saving_thread = TestSummarySavingThread(test_thread.device, current_test_logs)
 

@@ -496,7 +496,7 @@ def print_test_summary():
 def print_rerun_summary():
     if GlobalConfig.SHOULD_RERUN_FAILED_TESTS:
         Printer.system_message(TAG, "Re-run details:")
-        Printer.system_message(TAG, "  - from " + Color.GREEN + "{}".format(session_log.test_summary.test_failed)
+        Printer.system_message(TAG, "  * from " + Color.GREEN + "{}".format(session_log.test_summary.test_failed)
                                + Color.BLUE + " failed test cases, each was started again " + Color.GREEN
                                + "{}".format(GlobalConfig.FLAKINESS_RERUN_COUNT) + Color.BLUE + " times:")
 

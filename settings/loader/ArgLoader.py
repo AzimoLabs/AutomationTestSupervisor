@@ -44,8 +44,8 @@ parser.add_argument(LAUNCH_PLAN_PREFIX,
                     help="Name of launch plan specified in LaunchManifest.json.")
 
 parser.add_argument(TEST_SET_PREFIX,
-                    type=str,
-                    default=TEST_SET_DEFAULT,
+                    nargs="+",
+                    default=[TEST_SET_DEFAULT],
                     help="Name of test set specified in TestManifest.json.")
 
 parser.add_argument(AVD_SET_PREFIX,
