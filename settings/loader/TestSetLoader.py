@@ -155,8 +155,7 @@ def _pick_test_set(test_manifest, test_set_names):
                          + "config (on parameter: {}) and cannot be merged.".format(parameter_name)
             raise LauncherFlowInterruptedException(TAG, error)
     else:
-        return test_set_names[0]
-
+        return test_manifest.get_set(test_set_names[0])
 
 def _load_test_set(test_manifest, test_set_names):
     _check_if_packages_exists(test_manifest, test_set_names)
