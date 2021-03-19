@@ -327,3 +327,7 @@ c) LauncherConfigCreator - subtool
 
 ### Problems to be solved
 a) Test recording is working but the way files are pulled from device is very imperfect. This is due to fact, even if you stop recording from terminal command ADB still takes few seconds to process file. If you pull video too fast then it will be corrupted and won't run. This is simply bug in ADB as it doesn't release video recording process in the moment when video is ready to use. We tested this feature on our test set (where some tests take even 6 minutes) and decided to wait 10 seconds before each file is pulled. This will cause huge problem if someone has set of very small and fast tests. What needs to be done to **implement proper synchronisation/wait for .mp4 to finish being written to** in [TestRecordingSavingThread](https://github.com/AzimoLabs/AutomationTestSupervisor/blob/master/session/SessionThreads.py).
+
+
+# Towards financial services available to all
+We’re working throughout the company to create faster, cheaper, and more available financial services all over the world, and here are some of the techniques that we’re utilizing. There’s still a long way ahead of us, and if you’d like to be part of that journey, check out our [careers page](bit.ly/3vajnu6).
